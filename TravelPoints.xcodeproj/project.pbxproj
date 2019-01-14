@@ -1,0 +1,419 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3BD9516921EC2A1800CD0627 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD9516821EC2A1800CD0627 /* AppDelegate.m */; };
+		3BD9516C21EC2A1800CD0627 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD9516B21EC2A1800CD0627 /* ViewController.m */; };
+		3BD9516F21EC2A1800CD0627 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3BD9516D21EC2A1800CD0627 /* Main.storyboard */; };
+		3BD9517121EC2A1C00CD0627 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3BD9517021EC2A1C00CD0627 /* Assets.xcassets */; };
+		3BD9517421EC2A1C00CD0627 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3BD9517221EC2A1C00CD0627 /* LaunchScreen.storyboard */; };
+		3BD9517721EC2A1C00CD0627 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD9517621EC2A1C00CD0627 /* main.m */; };
+		C29759717D719AEDDBD225D1 /* libPods-TravelPoints.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C2211E9E3C715FBAD2B67682 /* libPods-TravelPoints.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		336807D058BD974831344AA1 /* Pods-TravelPoints.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TravelPoints.release.xcconfig"; path = "Pods/Target Support Files/Pods-TravelPoints/Pods-TravelPoints.release.xcconfig"; sourceTree = "<group>"; };
+		3BD9516421EC2A1800CD0627 /* TravelPoints.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TravelPoints.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3BD9516721EC2A1800CD0627 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		3BD9516821EC2A1800CD0627 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		3BD9516A21EC2A1800CD0627 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		3BD9516B21EC2A1800CD0627 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		3BD9516E21EC2A1800CD0627 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		3BD9517021EC2A1C00CD0627 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		3BD9517321EC2A1C00CD0627 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		3BD9517521EC2A1C00CD0627 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3BD9517621EC2A1C00CD0627 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		511DB104CDCE097693D079A1 /* Pods-TravelPoints.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TravelPoints.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TravelPoints/Pods-TravelPoints.debug.xcconfig"; sourceTree = "<group>"; };
+		C2211E9E3C715FBAD2B67682 /* libPods-TravelPoints.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TravelPoints.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3BD9516121EC2A1800CD0627 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C29759717D719AEDDBD225D1 /* libPods-TravelPoints.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3BD9515B21EC2A1700CD0627 = {
+			isa = PBXGroup;
+			children = (
+				3BD9516621EC2A1800CD0627 /* TravelPoints */,
+				3BD9516521EC2A1800CD0627 /* Products */,
+				E742E9DC1322E998EF215180 /* Pods */,
+				DB8507701782B66B7803DD23 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		3BD9516521EC2A1800CD0627 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3BD9516421EC2A1800CD0627 /* TravelPoints.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3BD9516621EC2A1800CD0627 /* TravelPoints */ = {
+			isa = PBXGroup;
+			children = (
+				3BD9516721EC2A1800CD0627 /* AppDelegate.h */,
+				3BD9516821EC2A1800CD0627 /* AppDelegate.m */,
+				3BD9516A21EC2A1800CD0627 /* ViewController.h */,
+				3BD9516B21EC2A1800CD0627 /* ViewController.m */,
+				3BD9516D21EC2A1800CD0627 /* Main.storyboard */,
+				3BD9517021EC2A1C00CD0627 /* Assets.xcassets */,
+				3BD9517221EC2A1C00CD0627 /* LaunchScreen.storyboard */,
+				3BD9517521EC2A1C00CD0627 /* Info.plist */,
+				3BD9517621EC2A1C00CD0627 /* main.m */,
+			);
+			path = TravelPoints;
+			sourceTree = "<group>";
+		};
+		DB8507701782B66B7803DD23 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C2211E9E3C715FBAD2B67682 /* libPods-TravelPoints.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E742E9DC1322E998EF215180 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				511DB104CDCE097693D079A1 /* Pods-TravelPoints.debug.xcconfig */,
+				336807D058BD974831344AA1 /* Pods-TravelPoints.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3BD9516321EC2A1800CD0627 /* TravelPoints */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3BD9517A21EC2A1C00CD0627 /* Build configuration list for PBXNativeTarget "TravelPoints" */;
+			buildPhases = (
+				D530000E1E095FD687BC0F99 /* [CP] Check Pods Manifest.lock */,
+				3BD9516021EC2A1800CD0627 /* Sources */,
+				3BD9516121EC2A1800CD0627 /* Frameworks */,
+				3BD9516221EC2A1800CD0627 /* Resources */,
+				0E2D1A842D38C90D1EE22A96 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TravelPoints;
+			productName = TravelPoints;
+			productReference = 3BD9516421EC2A1800CD0627 /* TravelPoints.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3BD9515C21EC2A1800CD0627 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1010;
+				ORGANIZATIONNAME = "Charles Ran";
+				TargetAttributes = {
+					3BD9516321EC2A1800CD0627 = {
+						CreatedOnToolsVersion = 10.1;
+					};
+				};
+			};
+			buildConfigurationList = 3BD9515F21EC2A1800CD0627 /* Build configuration list for PBXProject "TravelPoints" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 3BD9515B21EC2A1700CD0627;
+			productRefGroup = 3BD9516521EC2A1800CD0627 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3BD9516321EC2A1800CD0627 /* TravelPoints */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3BD9516221EC2A1800CD0627 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3BD9517421EC2A1C00CD0627 /* LaunchScreen.storyboard in Resources */,
+				3BD9517121EC2A1C00CD0627 /* Assets.xcassets in Resources */,
+				3BD9516F21EC2A1800CD0627 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0E2D1A842D38C90D1EE22A96 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-TravelPoints/Pods-TravelPoints-resources.sh",
+				"${PODS_ROOT}/IQKeyboardManager/IQKeyboardManager/Resources/IQKeyboardManager.bundle",
+				"${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/IQKeyboardManager.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MJRefresh.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TravelPoints/Pods-TravelPoints-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D530000E1E095FD687BC0F99 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TravelPoints-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3BD9516021EC2A1800CD0627 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3BD9516C21EC2A1800CD0627 /* ViewController.m in Sources */,
+				3BD9517721EC2A1C00CD0627 /* main.m in Sources */,
+				3BD9516921EC2A1800CD0627 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		3BD9516D21EC2A1800CD0627 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3BD9516E21EC2A1800CD0627 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		3BD9517221EC2A1C00CD0627 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3BD9517321EC2A1C00CD0627 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		3BD9517821EC2A1C00CD0627 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		3BD9517921EC2A1C00CD0627 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		3BD9517B21EC2A1C00CD0627 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 511DB104CDCE097693D079A1 /* Pods-TravelPoints.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4DVSB2T6TD;
+				INFOPLIST_FILE = TravelPoints/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.quantdo.rj.TravelPoints;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		3BD9517C21EC2A1C00CD0627 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 336807D058BD974831344AA1 /* Pods-TravelPoints.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4DVSB2T6TD;
+				INFOPLIST_FILE = TravelPoints/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.quantdo.rj.TravelPoints;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3BD9515F21EC2A1800CD0627 /* Build configuration list for PBXProject "TravelPoints" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3BD9517821EC2A1C00CD0627 /* Debug */,
+				3BD9517921EC2A1C00CD0627 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3BD9517A21EC2A1C00CD0627 /* Build configuration list for PBXNativeTarget "TravelPoints" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3BD9517B21EC2A1C00CD0627 /* Debug */,
+				3BD9517C21EC2A1C00CD0627 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3BD9515C21EC2A1800CD0627 /* Project object */;
+}
