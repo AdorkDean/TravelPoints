@@ -9,19 +9,9 @@
 #ifndef WXApi_h
 #define WXApi_h
 
-////前置地址
-//static NSString * const QD_Domain = @"http://192.168.100.129:6080";
-//
-////行情地址
-//static NSString * const QD_Mark_Domain = @"http://122.144.129.233:60105";
-//
-////前置推送地址
-//static NSString * const QD_WS_Domain = @"ws://192.168.100.129:6080";
-//
-////行情推送地址
-//static NSString * const QD_WSMark_Domain = @"ws://122.144.129.233:60105";
+static NSString * const QD_Domain = @"http://192.168.65.198:9083";
 
-static NSString * const QD_ProjectName = @"/qdFrontServer/";
+static NSString * const QD_ProjectName = @"/lyjfapp/trade/api/v1/";
 static NSString * const QD_MarkProjectName = @"/qdMarketJniServer/";
 
 static NSString * const QD_Service = @"service/";
@@ -43,7 +33,7 @@ static NSString * const WS_TOPIC_Order_Insert = @"public_order_insert_return_"; 
 static NSString * const WS_TOPIC_Account = @"public_part_account_"; //资金订阅（接userID）
 
 /***************** API **************************/
-static NSString * const api_LogonService = @"logon";            //登录
+static NSString * const api_LogonService = @"user/login";            //登录
 static NSString * const api_LogoutService = @"logout";          //登出
 static NSString * const api_GetVerifyCode = @"captcha?d=";      //获取验证码
 static NSString * const api_ListMarketData = @"listMarketDataByInstrumentIdList";//合约列表行情

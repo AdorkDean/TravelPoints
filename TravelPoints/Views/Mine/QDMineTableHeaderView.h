@@ -12,6 +12,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface QDMineTableHeaderView : UIView
 
+@property (nonatomic, strong) UIImageView *imgView;
+@property (nonatomic, strong) UIButton *settingBtn;
+@property (nonatomic, strong) UIButton *voiceBtn;
+
 @end
 
 NS_ASSUME_NONNULL_END

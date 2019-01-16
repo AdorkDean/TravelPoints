@@ -42,7 +42,7 @@
             // 设置验证码/密码的现实属性
             NSMutableDictionary *attributes = [[NSMutableDictionary alloc]init];
             // 设置验证码颜色
-            attributes[NSForegroundColorAttributeName] =  [UIColor colorWithRed:5/255 green:124/255 blue:255/255 alpha:1];
+            attributes[NSForegroundColorAttributeName] = [UIColor colorWithHexString:@"#72BB37"];
             attributes[NSFontAttributeName] =self.font;
             // 计算每位验证码/密码的绘制起点（为了使验证码/密码位于tempRect的中部，不应该从tempRect的重点开始绘制）
             // 计算每位验证码/密码的在指定样式下的size
@@ -75,8 +75,8 @@
         CGContextSetStrokeColorWithColor(context,[UIColor grayColor].CGColor);//底部颜色
         CGContextSetFillColorWithColor(context,[UIColor grayColor].CGColor);//内容的颜色
     }else if( k == self.text.length) {
-        CGContextSetStrokeColorWithColor(context,[UIColor colorWithRed:5/255 green:124/255 blue:255/255 alpha:1].CGColor);//底部颜色
-        CGContextSetFillColorWithColor(context,[UIColor colorWithRed:5/255 green:124/255 blue:255/255 alpha:1].CGColor);//内容的颜色
+        CGContextSetStrokeColorWithColor(context,[UIColor colorWithHexString:@"#72BB37"].CGColor);//底部颜色
+        CGContextSetFillColorWithColor(context,[UIColor colorWithHexString:@"#72BB37"].CGColor);//内容的颜色
     }
     else{
         CGContextSetStrokeColorWithColor(context,[UIColor grayColor].CGColor);//底部颜色
@@ -97,8 +97,8 @@
         CGContextRef context =UIGraphicsGetCurrentContext();
         CGContextSetLineWidth(context,0.5);
         /****  设置竖线的颜色 ****/
-        CGContextSetStrokeColorWithColor(context,[UIColor colorWithRed:5/255 green:124/255 blue:255/255 alpha:1].CGColor);//
-        CGContextSetFillColorWithColor(context,[UIColor colorWithRed:5/255 green:124/255 blue:255/255 alpha:1].CGColor);
+        CGContextSetStrokeColorWithColor(context,[UIColor colorWithHexString:@"#72BB37"].CGColor);//
+        CGContextSetFillColorWithColor(context,[UIColor colorWithHexString:@"#72BB37"].CGColor);
         CGContextMoveToPoint(context, width * k + (width -1.0) /2.0, height/5);
         CGContextAddLineToPoint(context,  width * k + (width -1.0) /2.0,height-height/5);
         CGContextStrokePath(context);

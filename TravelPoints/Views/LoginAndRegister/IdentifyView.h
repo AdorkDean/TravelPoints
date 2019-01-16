@@ -7,11 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-
 NS_ASSUME_NONNULL_BEGIN
 
 @interface IdentifyView : UIView
 
+@property (nonatomic, strong) UILabel *identifyLab;
+@property (nonatomic, strong) UIView *lineView;
+@property (nonatomic, strong) UIImageView *imgView;
+@property (nonatomic, strong) UIButton *refreshBtn;
 @end
 
 NS_ASSUME_NONNULL_END

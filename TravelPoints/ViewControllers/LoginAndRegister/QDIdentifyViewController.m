@@ -7,8 +7,10 @@
 //
 
 #import "QDIdentifyViewController.h"
-
-@interface QDIdentifyViewController ()
+#import "IdentifyView.h"
+@interface QDIdentifyViewController (){
+    IdentifyView *_identifyView;
+}
 
 @end
 
@@ -16,6 +18,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _identifyView = [[IdentifyView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     // Do any additional setup after loading the view.
 }
 

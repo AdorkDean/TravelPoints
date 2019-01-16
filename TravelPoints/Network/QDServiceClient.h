@@ -2,7 +2,7 @@
 //  QDServiceClient.h
 //  QDINFI
 //
-//  Created by ZengTark on 2017/10/21.
+//  Created by 冉金 on 2017/10/21.
 //  Copyright © 2017年 quantdo. All rights reserved.
 //
 
@@ -60,10 +60,6 @@ typedef void(^DownloadProgress)(NSProgress *progress);
  */
 - (NSString *)getFullUrlByUrl:(NSString *)urlString;
 
-#pragma mark - 新增
-- (NSString *)getMarkFullUrlByUrl:(NSString *)urlString;
-
-
 /**
  网络请求
 
@@ -88,8 +84,6 @@ typedef void(^DownloadProgress)(NSProgress *progress);
  @param isCached 是否缓存数据
  */
 - (void)requestWithServiceName:(NSString *)serviceName functionName:(NSString *)funcName paraments:(NSArray *)paraments successBlock:(RequestSuccess)successBlock failureBlock:(RequestFailure)failureBlock progress:(DownloadProgress)progressBlock isCached:(BOOL)isCached;
-
-- (void)requestWithMarketService:(NSString *)serviceName functionName:(NSString *)funcName paraments:(NSArray *)paraments successBlock:(RequestSuccess)successBlock failureBlock:(RequestFailure)failureBlock progress:(DownloadProgress)progressBlock isCached:(BOOL)isCached;
 
 /**
  用户登录

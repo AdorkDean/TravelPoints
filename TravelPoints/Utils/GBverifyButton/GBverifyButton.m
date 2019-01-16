@@ -26,7 +26,7 @@ alpha:1.0]
 @property(nonatomic,retain)UILabel*tipLabel;
 @end
 @implementation GBverifyButton
--(id)initWithFrame:(CGRect)frame delegate:(UIViewController*)Delegate Target:(id)target Action:(SEL)action{
+-(id)initWithFrame:(CGRect)frame delegate:(UIView*)Delegate Target:(id)target Action:(SEL)action{
     
     self = [super initWithFrame:frame];
     if(self){
@@ -46,14 +46,14 @@ alpha:1.0]
     
     //获取验证码按钮
     
-    _get_verifyButton=[self createButtonWithFrame:self.frame ImageName:nil Target:self.target Action:self.action Title:@"获取验证码"];
+    _get_verifyButton=[self createButtonWithFrame:self.frame ImageName:nil Target:self.target Action:self.action Title:@"发送验证码"];
     
     [_get_verifyButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     _get_verifyButton.layer.cornerRadius=3;
     _get_verifyButton.clipsToBounds=YES;
     [_get_verifyButton setBackgroundColor:R_G_B_16(0x4edb69)];
     
-    [self.delegate.view addSubview:_get_verifyButton];
+    [self.delegate addSubview:_get_verifyButton];
     
     //验证提交之后的跑秒提示防止用户的重复提交数据有效时间60秒
     _tipLabel=[[UILabel alloc ]initWithFrame:self.frame];
@@ -64,7 +64,7 @@ alpha:1.0]
     _tipLabel.clipsToBounds=YES;
     _tipLabel.backgroundColor=[UIColor lightGrayColor];
     _tipLabel.hidden=YES;
-    [self.delegate.view addSubview:_tipLabel];
+    [self.delegate addSubview:_tipLabel];
     
     
 }

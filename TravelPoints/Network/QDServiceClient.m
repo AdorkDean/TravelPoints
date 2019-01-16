@@ -2,7 +2,7 @@
 //  QDServiceClient.m
 //  QDINFI
 //
-//  Created by ZengTark on 2017/10/21.
+//  Created by 冉金 on 2017/10/21.
 //  Copyright © 2017年 quantdo. All rights reserved.
 //
 
@@ -36,17 +36,18 @@ typedef void(^PrivateRequestFailure)(NSURLSessionDataTask *task, NSError *error)
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         serviceClient = [[QDServiceClient alloc] init];
+        serviceClient.manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:QD_Domain]];
 //        serviceClient.manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:QD_Domain]];
-        serviceClient.manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:[QDUserDefaults getObjectForKey:@"QD_Domain"]]];
-        serviceClient.manager.requestSerializer.timeoutInterval = QD_Timeout;
-        serviceClient.manager.requestSerializer.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
-        [serviceClient.manager.requestSerializer setValue:@"text/plain" forHTTPHeaderField:@"Accept"];
-        
-//        serviceClient.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-        serviceClient.manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/plain", @"text/javascript",@"image/jpeg",@"image/png", @"text/json", @"text/html", nil];
-        serviceClient.manager.securityPolicy.allowInvalidCertificates = YES;
-        
-        serviceClient.tasks = [[NSMutableArray alloc] init];
+//        serviceClient.manager.requestSerializer.timeoutInterval = QD_Timeout;
+//        serviceClient.manager.requestSerializer.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
+////        [serviceClient.manager.requestSerializer setValue:@"text/plain" forHTTPHeaderField:@"Accept"];
+//        [serviceClient.manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+//
+////        serviceClient.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+//        serviceClient.manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/plain", @"text/javascript",@"image/jpeg",@"image/png", @"text/json", @"text/html", nil];
+//        serviceClient.manager.securityPolicy.allowInvalidCertificates = YES;
+//
+//        serviceClient.tasks = [[NSMutableArray alloc] init];
     });
     return serviceClient;
 }
@@ -110,26 +111,13 @@ typedef void(^PrivateRequestFailure)(NSURLSessionDataTask *task, NSError *error)
 - (NSString *)getFullUrlByUrl:(NSString *)urlString
 {
     if (urlString == nil) {
-//        return [NSString stringWithFormat:@"%@%@", QD_Domain, QD_ProjectName];
-        return [NSString stringWithFormat:@"%@%@", [QDUserDefaults getObjectForKey:@"QD_Domain"], QD_ProjectName];
+        return [NSString stringWithFormat:@"%@%@", QD_Domain, QD_ProjectName];
     }
     else {
-//        return [NSString stringWithFormat:@"%@%@%@", QD_Domain, QD_ProjectName, urlString];
-        return [NSString stringWithFormat:@"%@%@%@", [QDUserDefaults getObjectForKey:@"QD_Domain"], QD_ProjectName, urlString];
+        return [NSString stringWithFormat:@"%@%@%@", QD_Domain, QD_ProjectName, urlString];
     }
 }
 
-- (NSString *)getMarkFullUrlByUrl:(NSString *)urlString
-{
-    if (urlString == nil) {
-//        return [NSString stringWithFormat:@"%@%@", QD_Mark_Domain, QD_MarkProjectName];
-        return [NSString stringWithFormat:@"%@%@", [QDUserDefaults getObjectForKey:@"QD_Mark_Domain"], QD_MarkProjectName];
-    }
-    else {
-//        return [NSString stringWithFormat:@"%@%@%@", QD_Mark_Domain, QD_MarkProjectName, urlString];
-        return [NSString stringWithFormat:@"%@%@%@", [QDUserDefaults getObjectForKey:@"QD_Mark_Domain"], QD_MarkProjectName, urlString];
-    }
-}
 /**
  网络请求
  
@@ -166,19 +154,6 @@ typedef void(^PrivateRequestFailure)(NSURLSessionDataTask *task, NSError *error)
     } isCached:isCached];
 }
 
-#pragma mark - 新增markDataService
-- (void)requestWithMarketService:(NSString *)serviceName functionName:(NSString *)funcName paraments:(NSArray *)paraments successBlock:(RequestSuccess)successBlock failureBlock:(RequestFailure)failureBlock progress:(DownloadProgress)progressBlock isCached:(BOOL)isCached
-{
-    NSString *urlString = [self getMarkFullUrlByUrl:[NSString stringWithFormat:@"%@%@/%@",QD_Service, serviceName, funcName]];
-    [self requestWithType:kHTTPRequestTypePOST urlString:urlString params:paraments success:^(NSURLSessionDataTask *task, QDResponseObject *responseObject) {
-        successBlock ? successBlock(responseObject) : nil;
-    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        failureBlock ? failureBlock(error) : nil;
-    } progress:^(NSProgress *progress) {
-        progressBlock ? progressBlock(progress) : nil;
-    } isCached:isCached];
-}
-
 /**
  用户登录
  
@@ -191,10 +166,10 @@ typedef void(^PrivateRequestFailure)(NSURLSessionDataTask *task, NSError *error)
 - (void)loginWithUserName:(NSString *)userName password:(NSString *)password extendsParams:(NSDictionary *)extendsParams successBlock:(RequestSuccess)successBlock failureBlock:(RequestFailure)failureBlock
 {
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    [params setValue:userName forKey:@"userName"];
-//    [params setValue:[self getMD5String:password] forKey:@"password"];
-    [params setValue:password forKey:@"password"];
-    [params setValue:[extendsParams jsonString] forKey:@"extends"];
+    [params setValue:userName forKey:@"legalPhone"];
+    [params setValue:[self getMD5String:password] forKey:@"userPwd"];
+//    [params setValue:password forKey:@"userPwd"];
+//    [params setValue:[extendsParams jsonString] forKey:@"extends"];
     NSDictionary *params2 = [NSDictionary dictionaryWithDictionary:params];
     NSString *logonUrl = [self getFullUrlByUrl:api_LogonService];
     

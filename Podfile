@@ -8,5 +8,11 @@ target 'TravelPoints' do
   # Pods for TravelPoints
   pod 'IQKeyboardManager'
   pod 'MJRefresh'
+  pod 'Masonry'
+  pod 'YYCache'
+  pod 'AFNetworking'
+  pod 'YYModel'
+  pod 'MBProgressHUD'
+  pod 'Toast'
 
 end

@@ -21,9 +21,9 @@
 - (instancetype)init
 {
     if (self = [super init]) {        
-        self.layer.borderColor = [UIColor colorWithHexString:@"648AC7"].CGColor;
-        self.layer.borderWidth = 0.5f;
-        self.layer.cornerRadius = 6.0f;
+//        self.layer.borderColor = [UIColor colorWithHexString:@"648AC7"].CGColor;
+//        self.layer.borderWidth = 0.5f;
+        self.layer.cornerRadius = 2.0f;
         self.layer.masksToBounds = YES;
     }
     return self;

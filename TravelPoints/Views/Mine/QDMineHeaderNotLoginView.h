@@ -11,6 +11,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QDMineHeaderNotLoginView : UIView
+@property (nonatomic, strong) UIView *headerView;
+@property (nonatomic, strong) UIButton *picBtn;
+@property (nonatomic, strong) UILabel *infoLab;
+@property (nonatomic, strong) UIButton *loginBtn;
 
 @end
 

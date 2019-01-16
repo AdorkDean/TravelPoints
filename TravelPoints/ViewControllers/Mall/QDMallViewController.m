@@ -7,7 +7,6 @@
 //
 
 #import "QDMallViewController.h"
-
 @interface QDMallViewController ()
 
 @end

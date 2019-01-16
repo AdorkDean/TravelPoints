@@ -2,7 +2,7 @@
 //  QDNetworkCache.h
 //  QDINFI
 //
-//  Created by ZengTark on 2017/10/26.
+//  Created by 冉金 on 2017/10/26.
 //  Copyright © 2017年 quantdo. All rights reserved.
 //
 

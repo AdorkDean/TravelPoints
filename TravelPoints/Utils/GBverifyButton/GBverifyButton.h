@@ -18,10 +18,10 @@
  *7.听取了别人的意见为了防止内存泄露，暴露一个关闭定时器的接口，在离开这个界面的时候关闭定时器
  */
 @interface GBverifyButton : UIButton
-@property(assign) UIViewController* delegate;
+@property(assign) UIView* delegate;
 @property(assign) id target;
 @property (nonatomic, assign) SEL action;
--(id)initWithFrame:(CGRect)frame delegate:(UIViewController*)Delegate Target:(id)target Action:(SEL)action;
+-(id)initWithFrame:(CGRect)frame delegate:(UIView*)Delegate Target:(id)target Action:(SEL)action;
 
 /**
  *  自定义背景图片

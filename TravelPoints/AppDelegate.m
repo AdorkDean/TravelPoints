@@ -7,16 +7,72 @@
 //
 
 #import "AppDelegate.h"
+#import "QDHomeViewController.h"
+#import "QDHotelViewController.h"
+#import "QDRestaurantViewController.h"
+#import "QDMallViewController.h"
+#import "QDMineViewController.h"
 
 @interface AppDelegate ()
+
+@property(nonatomic, strong) UITabBarController *rootTabbarCtr;
 
 @end
 
 @implementation AppDelegate
 
 
+- (void)initRootVC{
+    QDHomeViewController *homeVC = [[QDHomeViewController alloc] init];
+    UINavigationController *navHome = [[UINavigationController alloc] initWithRootViewController:homeVC];
+    
+    QDHotelViewController *hotelVC = [[QDHotelViewController alloc] init];
+    UINavigationController *navhotel = [[UINavigationController alloc] initWithRootViewController:hotelVC];
+    
+    QDRestaurantViewController *restaurantVC = [[QDRestaurantViewController alloc] init];
+    UINavigationController *navrestaurant = [[UINavigationController alloc] initWithRootViewController:restaurantVC];
+    
+    QDMallViewController *mallVC = [[QDMallViewController alloc] init];
+    UINavigationController *navMall = [[UINavigationController alloc] initWithRootViewController:mallVC];
+    
+    QDMineViewController *mineVC = [[QDMineViewController alloc] init];
+    UINavigationController *navMine = [[UINavigationController alloc] initWithRootViewController:mineVC];
+    
+    homeVC.title = @"首页";
+    hotelVC.title = @"酒店";
+    restaurantVC.title = @"餐厅";
+    mallVC.title = @"商城";
+    mineVC.title = @"我的";
+    NSArray *viewCtrs = @[navHome, navhotel, navrestaurant, navMall, navMine];
+    self.rootTabbarCtr = [[UITabBarController alloc] init];
+    [self.rootTabbarCtr setViewControllers:viewCtrs animated:YES];
+    self.window.rootViewController = self.rootTabbarCtr;
+    
+    UITabBar *tabbar = self.rootTabbarCtr.tabBar;
+    [[UITabBar appearance] setBarTintColor:[UIColor whiteColor]];
+    [UITabBar appearance].translucent = NO;
+    UITabBarItem *item1 = [tabbar.items objectAtIndex:0];
+    UITabBarItem *item2 = [tabbar.items objectAtIndex:1];
+    UITabBarItem *item3 = [tabbar.items objectAtIndex:2];
+    UITabBarItem *item4 = [tabbar.items objectAtIndex:3];
+    UITabBarItem *item5 = [tabbar.items objectAtIndex:4];
+    
+    item1.selectedImage = [[UIImage imageNamed:@"icon_tabbar_homepage_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    item1.image = [[UIImage imageNamed:@"icon_tabbar_homepage"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    item2.selectedImage = [[UIImage imageNamed:@"icon_tabbar_onsite_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    item2.image = [[UIImage imageNamed:@"icon_tabbar_onsite"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    item3.selectedImage = [[UIImage imageNamed:@"icon_tabbar_merchant_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    item3.image = [[UIImage imageNamed:@"icon_tabbar_merchant_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    item4.selectedImage = [[UIImage imageNamed:@"icon_tabbar_mine_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    item4.image = [[UIImage imageNamed:@"icon_tabbar_mine"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    item5.selectedImage = [[UIImage imageNamed:@"icon_tabbar_misc_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    item5.image = [[UIImage imageNamed:@"icon_tabbar_misc"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+}
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [self initRootVC];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    [self.window makeKeyAndVisible];
     return YES;
 }
 

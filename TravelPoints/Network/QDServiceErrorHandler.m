@@ -2,13 +2,12 @@
 //  QDServiceErrorHandler.m
 //  QDINFI
 //
-//  Created by ZengTark on 2017/10/24.
+//  Created by 冉金 on 2017/10/24.
 //  Copyright © 2017年 quantdo. All rights reserved.
 //
 
 #import "QDServiceErrorHandler.h"
 #import "QDLoginViewController.h"
-#import "QDBaseNavigationController.h"
 
 @implementation QDServiceErrorHandler
 
@@ -35,7 +34,7 @@
             }
         }else{
             NSString *errorString = [NSString stringWithFormat:@"Code:%ld, Msg:%@", errorCode, errorMsg];
-            QDToast(errorString);
+            
         }
     }
 //        AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];

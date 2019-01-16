@@ -7,10 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "YYLabel.h"
+#import "YYText.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QDRegisterViewController : UIViewController
+
+@property (nonatomic, strong) YYLabel *yyLabel;
+@property (nonatomic , assign) BOOL isSelect;
 
 @end
 

@@ -7,10 +7,24 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "QDButton.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QDLoginView : UIView
+
+//@property (nonatomic, strong) UIButton *cancelBtn;
+//@property (nonatomic, strong) UIButton *registerBtn;
+
+@property (nonatomic, strong) UILabel *loginLab;
+@property (nonatomic, strong) UIView *lineView;
+
+@property (nonatomic, strong) UIView *phoneLine;
+@property (nonatomic, strong) UIButton *areaBtn;
+@property (nonatomic, strong) UITextField *phoneTF;
+@property (nonatomic, strong) UIView *userNameLine;
+@property (nonatomic, strong) UITextField *userNameTF;
+@property (nonatomic, strong) UIButton *forgetPWD;
+@property (nonatomic, strong) QDButton *gotologinBtn;
 
 @end
 
