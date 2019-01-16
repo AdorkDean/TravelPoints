@@ -1,9 +1,9 @@
 //
 //  QDBaseViewController.m
-//  QDINFI
+//  TravelPoints
 //
-//  Created by ZengTark on 2017/12/5.
-//  Copyright © 2017年 quantdo. All rights reserved.
+//  Created by 冉金 on 2019/1/14.
+//  Copyright © 2019年 Charles Ran. All rights reserved.
 //
 
 #import "QDBaseViewController.h"
@@ -16,12 +16,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.navigationController.navigationBar setTitleTextAttributes:
-     @{NSForegroundColorAttributeName:[UIColor whiteColor]}];
-    QDWeakSelf(self);
-    [self setThemeChangeBlock:^{
-        [weakself.view setBackgroundColor:[UIColor colorWithHexString:[QDColorTheme shareColorTheme].background]];
-    }];
+//    [self.navigationController.navigationBar setTitleTextAttributes:
+//     @{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     // Do any additional setup after loading the view.
 }
 
@@ -33,7 +29,7 @@
 - (void)showBack:(BOOL)show
 {
     if (show) {
-        UIImage *backImage = [UIImage imageNamed:@"back"];
+        UIImage *backImage = [UIImage imageNamed:@"icon_tabbar_misc_selected"];
         UIImage *selectedImage = [backImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
         UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithImage:selectedImage style:UIBarButtonItemStylePlain target:self action:@selector(navBack:)];
         [self.navigationItem setLeftBarButtonItem:backItem animated:YES];

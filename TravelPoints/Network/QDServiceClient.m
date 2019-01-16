@@ -36,43 +36,13 @@ typedef void(^PrivateRequestFailure)(NSURLSessionDataTask *task, NSError *error)
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         serviceClient = [[QDServiceClient alloc] init];
-        serviceClient.manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:QD_Domain]];
-//        serviceClient.manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:QD_Domain]];
-//        serviceClient.manager.requestSerializer.timeoutInterval = QD_Timeout;
-//        serviceClient.manager.requestSerializer.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
-////        [serviceClient.manager.requestSerializer setValue:@"text/plain" forHTTPHeaderField:@"Accept"];
-//        [serviceClient.manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-//
-////        serviceClient.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-//        serviceClient.manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/plain", @"text/javascript",@"image/jpeg",@"image/png", @"text/json", @"text/html", nil];
-//        serviceClient.manager.securityPolicy.allowInvalidCertificates = YES;
-//
-//        serviceClient.tasks = [[NSMutableArray alloc] init];
-    });
-    return serviceClient;
-}
-
-#pragma mark - 新增market
-+ (instancetype)shareMarketClient
-{
-    static QDServiceClient *serviceClient = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        serviceClient = [[QDServiceClient alloc] init];
-//        serviceClient.manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:QD_Mark_Domain]];
-        serviceClient.manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:[QDUserDefaults getObjectForKey:@"QD_Mark_Domain"]]];
-        serviceClient.manager.requestSerializer.timeoutInterval = QD_Timeout;
-        serviceClient.manager.requestSerializer.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
-        [serviceClient.manager.requestSerializer setValue:@"text/plain" forHTTPHeaderField:@"Accept"];
-        
-        //        serviceClient.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-        serviceClient.manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/plain", @"text/javascript",@"image/jpeg",@"image/png", @"text/json", @"text/html", nil];
+        serviceClient.manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
         serviceClient.manager.securityPolicy.allowInvalidCertificates = YES;
-        
         serviceClient.tasks = [[NSMutableArray alloc] init];
     });
     return serviceClient;
 }
+
 + (void) startMonitoringNetworking
 {
     AFNetworkReachabilityManager *statusManager = [AFNetworkReachabilityManager sharedManager];
@@ -159,37 +129,49 @@ typedef void(^PrivateRequestFailure)(NSURLSessionDataTask *task, NSError *error)
  
  @param userName 用户名
  @param password 密码
- @param extendsParams 扩展参数
  @param successBlock 成功block
  @param failureBlock 失败block
  */
-- (void)loginWithUserName:(NSString *)userName password:(NSString *)password extendsParams:(NSDictionary *)extendsParams successBlock:(RequestSuccess)successBlock failureBlock:(RequestFailure)failureBlock
+- (void)loginWithUserName:(NSString *)userName password:(NSString *)password successBlock:(RequestSuccess)successBlock failureBlock:(RequestFailure)failureBlock
 {
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     [params setValue:userName forKey:@"legalPhone"];
     [params setValue:[self getMD5String:password] forKey:@"userPwd"];
-//    [params setValue:password forKey:@"userPwd"];
-//    [params setValue:[extendsParams jsonString] forKey:@"extends"];
-    NSDictionary *params2 = [NSDictionary dictionaryWithDictionary:params];
-    NSString *logonUrl = [self getFullUrlByUrl:api_LogonService];
-    
-    //移除cookie
-    [QDUserDefaults removeCookies];
-    
-    
-    [self requestWithType:kHTTPRequestTypePOST urlString:logonUrl params:params2 success:^(NSURLSessionDataTask *task, QDResponseObject *responseObject) {
-        //把服务端返回的cookie存起来
+    NSData *dataFromDict = [NSJSONSerialization dataWithJSONObject:params options:NSJSONWritingPrettyPrinted error:nil];
+    NSString *logonUrl = [self getFullUrlByUrl:api_Login];
+    NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] requestWithMethod:@"POST" URLString:logonUrl parameters:nil error:nil];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPBody:dataFromDict];
+    __block NSURLSessionDataTask *task = [_manager dataTaskWithRequest:request uploadProgress:^(NSProgress * _Nonnull uploadProgress) {
         
-        NSHTTPURLResponse *response = (NSHTTPURLResponse *)task.response;
-        NSString *cookie = response.allHeaderFields[@"Set-Cookie"];
-        if (cookie) {
-            [QDUserDefaults setCookies:cookie];
+    } downloadProgress:^(NSProgress * _Nonnull downloadProgress) {
+    } completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+        if (error) {
+            successBlock ? successBlock(responseObject):nil;
+        }else{
+            QDResponseObject *responseObj = [QDResponseObject yy_modelWithDictionary:responseObject];
+            successBlock ? successBlock(responseObj):nil;
         }
-        successBlock ? successBlock(responseObject) : nil;
-    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        failureBlock ? failureBlock(error) : nil;
-    } progress:^(NSProgress *progress) {
-    } isCached:NO];
+    }];
+    [task resume];
+
+    //移除cookie
+//    [QDUserDefaults removeCookies];
+    
+    
+//    [self requestWithType:kHTTPRequestTypePOST urlString:logonUrl params:params2 success:^(NSURLSessionDataTask *task, QDResponseObject *responseObject) {
+//        //把服务端返回的cookie存起来
+//
+//        NSHTTPURLResponse *response = (NSHTTPURLResponse *)task.response;
+//        NSString *cookie = response.allHeaderFields[@"Set-Cookie"];
+//        if (cookie) {
+//            [QDUserDefaults setCookies:cookie];
+//        }
+//        successBlock ? successBlock(responseObject) : nil;
+//    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+//        failureBlock ? failureBlock(error) : nil;
+//    } progress:^(NSProgress *progress) {
+//    } isCached:NO];
 }
 
 - (void)logoutSuccessBlock:(RequestSuccess)successBlock failureBlock:(RequestFailure)failureBlock
@@ -222,89 +204,44 @@ typedef void(^PrivateRequestFailure)(NSURLSessionDataTask *task, NSError *error)
     NSData *imageData = UIImageJPEGRepresentation(image, 0.7);
     //get uploadUrl
     NSString *uploadUrlString = [self getUploadUrlWithServiceName:service functionName:funcName type:uploadType];
-    [self.manager POST:uploadUrlString parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-        //set fileName with current time
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        formatter.dateFormat = @"yyyyMMddHHmmss";
-        NSDate *today = [NSDate date];
-        NSString *fileName = [formatter stringFromDate:today];
-        [formData appendPartWithFileData:imageData name:@"file" fileName:fileName mimeType:@"image/jpeg"];
-    } progress:^(NSProgress * _Nonnull uploadProgress) {
-        progress ? progress(uploadProgress) : nil;
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSInteger errorCode = 200;
-        @try {
-            NSHTTPURLResponse *response = (NSHTTPURLResponse *)task.response;
-            NSDictionary *allHeaders = response.allHeaderFields;
-            NSNumber *code = [allHeaders objectForKey:@"error_code"];
-            if (code != nil) {
-                errorCode = [code integerValue];
-            }
-        } @catch (NSException *exception) {
-            
-        } @finally {
-            
-        }
-        if (errorCode == 200) {
-            QDResponseObject *responseObj = [QDResponseObject yy_modelWithDictionary:responseObject];
-            if ([responseObj.data[@"resultFlag"]integerValue] == 1 && responseObj.data[@"path"] != nil) {
-                successBlock ? successBlock(responseObj) : nil;
-            }
-            else {
-                QDToast(@"上传图片失败，请重试或重新登录");
-            }
-        }
-        else {
-            [QDServiceErrorHandler handleError:errorCode];
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-    }];
-}
-
-
-- (void)getCloudDataWithStr:(NSString *)str SuccessBlock:(RequestSuccess)successBlock withFailurBlock:(RequestFailure)failureBlock withUpLoadProgress:(UploadProgress)progress
-{
-    //image to data
-//    NSString * str =@"IdTest";
-//    NSString * str =@"default";
-
-    NSData *imageData =[str dataUsingEncoding:NSUTF8StringEncoding];
-
-    //get uploadUrl
-    NSString *uploadUrlString = @"http://updateit.quantdo.com.cn/app";
-    [self.manager POST:uploadUrlString parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-        //set fileName with current time
-        [formData appendPartWithFormData:imageData name:@"cid"];
-    } progress:^(NSProgress * _Nonnull uploadProgress) {
-        progress ? progress(uploadProgress) : nil;
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSInteger errorCode = 200;
-        @try {
-            NSHTTPURLResponse *response = (NSHTTPURLResponse *)task.response;
-            NSDictionary *allHeaders = response.allHeaderFields;
-            NSNumber *code = [allHeaders objectForKey:@"error_code"];
-            if (code != nil) {
-                errorCode = [code integerValue];
-            }
-        } @catch (NSException *exception) {
-            
-        } @finally {
-            
-        }
-        if (errorCode == 200) {
-            if([[responseObject objectForKey:@"errorCode"] intValue] == 0){
-                successBlock ? successBlock(responseObject) : nil;
-            }else {
-                QDToast([responseObject objectForKey:@"errorMsg"]);
-            }
-        }
-        else {
-            [QDServiceErrorHandler handleError:errorCode];
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-    }];
+//    [self.manager POST:uploadUrlString parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+//        //set fileName with current time
+//        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+//        formatter.dateFormat = @"yyyyMMddHHmmss";
+//        NSDate *today = [NSDate date];
+//        NSString *fileName = [formatter stringFromDate:today];
+//        [formData appendPartWithFileData:imageData name:@"file" fileName:fileName mimeType:@"image/jpeg"];
+//    } progress:^(NSProgress * _Nonnull uploadProgress) {
+//        progress ? progress(uploadProgress) : nil;
+//    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+//        NSInteger errorCode = 200;
+//        @try {
+//            NSHTTPURLResponse *response = (NSHTTPURLResponse *)task.response;
+//            NSDictionary *allHeaders = response.allHeaderFields;
+//            NSNumber *code = [allHeaders objectForKey:@"error_code"];
+//            if (code != nil) {
+//                errorCode = [code integerValue];
+//            }
+//        } @catch (NSException *exception) {
+//
+//        } @finally {
+//
+//        }
+//        if (errorCode == 200) {
+//            QDResponseObject *responseObj = [QDResponseObject yy_modelWithDictionary:responseObject];
+//            if ([responseObj.data[@"resultFlag"]integerValue] == 1 && responseObj.data[@"path"] != nil) {
+//                successBlock ? successBlock(responseObj) : nil;
+//            }
+//            else {
+//                QDToast(@"上传图片失败，请重试或重新登录");
+//            }
+//        }
+//        else {
+//            [QDServiceErrorHandler handleError:errorCode];
+//        }
+//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+//
+//    }];
 }
 
 
@@ -350,9 +287,10 @@ typedef void(^PrivateRequestFailure)(NSURLSessionDataTask *task, NSError *error)
 - (void)requestWithType:(HTTPRequestType)type urlString:(NSString *)urlString params:(id)params success:(PrivateRequestSuccess)successBlock failure:(PrivateRequestFailure)failureBlock progress:(DownloadProgress)progress isCached:(BOOL)isCached
 {
     NSDictionary *insetParams;
+    NSData *jsonData;
     if (params != nil) {
         NSError *error;
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:params options:NSJSONWritingPrettyPrinted error:&error];
+        jsonData = [NSJSONSerialization dataWithJSONObject:params options:NSJSONWritingPrettyPrinted error:&error];
         if (error) {
             insetParams = @{@"params":@[]};
         }
@@ -367,7 +305,7 @@ typedef void(^PrivateRequestFailure)(NSURLSessionDataTask *task, NSError *error)
     //把cookie取出来
     NSString *cookie = [NSString stringWithFormat:@"%@", [QDUserDefaults getCookies]];
     if (cookie && ![cookie isEqualToString:@"(null)"] && ![cookie isEqualToString:@""]) {
-        [self.manager.requestSerializer setValue:cookie forHTTPHeaderField:@"Cookie"];
+//        [self.manager.requestSerializer setValue:cookie forHTTPHeaderField:@"Cookie"];
     }
     
     if (isCached) {
@@ -382,56 +320,67 @@ typedef void(^PrivateRequestFailure)(NSURLSessionDataTask *task, NSError *error)
     switch (type) {
         case kHTTPRequestTypeGET:
         {
-            [self.manager GET:urlString parameters:insetParams progress:^(NSProgress * _Nonnull downloadProgress) {
-                progress ? progress(downloadProgress) : nil;
-            } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                successBlock ? successBlock(task ,responseObject) : nil;
-            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                failureBlock ? failureBlock(task, error) : nil;
-            }];
+//            [self.manager GET:urlString parameters:insetParams progress:^(NSProgress * _Nonnull downloadProgress) {
+//                progress ? progress(downloadProgress) : nil;
+//            } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+//                successBlock ? successBlock(task ,responseObject) : nil;
+//            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+//                failureBlock ? failureBlock(task, error) : nil;
+//            }];
         }
             break;
         case kHTTPRequestTypePOST:
         {
-            [self.manager POST:urlString parameters:insetParams progress:^(NSProgress * _Nonnull uploadProgress) {
-                progress ? progress(uploadProgress) : nil;
-            } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseData) {
-                NSInteger errorCode = 200;
-                @try {
-                    NSHTTPURLResponse *response = (NSHTTPURLResponse *)task.response;
-                    NSDictionary *allHeaders = response.allHeaderFields;
-                    NSNumber *code = [allHeaders objectForKey:@"error_code"];
-                    if (code != nil) {
-                        errorCode = [code integerValue];
-                    }
-                } @catch (NSException *exception) {
-                    
-                } @finally {
-                    
-                }
-                if (errorCode == 200) {
-                    if (isCached) {
-                        [QDNetworkCache setHttpCache:responseData URL:urlString paramenters:insetParams];
-                    }
-                    QDResponseObject *responseObj = [QDResponseObject yy_modelWithDictionary:responseData];
-                    successBlock ? successBlock(task, responseObj) : nil;
-                }else{
-                    [QDServiceErrorHandler handleError:errorCode];
-                    failureBlock ? failureBlock(task, nil) : nil;
-                }
-            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                QDLog(@"网络调用失败%@", task.response);
-                failureBlock ? failureBlock(task, error) : nil;
+            NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] requestWithMethod:@"POST" URLString:urlString parameters:nil error:nil];
+            [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+            [request setHTTPBody: jsonData];
+            request.timeoutInterval = 60;
+            [self.manager dataTaskWithRequest:request uploadProgress:^(NSProgress * _Nonnull uploadProgress) {
+                QDLog(@"uploadProgress");
+            } downloadProgress:^(NSProgress * _Nonnull downloadProgress) {
+                QDLog(@"downloadProgress");
+            } completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+                
             }];
+//            [self.manager POST:urlString parameters:jsonStr progress:^(NSProgress * _Nonnull uploadProgress) {
+//                progress ? progress(uploadProgress) : nil;
+//            } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseData) {
+//                NSInteger errorCode = 200;
+//                @try {
+//                    NSHTTPURLResponse *response = (NSHTTPURLResponse *)task.response;
+//                    NSDictionary *allHeaders = response.allHeaderFields;
+//                    NSNumber *code = [allHeaders objectForKey:@"error_code"];
+//                    if (code != nil) {
+//                        errorCode = [code integerValue];
+//                    }
+//                } @catch (NSException *exception) {
+//
+//                } @finally {
+//
+//                }
+//                if (errorCode == 200) {
+//                    if (isCached) {
+//                        [QDNetworkCache setHttpCache:responseData URL:urlString paramenters:insetParams];
+//                    }
+//                    QDResponseObject *responseObj = [QDResponseObject yy_modelWithDictionary:responseData];
+//                    successBlock ? successBlock(task, responseObj) : nil;
+//                }else{
+//                    [QDServiceErrorHandler handleError:errorCode];
+//                    failureBlock ? failureBlock(task, nil) : nil;
+//                }
+//            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+//                QDLog(@"网络调用失败%@", task.response);
+//                failureBlock ? failureBlock(task, error) : nil;
+//            }];
         }
             break;
         case kHTTPRequestTypePUT:
         {
-            [self.manager PUT:urlString parameters:params success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                successBlock ? successBlock(task, responseObject) : nil;
-            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                failureBlock ? failureBlock(task, error) : nil;
-            }];
+//            [self.manager PUT:urlString parameters:params success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+//                successBlock ? successBlock(task, responseObject) : nil;
+//            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+//                failureBlock ? failureBlock(task, error) : nil;
+//            }];
         }
             break;
         case kHTTPRequestTypeDELETE:

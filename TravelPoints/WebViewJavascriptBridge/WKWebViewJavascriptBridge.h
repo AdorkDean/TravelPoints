@@ -5,6 +5,9 @@
 //  Copyright (c) 2014 @LokiMeyburg. All rights reserved.
 //
 
+/*
+ 1. 针对WKWebView做的一层封装,主要用来执行JS代码,以及实现WKWebView的代理方法,并通过拦截URL来来通知WebViewJavascriptBridgeBase做相应操作。
+ */
 #if (__MAC_OS_X_VERSION_MAX_ALLOWED > __MAC_10_9 || __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_7_1)
 #define supportsWKWebView
 #endif

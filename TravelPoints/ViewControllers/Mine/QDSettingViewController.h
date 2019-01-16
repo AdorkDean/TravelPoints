@@ -6,11 +6,11 @@
 //  Copyright © 2019年 Charles Ran. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 
+#import "QDBaseViewController.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface QDSettingViewController : UIViewController
+@interface QDSettingViewController : QDBaseViewController
 
 @end
 

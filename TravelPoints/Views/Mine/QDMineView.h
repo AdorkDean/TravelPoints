@@ -12,6 +12,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface QDMineView : UIView
 
+
+@property (nonatomic, strong) UIButton *settingBtn;
+@property (nonatomic, strong) UIButton *voiceBtn;
+
 @property (nonatomic, strong) UIView *ordersView;
 @property (nonatomic, strong) UILabel *myOrdersLab;
 @property (nonatomic, strong) UIView *lineView;

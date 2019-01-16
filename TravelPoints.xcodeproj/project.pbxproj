@@ -58,6 +58,7 @@
 		3B40EC1221EE0C4400656C1F /* QDMineHeaderFinancialAccountView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B40EC1121EE0C4400656C1F /* QDMineHeaderFinancialAccountView.m */; };
 		3B40EC1521EE0C6200656C1F /* QDMineHeaderWithdrawView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B40EC1421EE0C6200656C1F /* QDMineHeaderWithdrawView.m */; };
 		3B40EC1821EECDED00656C1F /* QDSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B40EC1721EECDED00656C1F /* QDSettingViewController.m */; };
+		3B40EC1B21EED50F00656C1F /* QDBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B40EC1A21EED50E00656C1F /* QDBaseViewController.m */; };
 		3BCE3C1D21EC7FED005D518F /* QDServiceErrorHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCE3C1621EC7FEC005D518F /* QDServiceErrorHandler.m */; };
 		3BCE3C1E21EC7FED005D518F /* QDServiceClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCE3C1A21EC7FED005D518F /* QDServiceClient.m */; };
 		3BCE3C1F21EC7FED005D518F /* QDNetworkCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCE3C1B21EC7FED005D518F /* QDNetworkCache.m */; };
@@ -86,6 +87,12 @@
 		3BD951CB21EC6E6800CD0627 /* icon_tabbar_onsite_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BD951C121EC6E6700CD0627 /* icon_tabbar_onsite_selected@2x.png */; };
 		3BD951CC21EC6E6800CD0627 /* icon_tabbar_homepage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BD951C221EC6E6700CD0627 /* icon_tabbar_homepage@2x.png */; };
 		3BD951CD21EC6E6800CD0627 /* icon_tabbar_onsite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BD951C321EC6E6700CD0627 /* icon_tabbar_onsite@2x.png */; };
+		3BEA2C2F21EF3883001C52C4 /* WebViewJavascriptBridgeBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BEA2C2D21EF3882001C52C4 /* WebViewJavascriptBridgeBase.m */; };
+		3BEA2C3221EF39AC001C52C4 /* WebViewJavascriptBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BEA2C3021EF39AC001C52C4 /* WebViewJavascriptBridge.m */; };
+		3BEA2C3521EF4511001C52C4 /* WKWebViewJavascriptBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BEA2C3321EF4511001C52C4 /* WKWebViewJavascriptBridge.m */; };
+		3BEA2C3821EF45C5001C52C4 /* WebViewJavascriptBridge_JS.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BEA2C3621EF45C5001C52C4 /* WebViewJavascriptBridge_JS.m */; };
+		3BEA2C3B21EF478E001C52C4 /* QDBridgeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BEA2C3A21EF478E001C52C4 /* QDBridgeViewController.m */; };
+		3BEA2C3D21EF4C15001C52C4 /* ExampleApp.html in Resources */ = {isa = PBXBuildFile; fileRef = 3BEA2C3C21EF4C14001C52C4 /* ExampleApp.html */; };
 		C29759717D719AEDDBD225D1 /* libPods-TravelPoints.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C2211E9E3C715FBAD2B67682 /* libPods-TravelPoints.a */; };
 /* End PBXBuildFile section */
 
@@ -194,6 +201,8 @@
 		3B40EC1421EE0C6200656C1F /* QDMineHeaderWithdrawView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDMineHeaderWithdrawView.m; sourceTree = "<group>"; };
 		3B40EC1621EECDED00656C1F /* QDSettingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDSettingViewController.h; sourceTree = "<group>"; };
 		3B40EC1721EECDED00656C1F /* QDSettingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDSettingViewController.m; sourceTree = "<group>"; };
+		3B40EC1921EED50E00656C1F /* QDBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QDBaseViewController.h; sourceTree = "<group>"; };
+		3B40EC1A21EED50E00656C1F /* QDBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QDBaseViewController.m; sourceTree = "<group>"; };
 		3BCE3C1621EC7FEC005D518F /* QDServiceErrorHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QDServiceErrorHandler.m; sourceTree = "<group>"; };
 		3BCE3C1721EC7FEC005D518F /* QDServiceErrorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QDServiceErrorHandler.h; sourceTree = "<group>"; };
 		3BCE3C1821EC7FED005D518F /* QDServiceClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QDServiceClient.h; sourceTree = "<group>"; };
@@ -241,6 +250,17 @@
 		3BD951C221EC6E6700CD0627 /* icon_tabbar_homepage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_tabbar_homepage@2x.png"; sourceTree = "<group>"; };
 		3BD951C321EC6E6700CD0627 /* icon_tabbar_onsite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_tabbar_onsite@2x.png"; sourceTree = "<group>"; };
 		3BD951ED21EC75C700CD0627 /* QDTravelPoints.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDTravelPoints.pch; sourceTree = "<group>"; };
+		3BEA2C2D21EF3882001C52C4 /* WebViewJavascriptBridgeBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewJavascriptBridgeBase.m; sourceTree = "<group>"; };
+		3BEA2C2E21EF3883001C52C4 /* WebViewJavascriptBridgeBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewJavascriptBridgeBase.h; sourceTree = "<group>"; };
+		3BEA2C3021EF39AC001C52C4 /* WebViewJavascriptBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewJavascriptBridge.m; sourceTree = "<group>"; };
+		3BEA2C3121EF39AC001C52C4 /* WebViewJavascriptBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewJavascriptBridge.h; sourceTree = "<group>"; };
+		3BEA2C3321EF4511001C52C4 /* WKWebViewJavascriptBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WKWebViewJavascriptBridge.m; sourceTree = "<group>"; };
+		3BEA2C3421EF4511001C52C4 /* WKWebViewJavascriptBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKWebViewJavascriptBridge.h; sourceTree = "<group>"; };
+		3BEA2C3621EF45C5001C52C4 /* WebViewJavascriptBridge_JS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewJavascriptBridge_JS.m; sourceTree = "<group>"; };
+		3BEA2C3721EF45C5001C52C4 /* WebViewJavascriptBridge_JS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewJavascriptBridge_JS.h; sourceTree = "<group>"; };
+		3BEA2C3921EF478E001C52C4 /* QDBridgeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDBridgeViewController.h; sourceTree = "<group>"; };
+		3BEA2C3A21EF478E001C52C4 /* QDBridgeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDBridgeViewController.m; sourceTree = "<group>"; };
+		3BEA2C3C21EF4C14001C52C4 /* ExampleApp.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ExampleApp.html; sourceTree = "<group>"; };
 		511DB104CDCE097693D079A1 /* Pods-TravelPoints.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TravelPoints.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TravelPoints/Pods-TravelPoints.debug.xcconfig"; sourceTree = "<group>"; };
 		C2211E9E3C715FBAD2B67682 /* libPods-TravelPoints.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TravelPoints.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -269,6 +289,8 @@
 		3B40EB7321EC952800656C1F /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				3B40EC1921EED50E00656C1F /* QDBaseViewController.h */,
+				3B40EC1A21EED50E00656C1F /* QDBaseViewController.m */,
 				3B40EC0821EDE85200656C1F /* SPButton.h */,
 				3B40EC0721EDE85200656C1F /* SPButton.m */,
 				3B40EBEE21EDB79500656C1F /* GBverifyButton */,
@@ -495,6 +517,7 @@
 		3BD9516621EC2A1800CD0627 /* TravelPoints */ = {
 			isa = PBXGroup;
 			children = (
+				3BEA2C2C21EF3866001C52C4 /* WebViewJavascriptBridge */,
 				3B40EB7321EC952800656C1F /* Utils */,
 				3BCE3C2E21EC89F9005D518F /* Category */,
 				3BCE3C2921EC8898005D518F /* Marcos */,
@@ -650,6 +673,8 @@
 				3BD9519721EC605000CD0627 /* QDMineViewController.m */,
 				3B40EC1621EECDED00656C1F /* QDSettingViewController.h */,
 				3B40EC1721EECDED00656C1F /* QDSettingViewController.m */,
+				3BEA2C3921EF478E001C52C4 /* QDBridgeViewController.h */,
+				3BEA2C3A21EF478E001C52C4 /* QDBridgeViewController.m */,
 			);
 			path = Mine;
 			sourceTree = "<group>";
@@ -717,6 +742,22 @@
 				3BD951C321EC6E6700CD0627 /* icon_tabbar_onsite@2x.png */,
 			);
 			path = tabbar;
+			sourceTree = "<group>";
+		};
+		3BEA2C2C21EF3866001C52C4 /* WebViewJavascriptBridge */ = {
+			isa = PBXGroup;
+			children = (
+				3BEA2C3C21EF4C14001C52C4 /* ExampleApp.html */,
+				3BEA2C3721EF45C5001C52C4 /* WebViewJavascriptBridge_JS.h */,
+				3BEA2C3621EF45C5001C52C4 /* WebViewJavascriptBridge_JS.m */,
+				3BEA2C3421EF4511001C52C4 /* WKWebViewJavascriptBridge.h */,
+				3BEA2C3321EF4511001C52C4 /* WKWebViewJavascriptBridge.m */,
+				3BEA2C3121EF39AC001C52C4 /* WebViewJavascriptBridge.h */,
+				3BEA2C3021EF39AC001C52C4 /* WebViewJavascriptBridge.m */,
+				3BEA2C2E21EF3883001C52C4 /* WebViewJavascriptBridgeBase.h */,
+				3BEA2C2D21EF3882001C52C4 /* WebViewJavascriptBridgeBase.m */,
+			);
+			path = WebViewJavascriptBridge;
 			sourceTree = "<group>";
 		};
 		DB8507701782B66B7803DD23 /* Frameworks */ = {
@@ -808,6 +849,7 @@
 				3BD951C521EC6E6800CD0627 /* icon_tabbar_mine_selected@2x.png in Resources */,
 				3BD951C421EC6E6700CD0627 /* icon_tabbar_misc@2x.png in Resources */,
 				3BD951CD21EC6E6800CD0627 /* icon_tabbar_onsite@2x.png in Resources */,
+				3BEA2C3D21EF4C15001C52C4 /* ExampleApp.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -887,6 +929,7 @@
 				3BD9517721EC2A1C00CD0627 /* main.m in Sources */,
 				3B40EBB821EC953E00656C1F /* YYTextRubyAnnotation.m in Sources */,
 				3B40EBC721EC962100656C1F /* WXProgressHUD.m in Sources */,
+				3BEA2C3B21EF478E001C52C4 /* QDBridgeViewController.m in Sources */,
 				3BD951A121EC612E00CD0627 /* QDHotelViewController.m in Sources */,
 				3B40EC1221EE0C4400656C1F /* QDMineHeaderFinancialAccountView.m in Sources */,
 				3BCE3C2D21EC8899005D518F /* QDGlobalFunc.m in Sources */,
@@ -895,6 +938,7 @@
 				3B40EBE921ED925F00656C1F /* VertificationCodeInputView.m in Sources */,
 				3BCE3C3121EC8A08005D518F /* UIColor+QDColor.m in Sources */,
 				3B40EBA921EC953E00656C1F /* YYTextView.m in Sources */,
+				3BEA2C3821EF45C5001C52C4 /* WebViewJavascriptBridge_JS.m in Sources */,
 				3B40EC0921EDE85200656C1F /* SPButton.m in Sources */,
 				3BD9519821EC605000CD0627 /* QDMineViewController.m in Sources */,
 				3B40EB7121EC92C700656C1F /* QDResponseObject.m in Sources */,
@@ -908,6 +952,7 @@
 				3BCE3C2321EC83D8005D518F /* QDLoginViewController.m in Sources */,
 				3B40EBF721EDC4C300656C1F /* QDForgetPwdView.m in Sources */,
 				3B40EBAA21EC953E00656C1F /* YYTextMagnifier.m in Sources */,
+				3BEA2C3521EF4511001C52C4 /* WKWebViewJavascriptBridge.m in Sources */,
 				3B40EBF421EDBB2800656C1F /* QDSetLoginPwdView.m in Sources */,
 				3B40EBB921EC953E00656C1F /* YYTextUtilities.m in Sources */,
 				3B40EBCD21ECA64A00656C1F /* NSDictionary+Helper.m in Sources */,
@@ -919,17 +964,20 @@
 				3B40EBAC21EC953E00656C1F /* YYTextEffectWindow.m in Sources */,
 				3BCE3C1E21EC7FED005D518F /* QDServiceClient.m in Sources */,
 				3B40EBC021EC953E00656C1F /* YYTextWeakProxy.m in Sources */,
+				3B40EC1B21EED50F00656C1F /* QDBaseViewController.m in Sources */,
 				3B40EBD621ED655400656C1F /* IdentifyView.m in Sources */,
 				3BD9519521EC604500CD0627 /* QDRestaurantViewController.m in Sources */,
 				3B40EBB421EC953E00656C1F /* YYTextRunDelegate.m in Sources */,
 				3BCE3C1F21EC7FED005D518F /* QDNetworkCache.m in Sources */,
 				3B40EBAF21EC953E00656C1F /* YYTextLine.m in Sources */,
+				3BEA2C3221EF39AC001C52C4 /* WebViewJavascriptBridge.m in Sources */,
 				3B40EBBD21EC953E00656C1F /* YYTextTransaction.m in Sources */,
 				3B40EBB321EC953E00656C1F /* YYLabel.m in Sources */,
 				3B40EBAE21EC953E00656C1F /* YYTextLayout.m in Sources */,
 				3B40EC1521EE0C6200656C1F /* QDMineHeaderWithdrawView.m in Sources */,
 				3B40EC0F21EE0C2200656C1F /* QDMineHeaderNotLoginView.m in Sources */,
 				3B40EBC321EC956300656C1F /* QDUserDefaults.m in Sources */,
+				3BEA2C2F21EF3883001C52C4 /* WebViewJavascriptBridgeBase.m in Sources */,
 				3B40EBB721EC953E00656C1F /* YYTextArchiver.m in Sources */,
 				3BD9516921EC2A1800CD0627 /* AppDelegate.m in Sources */,
 				3B40EBB221EC953E00656C1F /* YYTextDebugOption.m in Sources */,
@@ -1084,7 +1132,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.quantdo.rj.TravelPoints;
+				PRODUCT_BUNDLE_IDENTIFIER = com.quantdo.travelPoints;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1104,7 +1152,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.quantdo.rj.TravelPoints;
+				PRODUCT_BUNDLE_IDENTIFIER = com.quantdo.travelPoints;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

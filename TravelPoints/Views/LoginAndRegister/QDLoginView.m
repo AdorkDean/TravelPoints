@@ -33,7 +33,7 @@
         _phoneTF = [[UITextField alloc] init];
         _phoneTF.placeholder = @"请输入手机号";
         [_phoneTF setValue:[UIColor colorWithHexString:@"#CCCCCC"] forKeyPath:@"placeholderLabel.textColor"];
-        [_phoneTF setValue:[UIFont systemFontOfSize:17] forKeyPath:@"_placeholderLabel.font"];
+        [_phoneTF setValue:[UIFont systemFontOfSize:15] forKeyPath:@"_placeholderLabel.font"];
         [self addSubview:_phoneTF];
         
         _userNameLine = [[UIView alloc] init];
@@ -43,7 +43,7 @@
         _userNameTF = [[UITextField alloc] init];
         _userNameTF.placeholder = @"请输入用户名";
         [_userNameTF setValue:[UIColor colorWithHexString:@"#CCCCCC"] forKeyPath:@"placeholderLabel.textColor"];
-        [_userNameTF setValue:[UIFont systemFontOfSize:17] forKeyPath:@"_placeholderLabel.font"];
+        [_userNameTF setValue:[UIFont systemFontOfSize:15] forKeyPath:@"_placeholderLabel.font"];
         [self addSubview:_userNameTF];
         
         _forgetPWD = [[UIButton alloc] init];

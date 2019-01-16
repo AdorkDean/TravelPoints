@@ -15,12 +15,19 @@
 #import "XBGradientColorView.h"
 #import "QDMineView.h"
 #import "QDMineHeaderNotLoginView.h"
+#import "QDSettingViewController.h"
+#import "QDBridgeViewController.h"
 @interface QDMineViewController ()
 
 @end
 
 @implementation QDMineViewController
 
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+}
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:animated];
@@ -47,6 +54,8 @@
 //    [self.view addSubview:grv];
     QDMineView *mineView = [[QDMineView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     [mineView.btn1 addTarget:self action:@selector(myOrders:) forControlEvents:UIControlEventTouchUpInside];
+    [mineView.settingBtn addTarget:self action:@selector(userSettings:) forControlEvents:UIControlEventTouchUpInside];
+    [mineView.btn8 addTarget:self action:@selector(toWebView:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:mineView];
     
     QDMineHeaderNotLoginView *headerView = [[QDMineHeaderNotLoginView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*0.053, SCREEN_HEIGHT*0.12, SCREEN_WIDTH*0.89, SCREEN_HEIGHT*0.225)];
@@ -61,6 +70,13 @@
     QDLog(@"userLogin");
     QDLoginAndRegisterVC *loginVC = [[QDLoginAndRegisterVC alloc] init];
     [self presentViewController:loginVC animated:YES completion:nil];
+}
+
+
+#pragma mark - 设置页面
+- (void)userSettings:(UIButton *)sender{
+    QDSettingViewController *settingVC = [[QDSettingViewController alloc] init];
+    [self.navigationController pushViewController:settingVC animated:YES];
 }
 
 - (void)myOrders:(UIButton *)sender{
@@ -83,14 +99,11 @@
     [self presentViewController:loginVC animated:YES completion:^{
     }];
 }
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+#pragma mark - JSBridge测试
+- (void)toWebView:(UIButton *)sender{
+    QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
+    [self.navigationController pushViewController:bridgeVC animated:YES];
 }
-*/
 
 @end

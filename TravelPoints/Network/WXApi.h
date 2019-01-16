@@ -11,7 +11,7 @@
 
 static NSString * const QD_Domain = @"http://192.168.65.198:9083";
 
-static NSString * const QD_ProjectName = @"/lyjfapp/trade/api/v1/";
+static NSString * const QD_ProjectName = @"/lyjfapp/api/v1/";
 static NSString * const QD_MarkProjectName = @"/qdMarketJniServer/";
 
 static NSString * const QD_Service = @"service/";
@@ -33,7 +33,7 @@ static NSString * const WS_TOPIC_Order_Insert = @"public_order_insert_return_"; 
 static NSString * const WS_TOPIC_Account = @"public_part_account_"; //资金订阅（接userID）
 
 /***************** API **************************/
-static NSString * const api_LogonService = @"user/login";            //登录
+static NSString * const api_Login = @"user/login";            //登录
 static NSString * const api_LogoutService = @"logout";          //登出
 static NSString * const api_GetVerifyCode = @"captcha?d=";      //获取验证码
 static NSString * const api_ListMarketData = @"listMarketDataByInstrumentIdList";//合约列表行情

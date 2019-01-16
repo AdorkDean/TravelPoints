@@ -1,9 +1,9 @@
 //
 //  QDBaseViewController.h
-//  QDINFI
+//  TravelPoints
 //
-//  Created by ZengTark on 2017/12/5.
-//  Copyright © 2017年 quantdo. All rights reserved.
+//  Created by 冉金 on 2019/1/14.
+//  Copyright © 2019年 Charles Ran. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

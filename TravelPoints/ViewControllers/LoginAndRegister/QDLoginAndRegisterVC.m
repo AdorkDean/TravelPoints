@@ -196,10 +196,18 @@
 
 #pragma mark - 用户登录
 - (void)userLogin:(UIButton *)sender{
-    [[QDServiceClient shareClient] loginWithUserName:@"13207166278" password:@"1" extendsParams:nil successBlock:^(QDResponseObject *responseObject) {
+//    [WXProgressHUD showHUD];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [[QDServiceClient shareClient] loginWithUserName:@"13207166278" password:@"1" successBlock:^(QDResponseObject *responseObject) {
         QDLog(@"123");
+        if (responseObject.errorCode == 0) {
+//            [WXProgressHUD hideHUD];
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [WXProgressHUD showInfoWithTittle:@"登录成功"];
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
     } failureBlock:^(NSError *error) {
-        
+
     }];
 }
 

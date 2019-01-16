@@ -14,5 +14,5 @@ target 'TravelPoints' do
   pod 'YYModel'
   pod 'MBProgressHUD'
   pod 'Toast'
-
+  pod 'TYAlertView'
 end

@@ -12,6 +12,17 @@
 
 - (instancetype)initWithFrame:(CGRect)frame{
     if ([super initWithFrame:frame]) {
+        
+        _settingBtn = [[UIButton alloc] init];
+        [_settingBtn setImage:[UIImage imageNamed:@"icon_tabbar_homepage"] forState:UIControlStateNormal];
+        _settingBtn.backgroundColor = [UIColor redColor];
+        [self addSubview:_settingBtn];
+        
+        _voiceBtn = [[UIButton alloc] init];
+        [_voiceBtn setImage:[UIImage imageNamed:@"icon_tabbar_homepage"] forState:UIControlStateNormal];
+        _voiceBtn.backgroundColor = [UIColor blueColor];
+        [self addSubview:_voiceBtn];
+        
         _ordersView = [[UIView alloc] init];
         _ordersView.backgroundColor = [UIColor whiteColor];
         [self addSubview:_ordersView];
@@ -126,6 +137,14 @@
 
 - (void)layoutSubviews{
     [super layoutSubviews];
+    [_settingBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.mas_top).offset(SCREEN_HEIGHT*0.06);
+        make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH*0.79);
+    }];
+    [_voiceBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.settingBtn);
+        make.right.equalTo(self.mas_right).offset(-(SCREEN_WIDTH*0.05));
+    }];
     [_ordersView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.and.right.equalTo(self);
         make.top.equalTo(self.mas_top).offset(SCREEN_HEIGHT*0.35);

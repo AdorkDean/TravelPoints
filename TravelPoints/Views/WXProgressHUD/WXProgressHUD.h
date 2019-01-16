@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import <MBProgressHUD/MBProgressHUD.h>
 typedef NS_ENUM(NSInteger, WXHUDPositionStyle) {
     WXHUDPositionTopStyle,
     WXHUDPositionCenterStyle,
@@ -15,7 +15,6 @@ typedef NS_ENUM(NSInteger, WXHUDPositionStyle) {
 };
 
 @interface WXProgressHUD : NSObject
-
 
 + (MBProgressHUD *)createHUD:(UIView *)view;
 

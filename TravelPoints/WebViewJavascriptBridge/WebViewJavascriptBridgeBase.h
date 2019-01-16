@@ -5,6 +5,10 @@
 //  Copyright (c) 2014 @LokiMeyburg. All rights reserved.
 //
 
+/*
+ 1.用来进行bridge初始化g和消息处理的核心类
+ 2.这个类是在支持WKWebView后从WebViewJavascriptBridge中独立出来的逻辑,专门用来处理bridge相关的逻辑,不再与具体的Web View相关联了
+ */
 #import <Foundation/Foundation.h>
 
 #define kOldProtocolScheme @"wvjbscheme"

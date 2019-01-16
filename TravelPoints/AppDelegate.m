@@ -26,6 +26,7 @@
     QDHomeViewController *homeVC = [[QDHomeViewController alloc] init];
     UINavigationController *navHome = [[UINavigationController alloc] initWithRootViewController:homeVC];
     
+    
     QDHotelViewController *hotelVC = [[QDHotelViewController alloc] init];
     UINavigationController *navhotel = [[UINavigationController alloc] initWithRootViewController:hotelVC];
     
@@ -37,7 +38,7 @@
     
     QDMineViewController *mineVC = [[QDMineViewController alloc] init];
     UINavigationController *navMine = [[UINavigationController alloc] initWithRootViewController:mineVC];
-    
+    navMine.navigationBar.barTintColor = [UIColor whiteColor];
     homeVC.title = @"首页";
     hotelVC.title = @"酒店";
     restaurantVC.title = @"餐厅";
@@ -71,7 +72,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [self initRootVC];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [self.window makeKeyAndVisible];
     return YES;
 }

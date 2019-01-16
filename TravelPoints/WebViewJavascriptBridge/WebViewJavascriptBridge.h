@@ -6,6 +6,10 @@
 //  Copyright (c) 2013 Marcus Westin. All rights reserved.
 //
 
+/*
+ 1. 桥接的入口,针对不同类型的Web View(UIWebView,WKWebView,WebView)进行分发。
+ 2. 针对UIWebView和WebView做的一层封装,主要用来执行JS代码，以及实现UIWebView和WebView的代理方法,并通过拦截URL来通知WebViewJavaScriptBridgeBase做相应操作。
+ */
 #import <Foundation/Foundation.h>
 #import "WebViewJavascriptBridgeBase.h"
 

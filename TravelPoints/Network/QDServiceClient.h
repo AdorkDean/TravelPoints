@@ -45,10 +45,9 @@ typedef void(^DownloadProgress)(NSProgress *progress);
 /**
  网络请求管理类
  */
-@property (nonatomic, strong)AFHTTPSessionManager *manager;
+@property (nonatomic, strong)AFURLSessionManager *manager;
 
 + (instancetype)shareClient;
-+ (instancetype)shareMarketClient;
 
 + (void)startMonitoringNetworking;
 
@@ -94,7 +93,7 @@ typedef void(^DownloadProgress)(NSProgress *progress);
  @param successBlock 成功block
  @param failureBlock 失败block
  */
-- (void)loginWithUserName:(NSString *)userName password:(NSString *)password extendsParams:(id)extendsParams successBlock:(RequestSuccess)successBlock failureBlock:(RequestFailure)failureBlock;
+- (void)loginWithUserName:(NSString *)userName password:(NSString *)password successBlock:(RequestSuccess)successBlock failureBlock:(RequestFailure)failureBlock;
 
 - (NSString *)getVerifyCodeImgUrlString;
 
@@ -114,7 +113,6 @@ typedef void(^DownloadProgress)(NSProgress *progress);
  */
 - (void)uploadImageWithType:(NSString *)uploadType withImage:(UIImage *)image withServiceName:(NSString *)service withFunctionName:(NSString *)funcName withSuccessBlock:(RequestSuccess)successBlock withFailurBlock:(RequestFailure)failureBlock withUpLoadProgress:(UploadProgress)progress;
 
-- (void)getCloudDataWithStr:(NSString *)str SuccessBlock:(RequestSuccess)successBlock withFailurBlock:(RequestFailure)failureBlock withUpLoadProgress:(UploadProgress)progress;
 /**
  文件下载
  
