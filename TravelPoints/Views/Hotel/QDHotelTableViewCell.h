@@ -11,6 +11,12 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QDHotelTableViewCell : UITableViewCell
+@property (nonatomic, strong) UIImageView *hotelImg;
+@property (nonatomic, strong) UILabel *hotelName;
+@property (nonatomic, strong) UILabel *starLab;
+@property (nonatomic, strong) UILabel *priceLab;
+@property (nonatomic, strong) UILabel *priceRMBLab;
+@property (nonatomic, strong) UILabel *locationLab;
 
 @end
 

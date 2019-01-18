@@ -10,16 +10,12 @@
 
 @interface QDResponseObject : NSObject
 
-@property (nonatomic, assign)NSInteger errorCode;
+@property (nonatomic, assign)NSInteger code;
 
-@property (nonatomic, strong)NSString * errorMsg;
+@property (nonatomic, strong)NSString * message;
 
-@property (nonatomic, strong)NSString * version;
+@property (nonatomic, strong)id result;
 
-@property (nonatomic, strong)id data;
-
-@property (nonatomic, assign)NSInteger pageCount;
-
-@property (nonatomic, assign)NSInteger totalCount;
+@property (nonatomic, strong)NSString * success;
 
 @end

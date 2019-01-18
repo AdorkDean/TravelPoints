@@ -11,10 +11,10 @@
 @implementation QDResponseObject
 
 - (BOOL)modelCustomTransformFromDictionary:(NSDictionary *)dic {
-    NSString *dataString = dic[@"data"];
+    NSString *dataString = dic[@"result"];
     if (![dataString isKindOfClass:[NSString class]] || [dataString isEqualToString:@""])
     {
-        _data = @{};
+        _result = @{};
         return YES;
     }
     NSData *jsonData = [dataString dataUsingEncoding:NSUTF8StringEncoding];
@@ -22,10 +22,10 @@
     id dataDict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableLeaves error:&error];
     if (error) {
         QDLog(@"YYModel——JSON类型{data}转换失败");
-        _data = @{};
+        _result = @{};
         return YES;
     }
-    _data = dataDict;
+    _result = dataDict;
     return YES;
 }
 

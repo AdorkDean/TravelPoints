@@ -74,7 +74,7 @@ static const CGFloat space = 15; //间距
     }];
     
     self.parting = [[UIView alloc]init];
-    self.parting.backgroundColor = APP_BLUECOLOR;
+    self.parting.backgroundColor = APP_GREENCOLOR;
     [self addSubview:self.parting];
     
     [self.parting mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -109,7 +109,7 @@ static const CGFloat space = 15; //间距
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         [btn setTitle:self.titleArr[i] forState:UIControlStateNormal];
         [btn setTitleColor:APP_BLACKCOLOR forState:UIControlStateNormal];
-        [btn setTitleColor:APP_BLUECOLOR forState:UIControlStateSelected];
+        [btn setTitleColor:APP_GREENCOLOR forState:UIControlStateSelected];
         [btn addTarget:self action:@selector(touchBtn:) forControlEvents:UIControlEventTouchUpInside];
         btn.tag = 10000+i;
         btn.titleLabel.font = F11;

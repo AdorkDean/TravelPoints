@@ -198,13 +198,18 @@
 - (void)userLogin:(UIButton *)sender{
 //    [WXProgressHUD showHUD];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    [[QDServiceClient shareClient] loginWithUserName:@"13207166278" password:@"1" successBlock:^(QDResponseObject *responseObject) {
+    [[QDServiceClient shareClient] loginWithUserName:@"13207166278" password:@"1" successBlock:^(NSDictionary *responseObject) {
         QDLog(@"123");
-        if (responseObject.errorCode == 0) {
+        if ([[responseObject objectForKey:@"code"] intValue] == 0) {
 //            [WXProgressHUD hideHUD];
+            NSDictionary *dic = [responseObject objectForKey:@"result"];
+            [QDUserDefaults setObject:[dic objectForKey:@"sessionId"] forKey:@"Token"];
+            QDLog(@"Token = %@", [dic objectForKey:@"sessionId"]);
             [MBProgressHUD hideHUDForView:self.view animated:YES];
             [WXProgressHUD showInfoWithTittle:@"登录成功"];
             [self dismissViewControllerAnimated:YES completion:nil];
+        }else{
+//            QDToast(<#str#>)
         }
     } failureBlock:^(NSError *error) {
 

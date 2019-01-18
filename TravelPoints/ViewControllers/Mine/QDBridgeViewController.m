@@ -18,33 +18,60 @@
 @implementation QDBridgeViewController
 
 - (void)viewWillAppear:(BOOL)animated{
+    [self.navigationController.navigationBar setHidden:YES];
     if (_bridge) {
         return;
     }
     //初始化UIWebView,设置webView代理
-    WKWebView *webView = [[NSClassFromString(@"WKWebView") alloc] initWithFrame:self.view.bounds];
+    WKWebView *webView = [[NSClassFromString(@"WKWebView") alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     webView.navigationDelegate = self;
     [self.view addSubview:webView];
     [WebViewJavascriptBridge enableLogging];
     
     _bridge = [WebViewJavascriptBridge bridgeForWebView:webView];
     [_bridge setWebViewDelegate:self];
-    //注册handle供JS调用--把注册过的handle保存起来。
-    [_bridge registerHandler:@"testObjcCallback" handler:^(id data, WVJBResponseCallback responseCallback) {
-        QDLog(@"testObjcCallback called:%@", data);
-        responseCallback(@"Response from testObjcCallback");
-    }];
     
     //加载网页URL
     [self loadExamplePage:webView];
 
+    /*
+     含义: JS调用OC
+     @param registerHandler 要注册的事件名称(比如这里为testObjcCallback)
+     @param handel 回调block函数 当后台触发这个事件的时候 会执行block里面的代码
+     */
+    [_bridge registerHandler:@"POST" handler:^(id data, WVJBResponseCallback responseCallback) {
+        //data: js页面传过来的参数
+        //准备post请求
+//        QDLog(@"testObjcCallback called:%@", data);
+        QDLog(@"JS调用OC,并传值过来");
+        NSDictionary *param = [data objectForKey:@"param"];
+        NSString *url = [data objectForKey:@"url"];
+//        [[QDServiceClient shareClient] requestWithUrlString:url params:param successBlock:^(NSDictionary *responseObject) {
+//            QDLog(@"responeseObject = %@", responseObject);
+//        } failureBlock:^(NSError *error) {
+//
+//        }];
+        //responseCallback 给后台的回复
+        responseCallback(@"报告,OC已收到js的请求");
+    }];
+    
     //网页一加载就会执行web页中的bridge初始化代码,即setupWebViewJavascriptBridge(bridge)函数
+    /*
+     OC调用JS
+     @param callHandler 商定的事件名称,用来调用网页里面相应的事件实现
+     @param data id类型,d相当于我们函数中的函数,向网页传递函数执行需要的参数
+     注意,这里callHandler分三种,根据需不需要传参数和需不需要后台返回执行结果来决定用哪个。
+     */
     [_bridge callHandler:@"testJavascriptHandler" data:@{@"foo": @"before ready"}];
+    [_bridge callHandler:@"" data:@"uid:123 pwd:123" responseCallback:^(id responseData) {
+        QDLog(@"OC请求js后接受的回调结果:%@", responseData);
+    }];
     [self renderButtons:webView];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
     // Do any additional setup after loading the view.
 }
 
@@ -56,10 +83,9 @@
 }
 
 - (void)loadExamplePage:(WKWebView *)webView{
-    NSString *htmlPath = [[NSBundle mainBundle] pathForResource:@"ExampleApp" ofType:@"html"];
-    NSString *appHtml = [NSString stringWithContentsOfFile:htmlPath encoding:NSUTF8StringEncoding error:nil];
-    NSURL *baseURL = [NSURL fileURLWithPath:htmlPath];
-    [webView loadHTMLString:appHtml baseURL:baseURL];
+    NSString *urlStr = @"http://192.168.65.199:3001/#/hotel/detail";
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    [webView loadRequest:request];
 }
 
 - (void)renderButtons:(WKWebView *)webView{

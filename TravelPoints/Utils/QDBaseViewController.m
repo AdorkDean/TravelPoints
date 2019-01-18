@@ -29,7 +29,7 @@
 - (void)showBack:(BOOL)show
 {
     if (show) {
-        UIImage *backImage = [UIImage imageNamed:@"icon_tabbar_misc_selected"];
+        UIImage *backImage = [UIImage imageNamed:@"ad_back_black"];
         UIImage *selectedImage = [backImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
         UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithImage:selectedImage style:UIBarButtonItemStylePlain target:self action:@selector(navBack:)];
         [self.navigationItem setLeftBarButtonItem:backItem animated:YES];

@@ -31,7 +31,7 @@ typedef NS_ENUM(NSUInteger, HTTPRequestType) {
 //缓存的block
 typedef void(^RequestCache)(id jsonCache);
 //请求成功的block
-typedef void(^RequestSuccess)(QDResponseObject *responseObject);
+typedef void(^RequestSuccess)(NSDictionary *responseObject);
 
 //请求失败的block
 typedef void(^RequestFailure)(NSError *error);
@@ -61,70 +61,22 @@ typedef void(^DownloadProgress)(NSProgress *progress);
 
 /**
  网络请求
-
- @param serviceName 服务名
- @param funcName 方法名
- @param paraments 参数
  @param successBlock 成功block
  @param failureBlock 失败block
- @param progressBlock 进度
  */
-- (void)requestWithServiceName:(NSString *)serviceName functionName:(NSString *)funcName paraments:(NSArray *)paraments successBlock:(RequestSuccess)successBlock failureBlock:(RequestFailure)failureBlock progress:(DownloadProgress)progressBlock;
-
-/**
- 网络请求
- 
- @param serviceName 服务名
- @param funcName 方法名
- @param paraments 参数
- @param successBlock 成功block
- @param failureBlock 失败block
- @param progressBlock 进度
- @param isCached 是否缓存数据
- */
-- (void)requestWithServiceName:(NSString *)serviceName functionName:(NSString *)funcName paraments:(NSArray *)paraments successBlock:(RequestSuccess)successBlock failureBlock:(RequestFailure)failureBlock progress:(DownloadProgress)progressBlock isCached:(BOOL)isCached;
+- (void)requestWithUrlString:(NSString *)urlString params:(id)params successBlock:(RequestSuccess)successBlock failureBlock:(RequestFailure)failureBlock;
 
 /**
  用户登录
 
  @param userName 用户名
  @param password 密码
- @param extendsParams 扩展参数
  @param successBlock 成功block
  @param failureBlock 失败block
  */
 - (void)loginWithUserName:(NSString *)userName password:(NSString *)password successBlock:(RequestSuccess)successBlock failureBlock:(RequestFailure)failureBlock;
 
 - (NSString *)getVerifyCodeImgUrlString;
-
-
-/**
- 上传图片至服务器
-
- @param uploadType 上传图片的类型
-                idFrontPhoto:身份证(或者护照)正面; idBackPhoto:身份证(或者护照)反面; selfCardPhoto:手持身份证照;
-                businessCardPhoto:营业执照;
- @param image 图片
- @param service 服务名
- @param funcName 方法名
- @param successBlock 成功block
- @param failureBlock 失败block
- @param progress 进度block
- */
-- (void)uploadImageWithType:(NSString *)uploadType withImage:(UIImage *)image withServiceName:(NSString *)service withFunctionName:(NSString *)funcName withSuccessBlock:(RequestSuccess)successBlock withFailurBlock:(RequestFailure)failureBlock withUpLoadProgress:(UploadProgress)progress;
-
-/**
- 文件下载
- 
- @param operations 文件下载预留参数
- @param savePath 下载文件保存路径
- @param urlString 请求的URL
- @param successBlock 请求成功的block
- @param failureBlock 请求失败的block
- @param progress 下载文件的进度
- */
-- (void)downLoadFileWithOperations:(NSDictionary *)operations withSavaPath:(NSString *)savePath withUrlString:(NSString *)urlString withSuccessBlock:(RequestSuccess)successBlock withFailureBlock:(RequestFailure)failureBlock withDownLoadProgress:(DownloadProgress)progress;
-
 
 /**
  取消所有网络请求
@@ -139,11 +91,6 @@ typedef void(^DownloadProgress)(NSProgress *progress);
  @param string 该请求的URL
  */
 - (void)cancelHttpRequestWithRequestType:(NSString *)requestType requestUrlString:(NSString *)string;
-
-/*
- 退出登录
- */
-- (void)logoutSuccessBlock:(RequestSuccess)successBlock failureBlock:(RequestFailure)failureBlock;
 
 
 @end

@@ -7,10 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "QDHotelSearchView.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QDHotelHeaderView : UIView
+
+@property (nonatomic, strong) UIView *backImgView;
+@property (nonatomic, strong) UILabel *hotelLab;
+@property (nonatomic, strong) QDHotelSearchView *searchView;
+
 
 @end
 

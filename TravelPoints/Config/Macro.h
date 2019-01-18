@@ -25,8 +25,6 @@
 #define APPvision @"113"
 
 #define WS(weakSelf)  __weak __typeof(&*self)weakSelf = self;
-#define SCREEN_WIDTH ([UIScreen mainScreen].bounds.size.width)
-#define SCREEN_HEIGHT ([UIScreen mainScreen].bounds.size.height)
 #define SCREEN_SCALE ([UIScreen mainScreen].bounds.size.width/320)
 
 #define IS_IPHONE (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
@@ -78,11 +76,12 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),blo
 
 #define RGB_COLOR_String(string)  [UIColor colorWithHexString:string]
 #define APP_BACKGROUND         RGB_COLOR_String(@"f5f5f5") //背景
-#define APP_GRAYCOLOR          RGB_COLOR_String(@"666666") //灰色
-#define APP_GRAYCOLOR_BETTER   RGB_COLOR_String(@"999999") //浅灰色
+#define APP_LIGHTGRAYCOLOR     RGB_COLOR_String(@"#DDDDDD") //线条灰色
+#define APP_GRAYCOLOR          RGB_COLOR_String(@"#999999") //灰色
+#define APP_GRAYCOLOR_BETTER   RGB_COLOR_String(@"#999999") //浅灰色
 #define APP_GRAYCOLOR_SEARCH   RGB_COLOR_String(@"f5f5f5") //搜索框灰色
-#define APP_BLUECOLOR          RGB_COLOR_String(@"ff7400") //主色调 橙色
-#define APP_NORMALBARCOLOR          RGB_COLOR_String(@"65230a") //主色调 橙色
+#define APP_GREENCOLOR         RGB_COLOR_String(@"#72BB37") //主色调 橙色
+#define APP_NORMALBARCOLOR          RGB_COLOR_String(@"#72BB37") //主色调 橙色
 #define APP_REDCOLOR           RGB_COLOR_String(@"c0965d") //红色
 #define APP_LINECOLOR          RGB_COLOR_String(@"EFEFEF") //边框色
 #define APP_ORANGECOLOR        RGB_COLOR_String(@"FF8244") //橘红色

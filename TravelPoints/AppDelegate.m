@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "QDHomeViewController.h"
 #import "QDHotelViewController.h"
+#import "QDHotelVC.h"
 #import "QDRestaurantViewController.h"
 #import "QDMallViewController.h"
 #import "QDMineViewController.h"
@@ -27,7 +28,7 @@
     UINavigationController *navHome = [[UINavigationController alloc] initWithRootViewController:homeVC];
     
     
-    QDHotelViewController *hotelVC = [[QDHotelViewController alloc] init];
+    QDHotelVC *hotelVC = [[QDHotelVC alloc] init];
     UINavigationController *navhotel = [[UINavigationController alloc] initWithRootViewController:hotelVC];
     
     QDRestaurantViewController *restaurantVC = [[QDRestaurantViewController alloc] init];
