@@ -15,6 +15,29 @@
 		3B0CD6EB21F0689B0020824A /* QDHotelVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0CD6EA21F0689B0020824A /* QDHotelVC.m */; };
 		3B0CD71021F08C360020824A /* QDHotelSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0CD70F21F08C360020824A /* QDHotelSearchView.m */; };
 		3B0CD71321F08E030020824A /* QDHotelHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0CD71221F08E030020824A /* QDHotelHeaderView.m */; };
+		3B0CD72321F16F280020824A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B0CD72221F16F280020824A /* CoreGraphics.framework */; };
+		3B0CD72521F16F2F0020824A /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B0CD72421F16F2F0020824A /* CoreLocation.framework */; };
+		3B0CD72721F16F3F0020824A /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B0CD72621F16F3F0020824A /* libc++.tbd */; };
+		3B0CD72921F16F4E0020824A /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B0CD72821F16F4E0020824A /* libsqlite3.0.tbd */; };
+		3B0CD72B21F16F540020824A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B0CD72A21F16F540020824A /* OpenGLES.framework */; };
+		3B0CD72D21F16F5A0020824A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B0CD72C21F16F5A0020824A /* QuartzCore.framework */; };
+		3B0CD72F21F16F650020824A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B0CD72E21F16F650020824A /* Security.framework */; };
+		3B0CD73121F16F6B0020824A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B0CD73021F16F6B0020824A /* SystemConfiguration.framework */; };
+		3B0CD73421F1736C0020824A /* libPods-TravelPoints.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C2211E9E3C715FBAD2B67682 /* libPods-TravelPoints.a */; };
+		3B0CD73721F1868C0020824A /* AMap.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3B0CD73621F1868B0020824A /* AMap.bundle */; };
+		3B0CD73921F186DB0020824A /* icon_location@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B0CD73821F186DB0020824A /* icon_location@2x.png */; };
+		3B0CD73C21F1A4940020824A /* QDHomeTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0CD73B21F1A4940020824A /* QDHomeTopView.m */; };
+		3B0CD74221F1DE380020824A /* SYCity.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3B0CD74121F1DE380020824A /* SYCity.bundle */; };
+		3B0CD74621F1DEC10020824A /* SYChineseToPinyin.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0CD74521F1DEC00020824A /* SYChineseToPinyin.m */; };
+		3B0CD74921F1E1C00020824A /* QDCitySelectedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0CD74821F1E1C00020824A /* QDCitySelectedViewController.m */; };
+		3B1DFDEC21F2BCA6007D4B12 /* QDLocationTopSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B1DFDEB21F2BCA6007D4B12 /* QDLocationTopSelectView.m */; };
+		3B1DFDEF21F2BFAD007D4B12 /* QDCurrentLocationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B1DFDEE21F2BFAD007D4B12 /* QDCurrentLocationView.m */; };
+		3B1DFDFB21F2CDDF007D4B12 /* SYHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B1DFDFA21F2CDDF007D4B12 /* SYHeaderView.m */; };
+		3B1DFDFE21F2CEF8007D4B12 /* SYTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B1DFDFD21F2CEF8007D4B12 /* SYTableViewCell.m */; };
+		3B1DFE0721F2D005007D4B12 /* SYCitysCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B1DFE0621F2D005007D4B12 /* SYCitysCell.m */; };
+		3B1DFE0A21F2D26D007D4B12 /* SYSearchController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B1DFE0921F2D26D007D4B12 /* SYSearchController.m */; };
+		3B1DFE0D21F2D797007D4B12 /* SYCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B1DFE0C21F2D797007D4B12 /* SYCollectionCell.m */; };
+		3B1DFE1021F2F3C0007D4B12 /* SYHotCityHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B1DFE0F21F2F3C0007D4B12 /* SYHotCityHeaderView.m */; };
 		3B40EB7121EC92C700656C1F /* QDResponseObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B40EB6F21EC92C700656C1F /* QDResponseObject.m */; };
 		3B40EBA921EC953E00656C1F /* YYTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B40EB7621EC953E00656C1F /* YYTextView.m */; };
 		3B40EBAA21EC953E00656C1F /* YYTextMagnifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B40EB7A21EC953E00656C1F /* YYTextMagnifier.m */; };
@@ -101,7 +124,6 @@
 		3BEA2C3821EF45C5001C52C4 /* WebViewJavascriptBridge_JS.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BEA2C3621EF45C5001C52C4 /* WebViewJavascriptBridge_JS.m */; };
 		3BEA2C3B21EF478E001C52C4 /* QDBridgeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BEA2C3A21EF478E001C52C4 /* QDBridgeViewController.m */; };
 		3BEA2C3D21EF4C15001C52C4 /* ExampleApp.html in Resources */ = {isa = PBXBuildFile; fileRef = 3BEA2C3C21EF4C14001C52C4 /* ExampleApp.html */; };
-		C29759717D719AEDDBD225D1 /* libPods-TravelPoints.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C2211E9E3C715FBAD2B67682 /* libPods-TravelPoints.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -121,6 +143,40 @@
 		3B0CD70F21F08C360020824A /* QDHotelSearchView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDHotelSearchView.m; sourceTree = "<group>"; };
 		3B0CD71121F08E030020824A /* QDHotelHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDHotelHeaderView.h; sourceTree = "<group>"; };
 		3B0CD71221F08E030020824A /* QDHotelHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDHotelHeaderView.m; sourceTree = "<group>"; };
+		3B0CD71421F16CFF0020824A /* libstdc++.6.0.9.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.0.9.tbd"; path = "../Desktop/libstdc++.6.0.9.tbd"; sourceTree = "<group>"; };
+		3B0CD72221F16F280020824A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		3B0CD72421F16F2F0020824A /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		3B0CD72621F16F3F0020824A /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		3B0CD72821F16F4E0020824A /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		3B0CD72A21F16F540020824A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		3B0CD72C21F16F5A0020824A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		3B0CD72E21F16F650020824A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		3B0CD73021F16F6B0020824A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		3B0CD73621F1868B0020824A /* AMap.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AMap.bundle; sourceTree = "<group>"; };
+		3B0CD73821F186DB0020824A /* icon_location@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_location@2x.png"; sourceTree = "<group>"; };
+		3B0CD73A21F1A4940020824A /* QDHomeTopView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDHomeTopView.h; sourceTree = "<group>"; };
+		3B0CD73B21F1A4940020824A /* QDHomeTopView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDHomeTopView.m; sourceTree = "<group>"; };
+		3B0CD74121F1DE380020824A /* SYCity.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SYCity.bundle; sourceTree = "<group>"; };
+		3B0CD74421F1DEC00020824A /* SYChineseToPinyin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYChineseToPinyin.h; sourceTree = "<group>"; };
+		3B0CD74521F1DEC00020824A /* SYChineseToPinyin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYChineseToPinyin.m; sourceTree = "<group>"; };
+		3B0CD74721F1E1C00020824A /* QDCitySelectedViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDCitySelectedViewController.h; sourceTree = "<group>"; };
+		3B0CD74821F1E1C00020824A /* QDCitySelectedViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDCitySelectedViewController.m; sourceTree = "<group>"; };
+		3B1DFDEA21F2BCA6007D4B12 /* QDLocationTopSelectView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDLocationTopSelectView.h; sourceTree = "<group>"; };
+		3B1DFDEB21F2BCA6007D4B12 /* QDLocationTopSelectView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDLocationTopSelectView.m; sourceTree = "<group>"; };
+		3B1DFDED21F2BFAD007D4B12 /* QDCurrentLocationView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDCurrentLocationView.h; sourceTree = "<group>"; };
+		3B1DFDEE21F2BFAD007D4B12 /* QDCurrentLocationView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDCurrentLocationView.m; sourceTree = "<group>"; };
+		3B1DFDF921F2CDDF007D4B12 /* SYHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYHeaderView.h; sourceTree = "<group>"; };
+		3B1DFDFA21F2CDDF007D4B12 /* SYHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SYHeaderView.m; sourceTree = "<group>"; };
+		3B1DFDFC21F2CEF8007D4B12 /* SYTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYTableViewCell.h; sourceTree = "<group>"; };
+		3B1DFDFD21F2CEF8007D4B12 /* SYTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SYTableViewCell.m; sourceTree = "<group>"; };
+		3B1DFE0521F2D005007D4B12 /* SYCitysCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYCitysCell.h; sourceTree = "<group>"; };
+		3B1DFE0621F2D005007D4B12 /* SYCitysCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SYCitysCell.m; sourceTree = "<group>"; };
+		3B1DFE0821F2D26D007D4B12 /* SYSearchController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYSearchController.h; sourceTree = "<group>"; };
+		3B1DFE0921F2D26D007D4B12 /* SYSearchController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SYSearchController.m; sourceTree = "<group>"; };
+		3B1DFE0B21F2D797007D4B12 /* SYCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYCollectionCell.h; sourceTree = "<group>"; };
+		3B1DFE0C21F2D797007D4B12 /* SYCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SYCollectionCell.m; sourceTree = "<group>"; };
+		3B1DFE0E21F2F3BF007D4B12 /* SYHotCityHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYHotCityHeaderView.h; sourceTree = "<group>"; };
+		3B1DFE0F21F2F3C0007D4B12 /* SYHotCityHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SYHotCityHeaderView.m; sourceTree = "<group>"; };
 		3B40EB6D21EC92C700656C1F /* QDResponseObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QDResponseObject.h; sourceTree = "<group>"; };
 		3B40EB6F21EC92C700656C1F /* QDResponseObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QDResponseObject.m; sourceTree = "<group>"; };
 		3B40EB7521EC953E00656C1F /* YYText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYText.h; sourceTree = "<group>"; };
@@ -293,7 +349,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C29759717D719AEDDBD225D1 /* libPods-TravelPoints.a in Frameworks */,
+				3B0CD73421F1736C0020824A /* libPods-TravelPoints.a in Frameworks */,
+				3B0CD73121F16F6B0020824A /* SystemConfiguration.framework in Frameworks */,
+				3B0CD72F21F16F650020824A /* Security.framework in Frameworks */,
+				3B0CD72D21F16F5A0020824A /* QuartzCore.framework in Frameworks */,
+				3B0CD72B21F16F540020824A /* OpenGLES.framework in Frameworks */,
+				3B0CD72921F16F4E0020824A /* libsqlite3.0.tbd in Frameworks */,
+				3B0CD72721F16F3F0020824A /* libc++.tbd in Frameworks */,
+				3B0CD72521F16F2F0020824A /* CoreLocation.framework in Frameworks */,
+				3B0CD72321F16F280020824A /* CoreGraphics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -309,6 +373,47 @@
 				3B0CD6DF21F05E840020824A /* UIColor+Extention.m */,
 			);
 			path = Config;
+			sourceTree = "<group>";
+		};
+		3B0CD73D21F1DD3D0020824A /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				3B0CD74721F1E1C00020824A /* QDCitySelectedViewController.h */,
+				3B0CD74821F1E1C00020824A /* QDCitySelectedViewController.m */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		3B0CD74321F1DEB70020824A /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				3B0CD74421F1DEC00020824A /* SYChineseToPinyin.h */,
+				3B0CD74521F1DEC00020824A /* SYChineseToPinyin.m */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		3B1DFDE921F2BC81007D4B12 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				3B1DFDEA21F2BCA6007D4B12 /* QDLocationTopSelectView.h */,
+				3B1DFDEB21F2BCA6007D4B12 /* QDLocationTopSelectView.m */,
+				3B1DFDED21F2BFAD007D4B12 /* QDCurrentLocationView.h */,
+				3B1DFDEE21F2BFAD007D4B12 /* QDCurrentLocationView.m */,
+				3B1DFDF921F2CDDF007D4B12 /* SYHeaderView.h */,
+				3B1DFDFA21F2CDDF007D4B12 /* SYHeaderView.m */,
+				3B1DFDFC21F2CEF8007D4B12 /* SYTableViewCell.h */,
+				3B1DFDFD21F2CEF8007D4B12 /* SYTableViewCell.m */,
+				3B1DFE0521F2D005007D4B12 /* SYCitysCell.h */,
+				3B1DFE0621F2D005007D4B12 /* SYCitysCell.m */,
+				3B1DFE0821F2D26D007D4B12 /* SYSearchController.h */,
+				3B1DFE0921F2D26D007D4B12 /* SYSearchController.m */,
+				3B1DFE0B21F2D797007D4B12 /* SYCollectionCell.h */,
+				3B1DFE0C21F2D797007D4B12 /* SYCollectionCell.m */,
+				3B1DFE0E21F2F3BF007D4B12 /* SYHotCityHeaderView.h */,
+				3B1DFE0F21F2F3C0007D4B12 /* SYHotCityHeaderView.m */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		3B40EB6C21EC92C700656C1F /* QDResponse */ = {
@@ -533,6 +638,8 @@
 		3BD9515B21EC2A1700CD0627 = {
 			isa = PBXGroup;
 			children = (
+				3B0CD74121F1DE380020824A /* SYCity.bundle */,
+				3B0CD73621F1868B0020824A /* AMap.bundle */,
 				3BD9516621EC2A1800CD0627 /* TravelPoints */,
 				3BD9516521EC2A1800CD0627 /* Products */,
 				E742E9DC1322E998EF215180 /* Pods */,
@@ -578,6 +685,7 @@
 		3BD9518121EC5A2200CD0627 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				3B0CD74321F1DEB70020824A /* Settings */,
 				3BCE3C2421EC83E9005D518F /* LoginAndRegister */,
 				3BD9519C21EC610600CD0627 /* Mall */,
 				3BD9518221EC5A2200CD0627 /* Home */,
@@ -619,6 +727,7 @@
 		3BD9518621EC5A2200CD0627 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				3B1DFDE921F2BC81007D4B12 /* Settings */,
 				3B40EBC421EC962100656C1F /* WXProgressHUD */,
 				3BCE3C2521EC83F7005D518F /* LoginAndRegister */,
 				3BD9519E21EC611D00CD0627 /* Hotel */,
@@ -633,6 +742,8 @@
 		3BD9518721EC5A2200CD0627 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				3B0CD73A21F1A4940020824A /* QDHomeTopView.h */,
+				3B0CD73B21F1A4940020824A /* QDHomeTopView.m */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -673,6 +784,7 @@
 		3BD9518B21EC5A2200CD0627 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				3B0CD73D21F1DD3D0020824A /* Settings */,
 				3BCE3C2021EC83D8005D518F /* LoginAndRegister */,
 				3BD9519D21EC611200CD0627 /* Hotel */,
 				3BD9518C21EC5A2200CD0627 /* Home */,
@@ -767,6 +879,7 @@
 		3BD951B821EC6E5300CD0627 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3B0CD73821F186DB0020824A /* icon_location@2x.png */,
 				3B0CD6E721F0639D0020824A /* hotel.png */,
 				3BD951B921EC6E5300CD0627 /* tabbar */,
 			);
@@ -809,6 +922,15 @@
 		DB8507701782B66B7803DD23 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3B0CD73021F16F6B0020824A /* SystemConfiguration.framework */,
+				3B0CD72E21F16F650020824A /* Security.framework */,
+				3B0CD72C21F16F5A0020824A /* QuartzCore.framework */,
+				3B0CD72A21F16F540020824A /* OpenGLES.framework */,
+				3B0CD72821F16F4E0020824A /* libsqlite3.0.tbd */,
+				3B0CD72621F16F3F0020824A /* libc++.tbd */,
+				3B0CD72421F16F2F0020824A /* CoreLocation.framework */,
+				3B0CD72221F16F280020824A /* CoreGraphics.framework */,
+				3B0CD71421F16CFF0020824A /* libstdc++.6.0.9.tbd */,
 				C2211E9E3C715FBAD2B67682 /* libPods-TravelPoints.a */,
 			);
 			name = Frameworks;
@@ -856,6 +978,11 @@
 				TargetAttributes = {
 					3BD9516321EC2A1800CD0627 = {
 						CreatedOnToolsVersion = 10.1;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -884,9 +1011,12 @@
 			files = (
 				3BD9517421EC2A1C00CD0627 /* LaunchScreen.storyboard in Resources */,
 				3BD951C721EC6E6800CD0627 /* icon_tabbar_mine@2x.png in Resources */,
+				3B0CD73721F1868C0020824A /* AMap.bundle in Resources */,
 				3BD9517121EC2A1C00CD0627 /* Assets.xcassets in Resources */,
+				3B0CD74221F1DE380020824A /* SYCity.bundle in Resources */,
 				3BD951C921EC6E6800CD0627 /* icon_tabbar_homepage_selected@2x.png in Resources */,
 				3BD951CA21EC6E6800CD0627 /* icon_tabbar_misc_selected@2x.png in Resources */,
+				3B0CD73921F186DB0020824A /* icon_location@2x.png in Resources */,
 				3BD951CC21EC6E6800CD0627 /* icon_tabbar_homepage@2x.png in Resources */,
 				3BD951C621EC6E6800CD0627 /* icon_tabbar_merchant_selected@2x.png in Resources */,
 				3BD951C821EC6E6800CD0627 /* icon_tabbar_merchant_normal@2x.png in Resources */,
@@ -912,6 +1042,8 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-TravelPoints/Pods-TravelPoints-resources.sh",
+				"${PODS_ROOT}/AMap2DMap/MAMapKit.framework/AMap.bundle",
+				"${PODS_ROOT}/BaiduMapKit/BaiduMapKit/BaiduMapAPI_Map.framework/Resources/mapapi.bundle",
 				"${PODS_ROOT}/IQKeyboardManager/IQKeyboardManager/Resources/IQKeyboardManager.bundle",
 				"${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle",
 			);
@@ -919,6 +1051,8 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AMap.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/mapapi.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/IQKeyboardManager.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MJRefresh.bundle",
 			);
@@ -959,16 +1093,20 @@
 				3B40EBED21EDA93800656C1F /* QDMsgVerifyView.m in Sources */,
 				3B40EBD921ED6C2400656C1F /* QDLoginAndRegisterVC.m in Sources */,
 				3B40EBBA21EC953E00656C1F /* NSParagraphStyle+YYText.m in Sources */,
+				3B1DFE0A21F2D26D007D4B12 /* SYSearchController.m in Sources */,
 				3B40EBD021ECB0DD00656C1F /* QDButton.m in Sources */,
 				3B40EBBF21EC953E00656C1F /* YYTextAsyncLayer.m in Sources */,
+				3B0CD74621F1DEC10020824A /* SYChineseToPinyin.m in Sources */,
 				3B40EBD321ED61F100656C1F /* QDLoginView.m in Sources */,
 				3B40EBCA21ECA46100656C1F /* QDRegisterViewController.m in Sources */,
 				3B40EC0321EDE33300656C1F /* XBGradientColorView.m in Sources */,
 				3B40EC0621EDE75100656C1F /* QDMineView.m in Sources */,
 				3B40EBFA21EDCDA700656C1F /* QDResetLoginPwdView.m in Sources */,
+				3B1DFDFB21F2CDDF007D4B12 /* SYHeaderView.m in Sources */,
 				3B40EBBE21EC953E00656C1F /* UIView+YYText.m in Sources */,
 				3B40EBFD21EDD83500656C1F /* QDBackgroundView.m in Sources */,
 				3B0CD6E321F05E850020824A /* Macro.m in Sources */,
+				3B0CD74921F1E1C00020824A /* QDCitySelectedViewController.m in Sources */,
 				3B40EC0C21EE08A600656C1F /* QDMineTableHeaderView.m in Sources */,
 				3BCE3C1D21EC7FED005D518F /* QDServiceErrorHandler.m in Sources */,
 				3B0CD6EB21F0689B0020824A /* QDHotelVC.m in Sources */,
@@ -984,12 +1122,14 @@
 				3BCE3C2D21EC8899005D518F /* QDGlobalFunc.m in Sources */,
 				3B40EBF121EDB79600656C1F /* GBverifyButton.m in Sources */,
 				3B40EC0221EDE33300656C1F /* UIColor+CustomFunctions.m in Sources */,
+				3B1DFDFE21F2CEF8007D4B12 /* SYTableViewCell.m in Sources */,
 				3B40EBE921ED925F00656C1F /* VertificationCodeInputView.m in Sources */,
 				3BCE3C3121EC8A08005D518F /* UIColor+QDColor.m in Sources */,
 				3B40EBA921EC953E00656C1F /* YYTextView.m in Sources */,
 				3BEA2C3821EF45C5001C52C4 /* WebViewJavascriptBridge_JS.m in Sources */,
 				3B0CD71321F08E030020824A /* QDHotelHeaderView.m in Sources */,
 				3B40EC0921EDE85200656C1F /* SPButton.m in Sources */,
+				3B1DFE0D21F2D797007D4B12 /* SYCollectionCell.m in Sources */,
 				3BD9519821EC605000CD0627 /* QDMineViewController.m in Sources */,
 				3B40EB7121EC92C700656C1F /* QDResponseObject.m in Sources */,
 				3B40EBE321ED857700656C1F /* QDIdentifyViewController.m in Sources */,
@@ -1010,10 +1150,13 @@
 				3B40EBCD21ECA64A00656C1F /* NSDictionary+Helper.m in Sources */,
 				3B40EC1821EECDED00656C1F /* QDSettingViewController.m in Sources */,
 				3B40EBB621EC953E00656C1F /* YYTextAttribute.m in Sources */,
+				3B0CD73C21F1A4940020824A /* QDHomeTopView.m in Sources */,
 				3B40EBEA21ED925F00656C1F /* VertificationCodeInputLabel.m in Sources */,
+				3B1DFE1021F2F3C0007D4B12 /* SYHotCityHeaderView.m in Sources */,
 				3B40EBB021EC953E00656C1F /* YYTextSelectionView.m in Sources */,
 				3B40EBB521EC953E00656C1F /* YYTextParser.m in Sources */,
 				3B40EBAC21EC953E00656C1F /* YYTextEffectWindow.m in Sources */,
+				3B1DFE0721F2D005007D4B12 /* SYCitysCell.m in Sources */,
 				3BCE3C1E21EC7FED005D518F /* QDServiceClient.m in Sources */,
 				3B40EBC021EC953E00656C1F /* YYTextWeakProxy.m in Sources */,
 				3B40EC1B21EED50F00656C1F /* QDBaseViewController.m in Sources */,
@@ -1028,10 +1171,12 @@
 				3B40EBB321EC953E00656C1F /* YYLabel.m in Sources */,
 				3B40EBAE21EC953E00656C1F /* YYTextLayout.m in Sources */,
 				3B40EC1521EE0C6200656C1F /* QDMineHeaderWithdrawView.m in Sources */,
+				3B1DFDEF21F2BFAD007D4B12 /* QDCurrentLocationView.m in Sources */,
 				3B40EC0F21EE0C2200656C1F /* QDMineHeaderNotLoginView.m in Sources */,
 				3B40EBC321EC956300656C1F /* QDUserDefaults.m in Sources */,
 				3BEA2C2F21EF3883001C52C4 /* WebViewJavascriptBridgeBase.m in Sources */,
 				3B0CD6E221F05E850020824A /* UIColor+Extention.m in Sources */,
+				3B1DFDEC21F2BCA6007D4B12 /* QDLocationTopSelectView.m in Sources */,
 				3B40EBB721EC953E00656C1F /* YYTextArchiver.m in Sources */,
 				3BD9516921EC2A1800CD0627 /* AppDelegate.m in Sources */,
 				3B40EBB221EC953E00656C1F /* YYTextDebugOption.m in Sources */,
@@ -1179,6 +1324,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4DVSB2T6TD;
+				GCC_INPUT_FILETYPE = automatic;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = /Users/ranjin/TravelPoints/TravelPoints/QDTravelPoints.pch;
 				INFOPLIST_FILE = TravelPoints/Info.plist;
@@ -1199,6 +1345,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4DVSB2T6TD;
+				GCC_INPUT_FILETYPE = automatic;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = /Users/ranjin/TravelPoints/TravelPoints/QDTravelPoints.pch;
 				INFOPLIST_FILE = TravelPoints/Info.plist;

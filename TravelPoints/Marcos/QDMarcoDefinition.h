@@ -192,6 +192,9 @@ item.alpha = 0.0; \
 
 #define  C_WIDTH(WIDTH) WIDTH * [UIScreen mainScreen].bounds.size.width/375.0
 
+#define SYHistoryCitysPath [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"SYHistoryCitys.plist"]
+
+
 //字体
 #define QDFont(size)                    [UIFont systemFontOfSize:FontSize(size)]
 #define QDBoldFont(size)                [UIFont boldSystemFontOfSize:FontSize(size)]

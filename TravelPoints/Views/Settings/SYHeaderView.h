@@ -11,6 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SYHeaderView : UITableViewHeaderFooterView
+@property (nonatomic, strong, readonly) UILabel *titleLabel;
 
 @end
 

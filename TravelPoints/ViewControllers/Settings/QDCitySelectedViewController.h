@@ -7,10 +7,60 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "SYSearchController.h"
+#import <CoreLocation/CoreLocation.h>
+#import "SYChineseToPinyin.h"
+#import "SYCitysCell.h"
+#import "SYTableViewCell.h"
+#import "SYHeaderView.h"
+#import "SYHotCityHeaderView.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface QDCitySelectedViewController : UIViewController
+@interface QDCitySelectedViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, SYSearchControllerDelegate, UISearchControllerDelegate, UISearchResultsUpdating, UISearchBarDelegate,CLLocationManagerDelegate>
+@property (nonatomic, strong) UISearchBar *searchBar;
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) SYSearchController *searchVc;
+@property (nonatomic, strong) UITableViewController *resultVc;
+
+@property (nonatomic, strong) CLLocationManager *locationManager;
+
+@property (nonatomic, copy) NSArray *indexArray;
+@property (nonatomic, copy) NSArray *currentCity;
+@property (nonatomic, copy) NSArray *historyCitys;
+@property (nonatomic, copy) NSMutableDictionary *cityDicts;
+@property (nonatomic, copy) NSArray *cityNames;
+@property (nonatomic, assign) NSInteger kCount;
+
+/// 选择城市后回调
+@property (nonatomic, copy) void(^selectCity)(NSString *cityName);
+
+/*
+ * 是否开启定位,默认为NO，请自行定位传当前位置进来
+ * 当前，也可开启,开启后 currentCityName 设置无效
+ *
+ * 如需使用定位，请先在info.plist 配置 添加以下2个配置
+ * NSLocationAlwaysUsageDescription
+ * NSLocationWhenInUseUsageDescription
+ */
+@property (nonatomic, assign) BOOL openLocation;
+
+/// 当前位置
+@property (nonatomic, copy) NSString *currentCityName;
+
+/// 返回按钮图片
+@property (nonatomic, copy) NSString *backImageName;
+
+/// 返回按钮
+@property (nonatomic, strong) UIView *backView;
+
+/// 热门城市
+@property (nonatomic, copy) NSArray *hotCitys;
+
+/// 所有城市
+@property (nonatomic, copy) NSArray *citys;
+
+/// 自己的城市Dict (Key is 'A,B,C,D...')
+@property (nonatomic, copy) NSDictionary *cityDict;
 
 @end
 

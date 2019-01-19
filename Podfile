@@ -15,4 +15,8 @@ target 'TravelPoints' do
   pod 'MBProgressHUD'
   pod 'Toast'
   pod 'TYAlertView'
+  pod 'AMap2DMap'
+  pod 'AMapSearch'
+  pod 'AMapLocation'
+  pod 'BaiduMapKit'
 end

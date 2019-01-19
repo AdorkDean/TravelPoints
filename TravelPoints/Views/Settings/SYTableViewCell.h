@@ -11,7 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SYTableViewCell : UITableViewCell
-
+@property (nonatomic, assign) BOOL isShowSeparator;
+@property (nonatomic, strong) UIColor *separatorColor;
 @end
 
 NS_ASSUME_NONNULL_END

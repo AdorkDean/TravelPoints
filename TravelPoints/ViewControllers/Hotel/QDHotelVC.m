@@ -10,6 +10,7 @@
 #import "QDHotelTableViewCell.h"
 #import "NavigationView.h"
 #import "QDHotelHeaderView.h"
+#import "QDCitySelectedViewController.h"
 @interface QDHotelVC ()<UITableViewDelegate, UITableViewDataSource, NavigationViewDelegate>{
     UITableView *_tableView;
     QDHotelHeaderView *_headView;
@@ -33,13 +34,13 @@
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
 }
 
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    // 导航栏不透明
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
-    [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
-    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
-}
+//- (void)viewWillDisappear:(BOOL)animated{
+//    [super viewWillDisappear:animated];
+//    // 导航栏不透明
+//    [self.navigationController setNavigationBarHidden:NO animated:YES];
+//    [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+//    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
+//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -108,17 +109,15 @@
     [self.view addSubview:_tableView];
     
     _headView = [[QDHotelHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.6)];
-    
+    [_headView.searchView.locateBtn addTarget:self action:@selector(myLocation:) forControlEvents:UIControlEventTouchUpInside];
     _tableView.tableHeaderView = _headView;
 }
--(void)forbidDormant:(UISwitch *)sender{
-    if (sender.isOn) {
-        QDToast(@"已禁止休眠");
-    }else{
-        QDToast(@"已打开休眠");
-    }
-}
 
+#pragma mark - 定位:我的位置
+- (void)myLocation:(UIButton *)sender{
+    QDCitySelectedViewController *locationVC = [[QDCitySelectedViewController alloc] init];
+    [self presentViewController:locationVC animated:YES completion:nil];
+}
 #pragma mark -- tableView delegate
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     

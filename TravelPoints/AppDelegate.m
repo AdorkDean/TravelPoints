@@ -13,7 +13,7 @@
 #import "QDRestaurantViewController.h"
 #import "QDMallViewController.h"
 #import "QDMineViewController.h"
-
+#import <AMapFoundationKit/AMapFoundationKit.h>
 @interface AppDelegate ()
 
 @property(nonatomic, strong) UITabBarController *rootTabbarCtr;
@@ -22,6 +22,14 @@
 
 @implementation AppDelegate
 
+- (void)configureAPIKey{
+    if ([APIKey length] == 0) {
+        NSString *reason = [NSString stringWithFormat:@"apiKey为空，请检查key是否正确设置。"];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:reason delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+    }
+    [AMapServices sharedServices].apiKey = (NSString *)APIKey;
+}
 
 - (void)initRootVC{
     QDHomeViewController *homeVC = [[QDHomeViewController alloc] init];
@@ -70,10 +78,11 @@
     item5.selectedImage = [[UIImage imageNamed:@"icon_tabbar_misc_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     item5.image = [[UIImage imageNamed:@"icon_tabbar_misc"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
 }
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [self initRootVC];
-//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    [self configureAPIKey];
     [self.window makeKeyAndVisible];
     return YES;
 }

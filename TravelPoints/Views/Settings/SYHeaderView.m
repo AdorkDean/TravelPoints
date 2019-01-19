@@ -9,13 +9,23 @@
 #import "SYHeaderView.h"
 
 @implementation SYHeaderView
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
+- (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier {
+    if (self = [super initWithReuseIdentifier:reuseIdentifier]) {
+        self.contentView.backgroundColor = [UIColor colorWithHexString:@"#E8E8E8"];
+        [self initialize];
+    }
+    return self;
 }
-*/
 
+- (void)initialize {
+    _titleLabel = [[UILabel alloc] init];
+    _titleLabel.font = [UIFont boldSystemFontOfSize:15];
+    self.contentView.backgroundColor = [UIColor colorWithHexString:@"#F9FAFC"];
+    [self.contentView addSubview:_titleLabel];
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    _titleLabel.frame = CGRectMake(16, 0, self.frame.size.width - 32, self.frame.size.height);
+}
 @end

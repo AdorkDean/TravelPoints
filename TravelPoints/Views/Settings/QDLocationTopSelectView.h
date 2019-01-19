@@ -11,7 +11,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QDLocationTopSelectView : UIView
-
+@property (nonatomic, strong) UIView *topBackView;
+@property (nonatomic, strong) UIImageView *imgView;
+@property (nonatomic, strong) UITextField *inputTF;
+@property (nonatomic, strong) UIButton *cancelBtn;
 @end
 
 NS_ASSUME_NONNULL_END

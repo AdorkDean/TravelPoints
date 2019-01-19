@@ -12,6 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SYHotCityHeaderView : UITableViewHeaderFooterView
 
+@property (nonatomic, strong, readonly) UIView *lineView;
+@property (nonatomic, strong, readonly) UILabel *titleLabel;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -9,6 +9,8 @@
 #ifndef WXApi_h
 #define WXApi_h
 
+const static NSString *APIKey = @"0ddab1fff98f51d5958e2aaab23f3e55";
+
 static NSString * const QD_Domain = @"http://192.168.65.198:9083";
 
 static NSString * const QD_ProjectName = @"/lyjfapp/api/v1/";

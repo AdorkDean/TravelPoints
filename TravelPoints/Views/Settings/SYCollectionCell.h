@@ -11,6 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SYCollectionCell : UICollectionViewCell
+@property (nonatomic, strong) UILabel *textLabel;
 
 @end
 

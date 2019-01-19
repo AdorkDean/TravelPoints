@@ -10,7 +10,16 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SYSearchController : UISearchController
+#pragma mark - search
+@class SYSearchController;
+@protocol SYSearchControllerDelegate <NSObject>
+- (void)resultViewController:(SYSearchController *)resultVC didSelectFollowCity:(NSString*)cityName;
+@end
+@interface SYSearchController : UISearchController <UITableViewDelegate, UITableViewDataSource>
+@property (nonatomic, copy) NSArray *results;
+@property (nonatomic, weak) id<SYSearchControllerDelegate>resultDelegate;
+@property (nonatomic, strong) UIView *maskView;
+
 
 @end
 

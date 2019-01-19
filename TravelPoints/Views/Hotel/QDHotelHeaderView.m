@@ -24,8 +24,7 @@
         
         _searchView = [[QDHotelSearchView alloc] init];
         _searchView.backgroundColor = [UIColor whiteColor];
-//        [self addShadowToView:_searchView withColor:[UIColor blackColor]];
-        _searchView.layer.shadowOpacity = 1;
+        [self addShadowToView:_searchView withColor:APP_LIGHTGRAYCOLOR];
         [self addSubview:_searchView];
     }
     return self;
@@ -56,7 +55,7 @@
     // 阴影颜色
     theView.layer.shadowColor = theColor.CGColor;
     // 阴影偏移，默认(0, -3)
-    theView.layer.shadowOffset = CGSizeMake(0,-1);
+    theView.layer.shadowOffset = CGSizeMake(0,5);
     // 阴影透明度，默认0
     theView.layer.shadowOpacity = 0.4;
     // 阴影半径，默认3

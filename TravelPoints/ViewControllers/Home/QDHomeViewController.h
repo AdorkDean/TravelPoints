@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import <MAMapKit/MAMapKit.h>
+#import <AMapLocationKit/AMapLocationKit.h>
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QDHomeViewController : UIViewController
-
+@property (nonatomic, strong) MAMapView *mapView;
+@property (nonatomic, strong) AMapLocationManager *locationManager;
 @end
 
 NS_ASSUME_NONNULL_END

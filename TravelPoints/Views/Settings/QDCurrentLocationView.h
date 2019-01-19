@@ -11,7 +11,11 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QDCurrentLocationView : UIView
+@property (nonatomic, strong) UIImageView *locationImg;
+@property (nonatomic, strong) UILabel *myLocationLab;
 
+@property (nonatomic, strong) UILabel *detailLocationLab;
+@property (nonatomic, strong) UILabel *cityLab;
 @end
 
 NS_ASSUME_NONNULL_END
