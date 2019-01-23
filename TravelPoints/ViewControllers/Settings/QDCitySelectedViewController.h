@@ -25,7 +25,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) CLLocationManager *locationManager;
 
 @property (nonatomic, copy) NSArray *indexArray;
-@property (nonatomic, copy) NSArray *currentCity;
 @property (nonatomic, copy) NSArray *historyCitys;
 @property (nonatomic, copy) NSMutableDictionary *cityDicts;
 @property (nonatomic, copy) NSArray *cityNames;
@@ -43,9 +42,6 @@ NS_ASSUME_NONNULL_BEGIN
  * NSLocationWhenInUseUsageDescription
  */
 @property (nonatomic, assign) BOOL openLocation;
-
-/// 当前位置
-@property (nonatomic, copy) NSString *currentCityName;
 
 /// 返回按钮图片
 @property (nonatomic, copy) NSString *backImageName;

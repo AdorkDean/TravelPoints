@@ -39,6 +39,7 @@ typedef void(^PrivateRequestFailure)(NSURLSessionDataTask *task, NSError *error)
         serviceClient.manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
         serviceClient.manager.securityPolicy.allowInvalidCertificates = YES;
         serviceClient.tasks = [[NSMutableArray alloc] init];
+//        serviceClient.
     });
     return serviceClient;
 }
@@ -80,12 +81,12 @@ typedef void(^PrivateRequestFailure)(NSURLSessionDataTask *task, NSError *error)
 
 - (NSString *)getFullUrlByUrl:(NSString *)urlString
 {
-    if (urlString == nil) {
-        return [NSString stringWithFormat:@"%@%@", QD_Domain, QD_ProjectName];
-    }
-    else {
-        return [NSString stringWithFormat:@"%@%@", QD_Domain, urlString];
-    }
+    return [NSString stringWithFormat:@"%@%@%@", QD_Domain, QD_ProjectName, urlString];
+}
+
+- (NSString *)getRequestURLStr:(NSString *)urlStr
+{
+    return [NSString stringWithFormat:@"%@%@", QD_Domain, urlStr];
 }
 
 /**
@@ -96,16 +97,33 @@ typedef void(^PrivateRequestFailure)(NSURLSessionDataTask *task, NSError *error)
  @param successBlock 成功block
  @param failureBlock 失败block
  */
-- (void)loginWithUserName:(NSString *)userName password:(NSString *)password successBlock:(RequestSuccess)successBlock failureBlock:(RequestFailure)failureBlock
+
+/**{"password" : "1",
+    "userName" : "17321400216",
+    "terminal":"ios",
+    "userType":"member",
+    "os":"383",
+    "clientVersion":"1.0.0"
+ */
+- (void)loginWithUserName:(NSString *)userName password:(NSString *)password userType:(NSString *)userType successBlock:(RequestSuccess)successBlock failureBlock:(RequestFailure)failureBlock
 {
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    [params setValue:userName forKey:@"legalPhone"];
-    [params setValue:[self getMD5String:password] forKey:@"userPwd"];
+    [params setValue:userName forKey:@"userName"];
+    [params setValue:password forKey:@"password"];
+    [params setValue:userType forKey:@"userType"];
+    [params setValue:@"ios" forKey:@"terminal"];
+    [params setValue:@"383" forKey:@"os"];
+    [params setValue:@"1.0.0" forKey:@"clientVersion"];
+    
+    //移除cookie
+    [QDUserDefaults removeCookies];
+    
     NSData *dataFromDict = [NSJSONSerialization dataWithJSONObject:params options:NSJSONWritingPrettyPrinted error:nil];
     NSString *logonUrl = [self getFullUrlByUrl:api_Login];
     NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] requestWithMethod:@"POST" URLString:logonUrl parameters:nil error:nil];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setHTTPBody:dataFromDict];
+    request.timeoutInterval = 30;
     __block NSURLSessionDataTask *task = [_manager dataTaskWithRequest:request uploadProgress:^(NSProgress * _Nonnull uploadProgress) {
         
     } downloadProgress:^(NSProgress * _Nonnull downloadProgress) {
@@ -113,7 +131,13 @@ typedef void(^PrivateRequestFailure)(NSURLSessionDataTask *task, NSError *error)
         if (error) {
             failureBlock ? failureBlock(responseObject):nil;
         }else{
-            successBlock ? successBlock(responseObject):nil;
+            NSHTTPURLResponse *response = (NSHTTPURLResponse *)task.response;
+            NSString *cookie = response.allHeaderFields[@"Set-Cookie"];
+            if (cookie) {
+                [QDUserDefaults setCookies:cookie];
+            }
+            QDResponseObject *responseObj = [QDResponseObject yy_modelWithDictionary:responseObject];
+            successBlock ? successBlock(responseObj):nil;
         }
     }];
     [task resume];
@@ -150,10 +174,12 @@ typedef void(^PrivateRequestFailure)(NSURLSessionDataTask *task, NSError *error)
 
 
 #pragma mark - private method
-- (void)requestWithUrlString:(NSString *)urlString params:(id)params successBlock:(RequestSuccess)successBlock failureBlock:(RequestFailure)failureBlock
+- (void)requestWithType:(HTTPRequestType)type urlString:(NSString *)urlString params:(id)params successBlock:(RequestSuccess)successBlock failureBlock:(RequestFailure)failureBlock
 {
     NSDictionary *insetParams;
+    NSString *requestTypeStr;
     NSData *jsonData;
+    NSData *dataFromDict;
     if (params != nil) {
         NSError *error;
         jsonData = [NSJSONSerialization dataWithJSONObject:params options:NSJSONWritingPrettyPrinted error:&error];
@@ -164,25 +190,33 @@ typedef void(^PrivateRequestFailure)(NSURLSessionDataTask *task, NSError *error)
             NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
             insetParams = @{@"params":jsonString};
         }
+        dataFromDict = [NSJSONSerialization dataWithJSONObject:params options:NSJSONWritingPrettyPrinted error:nil];
     }
     else {
-        insetParams = @{@"params":@[]};
+        
+//        insetParams = @{@"params":@[]};
     }
+    NSString *requestUrl = [self getRequestURLStr:urlString];
+    switch (type) {
+        case kHTTPRequestTypeGET:
+            requestTypeStr = @"GET";
+            break;
+        case kHTTPRequestTypePOST:
+            requestTypeStr = @"POST";
+            break;
+        default:
+            break;
+    }
+    NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] requestWithMethod:requestTypeStr URLString:requestUrl parameters:insetParams error:nil];
     //把cookie取出来
     NSString *cookie = [NSString stringWithFormat:@"%@", [QDUserDefaults getCookies]];
     if (cookie && ![cookie isEqualToString:@"(null)"] && ![cookie isEqualToString:@""]) {
-//        [self.manager.requestSerializer setValue:cookie forHTTPHeaderField:@"Cookie"];
+        [request setValue:cookie forHTTPHeaderField:@"Cookie"];
     }
-    
-    NSData *dataFromDict = [NSJSONSerialization dataWithJSONObject:params options:NSJSONWritingPrettyPrinted error:nil];
-    NSString *requestUrl = [self getFullUrlByUrl:urlString];
-    NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] requestWithMethod:@"POST" URLString:requestUrl parameters:insetParams error:nil];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    NSString *tokenStr = [QDUserDefaults getObjectForKey:@"token"];
-    QDLog(@"tokenStr = %@", tokenStr);
-    [request setValue:tokenStr forHTTPHeaderField:@"token"];
-    
-    [request setHTTPBody:dataFromDict];
+    if (insetParams != nil) {
+        [request setHTTPBody:dataFromDict];
+    }
     __block NSURLSessionDataTask *task = [_manager dataTaskWithRequest:request uploadProgress:^(NSProgress * _Nonnull uploadProgress) {
         
     } downloadProgress:^(NSProgress * _Nonnull downloadProgress) {
@@ -190,8 +224,8 @@ typedef void(^PrivateRequestFailure)(NSURLSessionDataTask *task, NSError *error)
         if (error) {
             failureBlock ? failureBlock(responseObject):nil;
         }else{
-            //            QDResponseObject *responseObj = [QDResponseObject yy_modelWithDictionary:responseObject];
-            successBlock ? successBlock(responseObject):nil;
+            QDResponseObject *responseObj = [QDResponseObject yy_modelWithDictionary:responseObject];
+            successBlock ? successBlock(responseObj):nil;
         }
     }];
     [task resume];
@@ -222,4 +256,28 @@ typedef void(^PrivateRequestFailure)(NSURLSessionDataTask *task, NSError *error)
     return output;
 }
 
+- (void)logoutWitStr:(NSString *)urlStr SuccessBlock:(RequestSuccess)successBlock failureBlock:(RequestFailure)failureBlock
+{
+    NSError *error;
+    urlStr = [self getRequestURLStr:@"lyjfapp/sso/logout"];
+    NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] requestWithMethod:@"GET" URLString:urlStr parameters:nil error:&error];
+    //把cookie取出来
+    NSString *cookie = [NSString stringWithFormat:@"%@", [QDUserDefaults getCookies]];
+    if (cookie && ![cookie isEqualToString:@"(null)"] && ![cookie isEqualToString:@""]) {
+        [request setValue:cookie forHTTPHeaderField:@"Cookie"];
+    }
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    __block NSURLSessionDataTask *task = [_manager dataTaskWithRequest:request uploadProgress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } downloadProgress:^(NSProgress * _Nonnull downloadProgress) {
+    } completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+        if (error) {
+            failureBlock ? failureBlock(responseObject):nil;
+        }else{
+            QDResponseObject *responseObj = [QDResponseObject yy_modelWithDictionary:responseObject];
+            successBlock ? successBlock(responseObj):nil;
+        }
+    }];
+    [task resume];
+}
 @end

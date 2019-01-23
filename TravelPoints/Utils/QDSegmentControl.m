@@ -18,13 +18,19 @@
     return self;
 }
 
-- (id)initWithSectionTitles:(NSArray<NSString *> *)sectiontitles
-{
-    if (self = [super initWithSectionTitles:sectiontitles]) {
+- (instancetype)initWithSectionImages:(NSArray<UIImage *> *)sectionImages sectionSelectedImages:(NSArray<UIImage *> *)sectionSelectedImages titlesForSections:(NSArray<NSString *> *)sectiontitles{
+    if (self = [super initWithSectionImages:sectionImages sectionSelectedImages:sectionSelectedImages titlesForSections:sectiontitles]) {
         [self setupSegmentControl];
     }
     return self;
 }
+//- (id)initWithSectionTitles:(NSArray<NSString *> *)sectiontitles
+//{
+//    if (self = [super initWithSectionTitles:sectiontitles]) {
+//        [self setupSegmentControl];
+//    }
+//    return self;
+//}
 
 - (void)setupSegmentControl
 {
@@ -32,12 +38,11 @@
     self.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor colorWithHexString:@"#9B9B9B"], NSFontAttributeName: QDFont(15)};
     self.selectionStyle = HMSegmentedControlSelectionStyleFullWidthStripe;
     self.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
+//    self.selectionStyle
     QDWeakSelf(self);
-    [self setThemeChangeBlock:^{
-        weakself.backgroundColor = [UIColor colorWithHexString:[QDColorTheme shareColorTheme].hover_background];
-        weakself.selectedTitleTextAttributes = @{NSForegroundColorAttributeName: [UIColor colorWithHexString:[QDColorTheme shareColorTheme].active_text], NSFontAttributeName: QDFont(15)};
-        weakself.selectionIndicatorColor = [UIColor colorWithHexString:[QDColorTheme shareColorTheme].active_text];
-    }];
+    weakself.backgroundColor = [UIColor whiteColor];
+    weakself.selectedTitleTextAttributes = @{NSForegroundColorAttributeName: [UIColor blackColor], NSFontAttributeName: QDFont(15)};
+    weakself.selectionIndicatorColor = APP_GREENCOLOR;
 }
 
 /*

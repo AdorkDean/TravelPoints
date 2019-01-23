@@ -27,9 +27,9 @@
 
 - (void)initialize {
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.minimumLineSpacing = 10;
-    layout.minimumInteritemSpacing = 10;
-    layout.sectionInset = UIEdgeInsetsMake(0, 16, 10, 16);
+    layout.minimumLineSpacing = 5;
+    layout.minimumInteritemSpacing = 5;
+    layout.sectionInset = UIEdgeInsetsMake(10, 16, 0, 16);
     CGFloat itemW = ([[UIScreen mainScreen] bounds].size.width - 16 * 3 - 10 * 2) / 4;
     layout.itemSize = CGSizeMake(itemW, 30);
     
@@ -55,9 +55,9 @@
 + (CGFloat)heightForCitys:(NSArray *)citys {
     CGFloat h = 10;
     
-    NSInteger row = (citys.count % 3 == 0) ? citys.count / 3 - 1 : citys.count / 3;
+    NSInteger row = (citys.count % 4 == 0) ? citys.count / 4 - 1 : citys.count / 4;
     
-    h += row * 10 + (row + 1) * 40;
+    h += row * 10 + (row + 1) * 30;
     return h;
 }
 

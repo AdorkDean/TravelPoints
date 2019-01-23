@@ -56,13 +56,14 @@
 }
 
 - (void)setTableView {
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT*0.37, SCREEN_WIDTH, SCREEN_HEIGHT) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT*0.37, SCREEN_WIDTH, SCREEN_HEIGHT*0.63) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
     _tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     _tableView.tableFooterView = [UIView new];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _tableView.separatorColor = [UIColor colorWithHexString:@"#F4F4F4"];
     _tableView.sectionIndexColor = [UIColor grayColor]; //设置默认时索引值颜色
 }
 
@@ -77,9 +78,6 @@
 
 - (void)prepareData {
     _historyCitys = [NSKeyedUnarchiver unarchiveObjectWithFile:SYHistoryCitysPath];
-    _currentCityName = _currentCityName ? _currentCityName : @"北京市";
-    _currentCity = @[_currentCityName];
-    
     NSArray *tempIndex = @[];
     
     if (!_cityDict) {
@@ -104,7 +102,7 @@
         
         NSMutableArray *mArr = @[].mutableCopy;
         [tempIndex enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            [mArr addObject:_cityDict[obj]];
+            [mArr addObject:self.cityDict[obj]];
         }];
         
         _cityNames = mArr.copy;
@@ -114,16 +112,6 @@
     NSMutableArray *sortIndex = @[].mutableCopy;
     
     [sortIndex addObject:@"#"];
-    [sortCitys addObject:_currentCity];
-    _kCount++;
-    
-    if (_historyCitys && _historyCitys.count > 0) {
-        [sortIndex addObject:@"$"];
-        [sortCitys addObject:_historyCitys];
-        _kCount++;
-    }
-    
-    [sortIndex addObject:@"*"];
     [sortCitys addObject:self.hotCitys];
     _kCount++;
     
@@ -140,7 +128,7 @@
     [marr removeObject:cityName];
     [marr insertObject:cityName atIndex:0];
     
-    if (marr.count > 3) [marr removeObjectsInRange:NSMakeRange(3, marr.count - 3)];
+    if (marr.count > 4) [marr removeObjectsInRange:NSMakeRange(4, marr.count - 4)];
     self.historyCitys = [marr copy];
     
     [NSKeyedArchiver archiveRootObject:self.historyCitys toFile:SYHistoryCitysPath];
@@ -245,6 +233,7 @@
     if (!cell) {
         cell = [[SYTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SYTableViewCell"];
     }
+    cell.textLabel.font = QDFont(15);
     cell.isShowSeparator = YES;
     if (indexPath.row >= [categoryCitys count] - 1) cell.isShowSeparator = NO;
     cell.textLabel.text = categoryCitys[indexPath.row];
@@ -252,16 +241,17 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+  
     if (indexPath.section < _kCount) {
         NSArray *categoryCitys = _cityDicts[_indexArray[indexPath.section]];
         CGFloat h = [SYCitysCell heightForCitys:categoryCitys];
         return indexPath.section == _kCount - 1 ? h + 10 : h;
     }
-    return 47;
+    return SCREEN_HEIGHT*0.08;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return SCREEN_HEIGHT*0.064;
+    return SCREEN_HEIGHT*0.07;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -320,8 +310,6 @@
             [_locationManager requestWhenInUseAuthorization];//使用程序其间允许访问位置数据（iOS8定位需要）
         }
         [_locationManager startUpdatingLocation]; //开启定位
-        _currentCity = @[@"定位中..."];
-        [_cityDicts setObject:_currentCity forKey:@"#"];
         [_tableView reloadData];
     }else {
         //提示用户无法进行定位操作
@@ -353,9 +341,7 @@
                 //四大直辖市的城市信息无法通过locality获得，只能通过获取省份的方法来获得（如果city为空，则可知为直辖市）
                 city = placemark.administrativeArea;
             }
-            _currentCity = @[city];
-            [_cityDicts setObject:_currentCity forKey:@"#"];
-            [_tableView reloadData];
+            [self.tableView reloadData];
             
             //系统会一直更新数据，直到选择停止更新，因为我们只需要获得一次经纬度即可，所以获取之后就停止更新
             [manager stopUpdatingLocation];
@@ -366,12 +352,6 @@
         //             NSLog(@"An error occurred = %@", error);
         //         }
     }];
-}
-
-#pragma mark - Setter
-- (void)setCurrentCityName:(NSString *)currentCityName {
-    if ([_currentCityName isEqualToString:currentCityName]) return;
-    _currentCityName = currentCityName;
 }
 
 - (void)setOpenLocation:(BOOL)openLocation {
@@ -414,7 +394,7 @@
 
 - (NSArray *)hotCitys {
     if (!_hotCitys) {
-        _hotCitys = @[@"广州市",@"北京市",@"天津市",@"西安市",@"重庆市",@"沈阳市",@"青岛市",@"济南市",@"深圳市",@"长沙市",@"无锡市"];
+        _hotCitys = @[@"北京",@"三亚",@"上海",@"广州",@"成都",@"青岛",@"南京",@"杭州",@"厦门",@"深圳",@"重庆",@"大连",@"香港",@"台北"];
     }
     return _hotCitys;
 }

@@ -12,18 +12,31 @@
 
 - (instancetype)initWithFrame:(CGRect)frame{
     if ([super initWithFrame:frame]) {
-        _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH*0.89, SCREEN_HEIGHT*0.225)];
-        _headerView.backgroundColor = [UIColor whiteColor];
-        [self addSubview:_headerView];
+        _imgView = [[UIImageView alloc] init];
+        _imgView.backgroundColor = APP_GREENCOLOR;
+        [self addSubview:_imgView];
         
-
+        _settingBtn = [[UIButton alloc] init];
+        [_settingBtn setImage:[UIImage imageNamed:@"icon_tabbar_homepage"] forState:UIControlStateNormal];
+        _settingBtn.backgroundColor = [UIColor redColor];
+        [self addSubview:_settingBtn];
+        
+        _voiceBtn = [[UIButton alloc] init];
+        [_voiceBtn setImage:[UIImage imageNamed:@"icon_tabbar_homepage"] forState:UIControlStateNormal];
+        _voiceBtn.backgroundColor = [UIColor blueColor];
+        [self addSubview:_voiceBtn];
+        
+        _whiteBackView = [[UIView alloc] init];
+        _whiteBackView.backgroundColor = [UIColor whiteColor];
+        [self addSubview:_whiteBackView];
+        
         _picBtn = [[UIButton alloc] init];
         [_picBtn setImage:[UIImage imageNamed:@"icon_tabbar_merchant_normal"] forState:UIControlStateNormal];
         _picBtn.layer.borderWidth = SCREEN_WIDTH*0.01;
         _picBtn.layer.borderColor = [UIColor whiteColor].CGColor;
         _picBtn.layer.masksToBounds = YES;
         _picBtn.layer.cornerRadius = SCREEN_WIDTH*0.085;
-        [_headerView addSubview:_picBtn];
+        [self addSubview:_picBtn];
         
         _infoLab = [[UILabel alloc] init];
         _infoLab.text = @"登录后查看更多服务及权益";
@@ -44,20 +57,42 @@
 
 - (void)layoutSubviews{
     [super layoutSubviews];
+    
+    [_settingBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.mas_top).offset(SCREEN_HEIGHT*0.06);
+        make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH*0.79);
+    }];
+    [_voiceBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.settingBtn);
+        make.right.equalTo(self.mas_right).offset(-(SCREEN_WIDTH*0.05));
+    }];
+
+    [_imgView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.top.and.right.equalTo(self);
+        make.height.mas_equalTo(SCREEN_HEIGHT*0.225);
+    }];
+    
+    [_whiteBackView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self);
+        make.top.equalTo(self.mas_top).offset(SCREEN_HEIGHT*0.12);
+        make.width.mas_equalTo(SCREEN_WIDTH*0.89);
+        make.height.mas_equalTo(SCREEN_HEIGHT*0.225);
+    }];
+    
     [_picBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.headerView);
-        make.top.equalTo(self.headerView.mas_top).offset(-(SCREEN_HEIGHT*0.048));
+        make.centerX.equalTo(self.whiteBackView);
+        make.top.equalTo(self.whiteBackView.mas_top).offset(-(SCREEN_HEIGHT*0.048));
         make.width.and.height.equalTo(@(SCREEN_WIDTH*0.17));
     }];
-    
+
     [_infoLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.headerView);
-        make.top.equalTo(self.headerView.mas_top).offset(SCREEN_HEIGHT*0.087);
+        make.centerX.equalTo(self.whiteBackView);
+        make.top.equalTo(self.whiteBackView.mas_top).offset(SCREEN_HEIGHT*0.087);
     }];
-    
+
     [_loginBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.headerView);
-        make.bottom.equalTo(self.headerView.mas_bottom).offset(-(SCREEN_HEIGHT*0.03));
+        make.centerX.equalTo(self.whiteBackView);
+        make.bottom.equalTo(self.whiteBackView.mas_bottom).offset(-(SCREEN_HEIGHT*0.03));
         make.height.mas_equalTo(SCREEN_HEIGHT*0.057);
         make.width.mas_equalTo(SCREEN_WIDTH*0.43);
     }];

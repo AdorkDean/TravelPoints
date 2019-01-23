@@ -130,10 +130,43 @@
 }
 
 
+
 //@"yyyyMMdd HH:mm:ss"
 + (NSString *)getSecondsWithTradingDay:(NSString *)tradingDay andTime:(NSString *)time{
     NSString *dateString = [NSString stringWithFormat:@"%@ %@",tradingDay,time];
     return [QDDateUtils getSeconds:dateString format:@"yyyyMMdd HH:mm:ss"];
+}
+
+//计算两个日期之间的天数
++ (NSInteger) calcDaysFromBegin:(NSDate *)beginDate end:(NSDate *)endDate
+{
+    //创建日期格式化对象
+    NSDateFormatter *dateFormatter=[[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    
+    //取两个日期对象的时间间隔：
+    //这里的NSTimeInterval 并不是对象，是基本型，其实是double类型，是由c定义的:typedef double NSTimeInterval;
+    NSTimeInterval time=[endDate timeIntervalSinceDate:beginDate];
+    
+    int days=((int)time)/(3600*24);
+    //int hours=((int)time)%(3600*24)/3600;
+    //NSString *dateContent=[[NSString alloc] initWithFormat:@"%i天%i小时",days,hours];
+    return days;
+}
+
++ (NSInteger)getDaysFrom:(NSDate *)serverDate To:(NSDate *)endDate
+{
+    NSCalendar *gregorian = [[NSCalendar alloc]
+                             initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    [gregorian setFirstWeekday:2];
+    
+    //去掉时分秒信息
+    NSDate *fromDate;
+    NSDate *toDate;
+    [gregorian rangeOfUnit:NSCalendarUnitDay startDate:&fromDate interval:NULL forDate:serverDate];
+    [gregorian rangeOfUnit:NSCalendarUnitDay startDate:&toDate interval:NULL forDate:endDate];
+    NSDateComponents *dayComponents = [gregorian components:NSCalendarUnitDay fromDate:fromDate toDate:toDate options:0];
+    return dayComponents.day;
 }
 
 + (NSString *)noSecondsTime:(NSString *)completeTime{
@@ -164,5 +197,89 @@
     
 }
 
++ (NSString*)weekDayStr:(NSString*)format{
+    
+    NSString *weekDayStr = nil;
+    NSDateComponents *comps = [[NSDateComponents alloc] init];
+    if(format.length>=10) {
+        NSString *nowString = [format substringToIndex:10];
+        NSArray *array = [nowString componentsSeparatedByString:@"-"];
+        if(array.count==0) {
+            array = [nowString componentsSeparatedByString:@"/"];
+        }
+        
+        if(array.count>=3) {
+            NSInteger year = [[array objectAtIndex:0] integerValue];
+            NSInteger month = [[array objectAtIndex:1] integerValue];
+            NSInteger day = [[array objectAtIndex:2] integerValue];
+            [comps setYear:year];
+            [comps setMonth:month];
+            [comps setDay:day];
+        }
+    }
+    //日历
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    //获取传入date
+    NSDate *_date = [gregorian dateFromComponents:comps];
+    
+    NSDateComponents *weekdayComponents = [gregorian components:NSCalendarUnitWeekday fromDate:_date];
+    NSInteger week = [weekdayComponents weekday];
+    switch(week) {
+        case 1:
+            weekDayStr =@"星期日";
+            break;
+        case 2:
+            weekDayStr =@"星期一";
+            break;
+        case 3:
+            weekDayStr =@"星期二";
+            break;
+        case 4:
+            weekDayStr =@"星期三";
+            break;
+        case 5:
+            weekDayStr =@"星期四";
+            break;
+        case 6:
+            weekDayStr =@"星期五";
+            break;
+        case 7:
+            weekDayStr =@"星期六";
+            break;
+        default:
+            weekDayStr =@"";
+            break;
+    }
+    return weekDayStr;
+}
 
++ (NSString*)weekdayStringFromDate:(NSDate*)inputDate {
+    NSArray *weekdays = [NSArray arrayWithObjects: [NSNull null], @"周日", @"周一", @"周二", @"周三", @"周四", @"周五", @"周六", nil];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierChinese];
+    NSTimeZone *timeZone = [[NSTimeZone alloc] initWithName:@"Asia/Shanghai"];
+    [calendar setTimeZone: timeZone];
+    NSCalendarUnit calendarUnit = NSCalendarUnitWeekday;
+    NSDateComponents *theComponents = [calendar components:calendarUnit fromDate:inputDate];
+    return [weekdays objectAtIndex:theComponents.weekday];
+}
+
++ (NSInteger)compareDate:(NSDate*)aDate withDate:(NSDate*)bDate
+{
+    NSInteger aa = 0;
+    NSComparisonResult result = [aDate compare:bDate];
+    if (result==NSOrderedSame)
+    {
+        //        相等  aa=0
+        aa = 0;
+    }else if (result==NSOrderedAscending)
+    {
+        //bDate比aDate大
+        aa=1;
+    }else if (result == NSOrderedDescending)
+    {
+        //bDate比aDate小
+        aa=-1;
+    }
+    return aa;
+}
 @end

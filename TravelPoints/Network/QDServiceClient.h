@@ -31,7 +31,7 @@ typedef NS_ENUM(NSUInteger, HTTPRequestType) {
 //缓存的block
 typedef void(^RequestCache)(id jsonCache);
 //请求成功的block
-typedef void(^RequestSuccess)(NSDictionary *responseObject);
+typedef void(^RequestSuccess)(QDResponseObject *responseObject);
 
 //请求失败的block
 typedef void(^RequestFailure)(NSError *error);
@@ -59,22 +59,25 @@ typedef void(^DownloadProgress)(NSProgress *progress);
  */
 - (NSString *)getFullUrlByUrl:(NSString *)urlString;
 
+- (NSString *)getRequestURLStr:(NSString *)urlStr;
 /**
  网络请求
  @param successBlock 成功block
+ @param type 网络请求类型
  @param failureBlock 失败block
  */
-- (void)requestWithUrlString:(NSString *)urlString params:(id)params successBlock:(RequestSuccess)successBlock failureBlock:(RequestFailure)failureBlock;
+- (void)requestWithType:(HTTPRequestType)type urlString:(NSString *)urlString params:(id)params successBlock:(RequestSuccess)successBlock failureBlock:(RequestFailure)failureBlock;
 
 /**
  用户登录
 
  @param userName 用户名
  @param password 密码
+ @param userType 用户类型
  @param successBlock 成功block
  @param failureBlock 失败block
  */
-- (void)loginWithUserName:(NSString *)userName password:(NSString *)password successBlock:(RequestSuccess)successBlock failureBlock:(RequestFailure)failureBlock;
+- (void)loginWithUserName:(NSString *)userName password:(NSString *)password userType:(NSString *)userType successBlock:(RequestSuccess)successBlock failureBlock:(RequestFailure)failureBlock;
 
 - (NSString *)getVerifyCodeImgUrlString;
 
@@ -92,5 +95,10 @@ typedef void(^DownloadProgress)(NSProgress *progress);
  */
 - (void)cancelHttpRequestWithRequestType:(NSString *)requestType requestUrlString:(NSString *)string;
 
+- (void)requestWithServiceName:(NSString *)serviceName functionName:(NSString *)funcName paraments:(NSArray *)paraments successBlock:(RequestSuccess)successBlock failureBlock:(RequestFailure)failureBlock progress:(DownloadProgress)progressBlock;
 
+/*
+ 退出登录
+ */
+- (void)logoutWitStr:(NSString *)urlStr SuccessBlock:(RequestSuccess)successBlock failureBlock:(RequestFailure)failureBlock;
 @end

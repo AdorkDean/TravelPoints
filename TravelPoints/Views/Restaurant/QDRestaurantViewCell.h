@@ -11,7 +11,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QDRestaurantViewCell : UITableViewCell
-
+@property (nonatomic, strong) UIImageView *thePic;
+@property (nonatomic, strong) UILabel *titleLab;
+@property (nonatomic, strong) UILabel *ftLab;
+@property (nonatomic, strong) UILabel *rmbLab;
 @end
 
 NS_ASSUME_NONNULL_END

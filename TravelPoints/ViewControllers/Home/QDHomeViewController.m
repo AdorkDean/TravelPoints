@@ -34,6 +34,8 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
+    [self.locationManager stopUpdatingHeading];
+    [self.locationManager stopUpdatingLocation];
     [self.navigationController.navigationBar setHidden:NO];
 }
 
@@ -259,6 +261,7 @@
     
     [self configLocationManager];
 }
+
 
 - (void)viewDidAppear:(BOOL)animated
 {

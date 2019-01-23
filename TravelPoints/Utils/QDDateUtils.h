@@ -103,4 +103,22 @@
 
 + (BOOL)isValidDate:(NSString *)time;
 
+/**
+ 计算两个日期之间的天数
+ */
++ (NSInteger) calcDaysFromBegin:(NSDate *)beginDate end:(NSDate *)endDate;
+
+/**
+ 计算两个日期之间的天数
+ */
++ (NSInteger)getDaysFrom:(NSDate *)serverDate To:(NSDate *)endDate;
+
+/**
+ 根据年月日判断星期几
+ */
++ (NSString*)weekDayStr:(NSString*)format;
+
++ (NSString*)weekdayStringFromDate:(NSDate*)inputDate;
+
++ (NSInteger)compareDate:(NSString*)aDate withDate:(NSString*)bDate;
 @end

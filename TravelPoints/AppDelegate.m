@@ -8,11 +8,10 @@
 
 #import "AppDelegate.h"
 #import "QDHomeViewController.h"
-#import "QDHotelViewController.h"
 #import "QDHotelVC.h"
 #import "QDRestaurantViewController.h"
 #import "QDMallViewController.h"
-#import "QDMineViewController.h"
+#import "QDMineInfoViewController.h"
 #import <AMapFoundationKit/AMapFoundationKit.h>
 @interface AppDelegate ()
 
@@ -45,12 +44,12 @@
     QDMallViewController *mallVC = [[QDMallViewController alloc] init];
     UINavigationController *navMall = [[UINavigationController alloc] initWithRootViewController:mallVC];
     
-    QDMineViewController *mineVC = [[QDMineViewController alloc] init];
+    QDMineInfoViewController *mineVC = [[QDMineInfoViewController alloc] init];
     UINavigationController *navMine = [[UINavigationController alloc] initWithRootViewController:mineVC];
     navMine.navigationBar.barTintColor = [UIColor whiteColor];
     homeVC.title = @"首页";
     hotelVC.title = @"酒店";
-    restaurantVC.title = @"餐厅";
+    restaurantVC.title = @"定制游";
     mallVC.title = @"商城";
     mineVC.title = @"我的";
     NSArray *viewCtrs = @[navHome, navhotel, navrestaurant, navMall, navMine];

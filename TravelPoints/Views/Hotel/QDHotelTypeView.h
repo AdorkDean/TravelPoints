@@ -10,8 +10,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface QDHotelTypeView : UIView
-
+@interface QDHotelTypeView : UIView<UITableViewDelegate, UITableViewDataSource>
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) NSMutableArray *hotelTypeArr;
 @end
 
 NS_ASSUME_NONNULL_END

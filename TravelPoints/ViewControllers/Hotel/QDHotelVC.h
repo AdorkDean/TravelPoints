@@ -7,10 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "QDSegmentControl.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QDHotelVC : UIViewController
+
+@property (nonatomic, strong) QDSegmentControl *segmentControl;
+
+@property (nonatomic, strong) NSArray * firstDate;
+
+@property (nonatomic, strong) NSArray * lastDate;
+
+@property (nonatomic, strong) NSArray * singleDate;
+
 
 @end
 

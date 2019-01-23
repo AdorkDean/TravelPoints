@@ -11,7 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QDHotelTypeCell : UITableViewCell
-
+@property (nonatomic, strong) UIImageView *selectedImg;
+@property (nonatomic, strong) UILabel *hotelType;
 @end
 
 NS_ASSUME_NONNULL_END

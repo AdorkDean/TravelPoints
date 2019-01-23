@@ -46,7 +46,12 @@
         QDLog(@"JS调用OC,并传值过来");
         NSDictionary *param = [data objectForKey:@"param"];
         NSString *url = [data objectForKey:@"url"];
-//        [[QDServiceClient shareClient] requestWithUrlString:url params:param successBlock:^(NSDictionary *responseObject) {
+        [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:url params:param successBlock:^(QDResponseObject *responseObject) {
+            
+        } failureBlock:^(NSError *error) {
+            
+        }];
+//        [[QDServiceClient shareClient] requestWithUrlString:url params:param successBlock:^(QDResponseObject *responseObject) {
 //            QDLog(@"responeseObject = %@", responseObject);
 //        } failureBlock:^(NSError *error) {
 //
@@ -84,6 +89,7 @@
 
 - (void)loadExamplePage:(WKWebView *)webView{
     NSString *urlStr = @"http://192.168.65.199:3001/#/hotel/detail";
+//    NSString *urlStr = @"http://192.168.65.199:3001/#/hotel/detail";
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     [webView loadRequest:request];
 }

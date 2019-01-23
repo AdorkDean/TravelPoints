@@ -11,9 +11,13 @@
 #import "NavigationView.h"
 #import "QDHotelHeaderView.h"
 #import "QDCitySelectedViewController.h"
+#import "QDHotelTypeView.h"
+#import "QDBridgeViewController.h"
+#import "QDCalendarViewController.h"
 @interface QDHotelVC ()<UITableViewDelegate, UITableViewDataSource, NavigationViewDelegate>{
     UITableView *_tableView;
     QDHotelHeaderView *_headView;
+    QDHotelTypeView *_typeView;
 }
 @property (nonatomic, strong) NavigationView *navigationView;
 @property (nonatomic, strong) UITableView *tableView;
@@ -32,8 +36,26 @@
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+    [self requestHotelInfoWithURL:@"/lyjfapp/api/v1/hotel/findByCondition"];
 }
 
+- (void)requestHotelInfoWithURL:(NSString *)urlStr{
+    NSDictionary * dic1 = @{@"label":@"",
+                            @"pageNum":@1,
+                            @"pageSize":@20
+                            };
+    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:urlStr params:dic1 successBlock:^(QDResponseObject *responseObject) {
+        if (responseObject.code == 0) {
+            NSDictionary *dic = responseObject.result;
+            NSArray *hotelArr = [dic objectForKey:@"result"];
+            if (hotelArr.count) {
+                
+            }
+        }
+    } failureBlock:^(NSError *error) {
+        
+    }];
+}
 //- (void)viewWillDisappear:(BOOL)animated{
 //    [super viewWillDisappear:animated];
 //    // 导航栏不透明
@@ -110,6 +132,7 @@
     
     _headView = [[QDHotelHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.6)];
     [_headView.searchView.locateBtn addTarget:self action:@selector(myLocation:) forControlEvents:UIControlEventTouchUpInside];
+    [_headView.searchView.dateIn addTarget:self action:@selector(chooseRoomInOrOut:) forControlEvents:UIControlEventTouchUpInside];
     _tableView.tableHeaderView = _headView;
 }
 
@@ -118,12 +141,21 @@
     QDCitySelectedViewController *locationVC = [[QDCitySelectedViewController alloc] init];
     [self presentViewController:locationVC animated:YES completion:nil];
 }
+
+#pragma mark - 选择入住时间(自定义日历)
+- (void)chooseRoomInOrOut:(UIButton *)sender{
+    QDCalendarViewController * calendar = [[QDCalendarViewController alloc] init];
+    [self presentViewController:calendar animated:YES completion:nil];
+}
 #pragma mark -- tableView delegate
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
     return 10;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return SCREEN_HEIGHT*0.075;
+}
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return SCREEN_HEIGHT*0.225;
 }
@@ -145,12 +177,42 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.085)];
-    view.backgroundColor = [UIColor redColor];
-    return view;
+    NSArray<NSString *> *segmentedTitles = @[@"全部区域", @"酒店类型", @"价格", @"星级"];
+    // Segmented control with images
+    NSArray<UIImage *> *images = @[[UIImage imageNamed:@"ad_collection_black"],
+                                   [UIImage imageNamed:@"ad_collection_black"],
+                                   [UIImage imageNamed:@"ad_collection_black"],
+                                   [UIImage imageNamed:@"ad_collection_black"]];
+    
+    NSArray<UIImage *> *selectedImages = @[[UIImage imageNamed:@"ad_collection_red"],
+                                           [UIImage imageNamed:@"ad_collection_red"],
+                                           [UIImage imageNamed:@"ad_collection_red"],
+                                           [UIImage imageNamed:@"ad_collection_red"]];
+    _segmentControl = [[QDSegmentControl alloc] initWithSectionImages:images sectionSelectedImages:selectedImages titlesForSections:segmentedTitles];
+    _segmentControl.imagePosition = HMSegmentedControlImagePositionRightOfText;
+    [_segmentControl addTarget:self action:@selector(segmentedClicked:) forControlEvents:UIControlEventValueChanged];
+    
+    return _segmentControl;
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+- (void)segmentedClicked:(QDSegmentControl *)segmentControl{
+    QDLog(@"segmentControl = %ld", (long)segmentControl.selectedSegmentIndex);
+//    _typeView = [[QDHotelTypeView alloc] init];
+//
+//    [self.view addSubview:_typeView];
+//    [_typeView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(self.segmentControl.mas_bottom);
+//        make.centerX.and.width.equalTo(self.segmentControl);
+//        make.width.mas_equalTo(SCREEN_HEIGHT*0.57);
+//    }];
+//    UIView animateWithDuration:{1} animations:^{
+//
+//    } completion:<#^(BOOL finished)completion#>
+}
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{    
+    QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
+    [self.navigationController pushViewController:bridgeVC animated:YES];
+
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
 

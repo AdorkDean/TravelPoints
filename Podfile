@@ -19,4 +19,6 @@ target 'TravelPoints' do
   pod 'AMapSearch'
   pod 'AMapLocation'
   pod 'BaiduMapKit'
+  pod 'HMSegmentedControl'
+  pod 'FSCalendar'
 end

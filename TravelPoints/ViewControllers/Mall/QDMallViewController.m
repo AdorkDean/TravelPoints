@@ -7,14 +7,32 @@
 //
 
 #import "QDMallViewController.h"
-@interface QDMallViewController ()
+#import "QDMallTopView.h"
+@interface QDMallViewController (){
+    QDMallTopView *_mallTopView;
+}
 
 @end
 
 @implementation QDMallViewController
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.navigationController.navigationBar setHidden:YES];
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
+}
+
+-(void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.navigationController.navigationBar setHidden:NO];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
+    _mallTopView = [[QDMallTopView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.06)];
+    _mallTopView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:_mallTopView];
     // Do any additional setup after loading the view.
 }
 

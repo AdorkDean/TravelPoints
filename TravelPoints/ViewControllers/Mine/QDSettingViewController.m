@@ -20,9 +20,10 @@
 
 @implementation QDSettingViewController
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [UIColor whiteColor];
     [self showBack:YES];
     self.title = @"设置";
     [self initTableView];
@@ -94,18 +95,30 @@
     return cell;
 }
 
+#pragma mark - 用户登出接口
+- (void)logout{
+    [WXProgressHUD showHUD];
+    [[QDServiceClient shareClient] logoutWitStr:@"lyjfapp/sso/logout" SuccessBlock:^(QDResponseObject *responseObject) {
+        [WXProgressHUD hideHUD];
+        if (responseObject.code == 0) {
+            //移除cookie
+            [QDUserDefaults setObject:@"0" forKey:@"loginType"];
+            [QDUserDefaults removeCookies];
+            [self.navigationController popViewControllerAnimated:YES];
+        }else{
+            [WXProgressHUD showErrorWithTittle:responseObject.message];
+        }
+    } failureBlock:^(NSError *error) {
+        [WXProgressHUD hideHUD];
+        [WXProgressHUD showInfoWithTittle:@"网络异常"];
+    }];
+}
 - (void)showAlertView{
     TYAlertView *alertView = [[TYAlertView alloc] initWithTitle:@"提示" message:@"确定退出当前账户?"];
     [alertView addAction:[TYAlertAction actionWithTitle:@"取消" style:TYAlertActionStyleCancel handler:^(TYAlertAction *action) {
-        [WXProgressHUD hideHUD];
     }]];
     [alertView addAction:[TYAlertAction actionWithTitle:@"确定" style:TYAlertActionStyleDestructive handler:^(TYAlertAction *action) {
-        [QDUserDefaults setObject:@"0" forKey:@"isLogon"];
-        QDLoginAndRegisterVC *loginVC = [[QDLoginAndRegisterVC alloc] init];
-//        self
-//        QDLoginViewController *loginVC = [[QDLoginViewController alloc] init];
-//        loginVC.backFlag = 2;
-//        [self.navigationController pushViewController:loginVC animated:YES];
+        [self logout];
     }]];
     [alertView setButtonTitleColor:[UIColor colorWithHexString:@"#648AC7"] forActionStyle:TYAlertActionStyleCancel forState:UIControlStateNormal];
     [alertView setButtonTitleColor:[UIColor colorWithHexString:@"#648AC7"] forActionStyle:TYAlertActionStyleBlod forState:UIControlStateNormal];

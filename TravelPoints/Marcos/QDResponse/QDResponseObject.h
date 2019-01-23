@@ -16,6 +16,6 @@
 
 @property (nonatomic, strong)id result;
 
-@property (nonatomic, strong)NSString * success;
+@property (nonatomic, assign)BOOL success;
 
 @end

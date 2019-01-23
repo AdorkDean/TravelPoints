@@ -7,8 +7,10 @@
 //
 
 #import "QDLoginAndRegisterVC.h"
+#import "QDMemberDTO.h"
 
 @interface QDLoginAndRegisterVC ()
+@property (nonatomic, strong) QDMemberDTO *qdMemberTDO;
 @end
 
 @implementation QDLoginAndRegisterVC
@@ -196,26 +198,56 @@
 
 #pragma mark - 用户登录
 - (void)userLogin:(UIButton *)sender{
-//    [WXProgressHUD showHUD];
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    [[QDServiceClient shareClient] loginWithUserName:@"13207166278" password:@"1" successBlock:^(NSDictionary *responseObject) {
-        QDLog(@"123");
-        if ([[responseObject objectForKey:@"code"] intValue] == 0) {
-//            [WXProgressHUD hideHUD];
-            NSDictionary *dic = [responseObject objectForKey:@"result"];
-            [QDUserDefaults setObject:[dic objectForKey:@"sessionId"] forKey:@"Token"];
-            QDLog(@"Token = %@", [dic objectForKey:@"sessionId"]);
+    [WXProgressHUD showHUD];
+    [[QDServiceClient shareClient] loginWithUserName:@"17321400216" password:@"1" userType:@"member" successBlock:^(QDResponseObject *responseObject) {
+        [WXProgressHUD hideHUD];
+        if (responseObject.code == 0) {
+            [QDUserDefaults setObject:responseObject.result forKey:@"Token"];
+            QDLog(@"Token = %@", responseObject.result);
             [MBProgressHUD hideHUDForView:self.view animated:YES];
             [WXProgressHUD showInfoWithTittle:@"登录成功"];
-            [self dismissViewControllerAnimated:YES completion:nil];
+            [self findMyUserCreditWithUrlStr:@"lyjfapp/api/v1/user/detail"];
         }else{
-//            QDToast(<#str#>)
+            [WXProgressHUD showInfoWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
-
+        [WXProgressHUD hideHUD];
+        [WXProgressHUD showErrorWithTittle:@"网络异常"];
     }];
 }
 
+
+#pragma mark - 个人积分账户详情
+- (void)findMyUserCreditWithUrlStr:(NSString *)urlStr{
+    [WXProgressHUD showHUD];
+    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:urlStr params:nil successBlock:^(QDResponseObject *responseObject) {
+        QDLog(@"responseObject = %@", responseObject);
+        if (responseObject.code == 0) {
+            if (responseObject.result != nil) {
+                [WXProgressHUD hideHUD];
+                self.qdMemberTDO = [QDMemberDTO yy_modelWithDictionary:responseObject.result];
+                if (self.qdMemberTDO.accountId == nil) {
+                    //未开通资金帐户
+                    [QDUserDefaults setObject:@"1" forKey:@"loginType"];
+                    [self dismissViewControllerAnimated:YES completion:^{
+                    }];
+                }
+            }
+        }else{
+            [WXProgressHUD showErrorWithTittle:responseObject.message];
+        }
+    } failureBlock:^(NSError *error) {
+        [WXProgressHUD hideHUD];
+    }];
+}
+
+- (void)findMyUserCredit{
+    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:@"lyjfapp/api/v1/user/detail" params:nil successBlock:^(QDResponseObject *responseObject) {
+        QDLog(@"responseObject = %@", responseObject);
+    } failureBlock:^(NSError *error) {
+        
+    }];
+}
 #pragma mark - 忘记密码
 - (void)forgetPWD:(UIButton *)sender{
     [_loginView setHidden:YES];

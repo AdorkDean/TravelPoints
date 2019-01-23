@@ -7,10 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "SPButton.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QDRestaurantTopView : UIView
+
+@property (nonatomic, strong) UIView *backView;
+@property (nonatomic, strong) SPButton *cityBtn;
+@property (nonatomic, strong) UITextField *locationTF;
+@property (nonatomic, strong) UIButton *searchBtn;
 
 @end
 
