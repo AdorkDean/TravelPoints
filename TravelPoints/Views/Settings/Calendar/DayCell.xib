@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="DayCell">
+            <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="det-tO-mDW">
+                        <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fiL-GW-K4h">
+                        <rect key="frame" x="0.0" y="0.0" width="60" height="36.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B4g-lY-a6e">
+                        <rect key="frame" x="0.0" y="36.5" width="60" height="18.5"/>
+                        <accessibility key="accessibilityConfiguration">
+                            <accessibilityTraits key="traits" staticText="YES" adjustable="YES"/>
+                        </accessibility>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="B4g-lY-a6e" secondAttribute="trailing" id="1sn-P1-Gbn"/>
+                <constraint firstItem="B4g-lY-a6e" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Kc6-Ob-Q9K"/>
+                <constraint firstAttribute="trailing" secondItem="fiL-GW-K4h" secondAttribute="trailing" id="Lof-DJ-snP"/>
+                <constraint firstAttribute="trailing" secondItem="det-tO-mDW" secondAttribute="trailing" id="PAD-5a-YEL"/>
+                <constraint firstItem="det-tO-mDW" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="SJN-I5-SOg"/>
+                <constraint firstItem="fiL-GW-K4h" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Whn-gv-xtS"/>
+                <constraint firstAttribute="bottom" secondItem="det-tO-mDW" secondAttribute="bottom" id="XPd-LI-JWp"/>
+                <constraint firstItem="B4g-lY-a6e" firstAttribute="top" secondItem="fiL-GW-K4h" secondAttribute="bottom" id="ZVT-9P-R7j"/>
+                <constraint firstItem="B4g-lY-a6e" firstAttribute="height" secondItem="fiL-GW-K4h" secondAttribute="height" multiplier="1:2" id="fnj-zj-qeM"/>
+                <constraint firstItem="det-tO-mDW" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="h2e-eN-H3l"/>
+                <constraint firstItem="fiL-GW-K4h" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="qG7-pg-SUN"/>
+                <constraint firstAttribute="bottom" secondItem="B4g-lY-a6e" secondAttribute="bottom" constant="5" id="ygI-bs-cot"/>
+            </constraints>
+            <connections>
+                <outlet property="actionLabel" destination="B4g-lY-a6e" id="lJd-zf-Lys"/>
+                <outlet property="colorView" destination="det-tO-mDW" id="Uh4-IP-kzH"/>
+                <outlet property="dayLabel" destination="fiL-GW-K4h" id="phk-qa-agS"/>
+            </connections>
+        </collectionViewCell>
+    </objects>
+</document>
