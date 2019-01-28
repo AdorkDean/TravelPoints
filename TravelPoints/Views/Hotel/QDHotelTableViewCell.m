@@ -7,7 +7,7 @@
 //
 
 #import "QDHotelTableViewCell.h"
-
+#import "AppDelegate.h"
 @implementation QDHotelTableViewCell
 
 - (void)awakeFromNib {
@@ -28,7 +28,8 @@
         [self.contentView addSubview:_hotelImg];
         
         _hotelName = [[UILabel alloc] init];
-        _hotelName.text = @"路易斯湖费尔蒙酒店";
+        _hotelName.text = @"--";
+        _hotelName.numberOfLines = 0;
         _hotelName.font = QDBoldFont(17);
         [self.contentView addSubview:_hotelName];
         
@@ -52,6 +53,7 @@
         
         _locationLab = [[UILabel alloc] init];
         _locationLab.text = @"陆家嘴 | 浦东新区";
+        _locationLab.numberOfLines = 0;
         _locationLab.font = QDBoldFont(15);
         _locationLab.textColor = APP_GRAYCOLOR;
         [self.contentView addSubview:_locationLab];
@@ -71,7 +73,9 @@
     [_hotelName mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.contentView.mas_top).offset(SCREEN_HEIGHT*0.036);
         make.left.equalTo(self.hotelImg.mas_right).offset(SCREEN_WIDTH*0.037);
+        make.right.equalTo(self.mas_right).offset(-(SCREEN_WIDTH*0.025));
     }];
+    
     [_starLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.hotelName.mas_bottom).offset(SCREEN_HEIGHT*0.01);
         make.left.equalTo(self.hotelName);
@@ -91,6 +95,17 @@
         make.top.equalTo(self.priceLab.mas_bottom).offset(SCREEN_HEIGHT*0.01);
         make.left.equalTo(self.hotelName);
     }];
+}
+
+-(void)fillContentWithModel:(QDHotelListInfoModel *)infoModel andImgData:(NSData *)imgData{
+    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    self.hotelName.text = infoModel.hotelName;
+    self.starLab.text = [NSString stringWithFormat:@"%@人收藏",infoModel.collectCount];
+    self.priceLab.text = [NSString stringWithFormat:@"%@FT 起", infoModel.collectCount];
+    double ss = [infoModel.price doubleValue] * delegate.basePirceRate;
+    self.priceRMBLab.text = [NSString stringWithFormat:@"折合人民币%.f元", ss];
+    self.locationLab.text = infoModel.address;
+    self.hotelImg.image = [UIImage imageWithData:imgData];
 }
 
 @end

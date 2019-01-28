@@ -7,10 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "QDHotelListInfoModel.h"
+#import "CustomTravelDTO.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QDBridgeViewController : UIViewController
+
+@property (nonatomic, strong) QDHotelListInfoModel *infoModel;
+@property (nonatomic, strong) CustomTravelDTO *customTravelModel;
+
+@property (nonatomic, strong) NSString *urlStr;
 
 @end
 

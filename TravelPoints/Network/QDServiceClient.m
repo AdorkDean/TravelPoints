@@ -229,9 +229,64 @@ typedef void(^PrivateRequestFailure)(NSURLSessionDataTask *task, NSError *error)
         }
     }];
     [task resume];
-
 }
 
+#pragma mark - 针对H5的
+- (void)requestWithHTMLType:(HTTPRequestType)type urlString:(NSString *)urlString params:(id)params successBlock:(RequestH5Success)successBlock failureBlock:(RequestFailure)failureBlock
+{
+    NSDictionary *insetParams;
+    NSString *requestTypeStr;
+    NSData *jsonData;
+    NSData *dataFromDict;
+    if (params != nil) {
+        NSError *error;
+        jsonData = [NSJSONSerialization dataWithJSONObject:params options:NSJSONWritingPrettyPrinted error:&error];
+        if (error) {
+            insetParams = @{@"params":@[]};
+        }
+        else {
+            NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+            insetParams = @{@"params":jsonString};
+        }
+        dataFromDict = [NSJSONSerialization dataWithJSONObject:params options:NSJSONWritingPrettyPrinted error:nil];
+    }
+    else {
+        
+        //        insetParams = @{@"params":@[]};
+    }
+    NSString *requestUrl = [self getRequestURLStr:urlString];
+    switch (type) {
+        case kHTTPRequestTypeGET:
+            requestTypeStr = @"GET";
+            break;
+        case kHTTPRequestTypePOST:
+            requestTypeStr = @"POST";
+            break;
+        default:
+            break;
+    }
+    NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] requestWithMethod:requestTypeStr URLString:requestUrl parameters:insetParams error:nil];
+    //把cookie取出来
+    NSString *cookie = [NSString stringWithFormat:@"%@", [QDUserDefaults getCookies]];
+    if (cookie && ![cookie isEqualToString:@"(null)"] && ![cookie isEqualToString:@""]) {
+        [request setValue:cookie forHTTPHeaderField:@"Cookie"];
+    }
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    if (insetParams != nil) {
+        [request setHTTPBody:dataFromDict];
+    }
+    __block NSURLSessionDataTask *task = [_manager dataTaskWithRequest:request uploadProgress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } downloadProgress:^(NSProgress * _Nonnull downloadProgress) {
+    } completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+        if (error) {
+            failureBlock ? failureBlock(responseObject):nil;
+        }else{
+            successBlock ? successBlock(responseObject):nil;
+        }
+    }];
+    [task resume];
+}
 - (NSString *)getUploadUrlWithServiceName:(NSString *)serviceName functionName:(NSString *)funcName type:(NSString *)type
 {
     NSString *urlString;
@@ -259,7 +314,7 @@ typedef void(^PrivateRequestFailure)(NSURLSessionDataTask *task, NSError *error)
 - (void)logoutWitStr:(NSString *)urlStr SuccessBlock:(RequestSuccess)successBlock failureBlock:(RequestFailure)failureBlock
 {
     NSError *error;
-    urlStr = [self getRequestURLStr:@"lyjfapp/sso/logout"];
+    urlStr = [self getRequestURLStr:api_UserLogout];
     NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] requestWithMethod:@"GET" URLString:urlStr parameters:nil error:&error];
     //把cookie取出来
     NSString *cookie = [NSString stringWithFormat:@"%@", [QDUserDefaults getCookies]];

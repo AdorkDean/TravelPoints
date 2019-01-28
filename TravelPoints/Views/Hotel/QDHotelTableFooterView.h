@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface QDHotelTableFooterView : UIView
 
+@property (nonatomic, strong) UIButton *resetBtn;
+@property (nonatomic, strong) UIButton *confirmBtn;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -14,6 +14,9 @@
 		3B04DF4D21F83E17001909CD /* QDBankaccountDTO.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B04DF4C21F83E17001909CD /* QDBankaccountDTO.m */; };
 		3B04DF5021F83E5E001909CD /* QDHotelFacilityDTO.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B04DF4F21F83E5E001909CD /* QDHotelFacilityDTO.m */; };
 		3B04DF5321F83E6F001909CD /* QDRoomTypeDTO.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B04DF5221F83E6F001909CD /* QDRoomTypeDTO.m */; };
+		3B04DF5921F85001001909CD /* QDRefreshFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B04DF5521F85001001909CD /* QDRefreshFooter.m */; };
+		3B04DF5A21F85002001909CD /* QDRefreshHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B04DF5621F85001001909CD /* QDRefreshHeader.m */; };
+		3B04DF8621F9AA66001909CD /* CustomTravelDTO.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B04DF8521F9AA66001909CD /* CustomTravelDTO.m */; };
 		3B0CD6DC21F05E010020824A /* NavigationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0CD6DB21F05E010020824A /* NavigationView.m */; };
 		3B0CD6E221F05E850020824A /* UIColor+Extention.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0CD6DF21F05E840020824A /* UIColor+Extention.m */; };
 		3B0CD6E321F05E850020824A /* Macro.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0CD6E121F05E850020824A /* Macro.m */; };
@@ -32,11 +35,18 @@
 		3B0CD73121F16F6B0020824A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B0CD73021F16F6B0020824A /* SystemConfiguration.framework */; };
 		3B0CD73421F1736C0020824A /* libPods-TravelPoints.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C2211E9E3C715FBAD2B67682 /* libPods-TravelPoints.a */; };
 		3B0CD73721F1868C0020824A /* AMap.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3B0CD73621F1868B0020824A /* AMap.bundle */; };
-		3B0CD73921F186DB0020824A /* icon_location@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B0CD73821F186DB0020824A /* icon_location@2x.png */; };
 		3B0CD73C21F1A4940020824A /* QDHomeTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0CD73B21F1A4940020824A /* QDHomeTopView.m */; };
 		3B0CD74221F1DE380020824A /* SYCity.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3B0CD74121F1DE380020824A /* SYCity.bundle */; };
 		3B0CD74621F1DEC10020824A /* SYChineseToPinyin.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0CD74521F1DEC00020824A /* SYChineseToPinyin.m */; };
 		3B0CD74921F1E1C00020824A /* QDCitySelectedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0CD74821F1E1C00020824A /* QDCitySelectedViewController.m */; };
+		3B1BC00121F9DE4D0005C415 /* QDHotelTableFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B1BC00021F9DE4D0005C415 /* QDHotelTableFooterView.m */; };
+		3B1BC00321FAA1590005C415 /* MBProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3B1BC00221FAA1590005C415 /* MBProgressHUD.bundle */; };
+		3B1BC00C21FAEDF10005C415 /* RadialCircleAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B1BC00B21FAEDF10005C415 /* RadialCircleAnnotationView.m */; };
+		3B1BC01021FAFAE20005C415 /* decrease@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B1BC00D21FAFAE10005C415 /* decrease@2x.png */; };
+		3B1BC01121FAFAE20005C415 /* increase@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B1BC00E21FAFAE10005C415 /* increase@2x.png */; };
+		3B1BC01221FAFAE20005C415 /* gpsStat1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B1BC00F21FAFAE20005C415 /* gpsStat1@2x.png */; };
+		3B1BC01521FB260E0005C415 /* QDHotelsInAreaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B1BC01421FB260E0005C415 /* QDHotelsInAreaViewController.m */; };
+		3B1BC01821FB264D0005C415 /* QDHotelsInAreaView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B1BC01721FB264D0005C415 /* QDHotelsInAreaView.m */; };
 		3B1DFDEC21F2BCA6007D4B12 /* QDLocationTopSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B1DFDEB21F2BCA6007D4B12 /* QDLocationTopSelectView.m */; };
 		3B1DFDEF21F2BFAD007D4B12 /* QDCurrentLocationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B1DFDEE21F2BFAD007D4B12 /* QDCurrentLocationView.m */; };
 		3B1DFDFB21F2CDDF007D4B12 /* SYHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B1DFDFA21F2CDDF007D4B12 /* SYHeaderView.m */; };
@@ -52,6 +62,17 @@
 		3B1DFE1F21F32D1F007D4B12 /* QDRestaurantViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B1DFE1E21F32D1F007D4B12 /* QDRestaurantViewCell.m */; };
 		3B1DFE2121F32DAA007D4B12 /* test.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B1DFE2021F32DAA007D4B12 /* test.png */; };
 		3B1DFE2421F33C08007D4B12 /* QDMallTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B1DFE2321F33C08007D4B12 /* QDMallTopView.m */; };
+		3B2ADD0321FD396E00F62D63 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3B2ADD0221FD396E00F62D63 /* Images.xcassets */; };
+		3B2ADD0521FD637E00F62D63 /* empty@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B2ADD0421FD637E00F62D63 /* empty@2x.png */; };
+		3B2ADD0821FD95F600F62D63 /* QDHotelsInAreaViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B2ADD0721FD95F600F62D63 /* QDHotelsInAreaViewTableViewCell.m */; };
+		3B2ADD0C21FD996300F62D63 /* range@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B2ADD0B21FD996300F62D63 /* range@2x.png */; };
+		3B2ADD0F21FDA13F00F62D63 /* QDStrategyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B2ADD0E21FDA13F00F62D63 /* QDStrategyTableViewCell.m */; };
+		3B2ADD1121FE908300F62D63 /* strategy@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B2ADD1021FE908300F62D63 /* strategy@2x.png */; };
+		3B2ADD1421FEA51600F62D63 /* QDHotelAndStrategyFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B2ADD1321FEA51600F62D63 /* QDHotelAndStrategyFilterView.m */; };
+		3B2ADD1621FEA68B00F62D63 /* seach_01@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B2ADD1521FEA68B00F62D63 /* seach_01@2x.png */; };
+		3B2ADD1921FECFBA00F62D63 /* QDStrategyDTO.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B2ADD1821FECFBA00F62D63 /* QDStrategyDTO.m */; };
+		3B2ADD2621FEE3EC00F62D63 /* QDShowMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B2ADD2521FEE3EC00F62D63 /* QDShowMenuView.m */; };
+		3B2ADD2921FEECA400F62D63 /* QDBridgeTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B2ADD2821FEECA400F62D63 /* QDBridgeTViewController.m */; };
 		3B2C1F6A21F56C1A00DD94CD /* QDCalendarTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B2C1F6921F56C1A00DD94CD /* QDCalendarTopView.m */; };
 		3B2C1F8221F5CAB100DD94CD /* QDCalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B2C1F8121F5CAB100DD94CD /* QDCalendarViewController.m */; };
 		3B2C1F8521F5D89500DD94CD /* RangePickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B2C1F8421F5D89500DD94CD /* RangePickerCell.m */; };
@@ -161,6 +182,12 @@
 		3B04DF4F21F83E5E001909CD /* QDHotelFacilityDTO.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDHotelFacilityDTO.m; sourceTree = "<group>"; };
 		3B04DF5121F83E6F001909CD /* QDRoomTypeDTO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDRoomTypeDTO.h; sourceTree = "<group>"; };
 		3B04DF5221F83E6F001909CD /* QDRoomTypeDTO.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDRoomTypeDTO.m; sourceTree = "<group>"; };
+		3B04DF5521F85001001909CD /* QDRefreshFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QDRefreshFooter.m; sourceTree = "<group>"; };
+		3B04DF5621F85001001909CD /* QDRefreshHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QDRefreshHeader.m; sourceTree = "<group>"; };
+		3B04DF5721F85001001909CD /* QDRefreshHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QDRefreshHeader.h; sourceTree = "<group>"; };
+		3B04DF5821F85001001909CD /* QDRefreshFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QDRefreshFooter.h; sourceTree = "<group>"; };
+		3B04DF8421F9AA66001909CD /* CustomTravelDTO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomTravelDTO.h; sourceTree = "<group>"; };
+		3B04DF8521F9AA66001909CD /* CustomTravelDTO.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomTravelDTO.m; sourceTree = "<group>"; };
 		3B0CD6DA21F05E010020824A /* NavigationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationView.h; sourceTree = "<group>"; };
 		3B0CD6DB21F05E010020824A /* NavigationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationView.m; sourceTree = "<group>"; };
 		3B0CD6DE21F05E840020824A /* UIColor+Extention.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Extention.h"; sourceTree = "<group>"; };
@@ -186,7 +213,6 @@
 		3B0CD72E21F16F650020824A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		3B0CD73021F16F6B0020824A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		3B0CD73621F1868B0020824A /* AMap.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AMap.bundle; sourceTree = "<group>"; };
-		3B0CD73821F186DB0020824A /* icon_location@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_location@2x.png"; sourceTree = "<group>"; };
 		3B0CD73A21F1A4940020824A /* QDHomeTopView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDHomeTopView.h; sourceTree = "<group>"; };
 		3B0CD73B21F1A4940020824A /* QDHomeTopView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDHomeTopView.m; sourceTree = "<group>"; };
 		3B0CD74121F1DE380020824A /* SYCity.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SYCity.bundle; sourceTree = "<group>"; };
@@ -194,6 +220,18 @@
 		3B0CD74521F1DEC00020824A /* SYChineseToPinyin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYChineseToPinyin.m; sourceTree = "<group>"; };
 		3B0CD74721F1E1C00020824A /* QDCitySelectedViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDCitySelectedViewController.h; sourceTree = "<group>"; };
 		3B0CD74821F1E1C00020824A /* QDCitySelectedViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDCitySelectedViewController.m; sourceTree = "<group>"; };
+		3B1BBFFF21F9DE4D0005C415 /* QDHotelTableFooterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDHotelTableFooterView.h; sourceTree = "<group>"; };
+		3B1BC00021F9DE4D0005C415 /* QDHotelTableFooterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDHotelTableFooterView.m; sourceTree = "<group>"; };
+		3B1BC00221FAA1590005C415 /* MBProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MBProgressHUD.bundle; sourceTree = "<group>"; };
+		3B1BC00A21FAEDF10005C415 /* RadialCircleAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RadialCircleAnnotationView.h; sourceTree = "<group>"; };
+		3B1BC00B21FAEDF10005C415 /* RadialCircleAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RadialCircleAnnotationView.m; sourceTree = "<group>"; };
+		3B1BC00D21FAFAE10005C415 /* decrease@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "decrease@2x.png"; sourceTree = "<group>"; };
+		3B1BC00E21FAFAE10005C415 /* increase@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "increase@2x.png"; sourceTree = "<group>"; };
+		3B1BC00F21FAFAE20005C415 /* gpsStat1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gpsStat1@2x.png"; sourceTree = "<group>"; };
+		3B1BC01321FB260E0005C415 /* QDHotelsInAreaViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDHotelsInAreaViewController.h; sourceTree = "<group>"; };
+		3B1BC01421FB260E0005C415 /* QDHotelsInAreaViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDHotelsInAreaViewController.m; sourceTree = "<group>"; };
+		3B1BC01621FB264D0005C415 /* QDHotelsInAreaView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDHotelsInAreaView.h; sourceTree = "<group>"; };
+		3B1BC01721FB264D0005C415 /* QDHotelsInAreaView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDHotelsInAreaView.m; sourceTree = "<group>"; };
 		3B1DFDEA21F2BCA6007D4B12 /* QDLocationTopSelectView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDLocationTopSelectView.h; sourceTree = "<group>"; };
 		3B1DFDEB21F2BCA6007D4B12 /* QDLocationTopSelectView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDLocationTopSelectView.m; sourceTree = "<group>"; };
 		3B1DFDED21F2BFAD007D4B12 /* QDCurrentLocationView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDCurrentLocationView.h; sourceTree = "<group>"; };
@@ -223,6 +261,23 @@
 		3B1DFE2021F32DAA007D4B12 /* test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test.png; sourceTree = "<group>"; };
 		3B1DFE2221F33C08007D4B12 /* QDMallTopView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDMallTopView.h; sourceTree = "<group>"; };
 		3B1DFE2321F33C08007D4B12 /* QDMallTopView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDMallTopView.m; sourceTree = "<group>"; };
+		3B2ADD0221FD396E00F62D63 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		3B2ADD0421FD637E00F62D63 /* empty@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "empty@2x.png"; sourceTree = "<group>"; };
+		3B2ADD0621FD95F600F62D63 /* QDHotelsInAreaViewTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDHotelsInAreaViewTableViewCell.h; sourceTree = "<group>"; };
+		3B2ADD0721FD95F600F62D63 /* QDHotelsInAreaViewTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDHotelsInAreaViewTableViewCell.m; sourceTree = "<group>"; };
+		3B2ADD0B21FD996300F62D63 /* range@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "range@2x.png"; path = "../../../../Desktop/range@2x.png"; sourceTree = "<group>"; };
+		3B2ADD0D21FDA13F00F62D63 /* QDStrategyTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDStrategyTableViewCell.h; sourceTree = "<group>"; };
+		3B2ADD0E21FDA13F00F62D63 /* QDStrategyTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDStrategyTableViewCell.m; sourceTree = "<group>"; };
+		3B2ADD1021FE908300F62D63 /* strategy@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "strategy@2x.png"; sourceTree = "<group>"; };
+		3B2ADD1221FEA51600F62D63 /* QDHotelAndStrategyFilterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDHotelAndStrategyFilterView.h; sourceTree = "<group>"; };
+		3B2ADD1321FEA51600F62D63 /* QDHotelAndStrategyFilterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDHotelAndStrategyFilterView.m; sourceTree = "<group>"; };
+		3B2ADD1521FEA68B00F62D63 /* seach_01@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "seach_01@2x.png"; sourceTree = "<group>"; };
+		3B2ADD1721FECFB900F62D63 /* QDStrategyDTO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDStrategyDTO.h; sourceTree = "<group>"; };
+		3B2ADD1821FECFBA00F62D63 /* QDStrategyDTO.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDStrategyDTO.m; sourceTree = "<group>"; };
+		3B2ADD2421FEE3EC00F62D63 /* QDShowMenuView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDShowMenuView.h; sourceTree = "<group>"; };
+		3B2ADD2521FEE3EC00F62D63 /* QDShowMenuView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDShowMenuView.m; sourceTree = "<group>"; };
+		3B2ADD2721FEECA400F62D63 /* QDBridgeTViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDBridgeTViewController.h; sourceTree = "<group>"; };
+		3B2ADD2821FEECA400F62D63 /* QDBridgeTViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDBridgeTViewController.m; sourceTree = "<group>"; };
 		3B2C1F6821F56C1A00DD94CD /* QDCalendarTopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QDCalendarTopView.h; sourceTree = "<group>"; };
 		3B2C1F6921F56C1A00DD94CD /* QDCalendarTopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QDCalendarTopView.m; sourceTree = "<group>"; };
 		3B2C1F8021F5CAB100DD94CD /* QDCalendarViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDCalendarViewController.h; sourceTree = "<group>"; };
@@ -438,8 +493,21 @@
 				3B04DF4F21F83E5E001909CD /* QDHotelFacilityDTO.m */,
 				3B04DF5121F83E6F001909CD /* QDRoomTypeDTO.h */,
 				3B04DF5221F83E6F001909CD /* QDRoomTypeDTO.m */,
+				3B2ADD1721FECFB900F62D63 /* QDStrategyDTO.h */,
+				3B2ADD1821FECFBA00F62D63 /* QDStrategyDTO.m */,
 			);
 			path = Hotel;
+			sourceTree = "<group>";
+		};
+		3B04DF5421F85001001909CD /* QDRefreshView */ = {
+			isa = PBXGroup;
+			children = (
+				3B04DF5521F85001001909CD /* QDRefreshFooter.m */,
+				3B04DF5621F85001001909CD /* QDRefreshHeader.m */,
+				3B04DF5721F85001001909CD /* QDRefreshHeader.h */,
+				3B04DF5821F85001001909CD /* QDRefreshFooter.h */,
+			);
+			path = QDRefreshView;
 			sourceTree = "<group>";
 		};
 		3B0CD6DD21F05E7D0020824A /* Config */ = {
@@ -470,6 +538,15 @@
 				3B0CD74521F1DEC00020824A /* SYChineseToPinyin.m */,
 			);
 			path = Settings;
+			sourceTree = "<group>";
+		};
+		3B1BC00921FAEDDA0005C415 /* CustomMapView */ = {
+			isa = PBXGroup;
+			children = (
+				3B1BC00A21FAEDF10005C415 /* RadialCircleAnnotationView.h */,
+				3B1BC00B21FAEDF10005C415 /* RadialCircleAnnotationView.m */,
+			);
+			path = CustomMapView;
 			sourceTree = "<group>";
 		};
 		3B1DFDE921F2BC81007D4B12 /* Settings */ = {
@@ -528,6 +605,7 @@
 		3B40EB7321EC952800656C1F /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				3B04DF5421F85001001909CD /* QDRefreshView */,
 				3B2C1F8621F5DF1A00DD94CD /* QDDateUtils.h */,
 				3B2C1F8721F5DF1B00DD94CD /* QDDateUtils.m */,
 				3B1DFE1221F305E1007D4B12 /* QDSegmentControl.h */,
@@ -742,6 +820,7 @@
 		3BD9515B21EC2A1700CD0627 = {
 			isa = PBXGroup;
 			children = (
+				3B1BC00221FAA1590005C415 /* MBProgressHUD.bundle */,
 				3B0CD74121F1DE380020824A /* SYCity.bundle */,
 				3B0CD73621F1868B0020824A /* AMap.bundle */,
 				3BD9516621EC2A1800CD0627 /* TravelPoints */,
@@ -782,6 +861,7 @@
 				3BD9517521EC2A1C00CD0627 /* Info.plist */,
 				3BD9517621EC2A1C00CD0627 /* main.m */,
 				3BD951ED21EC75C700CD0627 /* QDTravelPoints.pch */,
+				3B2ADD0221FD396E00F62D63 /* Images.xcassets */,
 			);
 			path = TravelPoints;
 			sourceTree = "<group>";
@@ -810,6 +890,8 @@
 		3BD9518321EC5A2200CD0627 /* Restaurant */ = {
 			isa = PBXGroup;
 			children = (
+				3B04DF8421F9AA66001909CD /* CustomTravelDTO.h */,
+				3B04DF8521F9AA66001909CD /* CustomTravelDTO.m */,
 			);
 			path = Restaurant;
 			sourceTree = "<group>";
@@ -830,6 +912,7 @@
 		3BD9518621EC5A2200CD0627 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				3B1BC00921FAEDDA0005C415 /* CustomMapView */,
 				3B1DFDE921F2BC81007D4B12 /* Settings */,
 				3B40EBC421EC962100656C1F /* WXProgressHUD */,
 				3BCE3C2521EC83F7005D518F /* LoginAndRegister */,
@@ -847,6 +930,16 @@
 			children = (
 				3B0CD73A21F1A4940020824A /* QDHomeTopView.h */,
 				3B0CD73B21F1A4940020824A /* QDHomeTopView.m */,
+				3B1BC01621FB264D0005C415 /* QDHotelsInAreaView.h */,
+				3B1BC01721FB264D0005C415 /* QDHotelsInAreaView.m */,
+				3B2ADD0621FD95F600F62D63 /* QDHotelsInAreaViewTableViewCell.h */,
+				3B2ADD0721FD95F600F62D63 /* QDHotelsInAreaViewTableViewCell.m */,
+				3B2ADD0D21FDA13F00F62D63 /* QDStrategyTableViewCell.h */,
+				3B2ADD0E21FDA13F00F62D63 /* QDStrategyTableViewCell.m */,
+				3B2ADD1221FEA51600F62D63 /* QDHotelAndStrategyFilterView.h */,
+				3B2ADD1321FEA51600F62D63 /* QDHotelAndStrategyFilterView.m */,
+				3B2ADD2421FEE3EC00F62D63 /* QDShowMenuView.h */,
+				3B2ADD2521FEE3EC00F62D63 /* QDShowMenuView.m */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -913,6 +1006,8 @@
 			children = (
 				3BD9519021EC5A4A00CD0627 /* QDHomeViewController.h */,
 				3BD9519121EC5A4A00CD0627 /* QDHomeViewController.m */,
+				3B1BC01321FB260E0005C415 /* QDHotelsInAreaViewController.h */,
+				3B1BC01421FB260E0005C415 /* QDHotelsInAreaViewController.m */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -933,6 +1028,8 @@
 				3B40EC1721EECDED00656C1F /* QDSettingViewController.m */,
 				3BEA2C3921EF478E001C52C4 /* QDBridgeViewController.h */,
 				3BEA2C3A21EF478E001C52C4 /* QDBridgeViewController.m */,
+				3B2ADD2721FEECA400F62D63 /* QDBridgeTViewController.h */,
+				3B2ADD2821FEECA400F62D63 /* QDBridgeTViewController.m */,
 				3B2C1F8C21F732AD00DD94CD /* QDMineInfoViewController.h */,
 				3B2C1F8D21F732AD00DD94CD /* QDMineInfoViewController.m */,
 			);
@@ -972,6 +1069,8 @@
 				3B1DFE1521F31588007D4B12 /* QDHotelTypeView.m */,
 				3B1DFE1721F31A5C007D4B12 /* QDHotelTypeCell.h */,
 				3B1DFE1821F31A5D007D4B12 /* QDHotelTypeCell.m */,
+				3B1BBFFF21F9DE4D0005C415 /* QDHotelTableFooterView.h */,
+				3B1BC00021F9DE4D0005C415 /* QDHotelTableFooterView.m */,
 			);
 			path = Hotel;
 			sourceTree = "<group>";
@@ -987,8 +1086,14 @@
 		3BD951B821EC6E5300CD0627 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3B2ADD1521FEA68B00F62D63 /* seach_01@2x.png */,
+				3B2ADD1021FE908300F62D63 /* strategy@2x.png */,
+				3B2ADD0B21FD996300F62D63 /* range@2x.png */,
+				3B2ADD0421FD637E00F62D63 /* empty@2x.png */,
+				3B1BC00F21FAFAE20005C415 /* gpsStat1@2x.png */,
+				3B1BC00D21FAFAE10005C415 /* decrease@2x.png */,
+				3B1BC00E21FAFAE10005C415 /* increase@2x.png */,
 				3B1DFE2021F32DAA007D4B12 /* test.png */,
-				3B0CD73821F186DB0020824A /* icon_location@2x.png */,
 				3B0CD6E721F0639D0020824A /* hotel.png */,
 				3BD951B921EC6E5300CD0627 /* tabbar */,
 			);
@@ -1119,22 +1224,30 @@
 			buildActionMask = 2147483647;
 			files = (
 				3BD9517421EC2A1C00CD0627 /* LaunchScreen.storyboard in Resources */,
+				3B2ADD0321FD396E00F62D63 /* Images.xcassets in Resources */,
 				3BD951C721EC6E6800CD0627 /* icon_tabbar_mine@2x.png in Resources */,
 				3B0CD73721F1868C0020824A /* AMap.bundle in Resources */,
 				3BD9517121EC2A1C00CD0627 /* Assets.xcassets in Resources */,
 				3B0CD74221F1DE380020824A /* SYCity.bundle in Resources */,
 				3BD951C921EC6E6800CD0627 /* icon_tabbar_homepage_selected@2x.png in Resources */,
+				3B2ADD1121FE908300F62D63 /* strategy@2x.png in Resources */,
 				3BD951CA21EC6E6800CD0627 /* icon_tabbar_misc_selected@2x.png in Resources */,
-				3B0CD73921F186DB0020824A /* icon_location@2x.png in Resources */,
 				3BD951CC21EC6E6800CD0627 /* icon_tabbar_homepage@2x.png in Resources */,
 				3BD951C621EC6E6800CD0627 /* icon_tabbar_merchant_selected@2x.png in Resources */,
 				3BD951C821EC6E6800CD0627 /* icon_tabbar_merchant_normal@2x.png in Resources */,
 				3BD951CB21EC6E6800CD0627 /* icon_tabbar_onsite_selected@2x.png in Resources */,
 				3B1DFE2121F32DAA007D4B12 /* test.png in Resources */,
+				3B2ADD0C21FD996300F62D63 /* range@2x.png in Resources */,
 				3BD9516F21EC2A1800CD0627 /* Main.storyboard in Resources */,
+				3B1BC01221FAFAE20005C415 /* gpsStat1@2x.png in Resources */,
 				3BD951C521EC6E6800CD0627 /* icon_tabbar_mine_selected@2x.png in Resources */,
+				3B2ADD0521FD637E00F62D63 /* empty@2x.png in Resources */,
 				3BD951C421EC6E6700CD0627 /* icon_tabbar_misc@2x.png in Resources */,
+				3B2ADD1621FEA68B00F62D63 /* seach_01@2x.png in Resources */,
 				3BD951CD21EC6E6800CD0627 /* icon_tabbar_onsite@2x.png in Resources */,
+				3B1BC01021FAFAE20005C415 /* decrease@2x.png in Resources */,
+				3B1BC00321FAA1590005C415 /* MBProgressHUD.bundle in Resources */,
+				3B1BC01121FAFAE20005C415 /* increase@2x.png in Resources */,
 				3B0CD6E821F0639D0020824A /* hotel.png in Resources */,
 				3BEA2C3D21EF4C15001C52C4 /* ExampleApp.html in Resources */,
 			);
@@ -1203,17 +1316,21 @@
 				3B40EBED21EDA93800656C1F /* QDMsgVerifyView.m in Sources */,
 				3B40EBD921ED6C2400656C1F /* QDLoginAndRegisterVC.m in Sources */,
 				3B40EBBA21EC953E00656C1F /* NSParagraphStyle+YYText.m in Sources */,
+				3B2ADD2921FEECA400F62D63 /* QDBridgeTViewController.m in Sources */,
 				3B1DFE0A21F2D26D007D4B12 /* SYSearchController.m in Sources */,
 				3B40EBD021ECB0DD00656C1F /* QDButton.m in Sources */,
 				3B40EBBF21EC953E00656C1F /* YYTextAsyncLayer.m in Sources */,
 				3B0CD74621F1DEC10020824A /* SYChineseToPinyin.m in Sources */,
 				3B40EBD321ED61F100656C1F /* QDLoginView.m in Sources */,
 				3B40EBCA21ECA46100656C1F /* QDRegisterViewController.m in Sources */,
+				3B2ADD2621FEE3EC00F62D63 /* QDShowMenuView.m in Sources */,
 				3B40EC0321EDE33300656C1F /* XBGradientColorView.m in Sources */,
 				3B40EC0621EDE75100656C1F /* QDMineView.m in Sources */,
 				3B2C1F8221F5CAB100DD94CD /* QDCalendarViewController.m in Sources */,
+				3B2ADD0F21FDA13F00F62D63 /* QDStrategyTableViewCell.m in Sources */,
 				3B40EBFA21EDCDA700656C1F /* QDResetLoginPwdView.m in Sources */,
 				3B2C1F6A21F56C1A00DD94CD /* QDCalendarTopView.m in Sources */,
+				3B2ADD0821FD95F600F62D63 /* QDHotelsInAreaViewTableViewCell.m in Sources */,
 				3B2C1F8B21F72A3400DD94CD /* QDLogonWithNoFinancialAccountView.m in Sources */,
 				3B1DFDFB21F2CDDF007D4B12 /* SYHeaderView.m in Sources */,
 				3B40EBBE21EC953E00656C1F /* UIView+YYText.m in Sources */,
@@ -1223,6 +1340,7 @@
 				3B0CD74921F1E1C00020824A /* QDCitySelectedViewController.m in Sources */,
 				3B40EC0C21EE08A600656C1F /* QDMineTableHeaderView.m in Sources */,
 				3BCE3C1D21EC7FED005D518F /* QDServiceErrorHandler.m in Sources */,
+				3B04DF5A21F85002001909CD /* QDRefreshHeader.m in Sources */,
 				3B0CD6EB21F0689B0020824A /* QDHotelVC.m in Sources */,
 				3BCE3C2821EC84A3005D518F /* QDRegisterView.m in Sources */,
 				3B2C1F8521F5D89500DD94CD /* RangePickerCell.m in Sources */,
@@ -1245,10 +1363,12 @@
 				3BEA2C3821EF45C5001C52C4 /* WebViewJavascriptBridge_JS.m in Sources */,
 				3B0CD71321F08E030020824A /* QDHotelHeaderView.m in Sources */,
 				3B40EC0921EDE85200656C1F /* SPButton.m in Sources */,
+				3B1BC01821FB264D0005C415 /* QDHotelsInAreaView.m in Sources */,
 				3B1DFE0D21F2D797007D4B12 /* SYCollectionCell.m in Sources */,
 				3B40EB7121EC92C700656C1F /* QDResponseObject.m in Sources */,
 				3B04DF4221F8037E001909CD /* UserMoneyDTO.m in Sources */,
 				3B40EBE321ED857700656C1F /* QDIdentifyViewController.m in Sources */,
+				3B04DF5921F85001001909CD /* QDRefreshFooter.m in Sources */,
 				3B40EBBC21EC953E00656C1F /* UIPasteboard+YYText.m in Sources */,
 				3B40EBAB21EC953E00656C1F /* YYTextContainerView.m in Sources */,
 				3B04DF4D21F83E17001909CD /* QDBankaccountDTO.m in Sources */,
@@ -1268,6 +1388,7 @@
 				3B1DFE1C21F3226E007D4B12 /* QDRestaurantTopView.m in Sources */,
 				3B40EBB921EC953E00656C1F /* YYTextUtilities.m in Sources */,
 				3B40EBCD21ECA64A00656C1F /* NSDictionary+Helper.m in Sources */,
+				3B1BC01521FB260E0005C415 /* QDHotelsInAreaViewController.m in Sources */,
 				3B40EC1821EECDED00656C1F /* QDSettingViewController.m in Sources */,
 				3B40EBB621EC953E00656C1F /* YYTextAttribute.m in Sources */,
 				3B0CD73C21F1A4940020824A /* QDHomeTopView.m in Sources */,
@@ -1275,6 +1396,7 @@
 				3B04DF4521F80391001909CD /* UserCreditDTO.m in Sources */,
 				3B40EBEA21ED925F00656C1F /* VertificationCodeInputLabel.m in Sources */,
 				3B1DFE1321F305E2007D4B12 /* QDSegmentControl.m in Sources */,
+				3B2ADD1921FECFBA00F62D63 /* QDStrategyDTO.m in Sources */,
 				3B1DFE1021F2F3C0007D4B12 /* SYHotCityHeaderView.m in Sources */,
 				3B40EBB021EC953E00656C1F /* YYTextSelectionView.m in Sources */,
 				3B40EBB521EC953E00656C1F /* YYTextParser.m in Sources */,
@@ -1300,12 +1422,16 @@
 				3B40EC0F21EE0C2200656C1F /* QDMineHeaderNotLoginView.m in Sources */,
 				3B40EBC321EC956300656C1F /* QDUserDefaults.m in Sources */,
 				3BEA2C2F21EF3883001C52C4 /* WebViewJavascriptBridgeBase.m in Sources */,
+				3B1BC00121F9DE4D0005C415 /* QDHotelTableFooterView.m in Sources */,
 				3B0CD6E221F05E850020824A /* UIColor+Extention.m in Sources */,
 				3B1DFDEC21F2BCA6007D4B12 /* QDLocationTopSelectView.m in Sources */,
 				3B40EBB721EC953E00656C1F /* YYTextArchiver.m in Sources */,
+				3B04DF8621F9AA66001909CD /* CustomTravelDTO.m in Sources */,
 				3B2C1F8E21F732AD00DD94CD /* QDMineInfoViewController.m in Sources */,
+				3B1BC00C21FAEDF10005C415 /* RadialCircleAnnotationView.m in Sources */,
 				3B04DF3F21F7FE27001909CD /* QDMemberDTO.m in Sources */,
 				3BD9516921EC2A1800CD0627 /* AppDelegate.m in Sources */,
+				3B2ADD1421FEA51600F62D63 /* QDHotelAndStrategyFilterView.m in Sources */,
 				3B40EBB221EC953E00656C1F /* YYTextDebugOption.m in Sources */,
 				3B1DFE1921F31A5D007D4B12 /* QDHotelTypeCell.m in Sources */,
 			);
@@ -1450,6 +1576,9 @@
 			baseConfigurationReference = 511DB104CDCE097693D079A1 /* Pods-TravelPoints.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4DVSB2T6TD;
 				GCC_INPUT_FILETYPE = automatic;
@@ -1462,6 +1591,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.quantdo.travelPoints;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1471,6 +1601,9 @@
 			baseConfigurationReference = 336807D058BD974831344AA1 /* Pods-TravelPoints.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4DVSB2T6TD;
 				GCC_INPUT_FILETYPE = automatic;
@@ -1483,6 +1616,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.quantdo.travelPoints;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

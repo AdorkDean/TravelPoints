@@ -73,4 +73,12 @@
 }
 
 
+-(void)fillContentWithModel:(CustomTravelDTO *)infoModel andImgData:(NSData *)imgData{
+    self.thePic.image = [UIImage imageWithData:imgData];
+    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    self.titleLab.text = infoModel.travelName;
+    self.ftLab.text = [NSString stringWithFormat:@"%@FT 起", infoModel.singleCost];
+    double ss = [infoModel.singleCost doubleValue] * delegate.basePirceRate;
+    self.rmbLab.text = [NSString stringWithFormat:@"折合人民币%.f元", ss];
+}
 @end

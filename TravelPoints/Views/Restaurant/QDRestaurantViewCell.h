@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "CustomTravelDTO.h"
+#import "AppDelegate.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QDRestaurantViewCell : UITableViewCell
@@ -15,6 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *titleLab;
 @property (nonatomic, strong) UILabel *ftLab;
 @property (nonatomic, strong) UILabel *rmbLab;
+
+-(void)fillContentWithModel:(CustomTravelDTO *)infoModel andImgData:(NSData *)imgData;
+
 @end
 
 NS_ASSUME_NONNULL_END

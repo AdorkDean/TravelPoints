@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "QDHotelListInfoModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QDHotelTableViewCell : UITableViewCell
@@ -18,6 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *priceRMBLab;
 @property (nonatomic, strong) UILabel *locationLab;
 
+
+-(void)fillContentWithModel:(QDHotelListInfoModel *)infoModel andImgData:(NSData *)imgData;
 @end
 
 NS_ASSUME_NONNULL_END

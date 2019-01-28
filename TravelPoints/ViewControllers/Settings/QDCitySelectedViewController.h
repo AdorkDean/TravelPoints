@@ -16,11 +16,14 @@
 #import "SYHotCityHeaderView.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface QDCitySelectedViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, SYSearchControllerDelegate, UISearchControllerDelegate, UISearchResultsUpdating, UISearchBarDelegate,CLLocationManagerDelegate>
-@property (nonatomic, strong) UISearchBar *searchBar;
-@property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) SYSearchController *searchVc;
-@property (nonatomic, strong) UITableViewController *resultVc;
+@protocol getChoosedAreaDelegate <NSObject>
+
+- (void)getChoosedAreaName:(NSString *)areaStr;
+@end
+
+@interface QDCitySelectedViewController : UIViewController<CLLocationManagerDelegate>
+//@property (nonatomic, strong) SYSearchController *searchVc;
+//@property (nonatomic, strong) UITableViewController *resultVc;
 
 @property (nonatomic, strong) CLLocationManager *locationManager;
 
@@ -33,6 +36,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// 选择城市后回调
 @property (nonatomic, copy) void(^selectCity)(NSString *cityName);
 
+@property (nonatomic, strong) id<getChoosedAreaDelegate>delegate;
+
+
 /*
  * 是否开启定位,默认为NO，请自行定位传当前位置进来
  * 当前，也可开启,开启后 currentCityName 设置无效
@@ -41,7 +47,6 @@ NS_ASSUME_NONNULL_BEGIN
  * NSLocationAlwaysUsageDescription
  * NSLocationWhenInUseUsageDescription
  */
-@property (nonatomic, assign) BOOL openLocation;
 
 /// 返回按钮图片
 @property (nonatomic, copy) NSString *backImageName;

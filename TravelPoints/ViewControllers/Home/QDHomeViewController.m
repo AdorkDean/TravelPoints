@@ -8,11 +8,14 @@
 
 #import "QDHomeViewController.h"
 #import "QDHomeTopView.h"
-@interface QDHomeViewController ()<MAMapViewDelegate, AMapLocationManagerDelegate>
+#import "RadialCircleAnnotationView.h"
+#import "QDCitySelectedViewController.h"
+#import "QDHotelsInAreaViewController.h"
+@interface QDHomeViewController ()<MAMapViewDelegate, AMapLocationManagerDelegate, UISearchBarDelegate, getChoosedAreaDelegate>
 
 @property (nonatomic, strong) UISegmentedControl *showSegment;
 @property (nonatomic, strong) UISegmentedControl *headingSegment;
-@property (nonatomic, strong) MAPointAnnotation *pointAnnotaiton;
+@property (nonatomic, strong) MAPointAnnotation *annotation;
 @property (nonatomic, assign) BOOL headingCalibration;
 @property (nonatomic, strong) MAPinAnnotationView *annotationView;
 @property (nonatomic, assign) CGFloat annotationViewAngle;
@@ -20,6 +23,8 @@
 @property (nonatomic, strong) QDHomeTopView *homeTopView;
 
 @property (nonatomic, strong) NSMutableArray *regions;
+@property (nonatomic, strong) UIButton *gpsButton;
+
 
 @end
 
@@ -54,36 +59,12 @@
     [self.locationManager setPausesLocationUpdatesAutomatically:NO];
     
     //设置允许在后台定位
-    [self.locationManager setAllowsBackgroundLocationUpdates:YES];
+//    [self.locationManager setAllowsBackgroundLocationUpdates:YES];
     
     //设置允许连续定位逆地理
     [self.locationManager setLocatingWithReGeocode:YES];
     
-    
-    CLLocationCoordinate2D coordinate;
-    coordinate.latitude = 31.212004;
-    coordinate.longitude = 121.534437;
-//    [self addCircleReionForCoordinate:coordinate];
-}
-
-- (void)showsSegmentAction:(UISegmentedControl *)sender
-{
-    if (sender.selectedSegmentIndex)
-    {
-        //停止定位
-        [self.locationManager stopUpdatingLocation];
-        [self.locationManager stopUpdatingHeading];
-        
-        //移除地图上的annotation
-        [self.mapView removeAnnotations:self.mapView.annotations];
-        self.pointAnnotaiton = nil;
-        _annotationView = nil;
-    }
-    else
-    {
-        [self startHeadingLocation];
-    }
-    
+    [self.locationManager startUpdatingLocation];
 }
 
 - (void)showsHeadingAction:(UISegmentedControl *)sender
@@ -139,55 +120,12 @@
     if (self.regions.count) {
         [self.regions removeAllObjects];
     }
-//    [self addCircleReionForCoordinate:location.coordinate];
-
-    //获取到定位信息，更新annotation
-    if (self.pointAnnotaiton == nil)
-    {
-        self.pointAnnotaiton = [[MAPointAnnotation alloc] init];
-        [self.pointAnnotaiton setCoordinate:location.coordinate];
-        
-        [self.mapView addAnnotation:self.pointAnnotaiton];
-    }
-    
-    [self.pointAnnotaiton setCoordinate:location.coordinate];
     
     [self.mapView setCenterCoordinate:location.coordinate];
+    [self.annotation setCoordinate:location.coordinate];
     [self.mapView setZoomLevel:15.1 animated:NO];
 }
 
-- (void)addCircleReionForCoordinate:(CLLocationCoordinate2D)coordinate
-{
-    //创建圆形地理围栏
-    AMapLocationCircleRegion *cirRegion200 = [[AMapLocationCircleRegion alloc] initWithCenter:coordinate
-                                                                                       radius:200.0
-                                                                                   identifier:@"circleRegion200"];
-    
-    AMapLocationCircleRegion *cirRegion300 = [[AMapLocationCircleRegion alloc] initWithCenter:coordinate
-                                                                                       radius:300.0
-                                                                                   identifier:@"circleRegion300"];
-    
-    //添加地理围栏
-    
-    
-//    [self.locationManager startMonitoringForRegion:cirRegion200];
-    [self.locationManager startMonitoringForRegion:cirRegion300];
-    
-    //保存地理围栏
-//    [self.regions addObject:cirRegion200];
-    if (self.regions.count) {
-        [self.regions removeAllObjects];
-    }
-    [self.regions addObject:cirRegion300];
-    QDLog(@"self.regions.count = %lu", (unsigned long)self.regions.count);
-    //添加地理围栏对应的Overlay，方便查看
-//    MACircle *circle200 = [MACircle circleWithCenterCoordinate:coordinate radius:200.0];
-    MACircle *circle300 = [MACircle circleWithCenterCoordinate:coordinate radius:300.0];
-//    [self.mapView addOverlay:circle200];
-    [self.mapView addOverlay:circle300];
-    
-    [self.mapView setVisibleMapRect:circle300.boundingMapRect];
-}
 - (BOOL)amapLocationManagerShouldDisplayHeadingCalibration:(AMapLocationManager *)manager
 {
     return _headingCalibration;
@@ -214,10 +152,11 @@
         self.mapView = [[MAMapView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT*0.3, SCREEN_WIDTH, SCREEN_HEIGHT*0.7)];
         //比例尺
         self.mapView.showsScale = YES;
+//        self.mapView.userTrackingMode = MAUserTrackingModeFollow;
         //罗盘
         self.mapView.showsCompass = NO;
+//        self.mapView.showsUserLocation = YES;
         [self.mapView setDelegate:self];
-        
         [self.view addSubview:self.mapView];
     }
 }
@@ -226,24 +165,53 @@
     _homeTopView = [[QDHomeTopView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.3)];
     _homeTopView.backgroundColor = APP_GREENCOLOR;
     [self.view addSubview:_homeTopView];
-}
-- (void)initToolBar
-{
-    UIBarButtonItem *flexble = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
-                                                                             target:nil
-                                                                             action:nil];
+    _homeTopView.searchBar.delegate = self;
     
-    self.showSegment = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"Start", @"Stop", nil]];
-    [self.showSegment addTarget:self action:@selector(showsSegmentAction:) forControlEvents:UIControlEventValueChanged];
-    self.showSegment.selectedSegmentIndex = 0;
-    UIBarButtonItem *showItem = [[UIBarButtonItem alloc] initWithCustomView:self.showSegment];
+    UIView *bottomView = [[UIView alloc] init];
+    bottomView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:bottomView];
+    [bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view);
+        make.top.equalTo(self.view.mas_top).offset(SCREEN_HEIGHT*0.85);
+        make.width.mas_equalTo(SCREEN_WIDTH*0.89);
+        make.height.mas_equalTo(SCREEN_HEIGHT*0.06);
+    }];
+    UILabel *lab = [[UILabel alloc] init];
+    lab.text = @"发行计划";
+    lab.font = QDFont(13);
+    [bottomView addSubview:lab];
+    [lab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(bottomView);
+        make.left.equalTo(bottomView.mas_left).offset(SCREEN_WIDTH*0.027);
+    }];
     
-    self.headingSegment = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"不校准", @"校准", nil]];
-    [self.headingSegment addTarget:self action:@selector(showsHeadingAction:) forControlEvents:UIControlEventValueChanged];
-    self.headingSegment.selectedSegmentIndex = 0;
-    UIBarButtonItem *showItem2 = [[UIBarButtonItem alloc] initWithCustomView:self.headingSegment];
+    UIView *lineView = [[UIView alloc] init];
+    lineView.backgroundColor = APP_GRAYCOLOR;
+    [bottomView addSubview:lineView];
+    [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(bottomView);
+        make.left.equalTo(bottomView.mas_left).offset(SCREEN_WIDTH*0.2);
+        make.height.mas_equalTo(SCREEN_HEIGHT*0.02);
+        make.width.mas_equalTo(SCREEN_WIDTH*0.008);
+    }];
     
-    self.toolbarItems = [NSArray arrayWithObjects:flexble, showItem, flexble, showItem2, flexble, nil];
+    UILabel *desc = [[UILabel alloc] init];
+    desc.text = @"发行计划说明文字";
+    desc.font = QDFont(11);
+    desc.textColor = APP_GRAYCOLOR;
+    [bottomView addSubview:desc];
+    [desc mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(bottomView);
+        make.left.equalTo(bottomView.mas_left).offset(SCREEN_WIDTH*0.23);
+    }];
+    
+    UIImageView *img = [[UIImageView alloc] init];
+    img.image = [UIImage imageNamed:@"ad_back_black"];
+    [bottomView addSubview:img];
+    [img mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(bottomView);
+        make.right.equalTo(bottomView.mas_right).offset(-(SCREEN_WIDTH*0.027));
+    }];
 }
 
 #pragma mark - Life Cycle
@@ -254,12 +222,26 @@
     
     [self.view setBackgroundColor:[UIColor whiteColor]];
     self.regions = [[NSMutableArray alloc] init];
-    [self initToolBar];
     
     [self initMapView];
     [self initUI];
     
     [self configLocationManager];
+    [self addOneAnnotation];
+
+    
+//    UIView *zoomPannelView = [self makeZoomPannelView];
+//    zoomPannelView.center = CGPointMake(self.view.bounds.size.width -  CGRectGetMidX(zoomPannelView.bounds) - 10,
+//                                        self.view.bounds.size.height -  CGRectGetMidY(zoomPannelView.bounds) - 10);
+//
+//    zoomPannelView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin;
+//    [self.view addSubview:zoomPannelView];
+    
+//    self.gpsButton = [self makeGPSButtonView];
+//    self.gpsButton.center = CGPointMake(CGRectGetMidX(self.gpsButton.bounds) + 10,
+//                                        self.view.bounds.size.height -  CGRectGetMidY(self.gpsButton.bounds) - 20);
+//    [self.view addSubview:self.gpsButton];
+//    self.gpsButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin;
 }
 
 
@@ -267,40 +249,55 @@
 {
     [super viewDidAppear:animated];
     
-    [self startHeadingLocation];
-    
-    if ([AMapLocationManager headingAvailable] == NO)
-    {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"该设备不支持方向功能" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [alertView show];
-    }
+//    [self startHeadingLocation];
+//
+//    if ([AMapLocationManager headingAvailable] == NO)
+//    {
+//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"该设备不支持方向功能" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+//        [alertView show];
+//    }
 }
 
+- (void)addOneAnnotation{
+    _annotation = [[MAPointAnnotation alloc] init];
+    _annotation.coordinate = self.mapView.centerCoordinate;
+    [self.mapView addAnnotation:self.annotation];
+}
 #pragma mark - MAMapView Delegate
 
 - (MAAnnotationView *)mapView:(MAMapView *)mapView viewForAnnotation:(id<MAAnnotation>)annotation
 {
     if ([annotation isKindOfClass:[MAPointAnnotation class]])
     {
-        static NSString *pointReuseIndetifier = @"pointReuseIndetifier";
-        
-        MAPinAnnotationView *annotationView = _annotationView;
+        static NSString *pointReuseIdentifier = @"pointReuseIdentifier";
+        RadialCircleAnnotationView *annotationView = (RadialCircleAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:pointReuseIdentifier];
         if (annotationView == nil)
         {
-            annotationView = [[MAPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:pointReuseIndetifier];
-            annotationView.canShowCallout   = NO;
-            annotationView.animatesDrop     = NO;
-            annotationView.draggable        = NO;
-            annotationView.image            = [UIImage imageNamed:@"icon_location.png"];
-            _annotationView = annotationView;
-            _annotationViewAngle = 0;
+            annotationView = [[RadialCircleAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:pointReuseIdentifier];
+            annotationView.canShowCallout = YES;
+            
+            //脉冲圈个数
+            annotationView.pulseCount = 2;
+            //单个脉冲圈动画时长
+            annotationView.animationDuration = 8.0;
+            //单个脉冲圈起始直径
+            annotationView.baseDiameter = 8.0;
+            //单个脉冲圈缩放比例
+            annotationView.scale = 30.0;
+            //单个脉冲圈fillColor
+            annotationView.fillColor = APP_GREENCOLOR;
+            //单个脉冲圈strokeColor
+            annotationView.strokeColor = [UIColor colorWithHexString:@"#E0EDDA"];
+            
+            //更改设置后重新开始动画
+            [annotationView startPulseAnimation];
         }
-        
         return annotationView;
     }
     
     return nil;
 }
+
 
 #pragma mark - MAMapViewDelegate
 //
@@ -326,4 +323,95 @@
     return nil;
 }
 
+#pragma mark - 定位按钮
+- (UIButton *)makeGPSButtonView {
+    UIButton *ret = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
+    ret.backgroundColor = [UIColor whiteColor];
+    ret.layer.cornerRadius = 4;
+    
+    [ret setImage:[UIImage imageNamed:@"gpsStat1"] forState:UIControlStateNormal];
+    [ret addTarget:self action:@selector(gpsAction) forControlEvents:UIControlEventTouchUpInside];
+    
+    return ret;
+}
+
+- (UIView *)makeZoomPannelView
+{
+    UIView *ret = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 53, 98)];
+    
+    UIButton *incBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 53, 49)];
+    [incBtn setImage:[UIImage imageNamed:@"increase"] forState:UIControlStateNormal];
+    [incBtn sizeToFit];
+    [incBtn addTarget:self action:@selector(zoomPlusAction) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *decBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 49, 53, 49)];
+    [decBtn setImage:[UIImage imageNamed:@"decrease"] forState:UIControlStateNormal];
+    [decBtn sizeToFit];
+    [decBtn addTarget:self action:@selector(zoomMinusAction) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    [ret addSubview:incBtn];
+    [ret addSubview:decBtn];
+    
+    return ret;
+}
+
+- (void)zoomPlusAction
+{
+    CGFloat oldZoom = self.mapView.zoomLevel;
+    [self.mapView setZoomLevel:(oldZoom + 1) animated:YES];
+}
+
+- (void)zoomMinusAction
+{
+    CGFloat oldZoom = self.mapView.zoomLevel;
+    [self.mapView setZoomLevel:(oldZoom - 1) animated:YES];
+}
+
+- (void)gpsAction {
+    
+//    11
+    [self.mapView setCenterCoordinate:self.mapView.userLocation.location.coordinate animated:YES];
+    [self.gpsButton setSelected:YES];
+//    if(self.mapView.userLocation.updating && self.mapView.userLocation.location) {
+//        [self.mapView setCenterCoordinate:self.mapView.userLocation.location.coordinate animated:YES];
+//        [self.gpsButton setSelected:YES];
+//    }
+}
+
+#pragma mark - 城市选择其
+- (void)getChoosedAreaName:(NSString *)areaStr{
+    QDLog(@"areaStr = %@", areaStr);
+    QDHotelsInAreaViewController *areaVC = [[QDHotelsInAreaViewController alloc] init];
+    [self.navigationController pushViewController:areaVC animated:YES];
+}
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{
+    QDLog(@"searchBarTextDidBeginEditing");
+    QDCitySelectedViewController *cityVC = [[QDCitySelectedViewController alloc] init];
+    cityVC.delegate = self;
+    cityVC.selectCity = ^(NSString * _Nonnull cityName) {
+        QDLog(@"%@", cityName);
+        QDHotelsInAreaViewController *areaVC = [[QDHotelsInAreaViewController alloc] init];
+        [self.navigationController pushViewController:areaVC animated:YES];
+    };
+    [self presentViewController:cityVC animated:YES completion:nil];
+}
+
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
+{
+    [_homeTopView.searchBar resignFirstResponder];
+    
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
+//    [_homeTopView.searchBar resignFirstResponder];
+}
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    if (searchBar.text.length == 0) {
+        [_homeTopView.searchBar resignFirstResponder];
+    }else{
+    }
+}
 @end

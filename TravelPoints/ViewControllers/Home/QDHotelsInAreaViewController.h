@@ -12,6 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface QDHotelsInAreaViewController : UIViewController
 
+
+@property (nonatomic, strong) NSString *choosedName;
+
 @end
 
 NS_ASSUME_NONNULL_END

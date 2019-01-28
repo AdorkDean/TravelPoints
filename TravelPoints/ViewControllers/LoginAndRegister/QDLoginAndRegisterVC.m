@@ -193,20 +193,19 @@
     _yyLabel.attributedText = text;
     //居中显示一定要放在这里，放在viewDidLoad不起作用
     _yyLabel.textAlignment = NSTextAlignmentCenter;
-    
 }
 
 #pragma mark - 用户登录
 - (void)userLogin:(UIButton *)sender{
     [WXProgressHUD showHUD];
-    [[QDServiceClient shareClient] loginWithUserName:@"17321400216" password:@"1" userType:@"member" successBlock:^(QDResponseObject *responseObject) {
+    [[QDServiceClient shareClient] loginWithUserName:@"13207166278" password:@"1" userType:@"member" successBlock:^(QDResponseObject *responseObject) {
         [WXProgressHUD hideHUD];
         if (responseObject.code == 0) {
             [QDUserDefaults setObject:responseObject.result forKey:@"Token"];
             QDLog(@"Token = %@", responseObject.result);
             [MBProgressHUD hideHUDForView:self.view animated:YES];
             [WXProgressHUD showInfoWithTittle:@"登录成功"];
-            [self findMyUserCreditWithUrlStr:@"lyjfapp/api/v1/user/detail"];
+            [self findMyUserCreditWithUrlStr:api_GetUserDetail];
         }else{
             [WXProgressHUD showInfoWithTittle:responseObject.message];
         }
@@ -242,7 +241,7 @@
 }
 
 - (void)findMyUserCredit{
-    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:@"lyjfapp/api/v1/user/detail" params:nil successBlock:^(QDResponseObject *responseObject) {
+    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_GetUserDetail params:nil successBlock:^(QDResponseObject *responseObject) {
         QDLog(@"responseObject = %@", responseObject);
     } failureBlock:^(NSError *error) {
         

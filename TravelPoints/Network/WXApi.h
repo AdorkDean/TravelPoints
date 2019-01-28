@@ -14,7 +14,7 @@ const static NSString *APIKey = @"0ddab1fff98f51d5958e2aaab23f3e55";
 
 //static NSString * const QD_Domain = @"http://192.168.65.198:9083";
 //外网
-static NSString * const QD_Domain = @"http://203.110.179.27:60409/";
+static NSString * const QD_Domain = @"http://203.110.179.27:60409";
 
 static NSString * const QD_ProjectName = @"/lyjfapp/sso/";
 static NSString * const QD_MarkProjectName = @"/qdMarketJniServer/";
@@ -39,7 +39,6 @@ static NSString * const WS_TOPIC_Account = @"public_part_account_"; //资金订�
 
 /***************** API **************************/
 static NSString * const api_Login = @"login";            //登录
-static NSString * const api_LogoutService = @"logout";          //登出
 static NSString * const api_GetVerifyCode = @"captcha?d=";      //获取验证码
 static NSString * const api_ListMarketData = @"listMarketDataByInstrumentIdList";//合约列表行情
 static NSString * const api_GetMarketDataById = @"getMarketDataByInstrumentId";  //根据合约id获取行情
@@ -83,6 +82,42 @@ static NSString *const QD_Notification_Trade = @"QD_Notification_Trade";
 static NSString *const QD_Notification_Order = @"QD_Notification_Order";
 static NSString *const QD_Notification_OrderInsert = @"QD_Notification_OrderInsert";
 static NSString *const QD_Notification_OrderAction = @"QD_Notification_OrderAction";
+
+
+static NSString * const api_UserLogout = @"/lyjfapp/sso/logout";          //登出
+static NSString * const api_GetBasicPrice = @"/lyjfapp/api/v1/common/getBasicPrice";
+static NSString * const api_GetUserDetail = @"/lyjfapp/api/v1/user/detail";
+static NSString * const api_GetHotelCondition = @"/lyjfapp/api/v1/hotel/findByCondition";
+static NSString * const api_GetDZYList = @"/lyjfapp/api/v1/travel/findByCondition"; //定制游列表
+
+static NSString * const api_FindHotelById = @"/lyjfapp/api/v1/hotel/findHotelById";
+static NSString * const api_FindDifferentStrategyDTO = @"/lyjfapp/api/v1/strategy/findDifferentStrategyDTO";     //不同的攻略列表,最新最热酒店定制游
+
+/**
+ JAVAScriptBridgeWebView
+ */
+
+
+//static NSString * const QD_JSURL                = @"http://192.168.65.199:3001";    //前端地址
+static NSString * const QD_JSURL                = @"http://203.110.179.27:60409/app";    //前端地址
+static NSString * const JS_HOTELDETAIL          = @"/#/hotel/detail";               //酒店详情
+static NSString * const JS_CUSTOMERTRAVEL       = @"/#/coustomSwim/detail";         //定制游详情
+
+static NSString * const JS_ATTRACTIONSDETAIL    = @"/#/attractions/detail";         //景区详情
+static NSString * const JS_STRATEGYDETAIL       = @"/#/strategy/detail";            //攻略详情
+static NSString * const JS_RESTAURANTDETAIL     = @"/#/restaurant/detail";          //餐厅详情
+
+
+static NSString * const JS_ORDERS               = @"/#/my/orders";                  //全部订单
+static NSString * const JS_INTEGRAL             = @"/#/my/integral";                //积分账户
+static NSString * const JS_ADDRESS              = @"/#/my/address";                 //地址
+static NSString * const JS_SECURITYCENTER       = @"/#/securityCenter/home";        //安全中心
+static NSString * const JS_STRATEGY             = @"/#/my/strategy";                //攻略
+static NSString * const JS_SHOPPING             = @"/#/shopping/details";           //商城
+static NSString * const JS_SETTING              = @"/#/my/setting";                 //设置
+static NSString * const JS_NOTICE               = @"/#/my/notice";                  //系统消息
+
+
 
 #endif /* WXApi_h */
 

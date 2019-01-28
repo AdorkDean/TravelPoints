@@ -83,9 +83,24 @@
     [self initRootVC];
     [self configureAPIKey];
     [self.window makeKeyAndVisible];
+    
+    //获取基准价
+    [self getBasicPrice];
     return YES;
 }
 
+#pragma mark - 个人积分账户详情
+- (void)getBasicPrice{
+    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_GetBasicPrice params:nil successBlock:^(QDResponseObject *responseObject) {
+        if (responseObject.code == 0) {
+            self.basePirceRate = [responseObject.result doubleValue];
+        }else{
+            [WXProgressHUD showErrorWithTittle:responseObject.message];
+        }
+    } failureBlock:^(NSError *error) {
+        [WXProgressHUD hideHUD];
+    }];
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

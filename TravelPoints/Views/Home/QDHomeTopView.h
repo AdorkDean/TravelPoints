@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface QDHomeTopView : UIView<UISearchBarDelegate>
+@interface QDHomeTopView : UIView
 
 @property (nonatomic, strong) UIImageView *backImg;
 @property (nonatomic, strong) UIImageView *imgView;

@@ -15,7 +15,7 @@
 @implementation SYSearchController
 - (UIView *)maskView {
     if (!_maskView) {
-        _maskView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height)];
+        _maskView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
         _maskView.backgroundColor = [UIColor colorWithWhite:0.f alpha:0.2];
         [_maskView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cancelKeyboard)]];
         _maskView.hidden = YES;
@@ -33,10 +33,14 @@
 
 - (instancetype)initWithSearchResultsController:(UIViewController *)searchResultsController {
     if (self = [super initWithSearchResultsController:searchResultsController]) {
-        self.hidesNavigationBarDuringPresentation = YES;
-        self.searchBar.frame = CGRectMake(self.searchBar.frame.origin.x, self.searchBar.frame.origin.y, self.searchBar.frame.size.width, 44.0);
+        self.definesPresentationContext = YES;
+//        self.navigationController.navigationBar.frame = CGRectZero;
+        [self.navigationController.navigationBar setHidden:YES];
+//        self.hidesNavigationBarDuringPresentation = YES;
+//        self.searchBar.frame = CGRectMake(self.searchBar.frame.origin.x, self.searchBar.frame.origin.y, self.searchBar.frame.size.width, SCREEN_HEIGHT*0.05);
         self.searchBar.placeholder = @"输入城市名或者拼音查询";
         self.searchBar.returnKeyType = UIReturnKeyDone;
+//        self.searchBar.showsCancelButton = YES;
         //        self.searchBar.layer.cornerRadius = 15;
         //        self.searchBar.layer.masksToBounds = YES;
         //        [self.searchBar.layer setBorderWidth:8];
@@ -44,7 +48,8 @@
         //        tf.backgroundColor = SYBackgroundColor;
         //        [self.searchBar.layer setBorderColor:SYBackgroundColor.CGColor];
         //        self.searchBar.returnKeyType = UIReturnKeyDone;
-        self.searchResultsController.view.frame = CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64);
+        self.searchResultsController.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+        self.searchResultsController.view.backgroundColor = [UIColor redColor];
         if ([searchResultsController isKindOfClass:[UITableViewController class]]) {
             UITableViewController *tb = (UITableViewController *)searchResultsController;
             tb.tableView.delegate = self;

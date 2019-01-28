@@ -33,6 +33,8 @@ typedef void(^RequestCache)(id jsonCache);
 //请求成功的block
 typedef void(^RequestSuccess)(QDResponseObject *responseObject);
 
+typedef void(^RequestH5Success)(id responseObject);
+
 //请求失败的block
 typedef void(^RequestFailure)(NSError *error);
 //上传进度block
@@ -97,6 +99,7 @@ typedef void(^DownloadProgress)(NSProgress *progress);
 
 - (void)requestWithServiceName:(NSString *)serviceName functionName:(NSString *)funcName paraments:(NSArray *)paraments successBlock:(RequestSuccess)successBlock failureBlock:(RequestFailure)failureBlock progress:(DownloadProgress)progressBlock;
 
+- (void)requestWithHTMLType:(HTTPRequestType)type urlString:(NSString *)urlString params:(id)params successBlock:(RequestH5Success)successBlock failureBlock:(RequestFailure)failureBlock;
 /*
  退出登录
  */

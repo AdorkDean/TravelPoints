@@ -14,10 +14,23 @@
 #import "QDHotelTypeView.h"
 #import "QDBridgeViewController.h"
 #import "QDCalendarViewController.h"
-@interface QDHotelVC ()<UITableViewDelegate, UITableViewDataSource, NavigationViewDelegate>{
+#import "QDHotelListInfoModel.h"
+#import "QDRefreshHeader.h"
+#import "QDRefreshFooter.h"
+#import <TFDropDownMenu.h>
+
+typedef enum : NSUInteger {
+    QDFilterArea,
+    QDFilterHotelType,
+    QDFilterHotelPrice,
+    QDFilterLevel
+} QDFilterType;
+@interface QDHotelVC ()<UITableViewDelegate, UITableViewDataSource, NavigationViewDelegate, TFDropDownMenuViewDelegate>{
     UITableView *_tableView;
     QDHotelHeaderView *_headView;
     QDHotelTypeView *_typeView;
+    NSMutableArray *_hotelListInfoArr;
+    NSMutableArray *_hotelImgArr;
 }
 @property (nonatomic, strong) NavigationView *navigationView;
 @property (nonatomic, strong) UITableView *tableView;
@@ -36,10 +49,14 @@
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
-    [self requestHotelInfoWithURL:@"/lyjfapp/api/v1/hotel/findByCondition"];
+    [self requestHotelInfoWithURL:api_GetHotelCondition];
 }
 
 - (void)requestHotelInfoWithURL:(NSString *)urlStr{
+    if (_hotelListInfoArr.count) {
+        [_hotelListInfoArr removeAllObjects];
+        [_hotelImgArr removeAllObjects];
+    }
     NSDictionary * dic1 = @{@"label":@"",
                             @"pageNum":@1,
                             @"pageSize":@20
@@ -49,28 +66,31 @@
             NSDictionary *dic = responseObject.result;
             NSArray *hotelArr = [dic objectForKey:@"result"];
             if (hotelArr.count) {
+                for (NSDictionary *dic in hotelArr) {
+                    QDHotelListInfoModel *infoModel = [QDHotelListInfoModel yy_modelWithDictionary:dic];
+                    [_hotelListInfoArr addObject:infoModel];
+                    NSDictionary *dic = [infoModel.imageList firstObject];
+                    NSString *urlStr = [NSString stringWithFormat:@"%@/%@", QD_Domain, [dic objectForKey:@"imageUrl"]];
+                    QDLog(@"urlStr = %@", urlStr);
+                    NSData *imgData = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlStr]];
+                    [_hotelImgArr addObject:imgData];
+                }
+                QDLog(@"_hotelListInfoArr = %@", _hotelListInfoArr);
                 
+                [self.tableView reloadData];
             }
         }
     } failureBlock:^(NSError *error) {
         
     }];
 }
-//- (void)viewWillDisappear:(BOOL)animated{
-//    [super viewWillDisappear:animated];
-//    // 导航栏不透明
-//    [self.navigationController setNavigationBarHidden:NO animated:YES];
-//    [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
-//    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
-//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-   
-//    [self showBack:YES];
-    self.title = @"酒店";
     [self initTableView];
     [self configNavigationBar];
+    _hotelListInfoArr = [[NSMutableArray alloc] init];
+    _hotelImgArr = [[NSMutableArray alloc] init];
     [self.view addSubview:self.navgationView];
 }
 
@@ -116,8 +136,9 @@
     }
     return _navigationView;
 }
+
 - (void)initTableView{
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-48) style:UITableViewStylePlain];
     if (@available(iOS 11.0, *)) {
        _tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     } else {
@@ -126,7 +147,15 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
+    view.backgroundColor = [UIColor whiteColor];
+    _tableView.tableFooterView = view;
+    _tableView.mj_footer = [QDRefreshFooter footerWithRefreshingBlock:^{
+        QDLog(@"sss");
+        [self endRefreshing];
+        [_tableView.mj_footer endRefreshingWithNoMoreData];
+    }];
+    
     _tableView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:_tableView];
     
@@ -150,7 +179,7 @@
 #pragma mark -- tableView delegate
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return 10;
+    return _hotelListInfoArr.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -160,60 +189,60 @@
     return SCREEN_HEIGHT*0.225;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    return 0.01;
+}
+
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *identifier = @"QDHotelTableViewCell";
     QDHotelTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (cell == nil) {
         cell = [[QDHotelTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        
     }
-    
-    //设置cell点击时的颜色
-//    UIView *backgroundViews = [[UIView alloc]initWithFrame:cell.frame];
-//    backgroundViews.backgroundColor = [UIColor whiteColor];
-//    [cell setSelectedBackgroundView:backgroundViews];
-//    cell.backgroundColor = [UIColor whiteColor];
+    if (_hotelListInfoArr.count > 0) {
+        [cell fillContentWithModel:_hotelListInfoArr[indexPath.row] andImgData:_hotelImgArr[indexPath.row]];
+    }
     return cell;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    NSArray<NSString *> *segmentedTitles = @[@"全部区域", @"酒店类型", @"价格", @"星级"];
-    // Segmented control with images
-    NSArray<UIImage *> *images = @[[UIImage imageNamed:@"ad_collection_black"],
-                                   [UIImage imageNamed:@"ad_collection_black"],
-                                   [UIImage imageNamed:@"ad_collection_black"],
-                                   [UIImage imageNamed:@"ad_collection_black"]];
+    NSMutableArray *array1 = [NSMutableArray arrayWithObjects:@"全部区域", nil];
+    NSMutableArray *array2 = [NSMutableArray arrayWithObjects:@"酒店类型",@"不限",@"主题乐园",@"亲子酒店",@"休闲度假",@"公寓",@"商务出行",@"客栈", nil];
+    NSMutableArray *array3 = [NSMutableArray arrayWithObjects:@"价格", nil];
+    NSMutableArray *array4 = [NSMutableArray arrayWithObjects:@"星级",@"经济型",@"舒适/三星",@"高档/四星",@"豪华/五星", nil];
     
-    NSArray<UIImage *> *selectedImages = @[[UIImage imageNamed:@"ad_collection_red"],
-                                           [UIImage imageNamed:@"ad_collection_red"],
-                                           [UIImage imageNamed:@"ad_collection_red"],
-                                           [UIImage imageNamed:@"ad_collection_red"]];
-    _segmentControl = [[QDSegmentControl alloc] initWithSectionImages:images sectionSelectedImages:selectedImages titlesForSections:segmentedTitles];
-    _segmentControl.imagePosition = HMSegmentedControlImagePositionRightOfText;
-    [_segmentControl addTarget:self action:@selector(segmentedClicked:) forControlEvents:UIControlEventValueChanged];
+    NSMutableArray *data1 = [NSMutableArray arrayWithObjects:array1, array2, array3, array4, nil];
+    NSMutableArray *data2 = [NSMutableArray arrayWithObjects:@[], @[], @[], @[], nil];
+
+    TFDropDownMenuView *menu = [[TFDropDownMenuView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40) firstArray:data1 secondArray:data2];
+    menu.separatorColor = [UIColor greenColor];
+    menu.cellTextSelectColor = APP_GREENCOLOR;
+    menu.itemFontSize = 12;
+    menu.itemTextSelectColor = APP_GREENCOLOR;
     
-    return _segmentControl;
+    /*风格*/
+//    menu.menuStyleArray = [NSMutableArray arrayWithObjects:
+//                           [NSNumber numberWithInteger:TFDropDownMenuStyleTableView],
+//                           [NSNumber numberWithInteger:TFDropDownMenuStyleTableView],
+//                           [NSNumber numberWithInteger:TFDropDownMenuStyleTableView],
+//                           [NSNumber numberWithInteger:TFDropDownMenuStyleCustom],nil];
+    
+    menu.delegate = self;
+    return menu;
 }
 
-- (void)segmentedClicked:(QDSegmentControl *)segmentControl{
-    QDLog(@"segmentControl = %ld", (long)segmentControl.selectedSegmentIndex);
-//    _typeView = [[QDHotelTypeView alloc] init];
-//
-//    [self.view addSubview:_typeView];
-//    [_typeView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(self.segmentControl.mas_bottom);
-//        make.centerX.and.width.equalTo(self.segmentControl);
-//        make.width.mas_equalTo(SCREEN_HEIGHT*0.57);
-//    }];
-//    UIView animateWithDuration:{1} animations:^{
-//
-//    } completion:<#^(BOOL finished)completion#>
-}
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{    
-    QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
-    [self.navigationController pushViewController:bridgeVC animated:YES];
-
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    QDHotelListInfoModel *model = _hotelListInfoArr[indexPath.row];
+    //传递ID
+    QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
+    bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?id=%ld", QD_JSURL, JS_HOTELDETAIL, (long)model.id];
+    QDLog(@"urlStr = %@", bridgeVC.urlStr);
+    bridgeVC.infoModel = model;
+    self.tabBarController.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:bridgeVC animated:YES];
 }
 
 #pragma mark - ScrollViewDelegate
@@ -273,4 +302,36 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (void)endRefreshing
+{
+    if (_tableView) {
+        [_tableView.mj_header endRefreshing];
+        [_tableView.mj_footer endRefreshing];
+    }
+}
+
+#pragma mark - TFDropDownMenuView Delegate
+
+- (void)menuView:(TFDropDownMenuView *)menu selectIndex:(TFIndexPatch *)index{
+    QDLog(@"index: %@",index);
+}
+
+- (void)menuView:(TFDropDownMenuView *)menu tfColumn:(NSInteger)column{
+    QDLog(@"column:%ld", (long)column);
+    switch (column) {
+        case 0:
+            //选择全部区域
+        {
+//            QDCitySelectedViewController *locationVC = [[QDCitySelectedViewController alloc] init];
+//            [self presentViewController:locationVC animated:YES completion:nil];
+
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
+
+
 @end

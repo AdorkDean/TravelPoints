@@ -7,11 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "QDStrategyDTO.h"
+#import "AppDelegate.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QDStrategyTableViewCell : UITableViewCell
+@property (nonatomic, strong) UIImageView *pic;
+@property (nonatomic, strong) UILabel *desc;
+@property (nonatomic, strong) UILabel *person;
+@property (nonatomic, strong) UILabel *watched;
 
+-(void)fillContentWithModel:(QDStrategyDTO *)infoModel andImgData:(NSData *)imgData;
 @end
 
 NS_ASSUME_NONNULL_END

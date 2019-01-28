@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface QDHotelListInfoModel : NSObject
 
+@property (nonatomic, assign) NSInteger id;              //酒店代码
 @property (nonatomic, strong) NSString *hotelCode;              //酒店代码
 @property (nonatomic, strong) NSString *hotelName;              //酒店名称
 @property (nonatomic, assign) NSInteger unitId;                 //机构ID
@@ -21,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) NSInteger totalFloor;             //总楼层
 @property (nonatomic, assign) NSInteger totalRoom;              //总房间数
 
-@property (nonatomic, assign) NSInteger collectCount;           //收藏数
+@property (nonatomic, strong) NSString *collectCount;           //收藏数
 //
 
 @property (nonatomic, strong) NSString *province;               //省
@@ -51,7 +52,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign) NSDecimalNumber *maxPrice;        //最大价格
 @property (nonatomic, assign) NSDecimalNumber *minPrice;        //最大价格
-@property (nonatomic, assign) NSDecimalNumber *price;           //酒店展示价格
+@property (nonatomic, strong) NSString *price;           //酒店展示价格
 
 @property (nonatomic, assign) NSDecimalNumber *registeredCapital;   //注册资本
 

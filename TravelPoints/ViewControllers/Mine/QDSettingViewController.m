@@ -98,7 +98,7 @@
 #pragma mark - 用户登出接口
 - (void)logout{
     [WXProgressHUD showHUD];
-    [[QDServiceClient shareClient] logoutWitStr:@"lyjfapp/sso/logout" SuccessBlock:^(QDResponseObject *responseObject) {
+    [[QDServiceClient shareClient] logoutWitStr:api_UserLogout SuccessBlock:^(QDResponseObject *responseObject) {
         [WXProgressHUD hideHUD];
         if (responseObject.code == 0) {
             //移除cookie

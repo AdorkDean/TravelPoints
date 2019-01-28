@@ -7,11 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "QDSegmentControl.h"
+#import "SPButton.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QDHotelsInAreaView : UIView
-
+@property (nonatomic, strong) UIButton *backBtn;
+@property (nonatomic, strong) SPButton *cityBtn;
+@property (nonatomic, strong) UIButton *searchBtn;
 @end
 
 NS_ASSUME_NONNULL_END

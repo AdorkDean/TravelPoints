@@ -12,11 +12,6 @@
 
 - (instancetype)initWithFrame:(CGRect)frame{
     if ([super initWithFrame:frame]) {
-//        _backImg = [[UIImageView alloc] init];
-//        _backImg.backgroundColor = APP_GREENCOLOR;
-//        _backImg.image = [UIImage imageNamed:@"ad_share_black"];
-//        [self addSubview:_backImg];
-        
         _imgView = [[UIImageView alloc] init];
         _imgView.image = [UIImage imageNamed:@"ad_share_black"];
         _imgView.layer.cornerRadius = SCREEN_WIDTH*0.027;
@@ -40,9 +35,9 @@
         [_searchBar setValue:@"取消" forKey:@"_cancelButtonText"];
         _searchBar.backgroundColor = [UIColor whiteColor];
         _searchBar.placeholder = @"我的目的地";
-        _searchBar.delegate = self;
         [[[[_searchBar.subviews objectAtIndex:0]subviews]objectAtIndex:0] removeFromSuperview];
-        _searchBar.showsCancelButton = YES;
+//        _searchBar.showsCancelButton = YES;
+//        [[[_searchBar.subviews objectAtIndex:0].subviews objectAtIndex:1] setTintColor:[UIColor greenColor]];
         [self addSubview:_searchBar];
     }
     return self;
@@ -51,11 +46,6 @@
 
 -(void)layoutSubviews{
     [super layoutSubviews];
-//    [_backImg mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.left.and.height.equalTo(self);
-//        make.height.mas_equalTo(SCREEN_HEIGHT*0.3);
-//    }];
-//
     [_imgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_top).offset(SCREEN_HEIGHT*0.07);
         make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH*0.05);
@@ -79,22 +69,5 @@
     }];
 }
 
-- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
-{
-    [_searchBar resignFirstResponder];
-    
-}
 
-- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
-    [_searchBar resignFirstResponder];
-}
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
-{
-    if (searchBar.text.length == 0) {
-        
-        [_searchBar resignFirstResponder];
-        
-    }else{
-    }
-}
 @end

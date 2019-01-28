@@ -28,7 +28,9 @@
         [self addSubview:_detailLocationLab];
         
         _cityLab = [[UILabel alloc] init];
-        _cityLab.backgroundColor = APP_LIGHTGRAYCOLOR;
+        _cityLab.backgroundColor = [UIColor colorWithHexString:@"#EAF0F3"];
+        _cityLab.layer.cornerRadius = 3;
+        _cityLab.layer.masksToBounds = YES;
         _cityLab.text = @"上海";
         _cityLab.font = QDFont(14);
         _cityLab.textAlignment = NSTextAlignmentCenter;
@@ -58,7 +60,7 @@
     [_cityLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.myLocationLab);
         make.top.equalTo(self.detailLocationLab.mas_bottom).offset(SCREEN_HEIGHT*0.02);
-        make.width.mas_equalTo(SCREEN_WIDTH*0.13);
+        make.width.mas_equalTo(SCREEN_WIDTH*0.15);
         make.height.mas_equalTo(SCREEN_HEIGHT*0.04);
     }];
 }

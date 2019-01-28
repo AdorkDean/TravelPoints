@@ -12,6 +12,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface QDHotelAndStrategyFilterView : UIView
 
+@property (nonatomic, strong) UIView *backView;
+@property (nonatomic, strong) UITextField *searchTF;
+@property (nonatomic, strong) UIButton *searchBtn;
+
+@property (nonatomic, strong) UIButton *rightBtn;
+
+@property (nonatomic, strong) UIButton *switchBtn;
+
 @end
 
 NS_ASSUME_NONNULL_END

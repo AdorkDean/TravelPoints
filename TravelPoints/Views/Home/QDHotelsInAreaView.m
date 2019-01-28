@@ -10,12 +10,31 @@
 
 @implementation QDHotelsInAreaView
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
+- (instancetype)initWithFrame:(CGRect)frame{
+    if ([super initWithFrame:frame]) {
+        _backBtn = [[UIButton alloc] init];
+        [_backBtn setImage:[UIImage imageNamed:@"ad_back_black"] forState:UIControlStateNormal];
+        [self addSubview:_backBtn];
+        
+        _cityBtn = [[SPButton alloc] initWithImagePosition:SPButtonImagePositionRight];
+        [_cityBtn setImage:[UIImage imageNamed:@"ad_back_black"] forState:UIControlStateNormal];
+        [self addSubview:_cityBtn];
+    }
+    return self;
 }
-*/
+
+
+- (void)layoutSubviews{
+    [super layoutSubviews];
+    [_backBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.mas_top).offset(SCREEN_HEIGHT*0.05);
+        make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH*0.042);
+    }];
+    
+    [_cityBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_backBtn);
+        make.right.equalTo(self.mas_right).offset(-(SCREEN_WIDTH*0.042));
+    }];
+}
 
 @end

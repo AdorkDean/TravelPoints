@@ -35,13 +35,13 @@
 - (void)setupSegmentControl
 {
     self.selectionIndicatorHeight = 3.0f;
-    self.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor colorWithHexString:@"#9B9B9B"], NSFontAttributeName: QDFont(15)};
+    self.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor colorWithHexString:@"#9B9B9B"], NSFontAttributeName: QDFont(14)};
     self.selectionStyle = HMSegmentedControlSelectionStyleFullWidthStripe;
     self.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
 //    self.selectionStyle
     QDWeakSelf(self);
     weakself.backgroundColor = [UIColor whiteColor];
-    weakself.selectedTitleTextAttributes = @{NSForegroundColorAttributeName: [UIColor blackColor], NSFontAttributeName: QDFont(15)};
+    weakself.selectedTitleTextAttributes = @{NSForegroundColorAttributeName: [UIColor blackColor], NSFontAttributeName: QDFont(14)};
     weakself.selectionIndicatorColor = APP_GREENCOLOR;
 }
 

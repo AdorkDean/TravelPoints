@@ -12,6 +12,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface QDShowMenuView : UIView
 
+@property (nonatomic, strong) UIButton *roomBtn;
+@property (nonatomic, strong) UIButton *travelBtn;
+@property (nonatomic, strong) UIButton *hotBtn;
+@property (nonatomic, strong) UIButton *latestBtn;
+
 @end
 
 NS_ASSUME_NONNULL_END
