@@ -58,6 +58,20 @@ static const NSInteger RoutePlanningPaddingEdge                    = 20;
 
 @implementation QDRotePlanViewController
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.navigationController.navigationBar setHidden:YES];
+    [self.navigationController.tabBarController.tabBar setHidden:YES];
+    self.tabBarController.tabBar.frame = CGRectZero;
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self.locationManager stopUpdatingHeading];
+    [self.locationManager stopUpdatingLocation];
+}
+
 - (void)makeCall:(UIButton *)sender{
     if (_infoModel.telphone == nil || [_infoModel.telphone isEqualToString:@""]) {
         [WXProgressHUD showErrorWithTittle:@"未找到酒店电话"];
@@ -185,18 +199,6 @@ static const NSInteger RoutePlanningPaddingEdge                    = 20;
     _annotation = [[MAPointAnnotation alloc] init];
     _annotation.coordinate = self.mapView.centerCoordinate;
     [self.mapView addAnnotation:self.annotation];
-}
-
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    [self.navigationController.navigationBar setHidden:NO];
-    self.tabBarController.tabBar.frame = CGRectMake(0, SCREEN_HEIGHT - 49, SCREEN_WIDTH, 49);
-    [self.locationManager stopUpdatingHeading];
-    [self.locationManager stopUpdatingLocation];
 }
 
 - (void)returnAction:(UIButton *)sender{

@@ -8,7 +8,7 @@
 
 #import "QDPriceRangeView.h"
 
-#define labSpace 17
+#define labSpace 20
 #define labWidth 25
 
 @implementation QDPriceRangeView
@@ -27,16 +27,18 @@
         _priceDetailLab.text = @"150-不限";
         [self addSubview:_priceDetailLab];
         
-        _slider = [[SFDualWaySlider alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH*0.88, 60) minValue:0 maxValue:900 blockSpaceValue:2];
+        _slider = [[SFDualWaySlider alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH*0.82, 60) minValue:0 maxValue:900 blockSpaceValue:100];
         _slider.backgroundColor = APP_WHITECOLOR;
         _slider.progressRadius = 5;
         [_slider.minIndicateView setTitle:@"0"];
         [_slider.maxIndicateView setTitle:@"不限"];
         _slider.lightColor = APP_BLUECOLOR;
+        _slider.progressLeftSpace = 0;
+        _slider.spaceInBlocks = 1;
         _slider.minIndicateView.backIndicateColor = APP_BLUECOLOR;
         _slider.maxIndicateView.backIndicateColor = APP_BLUECOLOR;
-        //    slider.indicateViewOffset = 10;
-        //    slider.indicateViewWidth = 80;
+//        _slider.indicateViewOffset = 2;
+//        _slider.indicateViewWidth = 2;
         _slider.sliderValueChanged = ^(CGFloat minValue, CGFloat maxValue) {
             if (maxValue < 900) {
                 _priceDetailLab.text = [NSString stringWithFormat:@"%.f-%.f", minValue, maxValue];
@@ -45,7 +47,6 @@
             }
             NSLog(@"minValue = %.f, maxValue = %.f", minValue, maxValue);
         };
-
         _slider.getMinTitle = ^NSString *(CGFloat minValue) {
             if (floor(minValue) == 0.f) {
                 return @"0";
@@ -140,7 +141,7 @@
 
     [_slider mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self);
-        make.width.mas_equalTo(SCREEN_WIDTH*0.88);
+        make.width.mas_equalTo(SCREEN_WIDTH*0.82);
         make.top.equalTo(_priceLab.mas_bottom).offset(15);
         make.height.mas_equalTo(60);
     }];
@@ -158,34 +159,34 @@
     }];
     
     [_leftLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(_slider.mas_left).offset(4);
+        make.left.equalTo(_slider.mas_left).offset(-5);
         make.top.equalTo(_slider.mas_bottom).offset(7);
         make.width.mas_equalTo(labWidth);
     }];
     
     [_rightLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(_slider);
+        make.right.equalTo(_slider.mas_right).offset(5);
         make.centerY.and.width.equalTo(_leftLab);
     }];
     
     [_lab1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.and.width.equalTo(_leftLab);
-        make.left.equalTo(_leftLab.mas_right).offset(labSpace);
+        make.left.equalTo(_leftLab.mas_right).offset(labSpace+5);
     }];
     
     [_lab2 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.and.width.equalTo(_lab1);
-        make.left.equalTo(_lab1.mas_right).offset(labSpace);
+        make.left.equalTo(_lab1.mas_right).offset(labSpace+10);
     }];
     
     [_lab3 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.and.width.equalTo(_lab2);
-        make.left.equalTo(_lab2.mas_right).offset(labSpace);
+        make.left.equalTo(_lab2.mas_right).offset(labSpace+10);
     }];
     
     [_lab4 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.and.width.equalTo(_lab3);
-        make.left.equalTo(_lab3.mas_right).offset(labSpace);
+        make.left.equalTo(_lab3.mas_right).offset(labSpace+5);
     }];
     
     [_lab5 mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -193,10 +194,10 @@
         make.left.equalTo(_lab4.mas_right).offset(labSpace);
     }];
     
-    [_lab6 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.and.width.equalTo(_lab5);
-        make.left.equalTo(_lab5.mas_right).offset(labSpace);
-    }];
+//    [_lab6 mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerY.and.width.equalTo(_lab5);
+//        make.left.equalTo(_lab5.mas_right).offset(labSpace+20);
+//    }];
     
 }
 @end

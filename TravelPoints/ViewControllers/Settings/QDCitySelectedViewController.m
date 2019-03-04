@@ -18,6 +18,7 @@
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UITableView *resultVC;
 @property (nonatomic, strong) NSMutableArray *results;
+@property (nonatomic, strong) NSString *currentCityStr;
 
 
 @end
@@ -112,6 +113,7 @@
 }
 
 - (void)selectCurrentLocation:(UIGestureRecognizer *)ges{
+    [_delegate getChoosedAreaName:_currentCityStr];
     [self dismissViewControllerAnimated:YES completion:nil];
 //    self.selectCity = ^(NSString * _Nonnull cityName) {
 //        cityName = _currentLocationInfo;
@@ -432,6 +434,7 @@
             NSLog(@"%@", [address objectForKey:@"State"]);
             
             NSLog(@"%@", [address objectForKey:@"City"]);
+            _currentCityStr = [address objectForKey:@"City"];
             _currentLocationView.cityLab.text = [address objectForKey:@"City"];
             if (address != NULL) {
                 _currentLocationInfo = [NSString stringWithFormat:@"%@%@%@", [address objectForKey:@"City"], [address objectForKey:@"SubLocality"], [address objectForKey:@"Street"]];

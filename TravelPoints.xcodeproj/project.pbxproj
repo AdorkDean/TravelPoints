@@ -1203,13 +1203,6 @@
 			path = LoginAndRegister;
 			sourceTree = "<group>";
 		};
-		3BCE3C2421EC83E9005D518F /* LoginAndRegister */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = LoginAndRegister;
-			sourceTree = "<group>";
-		};
 		3BCE3C2521EC83F7005D518F /* LoginAndRegister */ = {
 			isa = PBXGroup;
 			children = (
@@ -1316,11 +1309,9 @@
 				93E30EE82228CB98003CA771 /* RoutePlan */,
 				93E30EA822251934003CA771 /* VipPurchase */,
 				93BB7AB72221464C0061FB9C /* TradingShells */,
-				3BF92D5D22165E2C0019B941 /* PlayingShells */,
 				3B04DF4721F83A4A001909CD /* Hotel */,
 				3B04DF4621F83A43001909CD /* Mall */,
 				3B0CD74321F1DEB70020824A /* Settings */,
-				3BCE3C2421EC83E9005D518F /* LoginAndRegister */,
 				3BD9518221EC5A2200CD0627 /* Home */,
 				3BD9518321EC5A2200CD0627 /* Restaurant */,
 				3BD9518421EC5A2200CD0627 /* Mine */,
@@ -1637,13 +1628,6 @@
 				93E30ED82227E1AB003CA771 /* QDKeyWordsSearchViewT.m */,
 				93E30EF822295BCB003CA771 /* QDPriceRangeView.h */,
 				93E30EF922295BCB003CA771 /* QDPriceRangeView.m */,
-			);
-			path = PlayingShells;
-			sourceTree = "<group>";
-		};
-		3BF92D5D22165E2C0019B941 /* PlayingShells */ = {
-			isa = PBXGroup;
-			children = (
 			);
 			path = PlayingShells;
 			sourceTree = "<group>";

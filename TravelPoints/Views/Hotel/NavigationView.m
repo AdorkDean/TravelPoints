@@ -51,37 +51,37 @@
         make.right.equalTo(self.mas_right).offset(-(SCREEN_WIDTH*0.05));
     }];
     
-    _topBackView = [[UIView alloc] init];
-    _topBackView.backgroundColor = APP_GRAYBUTTONCOLOR;
-    _topBackView.layer.masksToBounds = YES;
-    _topBackView.layer.cornerRadius = SCREEN_WIDTH*0.04;
-    [self addSubview:_topBackView];
-    [_topBackView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(_addressBtn);
-        make.right.equalTo(self.iconBtn.mas_left).offset(-(SCREEN_WIDTH*0.008));
-        make.width.mas_equalTo(SCREEN_WIDTH*0.29);
-        make.height.mas_equalTo(SCREEN_HEIGHT*0.06);
-    }];
-
-    _imgView = [[UIImageView alloc] init];
-    [_imgView setImage:[UIImage imageNamed:@"icon_search"]];
-    [_topBackView addSubview:_imgView];
-    [_imgView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.topBackView);
-        make.left.equalTo(self.topBackView.mas_left).offset(SCREEN_WIDTH*0.04);
-    }];
-
-
-    _inputTF = [[UITextField alloc] init];
-    _inputTF.placeholder = @"搜索";
-    [_inputTF setValue:APP_GRAYLINECOLOR forKeyPath:@"_placeholderLabel.textColor"];
-    [_inputTF setValue:QDFont(15) forKeyPath:@"_placeholderLabel.font"];
-    _inputTF.clearButtonMode = UITextFieldViewModeWhileEditing;
-    [_topBackView addSubview:_inputTF];
-    [_inputTF mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.topBackView);
-        make.left.equalTo(self.imgView.mas_right).offset(SCREEN_WIDTH*0.02);
-    }];
+//    _topBackView = [[UIView alloc] init];
+//    _topBackView.backgroundColor = APP_GRAYBUTTONCOLOR;
+//    _topBackView.layer.masksToBounds = YES;
+//    _topBackView.layer.cornerRadius = SCREEN_WIDTH*0.04;
+//    [self addSubview:_topBackView];
+//    [_topBackView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerY.equalTo(_addressBtn);
+//        make.right.equalTo(self.iconBtn.mas_left).offset(-(SCREEN_WIDTH*0.008));
+//        make.width.mas_equalTo(SCREEN_WIDTH*0.29);
+//        make.height.mas_equalTo(SCREEN_HEIGHT*0.06);
+//    }];
+//
+//    _imgView = [[UIImageView alloc] init];
+//    [_imgView setImage:[UIImage imageNamed:@"icon_search"]];
+//    [_topBackView addSubview:_imgView];
+//    [_imgView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerY.equalTo(self.topBackView);
+//        make.left.equalTo(self.topBackView.mas_left).offset(SCREEN_WIDTH*0.04);
+//    }];
+//
+//
+//    _inputTF = [[UITextField alloc] init];
+//    _inputTF.placeholder = @"搜索";
+//    [_inputTF setValue:APP_GRAYLINECOLOR forKeyPath:@"_placeholderLabel.textColor"];
+//    [_inputTF setValue:QDFont(15) forKeyPath:@"_placeholderLabel.font"];
+//    _inputTF.clearButtonMode = UITextFieldViewModeWhileEditing;
+//    [_topBackView addSubview:_inputTF];
+//    [_inputTF mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerY.equalTo(self.topBackView);
+//        make.left.equalTo(self.imgView.mas_right).offset(SCREEN_WIDTH*0.02);
+//    }];
     
 }
 

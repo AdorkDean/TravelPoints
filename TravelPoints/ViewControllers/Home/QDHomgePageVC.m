@@ -15,13 +15,15 @@
 #import "NavigationView.h"
 #import "QDSearchViewController.h"
 #import "QDOrderField.h"
+#import "RanklistDTO.h"
 static NSString *cellIdentifier = @"CellIdentifier";
 
 @interface QDHomgePageVC ()<UICollectionViewDataSource, UITableViewDelegate, UITableViewDataSource, NavigationViewDelegate>{
     QDHomePageTopView *_homePageTopView;
     UITableView *_tableView;
-    NSMutableArray *_rankedList;
-    NSMutableArray *_rankTypeList;      //榜单类型排序数组
+    NSMutableArray *_rankTypeArr;             //榜单类型type值数组
+    NSMutableArray *_rankTotalArr;            //所有的榜单数据
+    NSMutableArray *_rankTypeDetailList;      //榜单类型排序数组
 }
 @property (nonatomic, strong) NavigationView *navigationView;
 @property (nonatomic, strong) ZLCollectionView *collectionView;
@@ -54,12 +56,12 @@ static NSString *cellIdentifier = @"CellIdentifier";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _rankedList = [[NSMutableArray alloc] init];
-    _rankTypeList = [[NSMutableArray alloc] init];
-    [self FindRankTypeToSort:api_FindRankTypeToSort];
-//    [self getRankedSorting:api_RankedSorting];
+    
+    _rankTypeArr = [[NSMutableArray alloc] init];
+    _rankTotalArr = [[NSMutableArray alloc] init];
+    _rankTypeDetailList = [[NSMutableArray alloc] init];
+    [self findRankType:api_FindRankTypeToSort];
     self.view.backgroundColor = APP_WHITECOLOR;
-    [self initTableView];
     [self configNavigationBar];
     [self.view addSubview:self.navigationView];
     [_navigationView.iconBtn addTarget:self action:@selector(theNewPage:) forControlEvents:UIControlEventTouchUpInside];
@@ -90,14 +92,23 @@ static NSString *cellIdentifier = @"CellIdentifier";
  
  */
 - (void)getRankedSorting:(NSString *)urlStr andTypeStr:(NSString *)typeStr{
-    if (_rankedList.count) {
-        [_rankedList removeAllObjects];
+    if (_rankTypeDetailList.count) {
+        [_rankTypeDetailList removeAllObjects];
     }
     NSDictionary * dic1 = @{@"listType":typeStr};
     [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:urlStr params:dic1 successBlock:^(QDResponseObject *responseObject) {
         if (responseObject.code == 0) {
             NSDictionary *dic = responseObject.result;
             NSArray *hotelArr = [dic objectForKey:@"result"];
+            if (hotelArr.count) {
+                for (NSDictionary *dic in hotelArr) {
+                    RanklistDTO *listDTO = [RanklistDTO yy_modelWithDictionary:dic];
+                    [_rankTypeDetailList addObject:listDTO];
+                }
+                [_rankTotalArr addObject:_rankTypeDetailList];
+            }
+            [self initTableView];
+            QDLog(@"_rankTypeArr = %@", _rankTypeArr);
         }
     } failureBlock:^(NSError *error) {
         [WXProgressHUD showErrorWithTittle:@"网络异常"];
@@ -107,21 +118,24 @@ static NSString *cellIdentifier = @"CellIdentifier";
 /**
 榜单类型排序查询
  */
-- (void)FindRankTypeToSort:(NSString *)urlStr{
-    if (_rankTypeList.count) {
-        [_rankTypeList removeAllObjects];
+- (void)findRankType:(NSString *)urlStr{
+    if (_rankTypeArr.count) {
+        [_rankTypeArr removeAllObjects];
     }
     [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:urlStr params:nil successBlock:^(QDResponseObject *responseObject) {
         if (responseObject.code == 0) {
             NSArray *resultArr = responseObject.result;
             for (NSDictionary *dic in resultArr) {
-                [_rankTypeList addObject:[dic objectForKey:@"rankType"]];
+                [_rankTypeArr addObject:[dic objectForKey:@"rankType"]];
             }
-            QDLog(@"_rankTypeList = %@", _rankTypeList);
+            QDLog(@"_rankTypeArr = %@", _rankTypeArr);
         }
-        //默认查询第一个type的榜单内容
-        if (_rankTypeList.count) {
-            [self getRankedSorting:api_RankedSorting andTypeStr:_rankTypeList[0]];
+//        [self initTableView];
+        if (_rankTypeArr.count) {
+            [self getRankedSorting:api_RankedSorting andTypeStr:_rankTypeArr[0]];
+//            for (int i = 0; i < _rankTypeArr.count; i++) {
+//                [self getRankedSorting:api_RankedSorting andTypeStr:_rankTypeArr[i]];
+//            }
         }
     } failureBlock:^(NSError *error) {
         [WXProgressHUD showErrorWithTittle:@"网络异常"];
@@ -210,7 +224,11 @@ static NSString *cellIdentifier = @"CellIdentifier";
     if (section == 0) {
         return 1;
     }else{
-        return 5;
+        if (_rankTypeDetailList.count) {
+            return _rankTypeDetailList.count - 1;
+        }else{
+            return 1;
+        }
     }
     return 1;
 }
@@ -228,7 +246,7 @@ static NSString *cellIdentifier = @"CellIdentifier";
 
 - (ZLCollectionView *)collectionView{
     if (!_collectionView) {
-        _collectionView = [ZLCollectionView collectionViewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.72) itemCount:4];
+        _collectionView = [ZLCollectionView collectionViewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.72) itemCount:_rankTypeArr.count];
     }
     return _collectionView;
 }
@@ -267,7 +285,10 @@ static NSString *cellIdentifier = @"CellIdentifier";
 
 #pragma mark - CollectionView Delegate
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 4;
+    if (_rankTypeArr.count) {
+        return _rankTypeArr.count;
+    }
+    return 1;
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
@@ -275,8 +296,7 @@ static NSString *cellIdentifier = @"CellIdentifier";
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    HYBCardCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier
-                                                                                forIndexPath:indexPath];
+    HYBCardCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier                                                          forIndexPath:indexPath];
 //    [cell configWithImage:[NSString stringWithFormat:@"img%ld.png", indexPath.item + 1]];
     return cell;
 }

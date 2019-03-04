@@ -16,6 +16,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) NSString *dateInStr;
 @property (nonatomic, strong) NSString *dateOutStr;
+
+//yyyy-MM-dd格式的日期
+@property (nonatomic, strong) NSString *dateInPassedVal;
+@property (nonatomic, strong) NSString *dateOutPassedVal;
+
 @property (nonatomic, strong) NSMutableArray *hotelListInfoArr;
 @property (nonatomic, strong) NSMutableArray *hotelImgArr;
 

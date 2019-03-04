@@ -22,9 +22,9 @@
 @property (nonatomic, strong) SPButton *addressBtn;
 @property (nonatomic, strong) UIButton *iconBtn;
 
-@property(nonatomic, strong) UIView *topBackView;
-@property(nonatomic, strong) UIImageView *imgView;
-@property(nonatomic, strong) UITextField *inputTF;
+//@property(nonatomic, strong) UIView *topBackView;
+//@property(nonatomic, strong) UIImageView *imgView;
+//@property(nonatomic, strong) UITextField *inputTF;
 @property (nonatomic, weak) id<NavigationViewDelegate> naviDelegate;
 
 ////向左移动

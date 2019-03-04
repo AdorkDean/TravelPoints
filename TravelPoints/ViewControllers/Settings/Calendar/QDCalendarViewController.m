@@ -357,6 +357,11 @@
             _dateOutStr = [NSString stringWithFormat:@"%@月%@日", outArr[1], outArr[2]];
             [_calendarTopView.roomInBtn setTitle:_dateInStr forState:UIControlStateNormal];
             [_calendarTopView.roomOutBtn setTitle:_dateOutStr forState:UIControlStateNormal];
+            NSString *tempDateStr;
+            QDLog(@"%@  %@", _dateInPassedVal, _dateOutPassedVal);
+            tempDateStr = self.date2Str;
+            self.date2Str = self.date1Str;
+            self.date1Str = tempDateStr;
         }
     }
     [self configureVisibleCells];

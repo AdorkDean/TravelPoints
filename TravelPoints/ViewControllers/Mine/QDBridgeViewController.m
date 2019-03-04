@@ -79,16 +79,16 @@
     [self.webView addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:nil];
     
     // 进度条
-    UIView * progress = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 2)];
-    progress.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:progress];
+//    UIView * progress = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 2)];
+//    progress.backgroundColor = [UIColor clearColor];
+//    [self.view addSubview:progress];
     
-    // 隐式动画
-    CALayer * layer = [CALayer layer];
-    layer.frame = CGRectMake(0, 0, 0, 3);
-    layer.backgroundColor = APP_BLUECOLOR.CGColor;
-    [progress.layer addSublayer:layer];
-    self.progressLayer = layer;
+//     隐式动画
+//    CALayer * layer = [CALayer layer];
+//    layer.frame = CGRectMake(0, 0, 0, 3);
+//    layer.backgroundColor = APP_BLUECOLOR.CGColor;
+//    [progress.layer addSublayer:layer];
+//    self.progressLayer = layer;
     
     [_bridge registerHandler:@"POST" handler:^(id data, WVJBResponseCallback responseCallback) {
         //data: js页面传过来的参数
@@ -280,6 +280,11 @@
         _progressView.trackTintColor = [UIColor whiteColor];       //未完成的进度的颜色
         _progressView.progress = 0.1;
         _progressView.progressViewStyle = UIProgressViewStyleDefault;
+        CALayer * layer = [CALayer layer];
+        layer.frame = CGRectMake(0, 0, 0, 3);
+        layer.backgroundColor = APP_BLUECOLOR.CGColor;
+        [_progressView.layer addSublayer:layer];
+        self.progressLayer = layer;
     }
     return _progressView;
 }

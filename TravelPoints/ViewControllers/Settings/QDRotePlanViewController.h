@@ -6,13 +6,13 @@
 //  Copyright © 2019 Charles Ran. All rights reserved.
 //
 
-#import "QDBaseViewController.h"
+#import <UIKit/UIKit.h>
 #import <MAMapKit/MAMapKit.h>
 #import <AMapLocationKit/AMapLocationKit.h>
 #import "QDHotelListInfoModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface QDRotePlanViewController : QDBaseViewController
+@interface QDRotePlanViewController : UIViewController
 @property (nonatomic, strong) MAMapView *mapView;
 @property (nonatomic, strong) AMapLocationManager *locationManager;
 

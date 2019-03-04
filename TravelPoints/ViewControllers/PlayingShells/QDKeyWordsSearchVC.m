@@ -526,7 +526,7 @@
         QDHotelListInfoModel *model = _hotelListInfoArr[indexPath.row];
         //传递ID
         QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
-        bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?id=%ld", QD_JSURL, JS_HOTELDETAIL, (long)model.id];
+        bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?id=%ld&&startDate=%@&&endDate=%@", QD_JSURL, JS_HOTELDETAIL, (long)model.id, _dateInPassedVal, _dateOutPassedVal];
         QDLog(@"urlStr = %@", bridgeVC.urlStr);
         bridgeVC.infoModel = model;
         self.tabBarController.hidesBottomBarWhenPushed = YES;

@@ -189,12 +189,14 @@
     _playShellType = (QDPlayShellType)segmentControl.selectedSegmentIndex;
     switch (_playShellType) {
         case QDHotelReserve: //酒店预定
+            [_tableView reloadData];
             _tableView.tableHeaderView = _headerView;
             [self requestHotelInfoWithURL:api_GetHotelCondition andIsPushVC:NO];
             QDLog(@"0");
             break;
         case QDCustomTour: //定制游
             QDLog(@"1");
+            [_tableView reloadData];
             _customTourHeaderView = [[QDCustomTourSectionHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH*0.12)];
             [_customTourHeaderView.searchBtn addTarget:self action:@selector(customerTourSearchAction:) forControlEvents:UIControlEventTouchUpInside];
             _customTourHeaderView.backgroundColor = APP_WHITECOLOR;
@@ -203,6 +205,7 @@
             break;
         case QDMall: //商城
         {
+            [_tableView reloadData];
             _mallHeaderView = [[QDMallTableHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.08)];
             _mallHeaderView.backgroundColor = APP_WHITECOLOR;
             _tableView.tableHeaderView = _mallHeaderView;
@@ -333,6 +336,11 @@
     keyVC.playShellType = QDHotelReserve;    //酒店预订的类型
     NSString *ss = _headerView.dateIn.titleLabel.text;
     NSString *sss = _headerView.dateOut.titleLabel.text;
+    //
+//    11ji
+    
+    keyVC.dateInPassedVal = _dateInPassedVal;
+    keyVC.dateOutPassedVal =_dateOutPassedVal;
     keyVC.dateInStr = ss;
     keyVC.dateOutStr = sss;
     keyVC.keyWords = _headerView.locationTF.text;
@@ -516,31 +524,37 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     if (_playShellType == QDHotelReserve) {
-        QDHotelListInfoModel *model = _hotelListInfoArr[indexPath.row];
-        //传递ID
-        QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
-        bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?id=%ld&&startDate=%@&&endDate=%@", QD_JSURL, JS_HOTELDETAIL, (long)model.id, _dateInPassedVal, _dateOutPassedVal];
-        QDLog(@"urlStr = %@", bridgeVC.urlStr);
-        bridgeVC.infoModel = model;
-        self.tabBarController.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:bridgeVC animated:YES];
+        if (_hotelListInfoArr.count) {
+            QDHotelListInfoModel *model = _hotelListInfoArr[indexPath.row];
+            //传递ID
+            QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
+            bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?id=%ld&&startDate=%@&&endDate=%@", QD_JSURL, JS_HOTELDETAIL, (long)model.id, _dateInPassedVal, _dateOutPassedVal];
+            QDLog(@"urlStr = %@", bridgeVC.urlStr);
+            bridgeVC.infoModel = model;
+            self.tabBarController.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:bridgeVC animated:YES];
+        }
     }else if (_playShellType == QDCustomTour){
-        CustomTravelDTO *model = _dzyListInfoArr[indexPath.row];
-        //传递ID
-        QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
-        bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?id=%ld", QD_JSURL, JS_CUSTOMERTRAVEL, (long)model.id];
-        QDLog(@"urlStr = %@", bridgeVC.urlStr);
-        bridgeVC.customTravelModel = model;
-        self.tabBarController.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:bridgeVC animated:YES];
+        if (_dzyListInfoArr.count) {
+            CustomTravelDTO *model = _dzyListInfoArr[indexPath.row];
+            //传递ID
+            QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
+            bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?id=%ld", QD_JSURL, JS_CUSTOMERTRAVEL, (long)model.id];
+            QDLog(@"urlStr = %@", bridgeVC.urlStr);
+            bridgeVC.customTravelModel = model;
+            self.tabBarController.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:bridgeVC animated:YES];
+        }
     }else{
-        QDMallModel *model = _mallInfoArr[indexPath.row];
-        QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
-        bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?id=%ld", QD_JSURL, JS_SHOPPING, (long)model.id];
-        QDLog(@"urlStr = %@", bridgeVC.urlStr);
-        bridgeVC.mallModel = model;
-        self.tabBarController.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:bridgeVC animated:YES];
+        if (_mallInfoArr.count) {
+            QDMallModel *model = _mallInfoArr[indexPath.row];
+            QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
+            bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?id=%ld", QD_JSURL, JS_SHOPPING, (long)model.id];
+            QDLog(@"urlStr = %@", bridgeVC.urlStr);
+            bridgeVC.mallModel = model;
+            self.tabBarController.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:bridgeVC animated:YES];
+        }
     }
 }
 
