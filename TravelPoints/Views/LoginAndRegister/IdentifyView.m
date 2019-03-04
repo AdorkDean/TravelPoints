@@ -18,15 +18,16 @@
         [self addSubview:_identifyLab];
         
         _lineView = [[UIView alloc] init];
-        _lineView.backgroundColor = [UIColor colorWithHexString:@"#50C533"];
+        _lineView.backgroundColor = APP_BLUECOLOR;
         [self addSubview:_lineView];
         
-        _imgView = [[UIImageView alloc] init];
-        _imgView.backgroundColor = [UIColor redColor];
-        [self addSubview:_imgView];
+        NSArray *randomArr = @[@"0",@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9"];
+        _pooCodeView = [[PooCodeView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*0.234, SCREEN_HEIGHT*0.3, SCREEN_WIDTH*0.53, SCREEN_HEIGHT*0.067) andChangeArray:randomArr];
+        [self addSubview:_pooCodeView];
         
         _refreshBtn = [[UIButton alloc] init];
         [_refreshBtn setTitle:@"看不清? 点击刷新" forState:UIControlStateNormal];
+        [_refreshBtn addTarget:self action:@selector(refreshVerifyCode:) forControlEvents:UIControlEventTouchUpInside];
         [_refreshBtn setTitleColor:[UIColor colorWithHexString:@"CCCCCC"] forState:UIControlStateNormal];
         _refreshBtn.titleLabel.font = QDFont(13);
         [self addSubview:_refreshBtn];
@@ -48,7 +49,7 @@
         make.height.mas_equalTo(SCREEN_WIDTH*0.01);
     }];
 
-    [_imgView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_pooCodeView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self);
         make.top.equalTo(self.lineView.mas_bottom).offset(SCREEN_HEIGHT*0.06);
         make.height.mas_equalTo(SCREEN_HEIGHT*0.067);
@@ -56,9 +57,12 @@
     }];
 
     [_refreshBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.imgView);
-        make.top.equalTo(self.imgView.mas_bottom).offset(SCREEN_HEIGHT*0.022);
+        make.centerX.equalTo(self.pooCodeView);
+        make.top.equalTo(self.pooCodeView.mas_bottom).offset(SCREEN_HEIGHT*0.022);
     }];
 }
 
+- (void)refreshVerifyCode:(UIButton *)sender{
+    [_pooCodeView changeCode];
+}
 @end

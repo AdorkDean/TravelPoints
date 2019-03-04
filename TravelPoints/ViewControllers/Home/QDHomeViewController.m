@@ -24,6 +24,7 @@
 
 @property (nonatomic, strong) NSMutableArray *regions;
 @property (nonatomic, strong) UIButton *gpsButton;
+@property (nonatomic, strong) UIView *bottomView;
 
 
 @end
@@ -39,6 +40,7 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
     [self.locationManager stopUpdatingHeading];
     [self.locationManager stopUpdatingLocation];
     [self.navigationController.navigationBar setHidden:NO];
@@ -163,14 +165,14 @@
 
 - (void)initUI{
     _homeTopView = [[QDHomeTopView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.3)];
-    _homeTopView.backgroundColor = APP_GREENCOLOR;
+    _homeTopView.backgroundColor = APP_BLUECOLOR;
     [self.view addSubview:_homeTopView];
     _homeTopView.searchBar.delegate = self;
     
-    UIView *bottomView = [[UIView alloc] init];
-    bottomView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:bottomView];
-    [bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
+    _bottomView = [[UIView alloc] init];
+    _bottomView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:_bottomView];
+    [_bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view);
         make.top.equalTo(self.view.mas_top).offset(SCREEN_HEIGHT*0.85);
         make.width.mas_equalTo(SCREEN_WIDTH*0.89);
@@ -179,18 +181,18 @@
     UILabel *lab = [[UILabel alloc] init];
     lab.text = @"发行计划";
     lab.font = QDFont(13);
-    [bottomView addSubview:lab];
+    [_bottomView addSubview:lab];
     [lab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(bottomView);
-        make.left.equalTo(bottomView.mas_left).offset(SCREEN_WIDTH*0.027);
+        make.centerY.equalTo(_bottomView);
+        make.left.equalTo(_bottomView.mas_left).offset(SCREEN_WIDTH*0.027);
     }];
     
     UIView *lineView = [[UIView alloc] init];
     lineView.backgroundColor = APP_GRAYCOLOR;
-    [bottomView addSubview:lineView];
+    [_bottomView addSubview:lineView];
     [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(bottomView);
-        make.left.equalTo(bottomView.mas_left).offset(SCREEN_WIDTH*0.2);
+        make.centerY.equalTo(_bottomView);
+        make.left.equalTo(_bottomView.mas_left).offset(SCREEN_WIDTH*0.2);
         make.height.mas_equalTo(SCREEN_HEIGHT*0.02);
         make.width.mas_equalTo(SCREEN_WIDTH*0.008);
     }];
@@ -199,18 +201,18 @@
     desc.text = @"发行计划说明文字";
     desc.font = QDFont(11);
     desc.textColor = APP_GRAYCOLOR;
-    [bottomView addSubview:desc];
+    [_bottomView addSubview:desc];
     [desc mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(bottomView);
-        make.left.equalTo(bottomView.mas_left).offset(SCREEN_WIDTH*0.23);
+        make.centerY.equalTo(_bottomView);
+        make.left.equalTo(_bottomView.mas_left).offset(SCREEN_WIDTH*0.23);
     }];
     
     UIImageView *img = [[UIImageView alloc] init];
-    img.image = [UIImage imageNamed:@"ad_back_black"];
-    [bottomView addSubview:img];
+    img.image = [UIImage imageNamed:@"icon_return"];
+    [_bottomView addSubview:img];
     [img mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(bottomView);
-        make.right.equalTo(bottomView.mas_right).offset(-(SCREEN_WIDTH*0.027));
+        make.centerY.equalTo(_bottomView);
+        make.right.equalTo(_bottomView.mas_right).offset(-(SCREEN_WIDTH*0.027));
     }];
 }
 
@@ -238,10 +240,12 @@
 //    [self.view addSubview:zoomPannelView];
     
 //    self.gpsButton = [self makeGPSButtonView];
-//    self.gpsButton.center = CGPointMake(CGRectGetMidX(self.gpsButton.bounds) + 10,
-//                                        self.view.bounds.size.height -  CGRectGetMidY(self.gpsButton.bounds) - 20);
 //    [self.view addSubview:self.gpsButton];
 //    self.gpsButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin;
+//    [self.gpsButton mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(_bottomView);
+//        make.bottom.equalTo(_bottomView.mas_top).offset(-(SCREEN_HEIGHT*0.03));
+//    }];
 }
 
 
@@ -285,7 +289,7 @@
             //单个脉冲圈缩放比例
             annotationView.scale = 30.0;
             //单个脉冲圈fillColor
-            annotationView.fillColor = APP_GREENCOLOR;
+            annotationView.fillColor = APP_BLUECOLOR;
             //单个脉冲圈strokeColor
             annotationView.strokeColor = [UIColor colorWithHexString:@"#E0EDDA"];
             

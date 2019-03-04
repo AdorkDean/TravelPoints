@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "SPButton.h"
+#import "MQGradientProgressView.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QDLogonWithNoFinancialAccountView : UIView
@@ -15,16 +16,33 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIButton *settingBtn;
 @property (nonatomic, strong) UIButton *voiceBtn;
 
-@property (nonatomic, strong) UIImageView *imgView;
-@property (nonatomic, strong) UIButton *picBtn;
+@property (nonatomic, strong) UIImageView *picView;
 @property (nonatomic, strong) UILabel *userNameLab;
-@property (nonatomic, strong) UIView *whiteView;
-@property (nonatomic, strong) UILabel *vipLab;
-@property (nonatomic, strong) UILabel *vipRightsLab;
+@property (nonatomic, strong) UIImageView *levelPic;
+@property (nonatomic, strong) UILabel *levelLab;
+@property (nonatomic, strong) UIButton *vipRightsBtn;
 
-@property (nonatomic, strong) UIView *whiteBackView;
+@property (nonatomic, strong) UIImageView *financialPic;
+@property (nonatomic, strong) UILabel *info1Lab;
+@property (nonatomic, strong) UILabel *info2Lab;
+@property (nonatomic, strong) UILabel *info3Lab;
+@property (nonatomic, strong) MQGradientProgressView *progressView;
+
+@property (nonatomic, strong) UILabel *info4Lab;
+@property (nonatomic, strong) UILabel *info5Lab;
+
+@property (nonatomic, strong) UILabel *info6Lab;
+@property (nonatomic, strong) UILabel *info7Lab;
+
+@property (nonatomic, strong) UILabel *info8Lab;
+@property (nonatomic, strong) UILabel *info9Lab;
+@property (nonatomic, strong) UIButton *accountInfo;
+
+
+
 @property (nonatomic, strong) UILabel *balanceLab;
-@property (nonatomic, strong) UILabel *infoLab;
+@property (nonatomic, strong) UILabel *balance;
+
 @property (nonatomic, strong) UIButton *openFinancialBtn;
 @end
 

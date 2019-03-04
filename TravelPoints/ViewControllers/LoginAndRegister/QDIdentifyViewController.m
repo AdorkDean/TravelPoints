@@ -19,6 +19,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _identifyView = [[IdentifyView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+//    _identifyView.refreshBtn addTarget:self action:@selector(<#selector#>) forControlEvents:<#(UIControlEvents)#>
     // Do any additional setup after loading the view.
 }
 

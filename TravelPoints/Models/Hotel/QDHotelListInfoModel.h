@@ -52,7 +52,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign) NSDecimalNumber *maxPrice;        //最大价格
 @property (nonatomic, assign) NSDecimalNumber *minPrice;        //最大价格
-@property (nonatomic, strong) NSString *price;           //酒店展示价格
+@property (nonatomic, strong) NSString *price;                  //酒店积分
+@property (nonatomic, strong) NSString *rmbprice;               //酒店展示价格
 
 @property (nonatomic, assign) NSDecimalNumber *registeredCapital;   //注册资本
 

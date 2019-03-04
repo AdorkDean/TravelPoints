@@ -58,19 +58,16 @@ typedef void(^PrivateRequestFailure)(NSURLSessionDataTask *task, NSError *error)
             case AFNetworkReachabilityStatusNotReachable:
             {
                 QDToast(@"当前网络不可用");
-
             }
                 break;
             case AFNetworkReachabilityStatusReachableViaWWAN:
             {
 //                QDToast(@"当前网络为3/4G状态");
-
             }
                 break;
             case AFNetworkReachabilityStatusReachableViaWiFi:
             {
 //                QDToast(@"当前网络环境为WI-FI");
-
             }
                 break;
             default:
@@ -254,7 +251,9 @@ typedef void(^PrivateRequestFailure)(NSURLSessionDataTask *task, NSError *error)
         
         //        insetParams = @{@"params":@[]};
     }
-    NSString *requestUrl = [self getRequestURLStr:urlString];
+//    NSString *requestUrl = [self getRequestURLStr:urlString];
+    NSString *requestUrl = urlString;
+
     switch (type) {
         case kHTTPRequestTypeGET:
             requestTypeStr = @"GET";

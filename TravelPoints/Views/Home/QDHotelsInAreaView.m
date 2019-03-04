@@ -13,11 +13,11 @@
 - (instancetype)initWithFrame:(CGRect)frame{
     if ([super initWithFrame:frame]) {
         _backBtn = [[UIButton alloc] init];
-        [_backBtn setImage:[UIImage imageNamed:@"ad_back_black"] forState:UIControlStateNormal];
+        [_backBtn setImage:[UIImage imageNamed:@"icon_return"] forState:UIControlStateNormal];
         [self addSubview:_backBtn];
         
         _cityBtn = [[SPButton alloc] initWithImagePosition:SPButtonImagePositionRight];
-        [_cityBtn setImage:[UIImage imageNamed:@"ad_back_black"] forState:UIControlStateNormal];
+        [_cityBtn setImage:[UIImage imageNamed:@"icon_return"] forState:UIControlStateNormal];
         [self addSubview:_cityBtn];
     }
     return self;

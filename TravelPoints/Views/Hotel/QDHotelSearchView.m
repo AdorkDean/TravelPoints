@@ -63,11 +63,11 @@
         [self addSubview:_dateOut];
         
         _greenLine = [[UIView alloc] init];
-        _greenLine.backgroundColor = APP_GREENCOLOR;
+        _greenLine.backgroundColor = APP_BLUECOLOR;
         [self addSubview:_greenLine];
         
         _totalDayLab = [[UILabel alloc] init];
-        _totalDayLab.textColor = APP_GREENCOLOR;
+        _totalDayLab.textColor = APP_BLUECOLOR;
         _totalDayLab.font = QDFont(15);
         _totalDayLab.text = @"1晚";
         [self addSubview:_totalDayLab];
@@ -89,9 +89,9 @@
         _searchBtn = [[UIButton alloc] init];
         _searchBtn.backgroundColor = [UIColor whiteColor];
         [_searchBtn setTitle:@"开始搜索" forState:UIControlStateNormal];
-        [_searchBtn setTitleColor:APP_GREENCOLOR forState:UIControlStateNormal];
+        [_searchBtn setTitleColor:APP_BLUECOLOR forState:UIControlStateNormal];
         _searchBtn.layer.borderWidth = 1;
-        _searchBtn.layer.borderColor = APP_GREENCOLOR.CGColor;
+        _searchBtn.layer.borderColor = APP_BLUECOLOR.CGColor;
         _searchBtn.layer.cornerRadius = SCREEN_WIDTH*0.06;
         _searchBtn.layer.masksToBounds = YES;
         [self addSubview:_searchBtn];

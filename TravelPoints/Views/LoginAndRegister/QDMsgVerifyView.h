@@ -15,6 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIView *lineView;
 @property (nonatomic, retain) GBverifyButton *sendBtn;
 
+@property (nonatomic, strong) NSString *legalPhone;
+
 @end
 
 NS_ASSUME_NONNULL_END

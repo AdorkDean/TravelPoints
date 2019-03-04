@@ -12,24 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface QDMineInfoTableViewCell : UITableViewCell
 
-@property (nonatomic, strong) UIView *ordersView;
-@property (nonatomic, strong) UILabel *myOrdersLab;
-@property (nonatomic, strong) UIView *lineView;
-@property (nonatomic, strong) SPButton *btn1;
-@property (nonatomic, strong) SPButton *btn2;
-@property (nonatomic, strong) SPButton *btn3;
-@property (nonatomic, strong) SPButton *btn4;
+@property (nonatomic, strong) UILabel *titleLab;
+@property (nonatomic, strong) UIImageView *indicatorPic;
 
-@property (nonatomic, strong) UIView *functionsView;
-@property (nonatomic, strong) UILabel *functionsLab;
-@property (nonatomic, strong) UIView *lineView2;
-@property (nonatomic, strong) SPButton *btn5;
-@property (nonatomic, strong) SPButton *btn6;
-@property (nonatomic, strong) SPButton *btn7;
-@property (nonatomic, strong) SPButton *btn8;
-@property (nonatomic, strong) SPButton *btn9;
-@property (nonatomic, strong) SPButton *btn10;
-@property (nonatomic, strong) SPButton *btn11;
 
 @end
 

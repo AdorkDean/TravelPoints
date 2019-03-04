@@ -25,7 +25,7 @@
         [_backView addSubview:_searchTF];
         
         _searchBtn = [[UIButton alloc] init];
-        [_searchBtn setImage:[UIImage imageNamed:@"ad_back_black"] forState:UIControlStateNormal];
+        [_searchBtn setImage:[UIImage imageNamed:@"icon_return"] forState:UIControlStateNormal];
         [_backView addSubview:_searchBtn];
         
     }

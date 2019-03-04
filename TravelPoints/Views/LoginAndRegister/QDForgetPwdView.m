@@ -18,7 +18,7 @@
         [self addSubview:_loginLab];
         
         _lineView = [[UIView alloc] init];
-        _lineView.backgroundColor = [UIColor colorWithHexString:@"#50C533"];
+        _lineView.backgroundColor = APP_BLUECOLOR;
         [self addSubview:_lineView];
         
         _phoneLine = [[UIView alloc] init];
@@ -32,8 +32,9 @@
         
         _phoneTF = [[UITextField alloc] init];
         _phoneTF.placeholder = @"请输入手机号";
-        [_phoneTF setValue:[UIColor colorWithHexString:@"#CCCCCC"] forKeyPath:@"placeholderLabel.textColor"];
-        [_phoneTF setValue:[UIFont systemFontOfSize:17] forKeyPath:@"_placeholderLabel.font"];
+        _phoneTF.clearButtonMode = UITextFieldViewModeWhileEditing;
+        [_phoneTF setValue:APP_GRAYLAYERCOLOR forKeyPath:@"placeholderLabel.textColor"];
+        [_phoneTF setValue:[UIFont systemFontOfSize:15] forKeyPath:@"_placeholderLabel.font"];
         [self addSubview:_phoneTF];
         
         _nextStepBtn = [[QDButton alloc] init];
@@ -73,15 +74,16 @@
     }];
     
     [_phoneTF mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(SCREEN_WIDTH*0.22);
-        make.centerY.equalTo(self.areaBtn);
+        make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH*0.24);
+        make.centerY.and.height.equalTo(self.areaBtn);
+//        make.right.equalTo(self.lineView);
+        make.width.mas_equalTo(SCREEN_WIDTH*0.6);
     }];
-    
+
     [_nextStepBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.and.width.equalTo(self.phoneLine);
         make.top.equalTo(self.phoneLine.mas_bottom).offset(SCREEN_HEIGHT*0.068);
         make.height.mas_equalTo(SCREEN_HEIGHT*0.075);
     }];
 }
-
 @end

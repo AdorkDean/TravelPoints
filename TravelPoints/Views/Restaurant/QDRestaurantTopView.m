@@ -19,7 +19,7 @@
         [self addSubview:_backView];
         
         _cityBtn = [[SPButton alloc] initWithImagePosition:SPButtonImagePositionRight];
-        [_cityBtn setImage:[UIImage imageNamed:@"ad_back_black"] forState:UIControlStateNormal];
+        [_cityBtn setImage:[UIImage imageNamed:@"icon_return"] forState:UIControlStateNormal];
         [_cityBtn setTitle:@"上海" forState:UIControlStateNormal];
         [_cityBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [_backView addSubview:_cityBtn];
@@ -31,7 +31,7 @@
         [_backView addSubview:_locationTF];
         
         _searchBtn = [[UIButton alloc] init];
-        [_searchBtn setImage:[UIImage imageNamed:@"ad_back_black"] forState:UIControlStateNormal];
+        [_searchBtn setImage:[UIImage imageNamed:@"icon_return"] forState:UIControlStateNormal];
         [_backView addSubview:_searchBtn];
     }
     return self;

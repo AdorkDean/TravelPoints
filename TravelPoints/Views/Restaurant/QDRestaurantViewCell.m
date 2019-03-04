@@ -7,6 +7,8 @@
 //
 
 #import "QDRestaurantViewCell.h"
+#import "SDWebImageManager.h"
+#import "UIImageView+WebCache.h"
 
 @implementation QDRestaurantViewCell
 
@@ -36,7 +38,7 @@
         _ftLab = [[UILabel alloc] init];
         _ftLab.text = @"588FT";
         _ftLab.font = QDFont(15);
-        _ftLab.textColor = APP_GREENCOLOR;
+        _ftLab.textColor = APP_BLUECOLOR;
         [self.contentView addSubview:_ftLab];
         
         _rmbLab = [[UILabel alloc] init];
@@ -73,12 +75,12 @@
 }
 
 
--(void)fillContentWithModel:(CustomTravelDTO *)infoModel andImgData:(NSData *)imgData{
-    self.thePic.image = [UIImage imageWithData:imgData];
+-(void)fillContentWithModel:(CustomTravelDTO *)infoModel andImgURL:(NSString *)imgURL{
     AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     self.titleLab.text = infoModel.travelName;
     self.ftLab.text = [NSString stringWithFormat:@"%@FT 起", infoModel.singleCost];
     double ss = [infoModel.singleCost doubleValue] * delegate.basePirceRate;
     self.rmbLab.text = [NSString stringWithFormat:@"折合人民币%.f元", ss];
+    [self.thePic sd_setImageWithURL:[NSURL URLWithString:imgURL] placeholderImage:[UIImage imageNamed:@"placeHolder"] options:SDWebImageLowPriority];
 }
 @end

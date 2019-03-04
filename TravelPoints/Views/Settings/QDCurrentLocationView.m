@@ -13,7 +13,7 @@
 - (instancetype)initWithFrame:(CGRect)frame{
     if ([super initWithFrame:frame]) {
         _locationImg = [[UIImageView alloc] init];
-        [_locationImg setImage:[UIImage imageNamed:@"ad_back_black"]];
+        [_locationImg setImage:[UIImage imageNamed:@"icon_grayLocate"]];
         [self addSubview:_locationImg];
         
         _myLocationLab = [[UILabel alloc] init];
@@ -22,7 +22,7 @@
         [self addSubview:_myLocationLab];
         
         _detailLocationLab = [[UILabel alloc] init];
-        _detailLocationLab.text = @"上海市浦东新区金康路33号";
+        _detailLocationLab.text = @"定位中...";
         _detailLocationLab.textColor = [UIColor grayColor];
         _detailLocationLab.font = QDFont(15);
         [self addSubview:_detailLocationLab];
@@ -31,7 +31,7 @@
         _cityLab.backgroundColor = [UIColor colorWithHexString:@"#EAF0F3"];
         _cityLab.layer.cornerRadius = 3;
         _cityLab.layer.masksToBounds = YES;
-        _cityLab.text = @"上海";
+        _cityLab.text = @"--";
         _cityLab.font = QDFont(14);
         _cityLab.textAlignment = NSTextAlignmentCenter;
         [self addSubview:_cityLab];

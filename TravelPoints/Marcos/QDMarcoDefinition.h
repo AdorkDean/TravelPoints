@@ -158,6 +158,8 @@ item.alpha = 0.0; \
 //获取系统版本
 #define IOS_SYSTEM_VERSION [[[UIDevice currentDevice] systemVersion] floatValue]
 
+#define isIOS(a) [[[UIDevice currentDevice]systemVersion] floatValue] == a
+
 //判断 iOS 8 或更高的系统版本
 #define IOS_VERSION_8_OR_LATER (([[[UIDevice currentDevice] systemVersion] floatValue] >=8.0)? (YES):(NO))
 

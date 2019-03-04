@@ -79,21 +79,30 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),blo
 #define BOLDF15 [UIFont boldSystemFontOfSize:15];
 
 #define RGB_COLOR_String(string)  [UIColor colorWithHexString:string]
-#define APP_BACKGROUND         RGB_COLOR_String(@"f5f5f5") //背景
-#define APP_LIGHTGRAYCOLOR     RGB_COLOR_String(@"#DDDDDD") //线条灰色
-#define APP_GRAYCOLOR          RGB_COLOR_String(@"#999999") //灰色
-#define APP_GRAYCOLOR_BETTER   RGB_COLOR_String(@"#999999") //浅灰色
-#define APP_GRAYCOLOR_SEARCH   RGB_COLOR_String(@"f5f5f5") //搜索框灰色
-#define APP_GREENCOLOR         RGB_COLOR_String(@"#72BB37") //主色调 橙色
-#define APP_NORMALBARCOLOR          RGB_COLOR_String(@"#72BB37") //主色调 橙色
-#define APP_REDCOLOR           RGB_COLOR_String(@"c0965d") //红色
-#define APP_LINECOLOR          RGB_COLOR_String(@"EFEFEF") //边框色
-#define APP_ORANGECOLOR        RGB_COLOR_String(@"FF8244") //橘红色
+#define APP_BACKGROUND         RGB_COLOR_String(@"f5f5f5")      //背景
+#define APP_LIGHTGRAYCOLOR     RGB_COLOR_String(@"#DDDDDD")     //线条灰色
+#define APP_GRAYCOLOR          RGB_COLOR_String(@"#999999")     //灰色
+#define APP_GRAYCOLOR_BETTER   RGB_COLOR_String(@"#999999")     //浅灰色
+#define APP_GRAYCOLOR_SEARCH   RGB_COLOR_String(@"f5f5f5")      //搜索框灰色
+#define APP_BLACKCOLOR         RGB_COLOR_String(@"#2B2C42")     //黑色
+#define APP_NORMALBARCOLOR          RGB_COLOR_String(@"#72BB37")//主色调 橙色
+#define APP_REDCOLOR           RGB_COLOR_String(@"c0965d")      //红色
+#define APP_LINECOLOR          RGB_COLOR_String(@"EFEFEF")      //边框色
+#define APP_ORANGECOLOR        RGB_COLOR_String(@"FF8244")      //橘红色
 #define APP_WHITECOLOR        [UIColor whiteColor]
-#define APP_BLACKCOLOR        [UIColor blackColor]
 #define APP_CLEARCOLOR        [UIColor clearColor]
 #define APP_LABELCOLOR        RGB_COLOR_String(@"F75D21")
 #define APP_LABELBGCOLOR        RGB_COLOR_String(@"FFE1D5")
+#define APP_BLUECOLOR        RGB_COLOR_String(@"#02AAB0")
+
+
+#define APP_GRAYTEXTCOLOR        RGB_COLOR_String(@"#62656E")   //灰色字体
+#define APP_GRAYLINECOLOR        RGB_COLOR_String(@"#A6A6B2")   //灰色线条
+#define APP_GRAYBUTTONCOLOR      RGB_COLOR_String(@"#EFEFF4") //按钮灰色背景色
+#define APP_GRAYLAYERCOLOR       RGB_COLOR_String(@"#CCCCCC")  //灰色layer
+#define APP_GRAYBUTTONTEXTCOLOR       RGB_COLOR_String(@"#666666")  //按钮上的灰色字
+#define APP_GRAYBACKGROUNDCOLOR       RGB_COLOR_String(@"#F5F5F7")  //灰色背景
+#define APP_ORANGETEXTCOLOR       RGB_COLOR_String(@"#FF643B")  //橘红色字体
 
 #define UIBUTTON_BORDER_COLOR        RGB_COLOR_String(@"BFBFBF") //橘红色
 

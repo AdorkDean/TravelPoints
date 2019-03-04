@@ -13,13 +13,17 @@ NS_ASSUME_NONNULL_BEGIN
 @interface QDHotelTableViewCell : UITableViewCell
 @property (nonatomic, strong) UIImageView *hotelImg;
 @property (nonatomic, strong) UILabel *hotelName;
-@property (nonatomic, strong) UILabel *starLab;
+@property (nonatomic, strong) UILabel *wanbeiLab;
+@property (nonatomic, strong) UILabel *wanbei;
+@property (nonatomic, strong) UILabel *yueLab;
 @property (nonatomic, strong) UILabel *priceLab;
-@property (nonatomic, strong) UILabel *priceRMBLab;
+@property (nonatomic, strong) UILabel *totalStars;
+@property (nonatomic, strong) UILabel *starLab;
+
 @property (nonatomic, strong) UILabel *locationLab;
 
+-(void)fillContentWithModel:(QDHotelListInfoModel *)infoModel andImgURLStr:(NSString *)imgURL;
 
--(void)fillContentWithModel:(QDHotelListInfoModel *)infoModel andImgData:(NSData *)imgData;
 @end
 
 NS_ASSUME_NONNULL_END

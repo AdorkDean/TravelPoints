@@ -14,6 +14,20 @@
 
 @implementation QDBaseViewController
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.navigationController.navigationBar setHidden:YES];
+    [self.navigationController.tabBarController.tabBar setHidden:NO];
+    self.tabBarController.tabBar.frame = CGRectMake(0, SCREEN_HEIGHT - 49, SCREEN_WIDTH, 49);
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+//    [self.navigationController.navigationBar setHidden:NO];
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 //    [self.navigationController.navigationBar setTitleTextAttributes:
@@ -29,7 +43,7 @@
 - (void)showBack:(BOOL)show
 {
     if (show) {
-        UIImage *backImage = [UIImage imageNamed:@"ad_back_black"];
+        UIImage *backImage = [UIImage imageNamed:@"icon_return"];
         UIImage *selectedImage = [backImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
         UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithImage:selectedImage style:UIBarButtonItemStylePlain target:self action:@selector(navBack:)];
         [self.navigationItem setLeftBarButtonItem:backItem animated:YES];

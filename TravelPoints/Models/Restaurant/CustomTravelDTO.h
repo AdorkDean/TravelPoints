@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *travelDesc;         //定制游描述
 @property (nonatomic, strong) NSString *topicUrl;           //标题推片地址
 @property (nonatomic, strong) NSString *unitCode;           //所属机构代码
-@property (nonatomic, assign) NSString *singleCost;  //单人人民币价格
+@property (nonatomic, assign) NSString *singleCost;         //单人人民币价格
 @property (nonatomic, assign) NSDecimalNumber *roomDiff;    //房差(人民币）
 @property (nonatomic, assign) NSInteger buyLimit;           //购买上限,0-表示无上限
 @property (nonatomic, assign) NSInteger preBuyDays;         //提前预定天数

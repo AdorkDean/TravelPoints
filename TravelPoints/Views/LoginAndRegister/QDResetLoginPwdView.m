@@ -18,7 +18,7 @@
         [self addSubview:_identifyLab];
         
         _lineView = [[UIView alloc] init];
-        _lineView.backgroundColor = [UIColor colorWithHexString:@"#50C533"];
+        _lineView.backgroundColor = APP_BLUECOLOR;
         [self addSubview:_lineView];
         
         _lineViewTop = [[UIView alloc] init];
@@ -31,19 +31,21 @@
         
         _theNewPwdTF = [[UITextField alloc] init];
         _theNewPwdTF.placeholder = @"请输入新登录密码";
-        [_theNewPwdTF setValue:[UIColor colorWithHexString:@"#CCCCCC"] forKeyPath:@"placeholderLabel.textColor"];
+        _theNewPwdTF.secureTextEntry = YES;
+        [_theNewPwdTF setValue:APP_GRAYLAYERCOLOR forKeyPath:@"placeholderLabel.textColor"];
         [_theNewPwdTF setValue:[UIFont systemFontOfSize:15] forKeyPath:@"_placeholderLabel.font"];
         [self addSubview:_theNewPwdTF];
         
         _confirmPwdTF = [[UITextField alloc] init];
         _confirmPwdTF.placeholder = @"请确认登录密码";
-        [_confirmPwdTF setValue:[UIColor colorWithHexString:@"#CCCCCC"] forKeyPath:@"placeholderLabel.textColor"];
+        _confirmPwdTF.secureTextEntry = YES;
+        [_confirmPwdTF setValue:APP_GRAYLAYERCOLOR forKeyPath:@"placeholderLabel.textColor"];
         [_confirmPwdTF setValue:[UIFont systemFontOfSize:15] forKeyPath:@"_placeholderLabel.font"];
         [self addSubview:_confirmPwdTF];
 
         _confirmBtn = [[UIButton alloc] init];
         [_confirmBtn setTitle:@"确认" forState:UIControlStateNormal];
-        _confirmBtn.backgroundColor = [UIColor colorWithHexString:@"#72BB37"];
+        _confirmBtn.backgroundColor = APP_BLUECOLOR;
         [self addSubview:_confirmBtn];
     }
     return self;

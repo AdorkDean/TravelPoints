@@ -7,12 +7,15 @@
 //
 
 #import "AppDelegate.h"
-#import "QDHomeViewController.h"
-#import "QDHotelVC.h"
-#import "QDRestaurantViewController.h"
-#import "QDMallViewController.h"
+#import "QDHomgePageVC.h"
+#import "QDPlayingShellsVC.h"
+#import "QDTradingShellsVC.h"
+#import "QDTradingViewController.h"
 #import "QDMineInfoViewController.h"
+#import "QDBridgeViewController.h"
 #import <AMapFoundationKit/AMapFoundationKit.h>
+#import <PgySDK/PgyManager.h>
+#import <PgyUpdate/PgyUpdateManager.h>
 @interface AppDelegate ()
 
 @property(nonatomic, strong) UITabBarController *rootTabbarCtr;
@@ -31,28 +34,27 @@
 }
 
 - (void)initRootVC{
-    QDHomeViewController *homeVC = [[QDHomeViewController alloc] init];
+    QDHomgePageVC *homeVC = [[QDHomgePageVC alloc] init];
     UINavigationController *navHome = [[UINavigationController alloc] initWithRootViewController:homeVC];
     
+    QDPlayingShellsVC *playShellsVC = [[QDPlayingShellsVC alloc] init];
+    UINavigationController *navPlayShell= [[UINavigationController alloc] initWithRootViewController:playShellsVC];
     
-    QDHotelVC *hotelVC = [[QDHotelVC alloc] init];
-    UINavigationController *navhotel = [[UINavigationController alloc] initWithRootViewController:hotelVC];
-    
-    QDRestaurantViewController *restaurantVC = [[QDRestaurantViewController alloc] init];
-    UINavigationController *navrestaurant = [[UINavigationController alloc] initWithRootViewController:restaurantVC];
-    
-    QDMallViewController *mallVC = [[QDMallViewController alloc] init];
-    UINavigationController *navMall = [[UINavigationController alloc] initWithRootViewController:mallVC];
-    
+    QDTradingViewController *tradeShellsVC = [[QDTradingViewController alloc] init];
+    UINavigationController *navTradeShell = [[UINavigationController alloc] initWithRootViewController:tradeShellsVC];
+//
+//    QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
+//    bridgeVC.urlStr = [QD_JSURL stringByAppendingString:@"integral/transaction/home"];
+//    UINavigationController *navTradeShell = [[UINavigationController alloc] initWithRootViewController:bridgeVC];
+
     QDMineInfoViewController *mineVC = [[QDMineInfoViewController alloc] init];
     UINavigationController *navMine = [[UINavigationController alloc] initWithRootViewController:mineVC];
     navMine.navigationBar.barTintColor = [UIColor whiteColor];
     homeVC.title = @"首页";
-    hotelVC.title = @"酒店";
-    restaurantVC.title = @"定制游";
-    mallVC.title = @"商城";
+    playShellsVC.title = @"用贝";
+    tradeShellsVC.title = @"转贝";
     mineVC.title = @"我的";
-    NSArray *viewCtrs = @[navHome, navhotel, navrestaurant, navMall, navMine];
+    NSArray *viewCtrs = @[navHome, navPlayShell, navTradeShell, navMine];
     self.rootTabbarCtr = [[UITabBarController alloc] init];
     [self.rootTabbarCtr setViewControllers:viewCtrs animated:YES];
     self.window.rootViewController = self.rootTabbarCtr;
@@ -64,7 +66,6 @@
     UITabBarItem *item2 = [tabbar.items objectAtIndex:1];
     UITabBarItem *item3 = [tabbar.items objectAtIndex:2];
     UITabBarItem *item4 = [tabbar.items objectAtIndex:3];
-    UITabBarItem *item5 = [tabbar.items objectAtIndex:4];
     
     item1.selectedImage = [[UIImage imageNamed:@"icon_tabbar_homepage_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     item1.image = [[UIImage imageNamed:@"icon_tabbar_homepage"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
@@ -74,8 +75,8 @@
     item3.image = [[UIImage imageNamed:@"icon_tabbar_merchant_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     item4.selectedImage = [[UIImage imageNamed:@"icon_tabbar_mine_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     item4.image = [[UIImage imageNamed:@"icon_tabbar_mine"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    item5.selectedImage = [[UIImage imageNamed:@"icon_tabbar_misc_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    item5.image = [[UIImage imageNamed:@"icon_tabbar_misc"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:APP_GRAYTEXTCOLOR, NSForegroundColorAttributeName, QDFont(12), NSFontAttributeName, nil] forState:UIControlStateNormal];
+    [[UITabBarItem appearance]setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:APP_BLUECOLOR,NSForegroundColorAttributeName,QDFont(12),NSFontAttributeName,nil]forState:UIControlStateSelected];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -83,12 +84,57 @@
     [self initRootVC];
     [self configureAPIKey];
     [self.window makeKeyAndVisible];
-    
+    _hotelLevel = [[NSMutableArray alloc] init];    //酒店等级
+    _hotelTypeId = [[NSMutableArray alloc] init];   //酒店类型
+    _level = [[NSMutableArray alloc] init];         //会员等级
+    [QDServiceClient startMonitoringNetworking];
     //获取基准价
     [self getBasicPrice];
+    [self findAllMapDict];
+    //启动Pgyer基本SDK
+    [[PgyManager sharedPgyManager] startManagerWithAppId:@"5b299d00b8ccffac5b2ea7908a03d716"];
+    
+    //启动更新检查SDK
+    [[PgyUpdateManager sharedPgyManager] startManagerWithAppId:@"5b299d00b8ccffac5b2ea7908a03d716"];
+    
+    [[PgyUpdateManager sharedPgyManager] checkUpdate];
     return YES;
 }
 
+- (void)findAllMapDict{
+    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_FindAllMapDict params:nil successBlock:^(QDResponseObject *responseObject) {
+        if (responseObject.code == 0) {
+            NSDictionary *dic = responseObject.result;
+            if ([[dic allKeys] containsObject:@"hotelLevel"]) {
+                if (_hotelLevel.count) {
+                    [_hotelLevel removeAllObjects];
+                }
+                if (_hotelTypeId.count) {
+                    [_hotelTypeId removeAllObjects];
+                }
+                if (_level.count) {
+                    [_level removeAllObjects];
+                }
+                NSArray *aaa = [dic objectForKey:@"hotelLevel"];
+                for (NSDictionary *dd in aaa) {
+                    [_hotelLevel addObject:[dd objectForKey:@"dictName"]];
+                }
+                NSArray *bbb = [dic objectForKey:@"hotelTypeId"];
+                for (NSDictionary *dd in bbb) {
+                    [_hotelTypeId addObject:[dd objectForKey:@"dictName"]];
+                }
+                NSArray *ccc = [dic objectForKey:@"Level"];
+                for (NSDictionary *dd in ccc) {
+                    [_level addObject:[dd objectForKey:@"dictName"]];
+                }
+            }
+        }else{
+            [WXProgressHUD showErrorWithTittle:responseObject.message];
+        }
+    } failureBlock:^(NSError *error) {
+        [WXProgressHUD hideHUD];
+    }];
+}
 #pragma mark - 个人积分账户详情
 - (void)getBasicPrice{
     [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_GetBasicPrice params:nil successBlock:^(QDResponseObject *responseObject) {

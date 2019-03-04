@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SPButton.h"
 
 @protocol NavigationViewDelegate <NSObject>
 
@@ -18,14 +19,18 @@
 @end
 
 @interface NavigationView : UIView
-@property (nonatomic, strong) UIButton *collectBtn;
-@property (nonatomic, weak) id<NavigationViewDelegate> naviDelegate;
-@property (nonatomic, strong) UIButton *backBtn;
+@property (nonatomic, strong) SPButton *addressBtn;
+@property (nonatomic, strong) UIButton *iconBtn;
 
-//向左移动
+@property(nonatomic, strong) UIView *topBackView;
+@property(nonatomic, strong) UIImageView *imgView;
+@property(nonatomic, strong) UITextField *inputTF;
+@property (nonatomic, weak) id<NavigationViewDelegate> naviDelegate;
+
+////向左移动
 - (void)navigationAnimation;
-//恢复原位
-- (void)resetFrame;
-//选中恢复
-- (void)resetBtns;
+////恢复原位
+//- (void)resetFrame;
+////选中恢复
+//- (void)resetBtns;
 @end

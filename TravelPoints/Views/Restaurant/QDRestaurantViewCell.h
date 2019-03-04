@@ -17,8 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *ftLab;
 @property (nonatomic, strong) UILabel *rmbLab;
 
--(void)fillContentWithModel:(CustomTravelDTO *)infoModel andImgData:(NSData *)imgData;
-
+-(void)fillContentWithModel:(CustomTravelDTO *)infoModel andImgURL:(NSString *)imgURL;
 @end
 
 NS_ASSUME_NONNULL_END

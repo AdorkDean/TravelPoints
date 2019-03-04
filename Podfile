@@ -17,9 +17,9 @@ target 'TravelPoints' do
   pod 'AMap2DMap'
   pod 'AMapSearch'
   pod 'AMapLocation'
-  pod 'BaiduMapKit'
   pod 'HMSegmentedControl'
   pod 'FSCalendar'
-  pod 'TFDropDownMenu'
   pod 'DZNEmptyDataSet'
+  pod 'Pgyer'
+  pod 'PgyUpdate'
 end

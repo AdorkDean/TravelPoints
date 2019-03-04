@@ -10,7 +10,9 @@
 #import "QDRestaurantViewCell.h"
 #import "CustomTravelDTO.h"
 #import "QDBridgeViewController.h"
-@interface QDRestaurantViewController ()<UITableViewDelegate, UITableViewDataSource>{
+#import <DZNEmptyDataSet/UIScrollView+EmptyDataSet.h>
+
+@interface QDRestaurantViewController ()<UITableViewDelegate, UITableViewDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate>{
     NSMutableArray *_dzyList;
     NSMutableArray *_imgList;
 }
@@ -47,17 +49,15 @@
                     NSDictionary *dic = [infoModel.imageList firstObject];
                     NSString *urlStr = [NSString stringWithFormat:@"%@/%@", QD_Domain, [dic objectForKey:@"imageUrl"]];
                     QDLog(@"urlStr = %@", urlStr);
-                    NSData *imgData = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlStr]];
-                    [_imgList addObject:imgData];
+                    [_imgList addObject:urlStr];
                 }
-                QDLog(@"_dzyList = %@", _dzyList);
-                QDLog(@"_imgList = %@", _imgList);
-
                 [self.tableView reloadData];
             }
         }
     } failureBlock:^(NSError *error) {
-        
+        [_tableView reloadData];
+        [_tableView reloadEmptyDataSet];
+        [WXProgressHUD showErrorWithTittle:@"网络异常"];
     }];
 }
 -(void)viewWillDisappear:(BOOL)animated {
@@ -100,6 +100,8 @@
 //    }
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    _tableView.emptyDataSetDelegate = self;
+    _tableView.emptyDataSetSource = self;
     _tableView.backgroundColor = [UIColor whiteColor];
     _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     _tableView.showsVerticalScrollIndicator = NO;
@@ -128,15 +130,9 @@
         cell = [[QDRestaurantViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     if (_dzyList.count > 0) {
-        [cell fillContentWithModel:_dzyList[indexPath.section] andImgData:_imgList[indexPath.section]];
+        [cell fillContentWithModel:_dzyList[indexPath.section] andImgURL:_imgList[indexPath.section]];
     }
     [self addShadowToView:cell withColor:APP_GRAYCOLOR];
-    
-    //设置cell点击时的颜色
-    //    UIView *backgroundViews = [[UIView alloc]initWithFrame:cell.frame];
-    //    backgroundViews.backgroundColor = [UIColor whiteColor];
-    //    [cell setSelectedBackgroundView:backgroundViews];
-    //    cell.backgroundColor = [UIColor whiteColor];
     return cell;
 }
 
@@ -153,7 +149,7 @@
 }
 - (void)addShadowToView:(UIView *)theView withColor:(UIColor *)theColor {
     // 阴影颜色
-    theView.layer.shadowColor = theColor.CGColor;
+    theView.layer.shadowColor = APP_GRAYCOLOR.CGColor;
     // 阴影偏移，默认(0, -3)
     theView.layer.shadowOffset = CGSizeMake(13,13);
     // 阴影透明度，默认0
@@ -161,6 +157,20 @@
     // 阴影半径，默认3
     theView.layer.shadowRadius = 6;
     
+}
+
+#pragma mark - DZNEmtpyDataSet Delegate
+
+- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView{
+    return [UIImage imageNamed:@"empty@2x"];
+}
+
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView{
+    NSString *text = @"未找到相关数据,请重试";
+    
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:16.0f],
+                                 NSForegroundColorAttributeName: [UIColor darkGrayColor]};
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
 
 @end

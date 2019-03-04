@@ -20,7 +20,7 @@
 - (void)initialize {
     self.contentView.backgroundColor = [UIColor colorWithHexString:@"#F9FAFC"];
     _lineView = [[UIView alloc] init];
-    _lineView.backgroundColor = APP_GREENCOLOR;
+    _lineView.backgroundColor = APP_BLUECOLOR;
     [self.contentView addSubview:_lineView];
     
     _titleLabel = [[UILabel alloc] init];

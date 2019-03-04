@@ -34,6 +34,10 @@
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
 }
 
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [_locationManager stopUpdatingLocation];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
@@ -77,6 +81,12 @@
     _tableView.sectionIndexColor = [UIColor grayColor]; //设置默认时索引值颜色
 }
 
+- (void)currentLocation:(UIGestureRecognizer *)ges{
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+}
+
 - (void)initUI{
     _topView = [[QDLocationTopSelectView alloc] initWithFrame:CGRectMake(0, 24, SCREEN_WIDTH, SCREEN_HEIGHT*0.05)];
     [_topView.cancelBtn addTarget:self action:@selector(cancelDidClick) forControlEvents:UIControlEventTouchUpInside];
@@ -88,7 +98,8 @@
     _currentLocationView.detailLocationLab.text = _currentLocationInfo;
     _currentLocationView.cityLab.text = _cityStr;
     [self.view addSubview:_currentLocationView];
-    
+    UITapGestureRecognizer *tapGes = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectCurrentLocation:)];
+    [_currentLocationView addGestureRecognizer:tapGes];
     _resultVC = [[UITableView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT*0.05 + 24, SCREEN_WIDTH, SCREEN_HEIGHT) style:UITableViewStylePlain];
     _resultVC.emptyDataSetDelegate = self;
     _resultVC.emptyDataSetSource = self;
@@ -100,6 +111,13 @@
     [self.view addSubview:_resultVC];
 }
 
+- (void)selectCurrentLocation:(UIGestureRecognizer *)ges{
+    [self dismissViewControllerAnimated:YES completion:nil];
+//    self.selectCity = ^(NSString * _Nonnull cityName) {
+//        cityName = _currentLocationInfo;
+//    };
+    QDLog(@"123");
+}
 - (void)prepareData {
     _historyCitys = [NSKeyedUnarchiver unarchiveObjectWithFile:SYHistoryCitysPath];
     NSArray *tempIndex = @[];
@@ -163,6 +181,7 @@
 
 #pragma mark - events
 - (void)cancelDidClick {
+    [_topView.inputTF resignFirstResponder];
     if (_resultVC.hidden) {
         [self dismissViewControllerAnimated:YES completion:nil];
 
@@ -536,7 +555,7 @@
 }
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView{
-    NSString *text = @"未找到相关位置,请重试";
+    NSString *text = @"暂无相关信息";
     
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:16.0f],
                                  NSForegroundColorAttributeName: [UIColor darkGrayColor]};

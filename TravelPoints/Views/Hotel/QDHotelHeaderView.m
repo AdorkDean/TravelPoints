@@ -13,7 +13,7 @@
 - (instancetype)initWithFrame:(CGRect)frame{
     if ([super initWithFrame:frame]) {
         _backImgView = [[UIView alloc] init];
-        _backImgView.backgroundColor = APP_GREENCOLOR;
+        _backImgView.backgroundColor = APP_BLUECOLOR;
         [self addSubview:_backImgView];
         
         _hotelLab = [[UILabel alloc] init];

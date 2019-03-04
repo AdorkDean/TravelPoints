@@ -87,7 +87,7 @@ typedef enum : NSUInteger {
     NSArray *segmentedTitles = @[@"酒店",@"攻略"];
     _segmentControl = [[QDSegmentControl alloc] initWithSectionTitles:segmentedTitles];
     [_segmentControl addTarget:self action:@selector(segmentedClicked:) forControlEvents:UIControlEventValueChanged];
-    _segmentControl.selectionIndicatorColor = APP_GREENCOLOR;
+    _segmentControl.selectionIndicatorColor = APP_BLUECOLOR;
     _segmentControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
     _segmentControl.selectionIndicatorBoxColor = [UIColor redColor];
     [_hotelsTopView addSubview:_segmentControl];

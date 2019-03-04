@@ -24,25 +24,25 @@
     }
     return self;
 }
-//- (id)initWithSectionTitles:(NSArray<NSString *> *)sectiontitles
-//{
-//    if (self = [super initWithSectionTitles:sectiontitles]) {
-//        [self setupSegmentControl];
-//    }
-//    return self;
-//}
+
+- (id)initWithSectionTitles:(NSArray<NSString *> *)sectiontitles
+{
+    if (self = [super initWithSectionTitles:sectiontitles]) {
+        [self setupSegmentControl];
+    }
+    return self;
+}
 
 - (void)setupSegmentControl
 {
-    self.selectionIndicatorHeight = 3.0f;
-    self.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor colorWithHexString:@"#9B9B9B"], NSFontAttributeName: QDFont(14)};
-    self.selectionStyle = HMSegmentedControlSelectionStyleFullWidthStripe;
+    self.selectionIndicatorHeight = 2.0f;
+    self.titleTextAttributes = @{NSForegroundColorAttributeName: APP_GRAYCOLOR, NSFontAttributeName: QDFont(14)};
+    self.selectionStyle = HMSegmentedControlSelectionStyleTextWidthStripe;
     self.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
-//    self.selectionStyle
     QDWeakSelf(self);
     weakself.backgroundColor = [UIColor whiteColor];
-    weakself.selectedTitleTextAttributes = @{NSForegroundColorAttributeName: [UIColor blackColor], NSFontAttributeName: QDFont(14)};
-    weakself.selectionIndicatorColor = APP_GREENCOLOR;
+    weakself.selectedTitleTextAttributes = @{NSForegroundColorAttributeName: APP_BLACKCOLOR, NSFontAttributeName: QDFont(14)};
+    weakself.selectionIndicatorColor = APP_BLUECOLOR;
 }
 
 /*

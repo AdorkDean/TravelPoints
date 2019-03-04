@@ -22,7 +22,7 @@
         _confirmBtn = [[UIButton alloc] init];
         [_confirmBtn setTitle:@"确定" forState:UIControlStateNormal];
         [_confirmBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        _confirmBtn.backgroundColor = APP_GREENCOLOR;
+        _confirmBtn.backgroundColor = APP_BLUECOLOR;
         _confirmBtn.titleLabel.font = QDFont(19);
         [self addSubview:_confirmBtn];
     }

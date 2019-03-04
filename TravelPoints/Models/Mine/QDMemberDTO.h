@@ -50,6 +50,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *verificationType;        //校验 0校验手机号用户名 1注册发送短信
 @property (nonatomic, assign) NSInteger isFirst;        //是否第一次交易 0否1是
 @property (nonatomic, strong) NSString *verificationCode;        //验证码
+@property (nonatomic, strong) NSString *isYepay;        //是否开通资金账户
 @property (nonatomic, strong) UserMoneyDTO *userMoneyDTO;        //资金信息
 @property (nonatomic, strong) UserCreditDTO *userCreditDTO;      //修改人
 

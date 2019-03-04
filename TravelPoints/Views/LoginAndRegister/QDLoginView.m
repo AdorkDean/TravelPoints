@@ -18,7 +18,7 @@
         [self addSubview:_loginLab];
         
         _lineView = [[UIView alloc] init];
-        _lineView.backgroundColor = [UIColor colorWithHexString:@"#50C533"];
+        _lineView.backgroundColor = APP_BLUECOLOR;
         [self addSubview:_lineView];
         
         _phoneLine = [[UIView alloc] init];
@@ -32,8 +32,12 @@
         
         _phoneTF = [[UITextField alloc] init];
         _phoneTF.placeholder = @"请输入手机号";
-        [_phoneTF setValue:[UIColor colorWithHexString:@"#CCCCCC"] forKeyPath:@"placeholderLabel.textColor"];
+        _phoneTF.delegate = self;
+        _phoneTF.clearButtonMode = UITextFieldViewModeWhileEditing;
+        _phoneTF.keyboardType = UIKeyboardTypeNumberPad;
+        [_phoneTF setValue:APP_GRAYLAYERCOLOR forKeyPath:@"placeholderLabel.textColor"];
         [_phoneTF setValue:[UIFont systemFontOfSize:15] forKeyPath:@"_placeholderLabel.font"];
+        [_phoneTF addTarget:self action:@selector(textFieldChanged:) forControlEvents:UIControlEventEditingChanged];
         [self addSubview:_phoneTF];
         
         _userNameLine = [[UIView alloc] init];
@@ -41,9 +45,13 @@
         [self addSubview:_userNameLine];
         
         _userNameTF = [[UITextField alloc] init];
-        _userNameTF.placeholder = @"请输入用户名";
-        [_userNameTF setValue:[UIColor colorWithHexString:@"#CCCCCC"] forKeyPath:@"placeholderLabel.textColor"];
+        _userNameTF.delegate = self;
+        _userNameTF.placeholder = @"请输入登录密码";
+        _userNameTF.secureTextEntry = YES;
+        _userNameTF.clearButtonMode = UITextFieldViewModeWhileEditing;
+        [_userNameTF setValue:APP_GRAYLAYERCOLOR forKeyPath:@"placeholderLabel.textColor"];
         [_userNameTF setValue:[UIFont systemFontOfSize:15] forKeyPath:@"_placeholderLabel.font"];
+        [_userNameTF addTarget:self action:@selector(textFieldChanged:) forControlEvents:UIControlEventEditingChanged];
         [self addSubview:_userNameTF];
         
         _forgetPWD = [[UIButton alloc] init];
@@ -54,8 +62,11 @@
         
         
         _gotologinBtn = [[QDButton alloc] init];
-        [_gotologinBtn setBackgroundColor:[UIColor colorWithHexString:@"#DDDDDD"] forState:UIControlStateNormal];
-        //        #72BB37
+        [_gotologinBtn setBackgroundColor:APP_LIGHTGRAYCOLOR forState:UIControlStateNormal];
+        [_gotologinBtn setBackgroundColor:APP_BLUECOLOR forState:UIControlStateSelected];
+        [_gotologinBtn setBackgroundColor:APP_BLUECOLOR forState:UIControlStateHighlighted];
+        [_gotologinBtn setBackgroundColor:APP_BLUECOLOR forState:UIControlStateDisabled];
+
         [_gotologinBtn setTitle:@"登录" forState:UIControlStateNormal];
         _gotologinBtn.titleLabel.font = QDFont(21);
         [self addSubview:_gotologinBtn];
@@ -91,8 +102,9 @@
     }];
     
     [_phoneTF mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(SCREEN_WIDTH*0.22);
+        make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH*0.24);
         make.centerY.equalTo(self.areaBtn);
+        make.right.equalTo(self.phoneLine);
     }];
     
     [_userNameLine mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -100,14 +112,16 @@
         make.top.equalTo(self.phoneLine.mas_bottom).offset(SCREEN_HEIGHT*0.1);
     }];
     
-    [_userNameTF mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.phoneTF);
-        make.bottom.equalTo(self.userNameLine.mas_top).offset(-(SCREEN_HEIGHT*0.01));
+    [_forgetPWD mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(self.userNameLine.mas_top).offset(-(SCREEN_HEIGHT*0.017));
+        make.right.equalTo(self.userNameLine);
     }];
     
-    [_forgetPWD mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.userNameTF);
-        make.right.equalTo(self.userNameLine);
+    
+    [_userNameTF mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.phoneTF);
+        make.centerY.equalTo(_forgetPWD);
+        make.right.equalTo(_forgetPWD.mas_left);
     }];
     
     [_gotologinBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -117,5 +131,10 @@
     }];
 }
 
-
+#pragma mark - 监听键盘输入
+- (void)textFieldChanged:(UITextField *)textField{
+    if (![_phoneTF.text isEqualToString:@""] && ![_userNameTF.text isEqualToString:@""]) {
+        [_gotologinBtn setSelected:YES];
+    }
+}
 @end

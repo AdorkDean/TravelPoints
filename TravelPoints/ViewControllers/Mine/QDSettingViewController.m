@@ -20,20 +20,44 @@
 
 @implementation QDSettingViewController
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.navigationController.navigationBar setHidden:NO];
+    [self.navigationController.tabBarController.tabBar setHidden:YES];
+    self.tabBarController.tabBar.frame = CGRectZero;
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self.navigationController.navigationBar setHidden:YES];
+    [self.navigationController.tabBarController.tabBar setHidden:NO];
+    self.tabBarController.tabBar.frame = CGRectMake(0, SCREEN_HEIGHT - 49, SCREEN_WIDTH, 49);
+}
+
+- (void)setLeftBtnItem{
+    UIImage *backImage = [UIImage imageNamed:@"icon_return"];
+    UIImage *selectedImage = [backImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithImage:selectedImage style:UIBarButtonItemStylePlain target:self action:@selector(leftBtn)];
+    [self.navigationItem setLeftBarButtonItem:backItem animated:YES];
+}
+- (void)leftBtn{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    [self showBack:YES];
     self.title = @"设置";
     [self initTableView];
-//    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
-    // Do any additional setup after loading the view.
+    [self setLeftBtnItem];
 }
 
 - (void)initTableView{
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT*0.022, SCREEN_WIDTH, SCREEN_HEIGHT) style:UITableViewStyleGrouped];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT*0.015 + SafeAreaTopHeight, SCREEN_WIDTH, SCREEN_HEIGHT) style:UITableViewStylePlain];
     _tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
@@ -97,11 +121,11 @@
 
 #pragma mark - 用户登出接口
 - (void)logout{
-    [WXProgressHUD showHUD];
     [[QDServiceClient shareClient] logoutWitStr:api_UserLogout SuccessBlock:^(QDResponseObject *responseObject) {
         [WXProgressHUD hideHUD];
         if (responseObject.code == 0) {
             //移除cookie
+            [WXProgressHUD showSuccessWithTittle:@"退出登录成功"];
             [QDUserDefaults setObject:@"0" forKey:@"loginType"];
             [QDUserDefaults removeCookies];
             [self.navigationController popViewControllerAnimated:YES];
@@ -109,8 +133,7 @@
             [WXProgressHUD showErrorWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
-        [WXProgressHUD hideHUD];
-        [WXProgressHUD showInfoWithTittle:@"网络异常"];
+        [WXProgressHUD showErrorWithTittle:@"网络异常"];
     }];
 }
 - (void)showAlertView{

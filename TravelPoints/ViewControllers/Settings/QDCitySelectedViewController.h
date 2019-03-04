@@ -16,9 +16,12 @@
 #import "SYHotCityHeaderView.h"
 NS_ASSUME_NONNULL_BEGIN
 
+//代理
 @protocol getChoosedAreaDelegate <NSObject>
 
 - (void)getChoosedAreaName:(NSString *)areaStr;
+
+
 @end
 
 @interface QDCitySelectedViewController : UIViewController<CLLocationManagerDelegate>

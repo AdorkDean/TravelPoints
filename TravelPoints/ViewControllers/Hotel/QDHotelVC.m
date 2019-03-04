@@ -17,7 +17,8 @@
 #import "QDHotelListInfoModel.h"
 #import "QDRefreshHeader.h"
 #import "QDRefreshFooter.h"
-#import <TFDropDownMenu.h>
+#import "TFDropDownMenu.h"
+#import "SDWebImageManager.h"
 
 typedef enum : NSUInteger {
     QDFilterArea,
@@ -47,11 +48,16 @@ typedef enum : NSUInteger {
     [super viewWillAppear:animated];
     // 导航栏透明
     [self.navigationController setNavigationBarHidden:YES animated:YES];
+    [self.navigationController.tabBarController.tabBar setHidden:NO];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     [self requestHotelInfoWithURL:api_GetHotelCondition];
 }
 
+- (void)viewWillDisappear:(BOOL)animated{
+//    [self.navigationController.tabBarController.tabBar setHidden:YES];
+//    self.navigationController.tabBarController.tabBar.frame = CGRectZero;
+}
 - (void)requestHotelInfoWithURL:(NSString *)urlStr{
     if (_hotelListInfoArr.count) {
         [_hotelListInfoArr removeAllObjects];
@@ -69,20 +75,24 @@ typedef enum : NSUInteger {
                 for (NSDictionary *dic in hotelArr) {
                     QDHotelListInfoModel *infoModel = [QDHotelListInfoModel yy_modelWithDictionary:dic];
                     [_hotelListInfoArr addObject:infoModel];
+                    
                     NSDictionary *dic = [infoModel.imageList firstObject];
                     NSString *urlStr = [NSString stringWithFormat:@"%@/%@", QD_Domain, [dic objectForKey:@"imageUrl"]];
                     QDLog(@"urlStr = %@", urlStr);
-                    NSData *imgData = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlStr]];
-                    [_hotelImgArr addObject:imgData];
+//                    NSData *imgData = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlStr]];
+                    [_hotelImgArr addObject:urlStr];
                 }
-                QDLog(@"_hotelListInfoArr = %@", _hotelListInfoArr);
-                
-                [self.tableView reloadData];
+                [_tableView reloadData];
             }
         }
     } failureBlock:^(NSError *error) {
-        
+        [WXProgressHUD showErrorWithTittle:@"网络异常"];
     }];
+}
+
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    self.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);//所需高度
 }
 
 - (void)viewDidLoad {
@@ -98,9 +108,6 @@ typedef enum : NSUInteger {
 //导航栏
 - (void)configNavigationBar{
     WS(ws);
-//    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [backBtn setImage:[UIImage imageNamed:@"ad_back_white"] forState:UIControlStateNormal];
-//    [backBtn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     _shareBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [_shareBtn setImage:[UIImage imageNamed:@"ad_share_white"] forState:UIControlStateNormal];
     [_shareBtn setImage:[UIImage imageNamed:@"ad_share_red"] forState:UIControlStateSelected];
@@ -200,9 +207,7 @@ typedef enum : NSUInteger {
         cell = [[QDHotelTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
         
     }
-    if (_hotelListInfoArr.count > 0) {
-        [cell fillContentWithModel:_hotelListInfoArr[indexPath.row] andImgData:_hotelImgArr[indexPath.row]];
-    }
+    [cell fillContentWithModel:_hotelListInfoArr[indexPath.row] andImgURLStr:_hotelImgArr[indexPath.row]];
     return cell;
 }
 
@@ -217,10 +222,11 @@ typedef enum : NSUInteger {
     NSMutableArray *data2 = [NSMutableArray arrayWithObjects:@[], @[], @[], @[], nil];
 
     TFDropDownMenuView *menu = [[TFDropDownMenuView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40) firstArray:data1 secondArray:data2];
-    menu.separatorColor = [UIColor greenColor];
-    menu.cellTextSelectColor = APP_GREENCOLOR;
+//    menu.separatorColor = [UIColor greenColor];
+    menu.cellTextSelectColor = APP_BLUECOLOR;
     menu.itemFontSize = 12;
-    menu.itemTextSelectColor = APP_GREENCOLOR;
+    menu.cellTitleFontSize = 12;
+    menu.itemTextSelectColor = APP_BLUECOLOR;
     
     /*风格*/
 //    menu.menuStyleArray = [NSMutableArray arrayWithObjects:
@@ -268,15 +274,15 @@ typedef enum : NSUInteger {
         self.collectBtn.alpha = 1.0;
     }
     
-    if (scrollView.contentOffset.y > threholdHeight &&
-        self.navigationView.alpha == 1.0) {
-        [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
-        [self.navigationView navigationAnimation];
-        self.tableView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
-    }else{
-        [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
-        [self.navigationView resetFrame];
-    }
+//    if (scrollView.contentOffset.y > threholdHeight &&
+//        self.navigationView.alpha == 1.0) {
+//        [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
+//        [self.navigationView navigationAnimation];
+//        self.tableView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
+//    }else{
+//        [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+//        [self.navigationView resetFrame];
+//    }
 }
 
 #pragma mark - NavigationViewDelegate

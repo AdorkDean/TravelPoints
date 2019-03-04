@@ -17,7 +17,7 @@
         [self addSubview:_identifyLab];
         
         _lineView = [[UIView alloc] init];
-        _lineView.backgroundColor = [UIColor colorWithHexString:@"#50C533"];
+        _lineView.backgroundColor = APP_BLUECOLOR;
         [self addSubview:_lineView];
         
         _lineViewTop = [[UIView alloc] init];
@@ -34,25 +34,30 @@
         
         _pwdTF = [[UITextField alloc] init];
         _pwdTF.placeholder = @"请输入登录密码";
-        [_pwdTF setValue:[UIColor colorWithHexString:@"#CCCCCC"] forKeyPath:@"placeholderLabel.textColor"];
+        _pwdTF.secureTextEntry = YES;
+        _pwdTF.clearButtonMode = UITextFieldViewModeWhileEditing;
+        [_pwdTF setValue:APP_GRAYLAYERCOLOR forKeyPath:@"placeholderLabel.textColor"];
         [_pwdTF setValue:[UIFont systemFontOfSize:15] forKeyPath:@"_placeholderLabel.font"];
         [self addSubview:_pwdTF];
         
         _confirmPwdTF = [[UITextField alloc] init];
         _confirmPwdTF.placeholder = @"请确认登录密码";
-        [_confirmPwdTF setValue:[UIColor colorWithHexString:@"#CCCCCC"] forKeyPath:@"placeholderLabel.textColor"];
+        _confirmPwdTF.secureTextEntry = YES;
+        _confirmPwdTF.clearButtonMode = UITextFieldViewModeWhileEditing;
+        [_confirmPwdTF setValue:APP_GRAYLAYERCOLOR forKeyPath:@"placeholderLabel.textColor"];
         [_confirmPwdTF setValue:[UIFont systemFontOfSize:15] forKeyPath:@"_placeholderLabel.font"];
         [self addSubview:_confirmPwdTF];
         
         _inviteTF = [[UITextField alloc] init];
         _inviteTF.placeholder = @"请填写邀请码(选填)";
-        [_inviteTF setValue:[UIColor colorWithHexString:@"#CCCCCC"] forKeyPath:@"placeholderLabel.textColor"];
+        _inviteTF.clearButtonMode = UITextFieldViewModeWhileEditing;
+        [_inviteTF setValue:APP_GRAYLAYERCOLOR forKeyPath:@"placeholderLabel.textColor"];
         [_inviteTF setValue:[UIFont systemFontOfSize:15] forKeyPath:@"_placeholderLabel.font"];
         [self addSubview:_inviteTF];
         
         _registerBtn = [[UIButton alloc] init];
         [_registerBtn setTitle:@"注册" forState:UIControlStateNormal];
-        _registerBtn.backgroundColor = [UIColor colorWithHexString:@"#72BB37"];
+        _registerBtn.backgroundColor = APP_BLUECOLOR;
         [self addSubview:_registerBtn];
     }
     return self;
@@ -82,6 +87,7 @@
     [_pwdTF mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH*0.053);
         make.bottom.equalTo(self.lineViewTop.mas_top).offset(-(SCREEN_HEIGHT*0.015));
+        make.right.equalTo(self.lineViewTop);
     }];
     
     [_lineViewCenter mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -94,6 +100,7 @@
     [_confirmPwdTF mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH*0.053);
         make.bottom.equalTo(self.lineViewCenter.mas_top).offset(-(SCREEN_HEIGHT*0.015));
+        make.right.equalTo(self.lineViewTop);
     }];
 
     [_lineViewBottom mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -104,6 +111,7 @@
     [_inviteTF mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.confirmPwdTF);
         make.bottom.equalTo(self.lineViewBottom.mas_top).offset(-(SCREEN_HEIGHT*0.015));
+        make.right.equalTo(self.lineViewTop);
     }];
     
     [_registerBtn mas_makeConstraints:^(MASConstraintMaker *make) {

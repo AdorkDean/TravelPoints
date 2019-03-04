@@ -7,7 +7,7 @@
 //
 
 #import <FSCalendar/FSCalendar.h>
-
+#import "DIYCalendarCell.h"
 @interface RangePickerCell : FSCalendarCell
 
 // The start/end of the range
@@ -15,5 +15,6 @@
 
 // The middle of the range
 @property (weak, nonatomic) CALayer *middleLayer;
+@property (assign, nonatomic) SelectionType selectionType;
 
 @end

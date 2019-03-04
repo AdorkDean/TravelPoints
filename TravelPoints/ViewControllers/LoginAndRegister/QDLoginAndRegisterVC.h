@@ -19,7 +19,7 @@
 #import "QDResetLoginPwdView.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface QDLoginAndRegisterVC : UIViewController<getTextFieldContentDelegate>{
+@interface QDLoginAndRegisterVC : UIViewController{
     QDLoginView *_loginView;
     QDRegisterView *_registerView;
     IdentifyView *_identifyView;

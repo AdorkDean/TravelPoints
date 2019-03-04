@@ -15,7 +15,6 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        
         CALayer *selectionLayer = [[CALayer alloc] init];
         selectionLayer.backgroundColor = [UIColor colorWithHexString:@"#00B3B4"].CGColor;
         selectionLayer.actions = @{@"hidden":[NSNull null]}; // Remove hiding animation
@@ -23,7 +22,9 @@
         self.selectionLayer = selectionLayer;
         
         CALayer *middleLayer = [[CALayer alloc] init];
-        middleLayer.backgroundColor = [[UIColor colorWithHexString:@"#DBF8F7"] colorWithAlphaComponent:0.3].CGColor;
+        middleLayer.backgroundColor = [[UIColor colorWithHexString:@"#DBF8F7"] colorWithAlphaComponent:0.5].CGColor;
+
+//        middleLayer.backgroundColor = [[UIColor colorWithHexString:@"#DBF8F7"] colorWithAlphaComponent:0.3].CGColor;
         middleLayer.actions = @{@"hidden":[NSNull null]}; // Remove hiding animation
         [self.contentView.layer insertSublayer:middleLayer below:self.titleLabel.layer];
         self.middleLayer = middleLayer;
@@ -38,7 +39,24 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    self.titleLabel.frame = self.contentView.bounds;
+//    self.titleLabel.backgroundColor = [UIColor redColor];
+//    self.subtitleLabel.backgroundColor = [UIColor yellowColor];
+//    self.imageView.backgroundColor = [UIColor blueColor];
+    
+    [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.contentView);
+        make.top.equalTo(self.contentView.mas_top);
+    }];
+    
+    [self.subtitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.contentView);
+        make.top.equalTo(self.titleLabel.mas_bottom).offset(-2);
+    }];
+    
+    [self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.subtitleLabel);
+        make.top.equalTo(self.subtitleLabel.mas_bottom).offset(-20);
+    }];
 }
 
 - (void)layoutSublayersOfLayer:(CALayer *)layer

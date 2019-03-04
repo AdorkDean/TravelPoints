@@ -7,7 +7,8 @@
 //
 
 #import "QDHotelTableViewCell.h"
-#import "AppDelegate.h"
+#import "SDWebImageManager.h"
+#import "UIImageView+WebCache.h"
 @implementation QDHotelTableViewCell
 
 - (void)awakeFromNib {
@@ -25,36 +26,56 @@
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         _hotelImg = [[UIImageView alloc] init];
         _hotelImg.image = [UIImage imageNamed:@"hotel"];
+        _hotelImg.layer.cornerRadius = 5;
+        _hotelImg.layer.masksToBounds = YES;
         [self.contentView addSubview:_hotelImg];
         
         _hotelName = [[UILabel alloc] init];
         _hotelName.text = @"--";
         _hotelName.numberOfLines = 0;
-        _hotelName.font = QDBoldFont(17);
+        _hotelName.font = QDBoldFont(15);
         [self.contentView addSubview:_hotelName];
         
+        _wanbei = [[UILabel alloc] init];
+        _wanbei.text = @"410";
+        _wanbei.font = QDFont(17);
+        _wanbei.textColor = APP_ORANGETEXTCOLOR;
+        [self.contentView addSubview:_wanbei];
+        
+        _wanbeiLab = [[UILabel alloc] init];
+        _wanbeiLab.text = @"玩贝";
+        _wanbeiLab.font = QDFont(12);
+        _wanbeiLab.textColor = APP_ORANGETEXTCOLOR;
+        [self.contentView addSubview:_wanbeiLab];
+        
+        _yueLab = [[UILabel alloc] init];
+        _yueLab.text = @"约";
+        _yueLab.font = QDFont(12);
+        _yueLab.textColor = APP_GRAYCOLOR;
+        [self.contentView addSubview:_yueLab];
+        
+        _priceLab = [[UILabel alloc] init];
+        _priceLab.text = @"¥400.02";
+        _priceLab.font = QDBoldFont(13);
+        _priceLab.textColor = APP_GRAYTEXTCOLOR;
+        [self.contentView addSubview:_priceLab];
+        
         _starLab = [[UILabel alloc] init];
-        _starLab.text = @"66人收藏";
+        _starLab.text = @"收藏";
         _starLab.font = QDFont(12);
         _starLab.textColor = APP_GRAYCOLOR;
         [self.contentView addSubview:_starLab];
         
-        _priceLab = [[UILabel alloc] init];
-        _priceLab.text = @"588FT 起";
-        _priceLab.font = QDBoldFont(15);
-        _priceLab.textColor = APP_GREENCOLOR;
-        [self.contentView addSubview:_priceLab];
-        
-        _priceRMBLab = [[UILabel alloc] init];
-        _priceRMBLab.text = @"折合人民币500元";
-        _priceRMBLab.font = QDBoldFont(15);
-        _priceRMBLab.textColor = APP_GRAYCOLOR;
-        [self.contentView addSubview:_priceRMBLab];
+        _totalStars = [[UILabel alloc] init];
+        _totalStars.text = @"¥23";
+        _totalStars.font = QDFont(13);
+        _totalStars.textColor = APP_BLUECOLOR;
+        [self.contentView addSubview:_totalStars];
         
         _locationLab = [[UILabel alloc] init];
         _locationLab.text = @"陆家嘴 | 浦东新区";
         _locationLab.numberOfLines = 0;
-        _locationLab.font = QDBoldFont(15);
+        _locationLab.font = QDBoldFont(14);
         _locationLab.textColor = APP_GRAYCOLOR;
         [self.contentView addSubview:_locationLab];
     }
@@ -71,41 +92,58 @@
     }];
     
     [_hotelName mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.contentView.mas_top).offset(SCREEN_HEIGHT*0.036);
+        make.top.equalTo(_hotelImg);
         make.left.equalTo(self.hotelImg.mas_right).offset(SCREEN_WIDTH*0.037);
-        make.right.equalTo(self.mas_right).offset(-(SCREEN_WIDTH*0.025));
+        make.right.equalTo(self.mas_right).offset(-(SCREEN_WIDTH*0.05));
+    }];
+    
+    [_wanbei mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_hotelName.mas_bottom).offset(SCREEN_HEIGHT*0.012);
+        make.left.equalTo(self.contentView.mas_left).offset(SCREEN_WIDTH*0.44);
+    }];
+    
+    [_wanbeiLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_wanbei);
+        make.left.equalTo(_wanbei.mas_right).offset(SCREEN_WIDTH*0.006);
+    }];
+    
+    [_yueLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_wanbei.mas_bottom).offset(SCREEN_HEIGHT*0.003);
+        make.left.equalTo(_wanbei);
+    }];
+    
+    [_priceLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_yueLab);
+        make.left.equalTo(_yueLab.mas_right).offset(SCREEN_WIDTH*0.006);
     }];
     
     [_starLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.hotelName.mas_bottom).offset(SCREEN_HEIGHT*0.01);
-        make.left.equalTo(self.hotelName);
+        make.centerY.equalTo(_yueLab);
+        make.right.equalTo(self.mas_right).offset(-(SCREEN_WIDTH*0.05));
     }];
 
-    [_priceLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.starLab.mas_bottom).offset(SCREEN_HEIGHT*0.01);
-        make.left.equalTo(self.hotelName);
-    }];
-
-    [_priceRMBLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.priceLab);
-        make.left.equalTo(self.priceLab.mas_right).offset(SCREEN_HEIGHT*0.01);
+    [_totalStars mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_yueLab);
+        make.right.equalTo(_starLab.mas_left).offset(-(SCREEN_WIDTH*0.003));
     }];
 
     [_locationLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.priceLab.mas_bottom).offset(SCREEN_HEIGHT*0.01);
-        make.left.equalTo(self.hotelName);
+        make.left.equalTo(_yueLab);
+        make.top.equalTo(_priceLab.mas_bottom).offset(SCREEN_HEIGHT*0.007);
+        make.right.equalTo(self.contentView.mas_right).offset(-(SCREEN_WIDTH*0.05));
+//        make.bottom.equalTo(self.contentView.mas_bottom).offset(-(SCREEN_HEIGHT*0.03));
     }];
 }
 
--(void)fillContentWithModel:(QDHotelListInfoModel *)infoModel andImgData:(NSData *)imgData{
-    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+-(void)fillContentWithModel:(QDHotelListInfoModel *)infoModel andImgURLStr:(NSString *)imgURL{
     self.hotelName.text = infoModel.hotelName;
-    self.starLab.text = [NSString stringWithFormat:@"%@人收藏",infoModel.collectCount];
-    self.priceLab.text = [NSString stringWithFormat:@"%@FT 起", infoModel.collectCount];
-    double ss = [infoModel.price doubleValue] * delegate.basePirceRate;
-    self.priceRMBLab.text = [NSString stringWithFormat:@"折合人民币%.f元", ss];
+    self.totalStars.text = [NSString stringWithFormat:@"%@",infoModel.collectCount];
+    self.priceLab.text = [NSString stringWithFormat:@"¥%@", infoModel.rmbprice];
+    self.wanbei.text = [NSString stringWithFormat:@"%@", infoModel.price];
     self.locationLab.text = infoModel.address;
-    self.hotelImg.image = [UIImage imageWithData:imgData];
+//    SDWebImageManager *manager = [SDWebImageManager sharedManager];
+//    BOOL isCached = [manager cachedImageExistsForURL:[NSURL URLWithString:imgURL] completion:nil];
+    [self.hotelImg sd_setImageWithURL:[NSURL URLWithString:imgURL] placeholderImage:[UIImage imageNamed:@"placeHolder"] options:SDWebImageLowPriority];
 }
 
 @end

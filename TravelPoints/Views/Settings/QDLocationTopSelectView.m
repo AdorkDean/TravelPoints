@@ -19,7 +19,7 @@
         [self addSubview:_topBackView];
         
         _imgView = [[UIImageView alloc] init];
-        [_imgView setImage:[UIImage imageNamed:@"ad_back_black"]];
+        [_imgView setImage:[UIImage imageNamed:@"icon_search"]];
         [_topBackView addSubview:_imgView];
         
         
@@ -27,6 +27,8 @@
         _inputTF.placeholder = @"城市/区域/位置";
         [_inputTF setValue:APP_LIGHTGRAYCOLOR forKeyPath:@"_placeholderLabel.textColor"];
         [_inputTF setValue:QDFont(14) forKeyPath:@"_placeholderLabel.font"];
+        _inputTF.font = QDFont(14);
+        _inputTF.textColor = APP_BLACKCOLOR;
         _inputTF.clearButtonMode = UITextFieldViewModeWhileEditing;
         [_topBackView addSubview:_inputTF];
 

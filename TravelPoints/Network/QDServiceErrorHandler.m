@@ -8,7 +8,8 @@
 
 #import "QDServiceErrorHandler.h"
 #import "QDLoginViewController.h"
-
+#import "AppDelegate.h"
+#import "QDLoginAndRegisterVC.h"
 @implementation QDServiceErrorHandler
 
 + (void)handleError:(NSInteger)errorCode
@@ -18,28 +19,24 @@
     NSDictionary *serviceError = [error objectForKey:@"ServiceError"];
     if (serviceError) {
         [serviceError enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-            if ([key integerValue] == errorCode && errorCode != 200) {
+            if ([key integerValue] == errorCode && errorCode != 1) {
                 errorMsg = [NSString stringWithFormat:@"%@", obj];
             }
         }];
     }
-    if (errorMsg != nil) {
-        if (errorCode == 100) {
-            //未登录，跳转至登录页面
-            QDLog(@"isLogon = %@", [QDUserDefaults getObjectForKey:@"isLogon"]);
-            if ([QDUserDefaults getObjectForKey:@"isLogon"] == nil) {
-                [QDUserDefaults setObject:@"0" forKey:@"isLogon"];
-            }else{
-                [QDUserDefaults setObject:@"0" forKey:@"isLogon"];
-            }
-        }else{
-            NSString *errorString = [NSString stringWithFormat:@"Code:%ld, Msg:%@", errorCode, errorMsg];
-            
-        }
+    if (errorCode == 1) {
+        //未登录，跳转至登录页面
+        [QDUserDefaults setObject:@"0" forKey:@"loginType"];
+        AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        QDLoginAndRegisterVC *loginVC = [[QDLoginAndRegisterVC alloc] init];
+        delegate.window.rootViewController = loginVC;
+    }else{
+        NSString *errorString = [NSString stringWithFormat:@"Code:%ld, Msg:%@", errorCode, errorMsg];
+        QDLog(@"errorString = %@", errorString);
     }
-//        AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-//        QDLoginViewController *loginVC = [[QDLoginViewController alloc] init];
-//        delegate.window.rootViewController = loginVC;
+
+//    if (errorMsg != nil) {
+//    }
 }
 
 @end

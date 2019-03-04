@@ -12,10 +12,6 @@
 
 - (instancetype)initWithFrame:(CGRect)frame{
     if ([super initWithFrame:frame]) {
-        _imgView = [[UIImageView alloc] init];
-        _imgView.backgroundColor = APP_GREENCOLOR;
-        [self addSubview:_imgView];
-        
         _settingBtn = [[UIButton alloc] init];
         [_settingBtn setImage:[UIImage imageNamed:@"icon_tabbar_homepage"] forState:UIControlStateNormal];
         _settingBtn.backgroundColor = [UIColor redColor];
@@ -26,86 +22,132 @@
         _voiceBtn.backgroundColor = [UIColor blueColor];
         [self addSubview:_voiceBtn];
         
-        _picBtn = [[UIButton alloc] init];
-        [_picBtn setImage:[UIImage imageNamed:@"icon_tabbar_merchant_normal"] forState:UIControlStateNormal];
-        _picBtn.layer.borderWidth = SCREEN_WIDTH*0.01;
-        _picBtn.layer.borderColor = [UIColor whiteColor].CGColor;
-        _picBtn.layer.masksToBounds = YES;
-        _picBtn.layer.cornerRadius = SCREEN_WIDTH*0.085;
-        [self addSubview:_picBtn];
-        
+        _picView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*0.06, SCREEN_HEIGHT*0.1, SCREEN_WIDTH*0.12, SCREEN_WIDTH*0.12)];
+        _picView.layer.cornerRadius = SCREEN_WIDTH*0.06;
+        _picView.layer.masksToBounds = YES;
+        _picView.backgroundColor = APP_BLUECOLOR;
+        [self addSubview:_picView];
         
         _userNameLab = [[UILabel alloc] init];
         _userNameLab.text = @"风式幽助";
-        _userNameLab.textColor = [UIColor whiteColor];
-        _userNameLab.font = QDFont(19);
+        _userNameLab.textColor = APP_BLACKCOLOR;
+        _userNameLab.font = QDFont(17);
         [self addSubview:_userNameLab];
         
-        _whiteView = [[UIView alloc] init];
-        _whiteView.backgroundColor = [UIColor whiteColor];
-        _whiteView.layer.cornerRadius = SCREEN_WIDTH*0.024;
-        _whiteView.layer.masksToBounds = YES;
-        [self addSubview:_whiteView];
+        _levelPic = [[UIImageView alloc] init];
+        _levelPic.backgroundColor = APP_BLUECOLOR;
+        [self addSubview:_levelPic];
         
-        _vipLab = [[UILabel alloc] init];
-        _vipLab.text = @"白金卡会员";
-        _vipLab.textColor = [UIColor whiteColor];
-        _vipLab.font = QDFont(12);
-        [self addSubview:_vipLab];
+        _levelLab = [[UILabel alloc] init];
+        _levelLab.text = @"Lv5";
+        _levelLab.textColor = APP_WHITECOLOR;
+        _levelLab.font = QDFont(12);
+        [_levelPic addSubview:_levelLab];
         
-        _vipRightsLab = [[UILabel alloc] init];
-        _vipRightsLab.text = @"会员权益";
-        _vipRightsLab.textColor = [UIColor whiteColor];
-        _vipRightsLab.font = QDFont(13);
-        [self addSubview:_vipRightsLab];
+        _vipRightsBtn = [[SPButton alloc] initWithImagePosition:SPButtonImagePositionLeft];
+        _vipRightsBtn.frame = CGRectMake(SCREEN_WIDTH*0.72, SCREEN_HEIGHT*0.12, SCREEN_WIDTH*0.29, SCREEN_HEIGHT*0.04);
+        [_vipRightsBtn setTitle:@"会员权益 >" forState:UIControlStateNormal];
+        [_vipRightsBtn setTitleColor:APP_BLACKCOLOR forState:UIControlStateNormal];
+        _vipRightsBtn.titleLabel.font = QDFont(12);
+        _vipRightsBtn.backgroundColor = APP_BLUECOLOR;
+        UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:_vipRightsBtn.bounds byRoundingCorners:UIRectCornerTopLeft|UIRectCornerBottomLeft cornerRadii:CGSizeMake(10, 10)];
+        CAShapeLayer *maskLayer = [[CAShapeLayer alloc]init];
+        maskLayer.frame = _vipRightsBtn.bounds;
+        maskLayer.path = maskPath.CGPath;
+        _vipRightsBtn.layer.mask = maskLayer;
+        [self addSubview:_vipRightsBtn];
         
-        _deadLineLab = [[UILabel alloc] init];
-        _deadLineLab.text = @"到期时间：2019-12-31";
-        _deadLineLab.textColor = [UIColor whiteColor];
-        _deadLineLab.font = QDFont(12);
-        [self addSubview:_deadLineLab];
+        _financialPic = [[UIImageView alloc] init];
+        _financialPic.backgroundColor = APP_LIGHTGRAYCOLOR;
+        [self addSubview:_financialPic];
         
-        _whiteBackView = [[UIView alloc] init];
-        _whiteBackView.backgroundColor = [UIColor whiteColor];
-        [self addSubview:_whiteBackView];
+        _info1Lab = [[UILabel alloc] init];
+        _info1Lab.text = @"升级还需";
+        _info1Lab.textColor = APP_GRAYLINECOLOR;
+        _info1Lab.font = QDFont(13);
+        [_financialPic addSubview:_info1Lab];
+        
+        _info2Lab = [[UILabel alloc] init];
+        _info2Lab.text = @"75";
+        _info2Lab.textColor = APP_BLUECOLOR;
+        _info2Lab.font = QDFont(13);
+        [_financialPic addSubview:_info2Lab];
+        
+        _info3Lab = [[UILabel alloc] init];
+        _info3Lab.text = @"成长值";
+        _info3Lab.textColor = APP_GRAYLINECOLOR;
+        _info3Lab.font = QDFont(13);
+        [_financialPic addSubview:_info3Lab];
+        
+        _progressView = [[MQGradientProgressView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*0.09, SCREEN_HEIGHT*0.28, SCREEN_WIDTH*0.63, SCREEN_HEIGHT*0.008)];
+        [self addSubview:_progressView];
+        
+        _info4Lab = [[UILabel alloc] init];
+        _info4Lab.text = @"LV5";
+        _info4Lab.textColor = APP_BLACKCOLOR;
+        _info4Lab.font = QDFont(12);
+        [_financialPic addSubview:_info4Lab];
+        
+        _info5Lab = [[UILabel alloc] init];
+        _info5Lab.text = @"(425)";
+        _info5Lab.textColor = APP_GRAYTEXTCOLOR;
+        _info5Lab.font = QDFont(11);
+        [_financialPic addSubview:_info5Lab];
+        
+        _info6Lab = [[UILabel alloc] init];
+        _info6Lab.text = @"LV6";
+        _info6Lab.textColor = APP_BLACKCOLOR;
+        _info6Lab.font = QDFont(12);
+        [_financialPic addSubview:_info6Lab];
+        
+        _info7Lab = [[UILabel alloc] init];
+        _info7Lab.text = @"(500)";
+        _info7Lab.textColor = APP_GRAYLINECOLOR;
+        _info7Lab.font = QDFont(11);
+        [_financialPic addSubview:_info7Lab];
+        
+        _info8Lab = [[UILabel alloc] init];
+        _info8Lab.text = @"我的玩贝(个)";
+        _info8Lab.textColor = APP_GRAYLINECOLOR;
+        _info8Lab.font = QDFont(13);
+        [_financialPic addSubview:_info8Lab];
+        
+        
+        _info9Lab = [[UILabel alloc] init];
+        _info9Lab.text = @"4100";
+        _info9Lab.textColor = APP_BLACKCOLOR;
+        _info9Lab.font = QDBoldFont(18);
+        [_financialPic addSubview:_info9Lab];
         
         _balanceLab = [[UILabel alloc] init];
-        _balanceLab.text = @"余额:(元)";
-        _balanceLab.textColor = APP_GRAYCOLOR;
+        _balanceLab.text = @"我的余额(元)";
+        _balanceLab.textColor = APP_GRAYLINECOLOR;
         _balanceLab.font = QDFont(13);
-        [_whiteBackView addSubview:_balanceLab];
+        [self addSubview:_balanceLab];
         
-        _balanceDetailLab = [[UILabel alloc] init];
-        _balanceDetailLab.text = @"999.00";
-        _balanceDetailLab.textColor = APP_GREENCOLOR;
-        _balanceDetailLab.font = QDFont(30);
-        [_whiteBackView addSubview:_balanceDetailLab];
-        
-        _tradeDetailBtn = [[UIButton alloc] init];
-        [_tradeDetailBtn setTitle:@"查看明细" forState:UIControlStateNormal];
-        _tradeDetailBtn.titleLabel.font = QDFont(13);
-        [_tradeDetailBtn setTitleColor:APP_GRAYCOLOR forState:UIControlStateNormal];
-        [_whiteBackView addSubview:_tradeDetailBtn];
-        
-        _vipRightsLab = [[UILabel alloc] init];
-        _vipRightsLab.text = @"会员权益";
-        _vipRightsLab.textColor = [UIColor whiteColor];
-        _vipRightsLab.font = QDFont(13);
-        [self addSubview:_vipRightsLab];
+        _balance = [[UILabel alloc] init];
+        _balance.text = @"0.00";
+        _balance.textColor = APP_BLACKCOLOR;
+        _balance.font = QDBoldFont(18);
+        [self addSubview:_balance];
         
         _rechargeBtn = [[UIButton alloc] init];
-        [_rechargeBtn setTitle:@"提现" forState:UIControlStateNormal];
-        _rechargeBtn.titleLabel.font = QDFont(17);
-        _rechargeBtn.backgroundColor = [UIColor colorWithHexString:@"#DFF4D7"];
-        [_rechargeBtn setTitleColor:[UIColor colorWithHexString:@"#72BB37"] forState:UIControlStateNormal];
-        [_whiteBackView addSubview:_rechargeBtn];
+        _rechargeBtn.backgroundColor = APP_BLUECOLOR;
+        _rechargeBtn.layer.cornerRadius = 6;
+        _rechargeBtn.layer.masksToBounds = YES;
+        [_rechargeBtn setTitle:@"充值" forState:UIControlStateNormal];
+        [_rechargeBtn setTitleColor:APP_WHITECOLOR forState:UIControlStateNormal];
+        _rechargeBtn.titleLabel.font = QDFont(15);
+        [self addSubview:_rechargeBtn];
         
         _withdrawBtn = [[UIButton alloc] init];
+        _withdrawBtn.backgroundColor = [UIColor colorWithHexString:@"#F2F2F2"];
+        _withdrawBtn.layer.cornerRadius = 6;
+        _withdrawBtn.layer.masksToBounds = YES;
         [_withdrawBtn setTitle:@"提现" forState:UIControlStateNormal];
-        [_withdrawBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        _withdrawBtn.titleLabel.font = QDFont(17);
-        _withdrawBtn.backgroundColor = APP_GREENCOLOR;
-        [_whiteBackView addSubview:_withdrawBtn];
+        [_withdrawBtn setTitleColor:APP_BLUECOLOR forState:UIControlStateNormal];
+        _withdrawBtn.titleLabel.font = QDFont(15);
+        [self addSubview:_withdrawBtn];
     }
     return self;
 }
@@ -122,78 +164,94 @@
         make.right.equalTo(self.mas_right).offset(-(SCREEN_WIDTH*0.05));
     }];
     
-    [_imgView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.top.and.right.equalTo(self);
-        make.height.mas_equalTo(SCREEN_HEIGHT*0.26);
-    }];
-    
-    [_picBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.mas_top).offset(SCREEN_HEIGHT*0.1);
-        make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH*0.055);
-        make.width.and.height.mas_equalTo(SCREEN_WIDTH*0.167);
-    }];
-    
     [_userNameLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.mas_top).offset(SCREEN_HEIGHT*0.117);
-        make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH*0.26);
+        make.top.equalTo(self.mas_top).offset(SCREEN_HEIGHT*0.1);
+        make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH*0.2);
     }];
     
-    [_whiteView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.mas_top).offset(SCREEN_HEIGHT*0.17);
-        make.left.equalTo(self.userNameLab);
-        make.width.and.height.mas_equalTo(SCREEN_WIDTH*0.048);
+    [_levelPic mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(_userNameLab);
+        make.top.equalTo(_userNameLab.mas_bottom).offset(3);
+        make.width.and.height.mas_equalTo(30);
     }];
     
-    [_vipLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.whiteView);
-        make.left.equalTo(self.whiteView.mas_right).offset(SCREEN_WIDTH*0.013);
+    [_levelLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(_financialPic);
     }];
     
-    [_vipRightsLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.mas_top).offset(SCREEN_HEIGHT*0.117);
-        make.right.equalTo(self.mas_right).offset(-(SCREEN_WIDTH*0.054));
+    [_financialPic mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.mas_top).offset(SCREEN_HEIGHT*0.21);
+        make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH*0.05);
+        make.right.equalTo(self.mas_right).offset(-(SCREEN_WIDTH*0.05));
+        make.height.mas_equalTo(SCREEN_HEIGHT*0.25);
     }];
     
-    [_deadLineLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.userNameLab);
-        make.top.equalTo(self.vipLab.mas_bottom).offset(SCREEN_HEIGHT*0.01);
+    [_info1Lab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_financialPic.mas_left).offset(SCREEN_WIDTH*0.04);
+        make.top.equalTo(_financialPic.mas_top).offset(SCREEN_HEIGHT*0.03);
+        
     }];
     
-    [_whiteBackView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self);
-        make.top.equalTo(self.mas_top).offset(SCREEN_HEIGHT*0.236);
-        make.width.mas_equalTo(SCREEN_WIDTH*0.89);
-        make.height.mas_equalTo(SCREEN_HEIGHT*0.247);
+    [_info2Lab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_info1Lab);
+        make.left.equalTo(_info1Lab.mas_right);
+    }];
+    
+    [_info3Lab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_info2Lab);
+        make.left.equalTo(_info2Lab.mas_right);
+    }];
+    
+    [_info4Lab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_financialPic.mas_top).offset(SCREEN_HEIGHT*0.09);
+        make.left.equalTo(_info1Lab);
+    }];
+    
+    [_info5Lab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_info4Lab);
+        make.left.equalTo(_info4Lab.mas_right);
+    }];
+    
+    [_info6Lab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_info4Lab);
+        make.left.equalTo(_financialPic.mas_left).offset(SCREEN_WIDTH*0.54);
+    }];
+    
+    [_info7Lab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_info6Lab);
+        make.left.equalTo(_info6Lab.mas_right);
+    }];
+    
+    [_info8Lab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_info1Lab.mas_right).offset(SCREEN_WIDTH*0.1);
+        make.top.equalTo(_financialPic.mas_top).offset(SCREEN_HEIGHT*0.14);
+    }];
+    
+    [_info9Lab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(_info8Lab);
+        make.top.equalTo(_info8Lab.mas_bottom).offset(SCREEN_HEIGHT*0.01);
     }];
     
     [_balanceLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.whiteBackView.mas_top).offset(SCREEN_WIDTH*0.053);
-        make.left.equalTo(self.whiteBackView.mas_left).offset(SCREEN_WIDTH*0.053);
+        make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH*0.08);
+        make.top.equalTo(_financialPic.mas_bottom).offset(SCREEN_WIDTH*0.05);
     }];
     
-    [_balanceDetailLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.balanceLab.mas_bottom);
-        make.left.equalTo(self.balanceLab);
+    [_balance mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_balanceLab);
+        make.top.equalTo(_balanceLab.mas_bottom).offset(SCREEN_HEIGHT*0.007);
     }];
-    
-    [_tradeDetailBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.balanceDetailLab);
-        make.right.equalTo(self.whiteBackView.mas_right).offset(-(SCREEN_WIDTH*0.053));
-    }];
-    
     
     [_rechargeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.whiteBackView.mas_left).offset(SCREEN_WIDTH*0.053);
-        make.right.equalTo(self.mas_left).offset(SCREEN_WIDTH/2);
-        make.bottom.equalTo(self.whiteBackView.mas_bottom).offset(-(SCREEN_HEIGHT*0.03));
-        make.height.mas_equalTo(SCREEN_HEIGHT*0.075);
+        make.top.equalTo(_financialPic.mas_bottom).offset(SCREEN_HEIGHT*0.04);
+        make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH*0.54);
+        make.height.mas_equalTo(SCREEN_HEIGHT*0.05);
+        make.width.mas_equalTo(SCREEN_WIDTH*0.19);
     }];
     
     [_withdrawBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.rechargeBtn);
-        make.right.equalTo(self.whiteBackView.mas_right).offset(-(SCREEN_WIDTH*0.053));
-        make.left.equalTo(self.rechargeBtn.mas_right);
-        make.height.mas_equalTo(SCREEN_HEIGHT*0.075);
+        make.centerY.width.and.height.equalTo(_rechargeBtn);
+        make.left.equalTo(_rechargeBtn.mas_right).offset(SCREEN_WIDTH*0.03);
     }];
 }
 

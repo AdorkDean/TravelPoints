@@ -9,13 +9,19 @@
 #import "QDLoginAndRegisterVC.h"
 #import "QDMemberDTO.h"
 
-@interface QDLoginAndRegisterVC ()
+@interface QDLoginAndRegisterVC ()<getTextFieldContentDelegate>
 @property (nonatomic, strong) QDMemberDTO *qdMemberTDO;
+
+#pragma mark - 注册人手机号跟用户名
+@property (nonatomic, strong) NSString *userPhoneNum;
+@property (nonatomic, strong) NSString *userName;
+
 @end
 
 @implementation QDLoginAndRegisterVC
 
 - (void)viewWillAppear:(BOOL)animated{
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
     _isResetPwdNextStep = NO;
     [_loginBtn setHidden:YES];
     [_registerBtn setHidden:NO];
@@ -27,6 +33,13 @@
     //登录页面
     _loginView = [[QDLoginView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     [_loginView.gotologinBtn addTarget:self action:@selector(userLogin:) forControlEvents:UIControlEventTouchUpInside];
+    //保留用户名
+    if ([QDUserDefaults getObjectForKey:@"userID"] != nil) {
+        QDLog(@"123 = %@", [QDUserDefaults getObjectForKey:@"userID"]);
+        _loginView.phoneTF.text = [QDUserDefaults getObjectForKey:@"userID"];
+    }
+//    _loginView.userNameTF.text = @"1";
+//    _loginView.phoneTF.text = @"13207166278";
     [_loginView.forgetPWD addTarget:self action:@selector(forgetPWD:) forControlEvents:UIControlEventTouchUpInside];
 
     [self.view addSubview:_loginView];
@@ -37,10 +50,10 @@
     [_registerView.nextBtn addTarget:self action:@selector(registNextStep:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_registerView];
     [_registerView setHidden:YES];
-    
+    [self.view addSubview:_registerView];
+
     //身份验证页面
     _identifyView = [[IdentifyView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-    [self.view addSubview:_registerView];
     [self.view addSubview:_identifyView];
     [_identifyView setHidden:YES];
 
@@ -53,7 +66,7 @@
     [_yyLabel setHidden:YES];
     
     //_identifyInputView
-    _identifyInputView = [[VertificationCodeInputView alloc]initWithFrame:CGRectMake(50,SCREEN_HEIGHT*0.48,self.view.frame.size.width - 100,55)];
+    _identifyInputView = [[VertificationCodeInputView alloc]initWithFrame:CGRectMake(50,SCREEN_HEIGHT*0.48,SCREEN_WIDTH - 100,55)];
     _identifyInputView.delegate = self;
     _identifyInputView.numberOfVertificationCode = 4;
     _identifyInputView.secureTextEntry =NO;
@@ -61,7 +74,7 @@
     [_identifyInputView setHidden:YES];
     
     //_msgInputView
-    _msgInputView = [[VertificationCodeInputView alloc]initWithFrame:CGRectMake(50,SCREEN_HEIGHT*0.34,self.view.frame.size.width - 100,55)];
+    _msgInputView = [[VertificationCodeInputView alloc]initWithFrame:CGRectMake(50,SCREEN_HEIGHT*0.34,SCREEN_WIDTH - 100,55)];
     _msgInputView.delegate = self;
     /****** 设置验证码/密码的位数默认为四位 ******/
     _msgInputView.numberOfVertificationCode = 4;
@@ -72,6 +85,7 @@
     
     //短信验证码
     _msgVerifyView = [[QDMsgVerifyView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    _msgVerifyView.legalPhone = _userPhoneNum;
     [self.view addSubview:_msgVerifyView];
     [_msgVerifyView setHidden:YES];
     
@@ -83,6 +97,7 @@
     
     //忘记密码view
     _forgetPwdView = [[QDForgetPwdView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+//    11
     [_forgetPwdView.nextStepBtn addTarget:self action:@selector(resetPwdNextStep:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_forgetPwdView];
     [_forgetPwdView setHidden:YES];
@@ -94,6 +109,11 @@
     [_resetLoginPwdView setHidden:YES];
     
     [self setSideBtn];
+}
+
+#pragma mark - 注册验证码验证
+- (void)refreshVerifyCode:(UIButton *)sender{
+    
 }
 
 - (void)setSideBtn{
@@ -111,12 +131,20 @@
     _loginBtn = [[UIButton alloc] init];
     [_loginBtn setTitle:@"登录" forState:UIControlStateNormal];
     [_loginBtn addTarget:self action:@selector(loginAction:) forControlEvents:UIControlEventTouchUpInside];
-
-    [_loginBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-
+    [_loginBtn setTitleColor:APP_BLACKCOLOR forState:UIControlStateNormal];
+//    CAGradientLayer *gradientLayer =  [CAGradientLayer layer];
+//    gradientLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH*0.89, SCREEN_HEIGHT*0.08);
+//    gradientLayer.startPoint = CGPointMake(0, 0);
+//    gradientLayer.endPoint = CGPointMake(1, 0);
+//    gradientLayer.locations = @[@(0.5),@(1.0)];//渐变点
+//    [gradientLayer setColors:@[(id)[[UIColor colorWithHexString:@"#159095"] CGColor],(id)[[UIColor colorWithHexString:@"#3CC8B1"] CGColor]]];//渐变数组
+//    [_loginBtn.layer addSublayer:gradientLayer];
+//    _loginBtn.titleLabel.font = QDFont(19);
     [self.view addSubview:_loginBtn];
     [_loginBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.cancelBtn);
+//        make.height.mas_equalTo(SCREEN_WIDTH*0.89);
+//        make.width.mas_equalTo(SCREEN_HEIGHT*0.08);
         make.right.equalTo(self.view.mas_right).offset(-(SCREEN_WIDTH*0.056));
     }];
     
@@ -188,6 +216,13 @@
     [text yy_setTextHighlightRange:[[text string] rangeOfString:[attachment string]] color:[UIColor clearColor] backgroundColor:[UIColor clearColor] tapAction:^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
         __weak typeof(self) weakSelf = self;
         weakSelf.isSelect = !weakSelf.isSelect;
+        if (weakSelf.isSelect) {
+            _registerView.nextBtn.enabled = YES;
+            [_registerView.nextBtn setSelected:YES];
+        }else{
+            _registerView.nextBtn.enabled = NO;
+            [_registerView.nextBtn setSelected:NO];
+        }
         [weakSelf protocolIsSelect:self.isSelect];
     }];
     _yyLabel.attributedText = text;
@@ -197,17 +232,17 @@
 
 #pragma mark - 用户登录
 - (void)userLogin:(UIButton *)sender{
-    [WXProgressHUD showHUD];
-    [[QDServiceClient shareClient] loginWithUserName:@"13207166278" password:@"1" userType:@"member" successBlock:^(QDResponseObject *responseObject) {
-        [WXProgressHUD hideHUD];
+//    13207166278
+    [[QDServiceClient shareClient] loginWithUserName:_loginView.phoneTF.text password:_loginView.userNameTF.text userType:@"member" successBlock:^(QDResponseObject *responseObject) {
         if (responseObject.code == 0) {
             [QDUserDefaults setObject:responseObject.result forKey:@"Token"];
             QDLog(@"Token = %@", responseObject.result);
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
-            [WXProgressHUD showInfoWithTittle:@"登录成功"];
+            [WXProgressHUD showSuccessWithTittle:@"登录成功"];
+            [QDUserDefaults setObject:_loginView.phoneTF.text forKey:@"userID"];
+            [QDUserDefaults setObject:_loginView.userNameTF.text forKey:@"userPwd"];
             [self findMyUserCreditWithUrlStr:api_GetUserDetail];
         }else{
-            [WXProgressHUD showInfoWithTittle:responseObject.message];
+            [WXProgressHUD showErrorWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
         [WXProgressHUD hideHUD];
@@ -218,7 +253,6 @@
 
 #pragma mark - 个人积分账户详情
 - (void)findMyUserCreditWithUrlStr:(NSString *)urlStr{
-    [WXProgressHUD showHUD];
     [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:urlStr params:nil successBlock:^(QDResponseObject *responseObject) {
         QDLog(@"responseObject = %@", responseObject);
         if (responseObject.code == 0) {
@@ -236,7 +270,7 @@
             [WXProgressHUD showErrorWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
-        [WXProgressHUD hideHUD];
+        [WXProgressHUD showErrorWithTittle:@"网络异常"];
     }];
 }
 
@@ -255,23 +289,67 @@
 
 #pragma mark - 下一步按钮:注册行点&&找回密码
 - (void)registNextStep:(UIButton *)sender{
-    _isResetPwdNextStep = NO;
-    QDLog(@"%@", self.presentedViewController.view.class);
-    [_identifyView setHidden:NO];
-    [_loginView setHidden:YES];
-    [_registerView setHidden:YES];
-    [_yyLabel setHidden:YES];
-    //当前为验证身份inputView
-    _currentInputView = _identifyInputView;
-    [_identifyInputView becomeFirstResponder];
-    [_identifyInputView setHidden:NO];
+    
+    //先验证是否登录
+    [self checkIsRegister];
+//    if ([_registerView.nextBtn isEnabled]) {
+//        _userPhoneNum = _registerView.phoneTF.text;
+//        _userName = _registerView.userNameTF.text;
+//        _isResetPwdNextStep = NO;
+//        QDLog(@"%@", self.presentedViewController.view.class);
+//        [_identifyView setHidden:NO];
+//        [_loginView setHidden:YES];
+//        [_registerView setHidden:YES];
+//        [_yyLabel setHidden:YES];
+//        //当前为验证身份inputView
+//        _currentInputView = _identifyInputView;
+//        [_identifyInputView becomeFirstResponder];
+//        [_identifyInputView setHidden:NO];
+//    }else{
+//        [WXProgressHUD showErrorWithTittle:@"请先阅读完注册协议并勾选"];
+//    }
 }
 
+/**
+ verificationType: 0验证是否注册 1表示发送验证码
+ */
+- (void)checkIsRegister{
+    NSDictionary * dic = @{@"legalPhone":_registerView.phoneTF.text,
+                           @"userName":_registerView.userNameTF.text,
+                           @"verificationType":@"0"
+                           };
+    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_VerificationRegister params:dic successBlock:^(QDResponseObject *responseObject) {
+        if (responseObject.code == 0) {
+            if ([_registerView.nextBtn isEnabled]) {
+                _userPhoneNum = _registerView.phoneTF.text;
+                _userName = _registerView.userNameTF.text;
+                _isResetPwdNextStep = NO;
+                QDLog(@"%@", self.presentedViewController.view.class);
+                [_identifyView setHidden:NO];
+                [_loginView setHidden:YES];
+                [_registerView setHidden:YES];
+                [_yyLabel setHidden:YES];
+                //当前为验证身份inputView
+                _currentInputView = _identifyInputView;
+                [_identifyInputView becomeFirstResponder];
+                [_identifyInputView setHidden:NO];
+            }else{
+                [WXProgressHUD showErrorWithTittle:@"请先阅读完注册协议并勾选"];
+            }
+        }else{
+            [WXProgressHUD showErrorWithTittle:responseObject.message];
+        }
+    } failureBlock:^(NSError *error) {
+        
+    }];
+}
 #pragma mark - 忘记密码页面的下一步按钮
 - (void)resetPwdNextStep:(UIButton *)sender{
     _isResetPwdNextStep = YES;
     QDLog(@"%@", self.presentedViewController.view.class);
     //当前为验证身份inputView
+    [_registerBtn setHidden:YES];
+    [_loginBtn setHidden:NO];
     [_forgetPwdView setHidden:YES];
     _currentInputView = _identifyInputView;
     [_identifyInputView becomeFirstResponder];
@@ -282,30 +360,70 @@
 -(void)returnTextFieldContent:(NSString *)content{
     NSLog(@"%@================验证码",content);
     if (_currentInputView == _identifyInputView) {
-        //    [_vertificationCodeInputView errorSMSAnim];
-        //验证码成功,发送短信
-        [_identifyView setHidden:YES];
-        [_identifyInputView setHidden:YES];
-        [_msgVerifyView setHidden:NO];
-        [_msgInputView setHidden:NO];
-        _currentInputView = _msgInputView;
-        [_msgInputView becomeFirstResponder];
-    }else if (_currentInputView == _msgInputView){
-        //输入完成 设置登录密码
-        [_msgVerifyView setHidden:YES];
-        [_msgInputView setHidden:YES];
-        if (_isResetPwdNextStep) {
-            //请重置登录密码
-            [_resetLoginPwdView setHidden:NO];
+        QDLog(@"_identifyView.pooCodeView.changeString = %@", [_identifyView.pooCodeView.changeString lowercaseString]);
+        NSString *str = [_identifyView.pooCodeView.changeString lowercaseString];
+        if ([content isEqualToString:str]) {
+            //验证码成功,发送短信
+            [_identifyView setHidden:YES];
+            [_identifyInputView setHidden:YES];
+            [_msgVerifyView setHidden:NO];
+            _msgVerifyView.legalPhone = _userPhoneNum;
+            [_msgInputView setHidden:NO];
+            _currentInputView = _msgInputView;
+            [_msgInputView becomeFirstResponder];
         }else{
-            [_setLogPwdView setHidden:NO];
+            [_identifyView.pooCodeView changeCode];
+            [_identifyInputView errorSMSAnim];
         }
+    }else if (_currentInputView == _msgInputView){
+        //输入完成 验证码校验
+        [self codeVerification:content];
     }
+}
+
+#pragma mark - 验证码验证
+- (void)codeVerification:(NSString *)code{
+    NSDictionary * dic = @{@"legalPhone":_userPhoneNum,
+                            @"verificationCode":code,
+                            };
+    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_VerificationCode params:dic successBlock:^(QDResponseObject *responseObject) {
+        if (responseObject.code == 0) {
+            [WXProgressHUD showSuccessWithTittle:@"验证成功"];
+            //
+            [_msgVerifyView setHidden:YES];
+            [_msgInputView setHidden:YES];
+            if (_isResetPwdNextStep) {
+                //请重置登录密码
+                [_resetLoginPwdView setHidden:NO];
+            }else{
+                [_setLogPwdView setHidden:NO];
+            }
+        }
+    } failureBlock:^(NSError *error) {
+        
+    }];
 }
 
 #pragma mark - 设置登录密码
 - (void)setLoginPwd:(UIButton *)sender{
-    
+    NSDictionary * dic = @{@"legalPhone":_userPhoneNum,
+                           @"userName":_userName,
+                           @"userPwd":_setLogPwdView.pwdTF.text,
+                           @"confirmUserPwd":_setLogPwdView.confirmPwdTF.text,
+                           @"beInvitedCode":_setLogPwdView.inviteTF.text
+                           };
+    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_TryToRegister params:dic successBlock:^(QDResponseObject *responseObject) {
+        if (responseObject.code == 0) {
+            [WXProgressHUD showSuccessWithTittle:@"注册成功,请前往登录"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self dismissViewControllerAnimated:YES completion:nil];
+            });
+        }else{
+            [WXProgressHUD showErrorWithTittle:responseObject.message];
+        }
+    } failureBlock:^(NSError *error) {
+        [WXProgressHUD showErrorWithTittle:@"网络请求失败"];
+    }];
 }
 
 #pragma mark - 重置登录密码

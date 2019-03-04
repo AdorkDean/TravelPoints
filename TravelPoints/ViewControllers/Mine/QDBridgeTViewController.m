@@ -10,7 +10,13 @@
 #import <WebKit/WebKit.h>
 #import "WebViewJavascriptBridge.h"
 #import "QDRefreshHeader.h"
-
+#import "QDBridgeTViewController.h"
+#import "QDServiceErrorHandler.h"
+#import "QDLoginAndRegisterVC.h"
+#import "QDRotePlanViewController.h"
+#import "AppDelegate.h"
+#import "QDPlayingShellsVC.h"
+#import "QDCalendarCustomerTourVC.h"
 @interface QDBridgeTViewController ()<WKNavigationDelegate>{
     WebViewJavascriptBridge *_bridge;
     CAReplicatorLayer *_containerLayer;
@@ -20,25 +26,40 @@
 @property (nonatomic, strong) WKWebView *webView;
 @property (nonatomic,weak)CALayer * progressLayer;
 
+#pragma mark - H5二级页面新增
+//保存本次请求的URL
+@property (nonatomic, strong) NSURL *currentUrl;
+@property (nonatomic, strong) NSMutableArray *urlArray;
+@property (nonatomic, assign) BOOL isbackBool;
+
 @end
 
 @implementation QDBridgeTViewController
 
+- (NSMutableArray *)urlArray{
+    if (!_urlArray) {
+        _urlArray = [NSMutableArray array];
+    }
+    return _urlArray;
+}
 - (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
     [self.tabBarController.tabBar setHidden:NO];
     self.tabBarController.tabBar.frame = CGRectMake(0, SCREEN_HEIGHT - 49, SCREEN_WIDTH, 49);
 }
 
 - (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    QDLog(@"urlStr = %@", _urlStr);
     [self.navigationController.navigationBar setHidden:YES];
-    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     [self.tabBarController.tabBar setHidden:YES];
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     self.tabBarController.tabBar.frame = CGRectZero;
-    
-    if (_bridge) {
-        return;
-    }
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
     //初始化UIWebView,设置webView代理
     _webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 3, SCREEN_WIDTH, SCREEN_HEIGHT)];
     _webView.navigationDelegate = self;
@@ -66,7 +87,7 @@
     // 隐式动画
     CALayer * layer = [CALayer layer];
     layer.frame = CGRectMake(0, 0, 0, 3);
-    layer.backgroundColor = APP_GREENCOLOR.CGColor;
+    layer.backgroundColor = APP_BLUECOLOR.CGColor;
     [progress.layer addSublayer:layer];
     self.progressLayer = layer;
     
@@ -81,8 +102,16 @@
         NSString *urlStr = [data objectForKey:@"url"];
         [[QDServiceClient shareClient] requestWithHTMLType:kHTTPRequestTypePOST urlString:urlStr params:dataDic successBlock:^(id responseObject) {
             QDLog(@"responseObject");
-            responseCallback(responseObject);
+            NSInteger code = [[responseObject objectForKey:@"code"] integerValue];
+            if (code == 1) {
+                //                [QDServiceErrorHandler handleError:code];
+                QDLoginAndRegisterVC *loginVC = [[QDLoginAndRegisterVC alloc] init];
+                [self presentViewController:loginVC animated:YES completion:nil];
+            }else{
+                responseCallback(responseObject);
+            }
         } failureBlock:^(NSError *error) {
+            QDLog(@"11");
         }];
     }];
     
@@ -90,10 +119,18 @@
         QDLog(@"goBack");
         [self.navigationController popViewControllerAnimated:YES];
     }];
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
+    
+    //调用日历 单选
+    [_bridge registerHandler:@"getSingleDate" handler:^(id data, WVJBResponseCallback responseCallback) {
+        QDLog(@"getSingleDate");
+        NSString *allowStartDate = [data objectForKey:@"allowStartDate"];
+        QDCalendarCustomerTourVC *calendar = [[QDCalendarCustomerTourVC alloc] init];
+        calendar.allowStartDate = allowStartDate;
+        [self presentViewController:calendar animated:YES completion:nil];
+        calendar.returnSingleDateBlock = ^(NSString * _Nonnull singleDate) {
+            responseCallback(singleDate);
+        };
+    }];
     [self.view addSubview:self.progressView];
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.view.backgroundColor = [UIColor whiteColor];
@@ -141,9 +178,9 @@
 //页面加载完成时调用
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation{
     QDLog(@"webViewDidFinishLoad");
-    [_progressView setProgress:0.8 animated:YES];
+    [_progressView setProgress:1 animated:YES];
+    [_progressView setHidden:YES];
     _webView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-    
 }
 
 //页面加载失败时调用
@@ -165,54 +202,67 @@
     //decisionHandler(WKNavigationResponsePolicyCancel);
 }
 
+
+-(NSDictionary *) getUrlParameterWithUrl:(NSURL *)url {
+    NSMutableDictionary *parm = [[NSMutableDictionary alloc]init];
+    //传入url创建url组件类
+    NSURLComponents *urlComponents = [[NSURLComponents alloc] initWithString:url.absoluteString];
+    //回调遍历所有参数，添加入字典
+    [urlComponents.queryItems enumerateObjectsUsingBlock:^(NSURLQueryItem * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [parm setObject:obj.value forKey:obj.name];
+    }];
+    return parm;
+}
+
 //在发送请求之前,决定是否跳转
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler{
     NSString *strRequest = [navigationAction.request.URL.absoluteString stringByRemovingPercentEncoding];
-    QDLog(@"拦截到的URL = %@", navigationAction.request.URL.absoluteString);
-    
-    QDLog(@"拦截到的URL = %@", navigationAction.request.URL.absoluteURL);
-    QDLog(@"拦截到的URL = %@", navigationAction.request.URL.parameterString);
-    
-    NSString *hostName = navigationAction.request.URL.host.lowercaseString;
-    QDLog(@"hostName = %@", hostName);
-    // 拦截到的URL = xl://quantdo:8888/CommonWeb?url=/hotel/reservation?%7B%22id%22:29,%22checkinDate%22:1548309942089,%22checkoutDate%22:1548396342089%7D, strRequest = xl://quantdo:8888/CommonWeb?url=/hotel/reservation?{"id":29,"checkinDate":1548309942089,"checkoutDate":1548396342089}
-    
-//    if ([hostName isEqualToString:@"quantdo"]) {
-//        //2.匹配字符串
-//        QDLog(@"ss = %d", (int)_infoModel.id);
-//        NSString *ss = [QD_JSURL stringByAppendingString:@"/#/hotel/reservation?%7B%22id%22:37,%22checkinDate%22:1548661927018,%22checkoutDate%22:1548748327019%7D"];
-//        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:ss]];
-//        [_webView loadRequest:request];
-//        
-//        QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
-//        NSString *str = @"/#/hotel/reservation?%7B%22id%22:34,%22checkinDate%22:1548386635954,%22checkoutDate%22:1548473035954%7D";
-//        bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@", QD_JSURL, str];
-//        [self.navigationController pushViewController:bridgeVC animated:YES];
-//    }
-    //允许跳转
+    if ([strRequest hasPrefix:@"xl://quantdo:8888/"]) {
+        NSURL *URL = navigationAction.request.URL;
+        NSString *ss = URL.scheme;
+        NSString *dd = URL.host;
+        NSString *ee = URL.path;
+        NSString *pp = URL.parameterString;
+        NSString *oo = URL.query ;
+        NSDictionary *dic = [self getUrlParameterWithUrl:URL];
+        NSArray *arr = [oo componentsSeparatedByString:@"url="];
+        QDLog(@"arr = %@", arr);
+        QDLog(@"ss = %@, dd = %@, ee = %@, oo = %@, pp = %@", ss, dd, ee, oo, pp);
+        if ([URL.path isEqualToString:@"/Map"]) {
+            QDRotePlanViewController *roteVC = [[QDRotePlanViewController alloc] init];
+            roteVC.cityStr = [dic objectForKey:@"city"];
+            roteVC.addressStr = [dic objectForKey:@"address"];
+            roteVC.infoModel = _infoModel;
+            [self.navigationController pushViewController:roteVC animated:YES];
+        }else if ([URL.path isEqualToString:@"/Login"]){
+            [WXProgressHUD showErrorWithTittle:@"未登录"];
+            QDLoginAndRegisterVC *loginVC = [[QDLoginAndRegisterVC alloc] init];
+            [self presentViewController:loginVC animated:YES completion:nil];
+        }else if ([URL.path isEqualToString:@"/Main"]){
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }
+        else{
+            QDBridgeTViewController *bridgeVC = [[QDBridgeTViewController alloc] init];
+            NSString *sss = [NSString stringWithFormat:@"%@%@",QD_TESTJSURL, arr.lastObject];
+            QDLog(@"sss = %@", sss);
+            bridgeVC.urlStr = sss;
+            [self.navigationController pushViewController:bridgeVC animated:YES];
+        }
+    }
     decisionHandler(WKNavigationActionPolicyAllow);
 }
 
 - (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error{
     [self.progressView setProgress:0.0f animated:NO];
 }
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the ne/Users/ranjin/Desktop/tewtsdf/tewtsdfw view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 - (UIProgressView *)progressView
 {
     if (!_progressView){
         _progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 3)];
-        _progressView.progressTintColor = APP_GREENCOLOR;   //已完成的进度的颜色
+        _progressView.progressTintColor = APP_BLUECOLOR;   //已完成的进度的颜色
         _progressView.trackTintColor = [UIColor whiteColor];       //未完成的进度的颜色
-        _progressView.progress = 0.3;
+        _progressView.progress = 0.1;
         _progressView.progressViewStyle = UIProgressViewStyleDefault;
     }
     return _progressView;

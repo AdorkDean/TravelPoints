@@ -27,7 +27,7 @@
         [self addSubview:_registerLab];
         
         _lineView = [[UIView alloc] init];
-        _lineView.backgroundColor = [UIColor colorWithHexString:@"#50C533"];
+        _lineView.backgroundColor = APP_BLUECOLOR;
         [self addSubview:_lineView];
 
         _phoneLine = [[UIView alloc] init];
@@ -41,8 +41,10 @@
 
         _phoneTF = [[UITextField alloc] init];
         _phoneTF.placeholder = @"请输入手机号";
-        [_phoneTF setValue:[UIColor colorWithHexString:@"#CCCCCC"] forKeyPath:@"placeholderLabel.textColor"];
-        [_phoneTF setValue:[UIFont systemFontOfSize:17] forKeyPath:@"_placeholderLabel.font"];
+        _phoneTF.keyboardType = UIKeyboardTypePhonePad;
+        _phoneTF.clearButtonMode = UITextFieldViewModeWhileEditing;
+        [_phoneTF setValue:APP_GRAYLAYERCOLOR forKeyPath:@"placeholderLabel.textColor"];
+        [_phoneTF setValue:[UIFont systemFontOfSize:15] forKeyPath:@"_placeholderLabel.font"];
         [self addSubview:_phoneTF];
 
         _userNameLine = [[UIView alloc] init];
@@ -51,8 +53,9 @@
 
         _userNameTF = [[UITextField alloc] init];
         _userNameTF.placeholder = @"请输入用户名";
-        [_userNameTF setValue:[UIColor colorWithHexString:@"#CCCCCC"] forKeyPath:@"placeholderLabel.textColor"];
-        [_userNameTF setValue:[UIFont systemFontOfSize:17] forKeyPath:@"_placeholderLabel.font"];
+//        _userNameTF.clearButtonMode = UITextFieldViewModeWhileEditing;
+        [_userNameTF setValue:APP_GRAYLAYERCOLOR forKeyPath:@"placeholderLabel.textColor"];
+        [_userNameTF setValue:[UIFont systemFontOfSize:15] forKeyPath:@"_placeholderLabel.font"];
         [self addSubview:_userNameTF];
 
         _infoLab = [[UILabel alloc] init];
@@ -63,8 +66,10 @@
         
         
         _nextBtn = [[QDButton alloc] init];
-        [_nextBtn setBackgroundColor:[UIColor colorWithHexString:@"#DDDDDD"] forState:UIControlStateNormal];
-//        #72BB37
+        [_nextBtn setBackgroundColor:APP_LIGHTGRAYCOLOR forState:UIControlStateNormal];
+        [_nextBtn setBackgroundColor:APP_BLUECOLOR forState:UIControlStateSelected];
+        [_nextBtn setBackgroundColor:APP_BLUECOLOR forState:UIControlStateHighlighted];
+        [_nextBtn setBackgroundColor:APP_LIGHTGRAYCOLOR forState:UIControlStateDisabled];
         [_nextBtn setTitle:@"下一步" forState:UIControlStateNormal];
         _nextBtn.titleLabel.font = QDFont(21);
         [self addSubview:_nextBtn];
@@ -117,6 +122,7 @@
     [_phoneTF mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(SCREEN_WIDTH*0.22);
         make.centerY.equalTo(self.areaBtn);
+        make.right.equalTo(self.phoneLine);
     }];
 
     [_userNameLine mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -127,6 +133,7 @@
     [_userNameTF mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.phoneTF);
         make.bottom.equalTo(self.userNameLine.mas_top).offset(-(SCREEN_HEIGHT*0.01));
+        make.right.equalTo(self.userNameLine);
     }];
     
     [_infoLab mas_makeConstraints:^(MASConstraintMaker *make) {

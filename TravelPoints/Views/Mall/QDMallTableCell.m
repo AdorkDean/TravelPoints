@@ -1,0 +1,156 @@
+//
+//  QDMallTableCell.m
+//  TravelPoints
+//
+//  Created by 冉金 on 2019/2/19.
+//  Copyright © 2019 Charles Ran. All rights reserved.
+//
+
+#import "QDMallTableCell.h"
+#import "SDWebImageManager.h"
+#import "UIImageView+WebCache.h"
+
+@implementation QDMallTableCell
+
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    // Initialization code
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+
+    // Configure the view for the selected state
+}
+
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
+    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        _hotelImg = [[UIImageView alloc] init];
+        _hotelImg.image = [UIImage imageNamed:@"hotel"];
+        _hotelImg.layer.cornerRadius = 5;
+        _hotelImg.layer.masksToBounds = YES;
+        [self.contentView addSubview:_hotelImg];
+        
+        _hotelName = [[UILabel alloc] init];
+        _hotelName.text = @"--";
+        _hotelName.numberOfLines = 0;
+        _hotelName.font = QDBoldFont(15);
+        [self.contentView addSubview:_hotelName];
+        
+        _wanbei = [[UILabel alloc] init];
+        _wanbei.text = @"410";
+        _wanbei.font = QDFont(17);
+        _wanbei.textColor = APP_ORANGETEXTCOLOR;
+        [self.contentView addSubview:_wanbei];
+        
+        _wanbeiLab = [[UILabel alloc] init];
+        _wanbeiLab.text = @"玩贝";
+        _wanbeiLab.font = QDFont(12);
+        _wanbeiLab.textColor = APP_ORANGETEXTCOLOR;
+        [self.contentView addSubview:_wanbeiLab];
+        
+        _yueLab = [[UILabel alloc] init];
+        _yueLab.text = @"约";
+        _yueLab.font = QDFont(12);
+        _yueLab.textColor = APP_GRAYCOLOR;
+        [self.contentView addSubview:_yueLab];
+        
+        _priceLab = [[UILabel alloc] init];
+        _priceLab.text = @"¥400.02";
+        _priceLab.font = QDBoldFont(13);
+        _priceLab.textColor = APP_GRAYTEXTCOLOR;
+        [self.contentView addSubview:_priceLab];
+        
+        _salesLab = [[UILabel alloc] init];
+        _salesLab.text = @"已售";
+        _salesLab.font = QDFont(12);
+        _salesLab.textColor = APP_GRAYCOLOR;
+        [self.contentView addSubview:_salesLab];
+        
+        _totalSales = [[UILabel alloc] init];
+        _totalSales.text = @"¥23";
+        _totalSales.font = QDFont(13);
+        _totalSales.textColor = APP_BLUECOLOR;
+        [self.contentView addSubview:_totalSales];
+        
+        _isShipping = [[UILabel alloc] init];
+        _isShipping.backgroundColor = [UIColor colorWithHexString:@"#D8EFF2"];
+        _isShipping.text = @"包邮";
+        _isShipping.textColor = APP_BLUECOLOR;
+        _isShipping.font = QDFont(11);
+        [self.contentView addSubview:_isShipping];
+    }
+    return self;
+}
+
+- (void)layoutSubviews{
+    [super layoutSubviews];
+    [_hotelImg mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.contentView);
+        make.left.equalTo(self.contentView.mas_left).offset(SCREEN_WIDTH*0.054);
+        make.width.mas_equalTo(SCREEN_WIDTH*0.35);
+        make.height.mas_equalTo(SCREEN_HEIGHT*0.165);
+    }];
+    
+    [_hotelName mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_hotelImg);
+        make.left.equalTo(self.hotelImg.mas_right).offset(SCREEN_WIDTH*0.037);
+        make.right.equalTo(self.mas_right).offset(-(SCREEN_WIDTH*0.05));
+    }];
+    
+    [_wanbei mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_hotelName.mas_bottom).offset(SCREEN_HEIGHT*0.012);
+        make.left.equalTo(self.contentView.mas_left).offset(SCREEN_WIDTH*0.44);
+    }];
+    
+    [_wanbeiLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_wanbei);
+        make.left.equalTo(_wanbei.mas_right).offset(SCREEN_WIDTH*0.006);
+    }];
+    
+    [_yueLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_wanbei.mas_bottom).offset(SCREEN_HEIGHT*0.003);
+        make.left.equalTo(_wanbei);
+    }];
+    
+    [_priceLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_yueLab);
+        make.left.equalTo(_yueLab.mas_right).offset(SCREEN_WIDTH*0.006);
+    }];
+    
+    [_salesLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_yueLab);
+        make.right.equalTo(self.mas_right).offset(-(SCREEN_WIDTH*0.05));
+    }];
+    
+    [_totalSales mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_yueLab);
+        make.right.equalTo(_salesLab.mas_left).offset(-(SCREEN_WIDTH*0.003));
+    }];
+    
+    [_isShipping mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_yueLab);
+        make.left.equalTo(_priceLab.mas_right).offset(SCREEN_WIDTH*0.03);
+    }];
+}
+
+- (void)fillContentWithModel:(QDMallModel *)mallModel{
+    self.hotelName.text = mallModel.goodsName;
+    self.totalSales.text = [NSString stringWithFormat:@"%@",mallModel.virtualSales];
+    self.wanbei.text = [NSString stringWithFormat:@"%@", mallModel.shopCredit];
+    self.priceLab.text = [NSString stringWithFormat:@"¥%@", mallModel.shopPrice];
+    if ([mallModel.isShipping isEqualToString:@"0"]) {
+        [self.isShipping setHidden:YES];
+    }else{
+        [self.isShipping setHidden:NO];
+    }
+    NSString *imgStr = mallModel.goodsImg;
+    //    SDWebImageManager *manager = [SDWebImageManager sharedManager];
+    //    BOOL isCached = [manager cachedImageExistsForURL:[NSURL URLWithString:imgURL] completion:nil];
+    if (imgStr == nil) {
+        self.hotelImg.image = [UIImage imageNamed:@"placeHolder"];
+    }else{
+        [self.hotelImg sd_setImageWithURL:[NSURL URLWithString:imgStr] placeholderImage:[UIImage imageNamed:@"placeHolder"] options:SDWebImageLowPriority];
+    }
+}
+@end
