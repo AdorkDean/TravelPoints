@@ -26,10 +26,10 @@
     }
     if (errorCode == 1) {
         //未登录，跳转至登录页面
-        [QDUserDefaults setObject:@"0" forKey:@"loginType"];
-        AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        QDLoginAndRegisterVC *loginVC = [[QDLoginAndRegisterVC alloc] init];
-        delegate.window.rootViewController = loginVC;
+//        [QDUserDefaults setObject:@"0" forKey:@"loginType"];
+//        AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+//        QDLoginAndRegisterVC *loginVC = [[QDLoginAndRegisterVC alloc] init];
+//        delegate.window.rootViewController = loginVC;
     }else{
         NSString *errorString = [NSString stringWithFormat:@"Code:%ld, Msg:%@", errorCode, errorMsg];
         QDLog(@"errorString = %@", errorString);

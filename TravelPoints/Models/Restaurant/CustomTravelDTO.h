@@ -33,6 +33,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) NSInteger pageNum;            //创建人
 @property (nonatomic, assign) NSInteger pageSize;           //创建人
 @property (nonatomic, strong) NSMutableArray *imageList;    //图片集合
+@property (nonatomic, strong) NSString *creditPirce;        //玩贝价格
+
 @end
 
 NS_ASSUME_NONNULL_END

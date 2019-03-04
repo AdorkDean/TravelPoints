@@ -228,6 +228,7 @@
         NSArray *arr = [oo componentsSeparatedByString:@"url="];
         QDLog(@"arr = %@", arr);
         QDLog(@"ss = %@, dd = %@, ee = %@, oo = %@, pp = %@", ss, dd, ee, oo, pp);
+        QDLog(@"path = %@", URL.path);
         if ([URL.path isEqualToString:@"/Map"]) {
             QDRotePlanViewController *roteVC = [[QDRotePlanViewController alloc] init];
             roteVC.cityStr = [dic objectForKey:@"city"];
