@@ -22,4 +22,5 @@ target 'TravelPoints' do
   pod 'DZNEmptyDataSet'
   pod 'Pgyer'
   pod 'PgyUpdate'
+  pod 'zhPopupController'
 end
