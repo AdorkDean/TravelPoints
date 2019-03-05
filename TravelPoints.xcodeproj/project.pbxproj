@@ -79,7 +79,6 @@
 		3B1DFE1C21F3226E007D4B12 /* QDRestaurantTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B1DFE1B21F3226E007D4B12 /* QDRestaurantTopView.m */; };
 		3B1DFE1F21F32D1F007D4B12 /* QDRestaurantViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B1DFE1E21F32D1F007D4B12 /* QDRestaurantViewCell.m */; };
 		3B1DFE2421F33C08007D4B12 /* QDMallTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B1DFE2321F33C08007D4B12 /* QDMallTopView.m */; };
-		3B2ADD0521FD637E00F62D63 /* empty@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B2ADD0421FD637E00F62D63 /* empty@2x.png */; };
 		3B2ADD0821FD95F600F62D63 /* QDHotelsInAreaViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B2ADD0721FD95F600F62D63 /* QDHotelsInAreaViewTableViewCell.m */; };
 		3B2ADD0F21FDA13F00F62D63 /* QDStrategyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B2ADD0E21FDA13F00F62D63 /* QDStrategyTableViewCell.m */; };
 		3B2ADD1421FEA51600F62D63 /* QDHotelAndStrategyFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B2ADD1321FEA51600F62D63 /* QDHotelAndStrategyFilterView.m */; };
@@ -231,6 +230,7 @@
 		93D2D5B1222A149D00CCC61D /* SFDualWaySlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D2D5AE222A149C00CCC61D /* SFDualWaySlider.m */; };
 		93D2D5B4222A2F4700CCC61D /* QDCalendarCustomerTourVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D2D5B3222A2F4700CCC61D /* QDCalendarCustomerTourVC.m */; };
 		93D2D5B7222A314700CCC61D /* QDCalendarCustomerTourTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D2D5B6222A314700CCC61D /* QDCalendarCustomerTourTopView.m */; };
+		93D2D630222E59D100CCC61D /* emptySource@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 93D2D62F222E59D100CCC61D /* emptySource@2x.png */; };
 		93D400452221527E00633479 /* QDTradingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D400442221527E00633479 /* QDTradingViewController.m */; };
 		93E30E9A2224D158003CA771 /* PPNumberButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E30E992224D158003CA771 /* PPNumberButton.m */; };
 		93E30EA02224D18D003CA771 /* PGIndexBannerSubiew.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E30E9C2224D18D003CA771 /* PGIndexBannerSubiew.m */; };
@@ -394,7 +394,6 @@
 		3B1DFE1E21F32D1F007D4B12 /* QDRestaurantViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDRestaurantViewCell.m; sourceTree = "<group>"; };
 		3B1DFE2221F33C08007D4B12 /* QDMallTopView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDMallTopView.h; sourceTree = "<group>"; };
 		3B1DFE2321F33C08007D4B12 /* QDMallTopView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDMallTopView.m; sourceTree = "<group>"; };
-		3B2ADD0421FD637E00F62D63 /* empty@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "empty@2x.png"; sourceTree = "<group>"; };
 		3B2ADD0621FD95F600F62D63 /* QDHotelsInAreaViewTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDHotelsInAreaViewTableViewCell.h; sourceTree = "<group>"; };
 		3B2ADD0721FD95F600F62D63 /* QDHotelsInAreaViewTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDHotelsInAreaViewTableViewCell.m; sourceTree = "<group>"; };
 		3B2ADD0D21FDA13F00F62D63 /* QDStrategyTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDStrategyTableViewCell.h; sourceTree = "<group>"; };
@@ -685,6 +684,7 @@
 		93D2D5B3222A2F4700CCC61D /* QDCalendarCustomerTourVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDCalendarCustomerTourVC.m; sourceTree = "<group>"; };
 		93D2D5B5222A314700CCC61D /* QDCalendarCustomerTourTopView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDCalendarCustomerTourTopView.h; sourceTree = "<group>"; };
 		93D2D5B6222A314700CCC61D /* QDCalendarCustomerTourTopView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDCalendarCustomerTourTopView.m; sourceTree = "<group>"; };
+		93D2D62F222E59D100CCC61D /* emptySource@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "emptySource@2x.png"; sourceTree = "<group>"; };
 		93D400432221527E00633479 /* QDTradingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDTradingViewController.h; sourceTree = "<group>"; };
 		93D400442221527E00633479 /* QDTradingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDTradingViewController.m; sourceTree = "<group>"; };
 		93E30E982224D158003CA771 /* PPNumberButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPNumberButton.h; sourceTree = "<group>"; };
@@ -1550,6 +1550,7 @@
 		3BD951B821EC6E5300CD0627 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				93D2D62F222E59D100CCC61D /* emptySource@2x.png */,
 				3B8984B6221BE32B001A9970 /* naviga@2x.png */,
 				3BF92D802216DCE70019B941 /* icon_shellDefault@2x.png */,
 				3BF92D812216DCE80019B941 /* icon_shellpositive@2x.png */,
@@ -1558,7 +1559,6 @@
 				3BF92D7C2216D8BD0019B941 /* shellBanner@2x.png */,
 				3B0DC04F220033150056C318 /* placeHolder@2x.png */,
 				3B2ADD1521FEA68B00F62D63 /* seach_01@2x.png */,
-				3B2ADD0421FD637E00F62D63 /* empty@2x.png */,
 				3B1BC00F21FAFAE20005C415 /* gpsStat1@2x.png */,
 				3B1BC00D21FAFAE10005C415 /* decrease@2x.png */,
 				3B1BC00E21FAFAE10005C415 /* increase@2x.png */,
@@ -1892,13 +1892,13 @@
 				3BF92D7F2216DC4F0019B941 /* icon_filter@2x.png in Resources */,
 				3BF92D842216DCE80019B941 /* icon_shellpositive@2x.png in Resources */,
 				3BD951CC21EC6E6800CD0627 /* icon_tabbar_homepage@2x.png in Resources */,
+				93D2D630222E59D100CCC61D /* emptySource@2x.png in Resources */,
 				3BD951C621EC6E6800CD0627 /* icon_tabbar_merchant_selected@2x.png in Resources */,
 				3BD951C821EC6E6800CD0627 /* icon_tabbar_merchant_normal@2x.png in Resources */,
 				3BD951CB21EC6E6800CD0627 /* icon_tabbar_onsite_selected@2x.png in Resources */,
 				3BD9516F21EC2A1800CD0627 /* Main.storyboard in Resources */,
 				3B1BC01221FAFAE20005C415 /* gpsStat1@2x.png in Resources */,
 				3BD951C521EC6E6800CD0627 /* icon_tabbar_mine_selected@2x.png in Resources */,
-				3B2ADD0521FD637E00F62D63 /* empty@2x.png in Resources */,
 				3BD951C421EC6E6700CD0627 /* icon_tabbar_misc@2x.png in Resources */,
 				3B2ADD1621FEA68B00F62D63 /* seach_01@2x.png in Resources */,
 				3B8984B7221BE32C001A9970 /* naviga@2x.png in Resources */,

@@ -92,12 +92,12 @@
     [self getBasicPrice];
     [self findAllMapDict];
     //启动Pgyer基本SDK
-    [[PgyManager sharedPgyManager] startManagerWithAppId:@"5b299d00b8ccffac5b2ea7908a03d716"];
-    
-    //启动更新检查SDK
-    [[PgyUpdateManager sharedPgyManager] startManagerWithAppId:@"5b299d00b8ccffac5b2ea7908a03d716"];
-    
-    [[PgyUpdateManager sharedPgyManager] checkUpdate];
+//    [[PgyManager sharedPgyManager] startManagerWithAppId:@"5b299d00b8ccffac5b2ea7908a03d716"];
+//
+//    //启动更新检查SDK
+//    [[PgyUpdateManager sharedPgyManager] startManagerWithAppId:@"5b299d00b8ccffac5b2ea7908a03d716"];
+//    
+//    [[PgyUpdateManager sharedPgyManager] checkUpdate];
     return YES;
 }
 

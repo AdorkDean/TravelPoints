@@ -98,7 +98,7 @@
     [super layoutSubviews];
     [_addressBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH*0.05);
-        make.top.equalTo(self.mas_top).offset(SCREEN_HEIGHT*0.06);
+        make.top.equalTo(self.mas_top).offset(SCREEN_HEIGHT*0.05);
     }];
     
     [_iconBtn mas_makeConstraints:^(MASConstraintMaker *make) {

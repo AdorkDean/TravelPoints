@@ -166,6 +166,9 @@
     [_tableView reloadData];
 }
 
+- (void)lookAccountInfo:(UIButton *)sender{
+    QDLog(@"lookAccountInfo");
+}
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     _sectionHeaderView = [[QDMineSectionHeaderView alloc] init];
     [_sectionHeaderView.btn1 addTarget:self action:@selector(ordersAction:) forControlEvents:UIControlEventTouchUpInside];

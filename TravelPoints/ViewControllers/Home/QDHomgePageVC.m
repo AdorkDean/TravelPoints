@@ -16,19 +16,28 @@
 #import "QDSearchViewController.h"
 #import "QDOrderField.h"
 #import "RanklistDTO.h"
+#import <DZNEmptyDataSet/UIScrollView+EmptyDataSet.h>
+
 static NSString *cellIdentifier = @"CellIdentifier";
 
-@interface QDHomgePageVC ()<UICollectionViewDataSource, UITableViewDelegate, UITableViewDataSource, NavigationViewDelegate>{
+@interface QDHomgePageVC ()<UITableViewDelegate, UITableViewDataSource, NavigationViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate>{
     QDHomePageTopView *_homePageTopView;
     UITableView *_tableView;
     NSMutableArray *_rankTypeArr;             //榜单类型type值数组
     NSMutableArray *_rankTotalArr;            //所有的榜单数据
-    NSMutableArray *_rankTypeDetailList;      //榜单类型排序数组
+    NSMutableArray *_rankFirstArr;            //榜单第一名数组
+    NSMutableArray *_rankTableViewData;       //tableView数据源数组
+    NSMutableArray *_currentTableViewData;    //当前tableView的数据源
+
+
 }
 @property (nonatomic, strong) NavigationView *navigationView;
 @property (nonatomic, strong) ZLCollectionView *collectionView;
+@property (nonatomic, assign) NSInteger currentTypeIndex;
 
 @property (nonatomic, assign) CGFloat alpha;
+@property (nonatomic, strong) UIButton *shareBtn;
+@property (nonatomic, strong) UIButton *collectBtn;
 
 
 @end
@@ -37,7 +46,16 @@ static NSString *cellIdentifier = @"CellIdentifier";
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [self.navigationController.navigationBar setHidden:YES];
+    [self.navigationController.tabBarController.tabBar setHidden:NO];
+    self.tabBarController.tabBar.frame = CGRectMake(0, SCREEN_HEIGHT - 49, SCREEN_WIDTH, 49);
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(horizontalSilde:) name:@"horizontalSilde" object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    //    [self.navigationController.navigationBar setHidden:NO];
 }
 
 - (void)viewWillLayoutSubviews {
@@ -45,26 +63,23 @@ static NSString *cellIdentifier = @"CellIdentifier";
 }
 
 - (void)horizontalSilde:(NSNotification *)notification {
-    QDLog(@"info = %@", notification.userInfo);
-    NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:1];
-    [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
-}
-
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
+    QDLog(@"info = %@", notification.object);
+    int ss = [notification.object intValue];
+    _currentTableViewData = _rankTableViewData[ss-1];
+    //重新刷新第二个section的内容
+    [_tableView reloadSections:[[NSIndexSet alloc]initWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     _rankTypeArr = [[NSMutableArray alloc] init];
     _rankTotalArr = [[NSMutableArray alloc] init];
-    _rankTypeDetailList = [[NSMutableArray alloc] init];
+    _rankFirstArr = [[NSMutableArray alloc] init];
+    _rankTableViewData = [[NSMutableArray alloc] init];
+    _currentTableViewData = [[NSMutableArray alloc] init];
     [self findRankType:api_FindRankTypeToSort];
     self.view.backgroundColor = APP_WHITECOLOR;
-    [self configNavigationBar];
-    [self.view addSubview:self.navigationView];
-    [_navigationView.iconBtn addTarget:self action:@selector(theNewPage:) forControlEvents:UIControlEventTouchUpInside];
+//    [_navigationView.iconBtn addTarget:self action:@selector(theNewPage:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 /*
@@ -91,24 +106,46 @@ static NSString *cellIdentifier = @"CellIdentifier";
 /**
  
  */
-- (void)getRankedSorting:(NSString *)urlStr andTypeStr:(NSString *)typeStr{
-    if (_rankTypeDetailList.count) {
-        [_rankTypeDetailList removeAllObjects];
-    }
+- (void)getRankedSortingWithTypeStr:(NSString *)typeStr{
     NSDictionary * dic1 = @{@"listType":typeStr};
-    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:urlStr params:dic1 successBlock:^(QDResponseObject *responseObject) {
+    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_RankedSorting params:dic1 successBlock:^(QDResponseObject *responseObject) {
         if (responseObject.code == 0) {
+            _currentTypeIndex++;
             NSDictionary *dic = responseObject.result;
             NSArray *hotelArr = [dic objectForKey:@"result"];
+            NSMutableArray *detailArr = [[NSMutableArray alloc] init];
             if (hotelArr.count) {
                 for (NSDictionary *dic in hotelArr) {
                     RanklistDTO *listDTO = [RanklistDTO yy_modelWithDictionary:dic];
-                    [_rankTypeDetailList addObject:listDTO];
+                    [detailArr addObject:listDTO];
                 }
-                [_rankTotalArr addObject:_rankTypeDetailList];
+                [_rankTotalArr addObject:detailArr];
             }
-            [self initTableView];
-            QDLog(@"_rankTypeArr = %@", _rankTypeArr);
+            if (_currentTypeIndex < _rankTypeArr.count) {
+                [self getRankedSortingWithTypeStr:_rankTypeArr[_currentTypeIndex]];
+            }else{
+                QDLog(@"_rankTotalArr = %@", _rankTotalArr);
+                //处理数据
+                if (_rankFirstArr.count) {
+                    [_rankFirstArr removeAllObjects];
+                }
+                //collectionView的数据源
+                for (int i = 0; i < _rankTotalArr.count; i++) {
+                    RanklistDTO *model = [_rankTotalArr[i] firstObject];
+                    [_rankFirstArr addObject:model];
+                }
+                QDLog(@"_rankFirstArr = %@", _rankFirstArr);
+                
+                //tableView的数据源
+                for (int i = 0; i < _rankTotalArr.count; i++) {
+                    NSMutableArray *arr = _rankTotalArr[i];
+                    [arr removeObjectAtIndex:0];
+                    [_rankTableViewData addObject:arr];
+                }
+                _currentTableViewData = _rankTableViewData[0];
+                QDLog(@"_rankFirstArr = %@, _rankTableViewData = %@, _currentTableViewData = %@", _rankFirstArr, _rankTableViewData, _currentTableViewData);
+                [self initTableView];
+            }
         }
     } failureBlock:^(NSError *error) {
         [WXProgressHUD showErrorWithTittle:@"网络异常"];
@@ -122,6 +159,7 @@ static NSString *cellIdentifier = @"CellIdentifier";
     if (_rankTypeArr.count) {
         [_rankTypeArr removeAllObjects];
     }
+    _currentTypeIndex = 0;
     [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:urlStr params:nil successBlock:^(QDResponseObject *responseObject) {
         if (responseObject.code == 0) {
             NSArray *resultArr = responseObject.result;
@@ -130,12 +168,8 @@ static NSString *cellIdentifier = @"CellIdentifier";
             }
             QDLog(@"_rankTypeArr = %@", _rankTypeArr);
         }
-//        [self initTableView];
         if (_rankTypeArr.count) {
-            [self getRankedSorting:api_RankedSorting andTypeStr:_rankTypeArr[0]];
-//            for (int i = 0; i < _rankTypeArr.count; i++) {
-//                [self getRankedSorting:api_RankedSorting andTypeStr:_rankTypeArr[i]];
-//            }
+            [self getRankedSortingWithTypeStr:_rankTypeArr[_currentTypeIndex]];
         }
     } failureBlock:^(NSError *error) {
         [WXProgressHUD showErrorWithTittle:@"网络异常"];
@@ -184,10 +218,12 @@ static NSString *cellIdentifier = @"CellIdentifier";
     _tableView.backgroundColor = APP_WHITECOLOR;
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    _tableView.emptyDataSetDelegate = self;
+    _tableView.emptyDataSetSource = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableView.showsVerticalScrollIndicator = NO;
     _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    _tableView.contentInset = UIEdgeInsetsMake(0, 0, SCREEN_HEIGHT*0.38, 0);
+    _tableView.contentInset = UIEdgeInsetsMake(0, 0, 67, 0);
     _homePageTopView = [[QDHomePageTopView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.36)];
     _homePageTopView.backgroundColor = APP_WHITECOLOR;
     [_homePageTopView.hysgBtn addTarget:self action:@selector(hysgAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -200,11 +236,37 @@ static NSString *cellIdentifier = @"CellIdentifier";
     _homePageTopView.iconBtn.clipsToBounds = YES;
     _tableView.tableHeaderView = _homePageTopView;
     [self.view addSubview:_tableView];
+    [self configNavigationBar];
+    [self.view addSubview:self.navigationView];
 }
 
 #pragma mark - UI
 //导航栏
 - (void)configNavigationBar{
+    WS(ws);
+    _shareBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_shareBtn setImage:[UIImage imageNamed:@"ad_share_white"] forState:UIControlStateNormal];
+    [_shareBtn setImage:[UIImage imageNamed:@"ad_share_red"] forState:UIControlStateSelected];
+    [_shareBtn addTarget:self action:@selector(shareBtnAction) forControlEvents:UIControlEventTouchUpInside];
+    _collectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_collectBtn addTarget:self action:@selector(collectButtonAction) forControlEvents:UIControlEventTouchUpInside];
+    [_collectBtn setImage:[UIImage imageNamed:@"ad_collection_white"] forState:UIControlStateNormal];
+    [_collectBtn setImage:[UIImage imageNamed:@"ad_collection_red"] forState:UIControlStateSelected];
+    
+    [self.view addSubview:_shareBtn];
+    [self.view addSubview:_collectBtn];
+    
+    [_shareBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(ws.view).offset(35);
+        make.right.equalTo(ws.view).offset(-73);
+        make.size.mas_offset(CGSizeMake(22, 22));
+    }];
+    
+    [_collectBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.shareBtn);
+        make.right.equalTo(ws.view).offset(-30);
+        make.size.mas_equalTo(CGSizeMake(22, 22));
+    }];
 }
 //透明导航兰
 - (NavigationView *)navigationView{
@@ -224,8 +286,8 @@ static NSString *cellIdentifier = @"CellIdentifier";
     if (section == 0) {
         return 1;
     }else{
-        if (_rankTypeDetailList.count) {
-            return _rankTypeDetailList.count - 1;
+        if (_currentTableViewData.count) {
+            return _currentTableViewData.count;
         }else{
             return 1;
         }
@@ -241,12 +303,13 @@ static NSString *cellIdentifier = @"CellIdentifier";
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return SCREEN_HEIGHT*0.72;
+    return SCREEN_HEIGHT*0.68;
 }
 
 - (ZLCollectionView *)collectionView{
     if (!_collectionView) {
         _collectionView = [ZLCollectionView collectionViewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.72) itemCount:_rankTypeArr.count];
+        _collectionView.rankFirstArr = _rankFirstArr;
     }
     return _collectionView;
 }
@@ -258,17 +321,15 @@ static NSString *cellIdentifier = @"CellIdentifier";
         if (cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
         }
-       
-        
-        self.collectionView.selectedItems = ^(NSIndexPath *indexPath) {
-            NSLog(@"ItemTag:%ld",indexPath.item);
-            //这里可能要点击切换
-        };
-        [self.collectionView didSelectedItemsWithBlock:^(NSIndexPath *indexPath) {
-            QDLog(@"%ld", (long)indexPath.row);
-        }];
+//        self.collectionView.selectedItems = ^(NSIndexPath *indexPath) {
+//            NSLog(@"ItemTag:%ld",indexPath.item);
+//            //这里可能要点击切换
+//        };
+//        [self.collectionView didSelectedItemsWithBlock:^(NSIndexPath *indexPath) {
+//            QDLog(@"%ld", (long)indexPath.row);
+//        }];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [cell.contentView addSubview:_collectionView];
+        [cell.contentView addSubview:self.collectionView];
         return cell;
     }else{
         static NSString *identifier2 = @"QDHomePageViewCell";
@@ -276,33 +337,18 @@ static NSString *cellIdentifier = @"CellIdentifier";
         if (cell == nil) {
             cell = [[QDHomePageViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier2];
         }
+        QDLog(@"index.row = %ld", (long)indexPath.row);
+        if (_currentTableViewData.count) {
+            [cell loadTableViewCellDataWithModel:_currentTableViewData[indexPath.row]];
+        }else{
+//            [_tableView reloadData];
+//            [_tableView reloadEmptyDataSet];
+        }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.backgroundColor = APP_WHITECOLOR;
         return cell;
     }
     return nil;
-}
-
-#pragma mark - CollectionView Delegate
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    if (_rankTypeArr.count) {
-        return _rankTypeArr.count;
-    }
-    return 1;
-}
-
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return  1;
-}
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    HYBCardCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier                                                          forIndexPath:indexPath];
-//    [cell configWithImage:[NSString stringWithFormat:@"img%ld.png", indexPath.item + 1]];
-    return cell;
-}
-
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    QDLog(@"%d", (int)indexPath.row);
 }
 
 #pragma mark - ScrollViewDelegate
@@ -319,22 +365,23 @@ static NSString *cellIdentifier = @"CellIdentifier";
     }
     else{
         self.navigationView.alpha = 1.0;
+        self.shareBtn.alpha = 0.0f;
+        self.collectBtn.alpha = 0.0f;
     }
     
     if (self.alpha == 0) {
+        self.shareBtn.alpha = 1.0;
+        self.collectBtn.alpha = 1.0;
     }
     
-//    if (scrollView.contentOffset.y > threholdHeight &&
-//        self.navigationView.alpha == 1.0) {
-//        [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
-//        [self.navigationView navigationAnimation];
-//        _tableView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
-//    }else{
-//        [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
-//        [self.navigationView resetFrame];
-//    }
+    if (scrollView.contentOffset.y > threholdHeight &&
+        self.navigationView.alpha == 1.0) {
+        [self.navigationView navigationAnimation];
+        _tableView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
+    }else{
+        [self.navigationView resetFrame];
+    }
 }
-
 #pragma mark - NavigationViewDelegate
 - (void)NavigationViewWithScrollerButton:(UIButton *)btn{
     
@@ -351,4 +398,22 @@ static NSString *cellIdentifier = @"CellIdentifier";
 - (void)NavigationViewGoCollect{
     
 }
+
+#pragma mark - emptyDataSource
+- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView{
+    return [UIImage imageNamed:@"emptySource"];
+}
+
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView{
+    NSString *text = @"暂无数据";
+    
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:16.0f],
+                                 NSForegroundColorAttributeName: [UIColor darkGrayColor]};
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView{
+    return SCREEN_HEIGHT*0.42;
+}
+
 @end

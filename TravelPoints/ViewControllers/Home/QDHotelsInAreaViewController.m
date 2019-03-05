@@ -297,7 +297,7 @@ typedef enum : NSUInteger {
 #pragma mark - DZNEmtpyDataSet Delegate
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView{
-    return [UIImage imageNamed:@"empty@2x"];
+    return [UIImage imageNamed:@"emptySource"];
 }
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView{

@@ -30,11 +30,6 @@ static NSString * identifier = @"collecitonView_cell";
     return [[self alloc]initWithFrame:frame itemCount:itemCount];
 }
 
-+ (instancetype)collectionVipViewWithFrame:(CGRect)frame itemCount:(NSInteger)itemCount
-{
-    return [[self alloc]initWithVipFrame:frame itemCount:itemCount];
-}
-
 - (instancetype)initWithFrame:(CGRect)frame itemCount:(NSInteger)itemCount
 {
     self = [super initWithFrame:frame];
@@ -47,18 +42,6 @@ static NSString * identifier = @"collecitonView_cell";
     return self;
 }
 
-- (instancetype)initWithVipFrame:(CGRect)frame itemCount:(NSInteger)itemCount
-{
-    self = [super initWithFrame:frame];
-    if (self)
-    {
-        self.itemCount = itemCount;
-        self.collectionViewFrame = frame;
-        [self createVipPurchaseViewStyle];
-    }
-    return self;
-}
-
 
 - (void)createCollectionViewStyle
 {
@@ -66,7 +49,7 @@ static NSString * identifier = @"collecitonView_cell";
     self.mainCollectionView = [[UICollectionView alloc]initWithFrame:self.collectionViewFrame collectionViewLayout:layout];
     self.mainCollectionView.delegate = self;
     self.mainCollectionView.dataSource = self;
-    self.mainCollectionView.backgroundColor = APP_ORANGECOLOR;
+    self.mainCollectionView.backgroundColor = APP_WHITECOLOR;
     self.mainCollectionView.showsHorizontalScrollIndicator = NO;
     [self addSubview:self.mainCollectionView];
     NSLog(@"%f -- %f",layout.itemSize.width,layout.itemSize.height); //375.404
@@ -75,20 +58,6 @@ static NSString * identifier = @"collecitonView_cell";
                 forCellWithReuseIdentifier:identifier];
 }
 
-- (void)createVipPurchaseViewStyle
-{
-    QDVipPurchaseFlowLayout *layout = [[QDVipPurchaseFlowLayout alloc]init];
-    self.mainCollectionView = [[UICollectionView alloc]initWithFrame:self.collectionViewFrame collectionViewLayout:layout];
-    self.mainCollectionView.delegate = self;
-    self.mainCollectionView.dataSource = self;
-    self.mainCollectionView.backgroundColor = APP_ORANGECOLOR;
-    self.mainCollectionView.showsHorizontalScrollIndicator = NO;
-    [self addSubview:self.mainCollectionView];
-    NSLog(@"%f -- %f",layout.itemSize.width,layout.itemSize.height); //375.404
-    //注册cell
-    [self.mainCollectionView registerClass:[UITableViewCell class]
-                forCellWithReuseIdentifier:identifier];
-}
 
 - (NSInteger )numberOfItemsInSection:(NSInteger)section
 {
@@ -103,7 +72,7 @@ static NSString * identifier = @"collecitonView_cell";
     QDLog(@"%ld", (long)indexPath.row);
     HYBCardCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier
                                                                            forIndexPath:indexPath];
-
+    [cell loadCellDataWithModel:_rankFirstArr[indexPath.row]];
     /*这段代码的作用就是：
      *当直接往细胞上面添加视图内容时，随着滑动，可能会出现内容重叠的问题。
      *但是在自定义细胞时使用这段代码，就会移除细胞的所有子视图，
@@ -152,12 +121,16 @@ static NSString * identifier = @"collecitonView_cell";
     isScroll = NO;
     CGFloat x = scrollView.contentOffset.x;
     CGFloat width = SCREEN_WIDTH * 0.83;
-    if (x > 0 && x < width) {
+    //x为0的情况
+    if (x >= 0 && x < width) {
         //第一个
         QDLog(@"第一个");
         ss = @"1";
     }else if (x > width && x < width * 2){
         QDLog(@"第二个");
+        //                [UIView performWithoutAnimation:^{
+        //                    [_mainCollectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:[_rankTypeArr indexOfObject:typeStr] inSection:0]]];
+        //                }];
         ss = @"2";
     }else if (x > width * 2 && x < width * 3){
         QDLog(@"第三个");
@@ -181,3 +154,4 @@ static NSString * identifier = @"collecitonView_cell";
 */
 
 @end
+

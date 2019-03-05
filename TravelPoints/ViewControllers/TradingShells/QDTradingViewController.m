@@ -571,7 +571,7 @@ typedef enum : NSUInteger {
 
 #pragma mark - emptyDataSource
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView{
-    return [UIImage imageNamed:@"empty@2x"];
+    return [UIImage imageNamed:@"emptySource"];
 }
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView{

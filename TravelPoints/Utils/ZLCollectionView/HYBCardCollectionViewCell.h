@@ -7,20 +7,28 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "RanklistDTO.h"
 @interface HYBCardCollectionViewCell : UICollectionViewCell
 
 @property (nonatomic, strong) UIView *backView;
 @property (nonatomic, strong) UILabel *descLab;
+@property (nonatomic, strong) UILabel *typeLab; //这好住
+
 @property (nonatomic, strong) UIImageView *pic;
 @property (nonatomic, strong) UILabel *titleLab;
 @property (nonatomic, strong) UILabel *warnLab1;
 @property (nonatomic, strong) UILabel *hates;
 
+@property (nonatomic, strong) UIImageView *typePic;
+@property (nonatomic, strong) UIImageView *robbotPic;
+
+@property (nonatomic, strong) UIView *grayBackView;
+
+@property (nonatomic, strong) UILabel *textOnView;
 @property (nonatomic, strong) UIView *lineView;
 @property (nonatomic, strong) UILabel *warnLab2;
 @property (nonatomic, strong) UILabel *likes;
 
-- (void)configWithImage:(id)image;
+- (void)loadCellDataWithModel:(RanklistDTO *)model;
 
 @end

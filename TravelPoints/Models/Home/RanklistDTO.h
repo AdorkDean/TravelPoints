@@ -28,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) ImageDTO *imageDTO;
 
 @property (nonatomic, strong) NSString *isRecommend;
-@property (nonatomic, strong) NSString *imageUrl;
+@property (nonatomic, strong) NSString *imageFullUrl;
 @property (nonatomic, strong) NSString *code;
 @property (nonatomic, strong) NSString *pageNum;
 @property (nonatomic, strong) NSString *pageSize;

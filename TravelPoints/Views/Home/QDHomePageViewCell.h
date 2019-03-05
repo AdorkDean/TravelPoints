@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RanklistDTO.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -17,12 +18,19 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIImageView *pic;
 @property (nonatomic, strong) UILabel *titleLab;
 @property (nonatomic, strong) UILabel *warnLab1;
-@property (nonatomic, strong) UIButton *hates;
+@property (nonatomic, strong) UILabel *hates;
+
+@property (nonatomic, strong) UIImageView *robbotPic;
+
+@property (nonatomic, strong) UIView *grayBackView;
+
+@property (nonatomic, strong) UILabel *textOnView;
 
 @property (nonatomic, strong) UIView *lineView;
 @property (nonatomic, strong) UILabel *warnLab2;
-@property (nonatomic, strong) UIButton *likes;
+@property (nonatomic, strong) UILabel *likes;
 
+- (void)loadTableViewCellDataWithModel:(RanklistDTO *)model;
 @end
 
 NS_ASSUME_NONNULL_END

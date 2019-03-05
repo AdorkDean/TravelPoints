@@ -278,6 +278,7 @@
                 [_tableView reloadData];
             }
         }
+        [self endRefreshing];
     } failureBlock:^(NSError *error) {
         [_tableView reloadData];
         [_tableView reloadEmptyDataSet];
@@ -572,7 +573,7 @@
 #pragma mark - DZNEmtpyDataSet Delegate
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView{
-    return [UIImage imageNamed:@"empty@2x"];
+    return [UIImage imageNamed:@"emptySource"];
 }
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView{
@@ -585,14 +586,29 @@
 
 - (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView{
     if (_playShellType == QDHotelReserve) {
-        return SCREEN_HEIGHT*0.18;
+        return SCREEN_HEIGHT*0.14;
     }else if (_playShellType == QDCustomTour){
         return 0;
     }else{
         return 0;
     }
-    return SCREEN_HEIGHT*0.18;
+    return SCREEN_HEIGHT*0.14;
 }
+
+//- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView
+//{
+//    NSString *text = @"This allows you to share photos from your";
+//    
+//    NSMutableParagraphStyle *paragraph = [NSMutableParagraphStyle new];
+//    paragraph.lineBreakMode = NSLineBreakByWordWrapping;
+//    paragraph.alignment = NSTextAlignmentCenter;
+//    
+//    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:14.0f],
+//                                 NSForegroundColorAttributeName: APP_BLUECOLOR,
+//                                 NSParagraphStyleAttributeName: paragraph};
+//    
+//    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+//}
 
 #pragma mark - CLLocationManagerDelegate
 /**
