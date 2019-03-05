@@ -7,7 +7,6 @@
 //
 
 #import "QDServiceErrorHandler.h"
-#import "QDLoginViewController.h"
 #import "AppDelegate.h"
 #import "QDLoginAndRegisterVC.h"
 @implementation QDServiceErrorHandler

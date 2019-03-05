@@ -15,6 +15,11 @@ typedef void(^DidSelectedItems)(NSIndexPath *indexPath);
 
 @property (nonatomic, strong) RanklistDTO *rankModel;
 @property (nonatomic, strong) NSMutableArray *rankFirstArr;
+
+@property (nonatomic,strong) UICollectionView *mainCollectionView;
+@property (nonatomic,assign) NSInteger itemCount;
+@property (nonatomic,assign) CGRect collectionViewFrame;
+
 - (void)didSelectedItemsWithBlock:(DidSelectedItems)selectedItems;
 
 - (instancetype)initWithFrame:(CGRect)frame itemCount:(NSInteger)itemCount;

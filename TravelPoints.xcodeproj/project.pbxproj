@@ -123,13 +123,11 @@
 		3B40EBC021EC953E00656C1F /* YYTextWeakProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B40EBA721EC953E00656C1F /* YYTextWeakProxy.m */; };
 		3B40EBC321EC956300656C1F /* QDUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B40EBC121EC956200656C1F /* QDUserDefaults.m */; };
 		3B40EBC721EC962100656C1F /* WXProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B40EBC521EC962100656C1F /* WXProgressHUD.m */; };
-		3B40EBCA21ECA46100656C1F /* QDRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B40EBC921ECA46100656C1F /* QDRegisterViewController.m */; };
 		3B40EBCD21ECA64A00656C1F /* NSDictionary+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B40EBCC21ECA64A00656C1F /* NSDictionary+Helper.m */; };
 		3B40EBD021ECB0DD00656C1F /* QDButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B40EBCF21ECB0DD00656C1F /* QDButton.m */; };
 		3B40EBD321ED61F100656C1F /* QDLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B40EBD221ED61F100656C1F /* QDLoginView.m */; };
 		3B40EBD621ED655400656C1F /* IdentifyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B40EBD521ED655400656C1F /* IdentifyView.m */; };
 		3B40EBD921ED6C2400656C1F /* QDLoginAndRegisterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B40EBD821ED6C2400656C1F /* QDLoginAndRegisterVC.m */; };
-		3B40EBE321ED857700656C1F /* QDIdentifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B40EBE221ED857700656C1F /* QDIdentifyViewController.m */; };
 		3B40EBE921ED925F00656C1F /* VertificationCodeInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B40EBE721ED925E00656C1F /* VertificationCodeInputView.m */; };
 		3B40EBEA21ED925F00656C1F /* VertificationCodeInputLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B40EBE821ED925F00656C1F /* VertificationCodeInputLabel.m */; };
 		3B40EBED21EDA93800656C1F /* QDMsgVerifyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B40EBEC21EDA93800656C1F /* QDMsgVerifyView.m */; };
@@ -177,7 +175,6 @@
 		3BCE3C1D21EC7FED005D518F /* QDServiceErrorHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCE3C1621EC7FEC005D518F /* QDServiceErrorHandler.m */; };
 		3BCE3C1E21EC7FED005D518F /* QDServiceClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCE3C1A21EC7FED005D518F /* QDServiceClient.m */; };
 		3BCE3C1F21EC7FED005D518F /* QDNetworkCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCE3C1B21EC7FED005D518F /* QDNetworkCache.m */; };
-		3BCE3C2321EC83D8005D518F /* QDLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCE3C2121EC83D8005D518F /* QDLoginViewController.m */; };
 		3BCE3C2821EC84A3005D518F /* QDRegisterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCE3C2721EC84A3005D518F /* QDRegisterView.m */; };
 		3BCE3C2D21EC8899005D518F /* QDGlobalFunc.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCE3C2A21EC8898005D518F /* QDGlobalFunc.m */; };
 		3BCE3C3121EC8A08005D518F /* UIColor+QDColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCE3C2F21EC8A08005D518F /* UIColor+QDColor.m */; };
@@ -484,8 +481,6 @@
 		3B40EBC221EC956300656C1F /* QDUserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QDUserDefaults.h; sourceTree = "<group>"; };
 		3B40EBC521EC962100656C1F /* WXProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WXProgressHUD.m; sourceTree = "<group>"; };
 		3B40EBC621EC962100656C1F /* WXProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXProgressHUD.h; sourceTree = "<group>"; };
-		3B40EBC821ECA46100656C1F /* QDRegisterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDRegisterViewController.h; sourceTree = "<group>"; };
-		3B40EBC921ECA46100656C1F /* QDRegisterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDRegisterViewController.m; sourceTree = "<group>"; };
 		3B40EBCB21ECA64A00656C1F /* NSDictionary+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Helper.h"; sourceTree = "<group>"; };
 		3B40EBCC21ECA64A00656C1F /* NSDictionary+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Helper.m"; sourceTree = "<group>"; };
 		3B40EBCE21ECB0DD00656C1F /* QDButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QDButton.h; sourceTree = "<group>"; };
@@ -496,8 +491,6 @@
 		3B40EBD521ED655400656C1F /* IdentifyView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IdentifyView.m; sourceTree = "<group>"; };
 		3B40EBD721ED6C2400656C1F /* QDLoginAndRegisterVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDLoginAndRegisterVC.h; sourceTree = "<group>"; };
 		3B40EBD821ED6C2400656C1F /* QDLoginAndRegisterVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDLoginAndRegisterVC.m; sourceTree = "<group>"; };
-		3B40EBE121ED857700656C1F /* QDIdentifyViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDIdentifyViewController.h; sourceTree = "<group>"; };
-		3B40EBE221ED857700656C1F /* QDIdentifyViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDIdentifyViewController.m; sourceTree = "<group>"; };
 		3B40EBE521ED925E00656C1F /* VertificationCodeInputLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VertificationCodeInputLabel.h; sourceTree = "<group>"; };
 		3B40EBE621ED925E00656C1F /* VertificationCodeInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VertificationCodeInputView.h; sourceTree = "<group>"; };
 		3B40EBE721ED925E00656C1F /* VertificationCodeInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VertificationCodeInputView.m; sourceTree = "<group>"; };
@@ -593,8 +586,6 @@
 		3BCE3C1A21EC7FED005D518F /* QDServiceClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QDServiceClient.m; sourceTree = "<group>"; };
 		3BCE3C1B21EC7FED005D518F /* QDNetworkCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QDNetworkCache.m; sourceTree = "<group>"; };
 		3BCE3C1C21EC7FED005D518F /* QDNetworkCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QDNetworkCache.h; sourceTree = "<group>"; };
-		3BCE3C2121EC83D8005D518F /* QDLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QDLoginViewController.m; sourceTree = "<group>"; };
-		3BCE3C2221EC83D8005D518F /* QDLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QDLoginViewController.h; sourceTree = "<group>"; };
 		3BCE3C2621EC84A3005D518F /* QDRegisterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDRegisterView.h; sourceTree = "<group>"; };
 		3BCE3C2721EC84A3005D518F /* QDRegisterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDRegisterView.m; sourceTree = "<group>"; };
 		3BCE3C2A21EC8898005D518F /* QDGlobalFunc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QDGlobalFunc.m; sourceTree = "<group>"; };
@@ -1191,14 +1182,8 @@
 		3BCE3C2021EC83D8005D518F /* LoginAndRegister */ = {
 			isa = PBXGroup;
 			children = (
-				3BCE3C2221EC83D8005D518F /* QDLoginViewController.h */,
-				3BCE3C2121EC83D8005D518F /* QDLoginViewController.m */,
-				3B40EBC821ECA46100656C1F /* QDRegisterViewController.h */,
-				3B40EBC921ECA46100656C1F /* QDRegisterViewController.m */,
 				3B40EBD721ED6C2400656C1F /* QDLoginAndRegisterVC.h */,
 				3B40EBD821ED6C2400656C1F /* QDLoginAndRegisterVC.m */,
-				3B40EBE121ED857700656C1F /* QDIdentifyViewController.h */,
-				3B40EBE221ED857700656C1F /* QDIdentifyViewController.m */,
 			);
 			path = LoginAndRegister;
 			sourceTree = "<group>";
@@ -1987,7 +1972,6 @@
 				3B40EBBF21EC953E00656C1F /* YYTextAsyncLayer.m in Sources */,
 				3B0CD74621F1DEC10020824A /* SYChineseToPinyin.m in Sources */,
 				3B40EBD321ED61F100656C1F /* QDLoginView.m in Sources */,
-				3B40EBCA21ECA46100656C1F /* QDRegisterViewController.m in Sources */,
 				93E30EF7222915CB003CA771 /* QDNavigationService.m in Sources */,
 				3B2ADD2621FEE3EC00F62D63 /* QDShowMenuView.m in Sources */,
 				3B40EC0321EDE33300656C1F /* XBGradientColorView.m in Sources */,
@@ -2065,7 +2049,6 @@
 				932611212223C72C00E3D0BA /* QDMyPickOrderModel.m in Sources */,
 				3B04DF4221F8037E001909CD /* UserMoneyDTO.m in Sources */,
 				3B0DC075220034B30056C318 /* SDWebImageManager.m in Sources */,
-				3B40EBE321ED857700656C1F /* QDIdentifyViewController.m in Sources */,
 				3B7636712217A6A300F77007 /* QDShellRecommendVC.m in Sources */,
 				3B04DF5921F85001001909CD /* QDRefreshFooter.m in Sources */,
 				93E30EC12225630D003CA771 /* ImageDTO.m in Sources */,
@@ -2083,7 +2066,6 @@
 				3B40EBBB21EC953E00656C1F /* NSAttributedString+YYText.m in Sources */,
 				3B40EBAD21EC953E00656C1F /* YYTextInput.m in Sources */,
 				3B1DFE2421F33C08007D4B12 /* QDMallTopView.m in Sources */,
-				3BCE3C2321EC83D8005D518F /* QDLoginViewController.m in Sources */,
 				93E30EBB22254CB3003CA771 /* QDSalesInfo.m in Sources */,
 				3B40EBF721EDC4C300656C1F /* QDForgetPwdView.m in Sources */,
 				93E30EE02228BE8B003CA771 /* QDRoutePlanHeaderView.m in Sources */,

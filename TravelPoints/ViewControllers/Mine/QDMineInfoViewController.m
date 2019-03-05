@@ -168,6 +168,11 @@
 
 - (void)lookAccountInfo:(UIButton *)sender{
     QDLog(@"lookAccountInfo");
+    
+    QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
+    bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@", QD_JSURL, JS_INTEGRAL];
+    QDLog(@"urlStr = %@", bridgeVC.urlStr);
+    [self.navigationController pushViewController:bridgeVC animated:YES];
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     _sectionHeaderView = [[QDMineSectionHeaderView alloc] init];

@@ -20,13 +20,14 @@
 #import "QDKeyWordsSearchViewT.h"
 #import "AppDelegate.h"
 #import "QDPriceRangeView.h"
+#import "QDSegmentControl.h"
 @interface QDKeyWordsSearchVC ()<UITableViewDelegate, UITableViewDataSource, TFDropDownMenuViewDelegate, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource, GetSearchStrDelegate, SendDateStrDelegate>{
     UITableView *_tableView;
     QDKeyWordsSearchHeaderView *_headView;
     QDKeyWordsSearchViewT *_headViewT;
     QDPriceRangeView *_priceRangeView;
     TFDropDownMenuView *_menu;
-    
+    QDSegmentControl *_segmentControl;
     NSMutableArray *_array1;
     NSMutableArray *_array2;
     NSMutableArray *_array3;
@@ -134,6 +135,26 @@
     }
     [self setDropMenu];
     [self initTableView];
+}
+
+- (void)segmentedClicked:(QDSegmentControl *)segmentControl{
+    
+}
+- (QDSegmentControl *)segmentControl{
+    if (!_segmentControl) {
+        //分段选择按钮
+        NSArray *segmentedTitles = @[@"榜单",@"酒店",@"定制游",@"商品",@"攻略"];
+        _segmentControl = [[QDSegmentControl alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH*0.89, SCREEN_HEIGHT*0.07)];
+        _segmentControl.sectionTitles = segmentedTitles;
+        [_segmentControl addTarget:self action:@selector(segmentedClicked:) forControlEvents:UIControlEventValueChanged];
+        _segmentControl.selectionIndicatorColor = APP_BLUECOLOR;
+        _segmentControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
+        _segmentControl.selectionStyle = HMSegmentedControlSelectionStyleTextWidthStripe;
+        _segmentControl.selectedTitleTextAttributes = @{NSForegroundColorAttributeName: APP_BLACKCOLOR, NSFontAttributeName: QDFont(16)};
+        _segmentControl.titleTextAttributes = @{NSForegroundColorAttributeName: APP_GRAYCOLOR, NSFontAttributeName: QDFont(15)};
+        [self.view addSubview:_segmentControl];
+    }
+    return _segmentControl;
 }
 
 #pragma mark - 调用日历控件
@@ -446,6 +467,9 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
+//    if (<#condition#>) {
+//        <#statements#>
+//    }
     return [[UIView alloc] initWithFrame:CGRectZero];
 //    if (_playShellType == QDHotelReserve) {
 //        NSMutableArray *data1 = [NSMutableArray arrayWithObjects:_array1, _array2, @[@"价格"], _array3, nil];

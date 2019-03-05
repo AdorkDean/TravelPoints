@@ -27,20 +27,20 @@
         _topBackView = [[UIView alloc] init];
         _topBackView.backgroundColor = [UIColor colorWithHexString:@"#EEF3F6"];
         _topBackView.layer.masksToBounds = YES;
-        _topBackView.layer.cornerRadius = SCREEN_WIDTH*0.04;
+        _topBackView.layer.cornerRadius = 8;
         [self addSubview:_topBackView];
         
         _imgView = [[UIImageView alloc] init];
         [_imgView setImage:[UIImage imageNamed:@"icon_search"]];
         [_topBackView addSubview:_imgView];
         
-        
-        _inputTF = [[UITextField alloc] init];
-        _inputTF.placeholder = @"搜索目的地、酒店和景点";
-        [_inputTF setValue:APP_GRAYLINECOLOR forKeyPath:@"_placeholderLabel.textColor"];
-        [_inputTF setValue:QDFont(14) forKeyPath:@"_placeholderLabel.font"];
-        _inputTF.clearButtonMode = UITextFieldViewModeWhileEditing;
-        [_topBackView addSubview:_inputTF];
+        _searchBtn = [[UIButton alloc] init];
+        [_searchBtn setTitle:@"搜索目的地,酒店和景点" forState:UIControlStateNormal];
+        _searchBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+        [_searchBtn setTitleColor:APP_GRAYTEXTCOLOR forState:UIControlStateNormal];
+        _searchBtn.titleLabel.font = QDFont(15);
+        _searchBtn.backgroundColor = APP_BLUECOLOR;
+        [_topBackView addSubview:_searchBtn];
         
         _hysgBtn = [[UIButton alloc] init];
         _hysgBtn.tag = 1001;
@@ -112,16 +112,16 @@
         make.top.equalTo(self.mas_top).offset(SCREEN_HEIGHT*0.14);
         make.height.mas_equalTo(SCREEN_HEIGHT*0.05);
     }];
-
+    
     [_imgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.topBackView);
         make.left.equalTo(self.topBackView.mas_left).offset(SCREEN_WIDTH*0.04);
     }];
-
-    [_inputTF mas_makeConstraints:^(MASConstraintMaker *make) {
+    
+    [_searchBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.topBackView);
         make.left.equalTo(self.imgView.mas_right).offset(SCREEN_WIDTH*0.02);
-        make.width.mas_equalTo(SCREEN_WIDTH*0.74);
+        make.width.mas_equalTo(SCREEN_WIDTH*0.75);
     }];
     
     [_hysgBtn mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -31,7 +31,6 @@
         _backView.backgroundColor = APP_WHITECOLOR;
         
         _backView.layer.cornerRadius = 8;
-//        _backView.layer.masksToBounds = YES;
         [self addShadowToView:self.contentView withColor:APP_GRAYCOLOR];
         [self.contentView addSubview:_backView];
         

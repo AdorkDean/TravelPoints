@@ -14,9 +14,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic, strong) SPButton *addressBtn;
 @property(nonatomic, strong) UIButton *iconBtn;
-@property(nonatomic, strong) UIView *topBackView;
-@property(nonatomic, strong) UIImageView *imgView;
-@property(nonatomic, strong) UITextField *inputTF;
+@property (nonatomic, strong) UIView *topLineView;
+@property (nonatomic, strong) UIView *topBackView;
+@property (nonatomic, strong) UIImageView *imgView;
+@property (nonatomic, strong) UIButton *searchBtn;
 
 //会员申购 攻略 定制游 商城
 @property(nonatomic, strong) UIButton *hysgBtn;

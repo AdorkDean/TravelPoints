@@ -63,11 +63,14 @@ typedef void(^PrivateRequestFailure)(NSURLSessionDataTask *task, NSError *error)
             case AFNetworkReachabilityStatusReachableViaWWAN:
             {
 //                QDToast(@"当前网络为3/4G状态");
+                //连接上网络 首页开始加载数据
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"123" object:nil];
             }
                 break;
             case AFNetworkReachabilityStatusReachableViaWiFi:
             {
 //                QDToast(@"当前网络环境为WI-FI");
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"123" object:nil];
             }
                 break;
             default:

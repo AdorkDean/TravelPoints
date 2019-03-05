@@ -10,15 +10,11 @@
 #import "ZLFlowLayout.h"
 #import "QDVipPurchaseFlowLayout.h"
 #import "HYBCardCollectionViewCell.h"
+#import <DZNEmptyDataSet/UIScrollView+EmptyDataSet.h>
 static NSString * identifier = @"collecitonView_cell";
-@interface ZLCollectionView ()<UICollectionViewDelegate,UICollectionViewDataSource, UIScrollViewDelegate>{
+@interface ZLCollectionView ()<UICollectionViewDelegate,UICollectionViewDataSource, UIScrollViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate>{
     BOOL isScroll;
 }
-
-
-@property (nonatomic,strong) UICollectionView *mainCollectionView;
-@property (nonatomic,assign) NSInteger itemCount;
-@property (nonatomic,assign) CGRect collectionViewFrame;
 
 @end
 
@@ -49,10 +45,15 @@ static NSString * identifier = @"collecitonView_cell";
     self.mainCollectionView = [[UICollectionView alloc]initWithFrame:self.collectionViewFrame collectionViewLayout:layout];
     self.mainCollectionView.delegate = self;
     self.mainCollectionView.dataSource = self;
+    self.mainCollectionView.emptyDataSetDelegate = self;
+    self.mainCollectionView.emptyDataSetSource = self;
     self.mainCollectionView.backgroundColor = APP_WHITECOLOR;
     self.mainCollectionView.showsHorizontalScrollIndicator = NO;
     [self addSubview:self.mainCollectionView];
     NSLog(@"%f -- %f",layout.itemSize.width,layout.itemSize.height); //375.404
+    if (_rankFirstArr.count == 0) {
+//        [self.mainCollectionView reloadEmptyDataSet];
+    }
     //注册cell
     [self.mainCollectionView registerClass:[HYBCardCollectionViewCell class]
                 forCellWithReuseIdentifier:identifier];
@@ -72,7 +73,10 @@ static NSString * identifier = @"collecitonView_cell";
     QDLog(@"%ld", (long)indexPath.row);
     HYBCardCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier
                                                                            forIndexPath:indexPath];
-    [cell loadCellDataWithModel:_rankFirstArr[indexPath.row]];
+    cell.backgroundColor = APP_BLUECOLOR;
+    if (_rankFirstArr.count) {
+        [cell loadCellDataWithModel:_rankFirstArr[indexPath.row]];
+    }
     /*这段代码的作用就是：
      *当直接往细胞上面添加视图内容时，随着滑动，可能会出现内容重叠的问题。
      *但是在自定义细胞时使用这段代码，就会移除细胞的所有子视图，
@@ -83,7 +87,7 @@ static NSString * identifier = @"collecitonView_cell";
         [view removeFromSuperview];
     }
      */
-
+    
     cell.backgroundColor = [UIColor lightGrayColor];
     cell.layer.masksToBounds = YES;
     cell.layer.cornerRadius = 5.0f;
@@ -152,6 +156,20 @@ static NSString * identifier = @"collecitonView_cell";
     // Drawing code
 }
 */
+
+#pragma mark - DZNEmtpyDataSet Delegate
+
+- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView{
+    return [UIImage imageNamed:@"emptySource"];
+}
+
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView{
+    NSString *text = @"暂无数据";
+    
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:16.0f],
+                                 NSForegroundColorAttributeName: [UIColor darkGrayColor]};
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
 
 @end
 
