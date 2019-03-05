@@ -23,4 +23,5 @@ target 'TravelPoints' do
   pod 'Pgyer'
   pod 'PgyUpdate'
   pod 'zhPopupController'
+  pod 'OpenShare'
 end
