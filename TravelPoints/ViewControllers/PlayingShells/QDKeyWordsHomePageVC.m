@@ -6,7 +6,7 @@
 //  Copyright © 2019 Charles Ran. All rights reserved.
 //
 
-#import "QDKeyWordsSearchVC.h"
+#import "QDKeyWordsHomePageVC.h"
 #import "QDKeyWordsSearchHeaderView.h"
 #import "QDHotelTableViewCell.h"
 #import "TFDropDownMenu.h"
@@ -21,7 +21,7 @@
 #import "AppDelegate.h"
 #import "QDPriceRangeView.h"
 #import "QDSegmentControl.h"
-@interface QDKeyWordsSearchVC ()<UITableViewDelegate, UITableViewDataSource, TFDropDownMenuViewDelegate, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource, GetSearchStrDelegate, SendDateStrDelegate>{
+@interface QDKeyWordsHomePageVC ()<UITableViewDelegate, UITableViewDataSource, TFDropDownMenuViewDelegate, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource, GetSearchStrDelegate, SendDateStrDelegate>{
     UITableView *_tableView;
     QDKeyWordsSearchHeaderView *_headView;
     QDKeyWordsSearchViewT *_headViewT;
@@ -35,7 +35,7 @@
 
 @end
 
-@implementation QDKeyWordsSearchVC
+@implementation QDKeyWordsHomePageVC
 
 - (BOOL)prefersStatusBarHidden{
     return YES;
@@ -49,7 +49,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-//    [self.navigationController.navigationBar setHidden:NO];
+    //    [self.navigationController.navigationBar setHidden:NO];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
@@ -192,7 +192,7 @@
 }
 
 - (void)searchInfo:(UIButton *)sender{
-//    [_headView.keyWordsTF resignFirstResponder];
+    //    [_headView.keyWordsTF resignFirstResponder];
     [self requestHotelInfoWithURL];
 }
 
@@ -204,7 +204,7 @@
     }
     NSDictionary * dic1 = @{
                             @"hotelName":_keyWords,         //酒店名,关键词
-//                            @"cityName":_cityName,          //城市名称
+                            //                            @"cityName":_cityName,          //城市名称
                             @"hotelTypeId":_hotelTypeId,    //酒店类型
                             @"hotelLevel":_hotelLevel,      //星级
                             @"minPrice":_minPrice,
@@ -370,7 +370,7 @@
             _minPrice = [NSString stringWithFormat:@"%.f", minValue];
             _maxPrice = [NSString stringWithFormat:@"%.f", maxValue];
             _priceRangeView.priceDetailLab.text = [NSString stringWithFormat:@"%.f-%.f", minValue, maxValue];
-
+            
         }else{
             _minPrice = [NSString stringWithFormat:@"%.f", minValue];
             _maxPrice = @"";
@@ -600,9 +600,9 @@
     QDLog(@"column:%ld", (long)column);
     //让tableView滚动到顶部位置
     [_tableView setContentOffset:CGPointZero animated:YES];
-//    NSIndexPath *scrollIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-//    [_tableView scrollToRowAtIndexPath:scrollIndexPath
-//                      atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    //    NSIndexPath *scrollIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    //    [_tableView scrollToRowAtIndexPath:scrollIndexPath
+    //                      atScrollPosition:UITableViewScrollPositionTop animated:YES];
 }
 
 @end

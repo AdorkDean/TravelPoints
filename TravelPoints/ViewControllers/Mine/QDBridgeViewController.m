@@ -116,15 +116,11 @@
     
     [_bridge registerHandler:@"goBack" handler:^(id data, WVJBResponseCallback responseCallback) {
         QDLog(@"goBack");   //返回按钮的点击事件里面的代码
-        //        if (self.urlArray.count < 1 || self.urlArray.count == 1) {
-        //            self.isbackBool = NO;
-        //        }else{
-        //            self.isbackBool = YES;  //表示用户点击了返回按钮此时不应该再添加链接
-        //            NSURL *url = [NSURL URLWithString:self.urlArray[self.urlArray.count - 2]];
-        //            [_webView loadRequest:[NSURLRequest requestWithURL:url]];
-        //            [self.urlArray removeAllObjects];
-        //        }
         [self.navigationController popViewControllerAnimated:YES];
+    }];
+    
+    [_bridge registerHandler:@"getShare" handler:^(id data, WVJBResponseCallback responseCallback) {
+        QDLog(@"getShare");
     }];
     
     //调用日历 多选
