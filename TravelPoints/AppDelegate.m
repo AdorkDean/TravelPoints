@@ -16,6 +16,7 @@
 #import <AMapFoundationKit/AMapFoundationKit.h>
 #import <PgySDK/PgyManager.h>
 #import <PgyUpdate/PgyUpdateManager.h>
+#import <OpenShareHeader.h>
 @interface AppDelegate ()
 
 @property(nonatomic, strong) UITabBarController *rootTabbarCtr;
@@ -98,9 +99,20 @@
 //    [[PgyUpdateManager sharedPgyManager] startManagerWithAppId:@"5b299d00b8ccffac5b2ea7908a03d716"];
 //    
 //    [[PgyUpdateManager sharedPgyManager] checkUpdate];
+    
+    [OpenShare connectQQWithAppId:@"1103194207"];
+    [OpenShare connectWeiboWithAppKey:@"402180334"];
+    [OpenShare connectWeixinWithAppId:@"wxd930ea5d5a258f4f"];
     return YES;
 }
 
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options{
+    if ([OpenShare handleOpenURL:url]) {
+        return YES;
+    }
+        //这里可以写上其他OpenShare不支持的客户端的回掉,比如支付宝等
+    return YES;
+}
 - (void)findAllMapDict{
     [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_FindAllMapDict params:nil successBlock:^(QDResponseObject *responseObject) {
         if (responseObject.code == 0) {

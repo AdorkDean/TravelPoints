@@ -434,4 +434,20 @@ typedef enum : NSUInteger {
         [_popups presentInView:self.view animated:YES completion:NULL];
     }
 }
+
+- (void)snailQuickMaskPopupsWillPresent:(SnailQuickMaskPopups *)popups{
+    QDLog(@"snailQuickMaskPopupsWillPresent");
+}
+
+- (void)snailQuickMaskPopupsWillDismiss:(SnailQuickMaskPopups *)popups{
+    QDLog(@"snailQuickMaskPopupsWillDismiss");
+}
+
+- (void)snailQuickMaskPopupsDidPresent:(SnailQuickMaskPopups *)popups{
+    QDLog(@"snailQuickMaskPopupsDidPresent");
+}
+
+- (void)snailQuickMaskPopupsDidDismiss:(SnailQuickMaskPopups *)popups{
+    QDLog(@"snailQuickMaskPopupsDidDismiss");
+}
 @end

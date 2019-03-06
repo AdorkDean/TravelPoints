@@ -16,10 +16,25 @@
 #import "QDRotePlanViewController.h"
 #import "QDCalendarViewController.h"
 #import "AppDelegate.h"
-@interface QDBridgeViewController ()<WKNavigationDelegate>{
+#import "QDShareView.h"
+#import "SnailQuickMaskPopups.h"
+#import <OpenShare.h>
+#import <OpenShare+Weibo.h>
+#import <OpenShare+Weixin.h>
+#import <OpenShare+QQ.h>
+
+#define FT_WEIBO_APPKEY         @"2645776991"
+#define FT_WEIBO_APPSECRET      @"785818577abc810dfac71fa7c59d1957"
+#define FT_WEIBO_CALLBACK_URL   @"http://sns.whalecloud.com/sina2/callback"
+
+@interface QDBridgeViewController ()<WKNavigationDelegate, SnailQuickMaskPopupsDelegate>{
     WebViewJavascriptBridge *_bridge;
     CAReplicatorLayer *_containerLayer;
+    NSData *_weiboImgUrl;
+    NSString *_weiboTitle;
 }
+@property (nonatomic, strong) QDShareView *shareView;
+@property (nonatomic, strong) SnailQuickMaskPopups *popups;
 
 @property (nonatomic, strong) UIProgressView *progressView;
 @property (nonatomic, strong) WKWebView *webView;
@@ -121,6 +136,14 @@
     
     [_bridge registerHandler:@"getShare" handler:^(id data, WVJBResponseCallback responseCallback) {
         QDLog(@"getShare");
+        [self.view addSubview:self.shareView];
+        _weiboTitle = [data objectForKey:@"title"];
+        _weiboImgUrl = [NSData dataWithContentsOfURL:[NSURL URLWithString:[data objectForKey:@"imgeUrl"]]];
+        _popups = [SnailQuickMaskPopups popupsWithMaskStyle:MaskStyleBlackTranslucent aView:_shareView];
+        _popups.presentationStyle = PresentationStyleBottom;
+        
+        _popups.delegate = self;
+        [_popups presentInView:self.view animated:YES completion:NULL];
     }];
     
     //调用日历 多选
@@ -285,4 +308,163 @@
     return _progressView;
 }
 
+- (QDShareView *)shareView{
+    if (!_shareView) {
+        _shareView = [[QDShareView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.4)];
+        _shareView.userInteractionEnabled = YES;
+        [_shareView.weiboBtn addTarget:self action:@selector(btnViewHandler:) forControlEvents:UIControlEventTouchUpInside];
+        [_shareView.pyqBtn addTarget:self action:@selector(btnViewHandler:) forControlEvents:UIControlEventTouchUpInside];
+
+        [_shareView.weixinBtn addTarget:self action:@selector(btnViewHandler:) forControlEvents:UIControlEventTouchUpInside];
+
+        [_shareView.qqQBtn addTarget:self action:@selector(btnViewHandler:) forControlEvents:UIControlEventTouchUpInside];
+
+        [_shareView.qqBtn addTarget:self action:@selector(btnViewHandler:) forControlEvents:UIControlEventTouchUpInside];
+        [_shareView.cancelBtn addTarget:self action:@selector(dismissShareView:) forControlEvents:UIControlEventTouchUpInside];
+        _shareView.backgroundColor = APP_WHITECOLOR;
+    }
+    return _shareView;
+}
+
+#pragma mark - 微博Handler
+-(void)btnViewHandler:(UIButton*)btn{
+    if (btn.tag == 1001) {
+        [OpenShare connectWeiboWithAppKey:FT_WEIBO_APPKEY];
+        OSMessage *message=[[OSMessage alloc]init];
+        message.title = _weiboTitle;
+        message.image = _weiboImgUrl;
+        [OpenShare shareToWeibo:message Success:^(OSMessage *message) {
+            QDLog(@"分享到sina微博成功:\%@",message);
+            [self hideMaskViewSucceedWithStr:@"分享到sina微博成功"];
+        } Fail:^(OSMessage *message, NSError *error) {
+            QDLog(@"分享到sina微博失败:\%@\n%@",message,error);
+            [self hideMaskViewFailedWithStr:@"分享到sina微博失败"];
+        }];
+    }else if (btn.tag == 1002){
+        OSMessage *msg=[[OSMessage alloc]init];
+        msg.desc = _weiboTitle;
+        msg.title = _weiboTitle;
+        msg.image = _weiboImgUrl;
+        //    msg.thumbnail = testThumbImage;
+        [OpenShare shareToWeixinTimeline:msg Success:^(OSMessage *message) {
+            QDLog(@"微信分享到朋友圈成功：\n%@",message);
+            [self hideMaskViewSucceedWithStr:@"分享到朋友圈成功"];
+        } Fail:^(OSMessage *message, NSError *error) {
+            QDLog(@"微信分享到朋友圈失败：\n%@\n%@",error,message);
+            [self hideMaskViewFailedWithStr:@"分享到朋友圈失败"];
+        }];
+    }else if (btn.tag == 1003){
+        OSMessage *msg=[[OSMessage alloc]init];
+        msg.desc = _weiboTitle;
+        msg.title = _weiboTitle;
+        msg.image = _weiboImgUrl;
+        [OpenShare shareToWeixinSession:msg Success:^(OSMessage *message) {
+            QDLog(@"微信分享到会话成功：\n%@",message);
+            [self hideMaskViewSucceedWithStr:@"微信分享到会话成功"];
+        } Fail:^(OSMessage *message, NSError *error) {
+            QDLog(@"微信分享到会话失败：\n%@\n%@",error,message);
+            [self hideMaskViewFailedWithStr:@"微信分享到会话失败"];
+        }];
+    }else if (btn.tag == 1004){
+        OSMessage *msg=[[OSMessage alloc]init];
+        msg.desc = _weiboTitle;
+        msg.title = _weiboTitle;
+        msg.image = _weiboImgUrl;
+        [OpenShare shareToQQZone:msg Success:^(OSMessage *message) {
+            QDLog(@"分享到QQ空间成功:%@",msg);
+            [self hideMaskViewSucceedWithStr:@"分享到QQ空间成功"];
+        } Fail:^(OSMessage *message, NSError *error) {
+            QDLog(@"分享到QQ空间失败:%@\n%@",msg,error);
+            [self hideMaskViewFailedWithStr:@"分享到QQ空间失败"];
+        }];
+    }else{     //QQ好友
+        OSMessage *msg=[[OSMessage alloc]init];
+        msg.desc = _weiboTitle;
+        msg.title = _weiboTitle;
+        msg.image = _weiboImgUrl;
+        [OpenShare shareToQQFriends:msg Success:^(OSMessage *message) {
+            QDLog(@"分享到QQ好友成功:%@",msg);
+            [self hideMaskViewSucceedWithStr:@"分享到QQ好友成功"];
+        } Fail:^(OSMessage *message, NSError *error) {
+            QDLog(@"分享到QQ好友失败:%@\n%@",msg,error);
+            [self hideMaskViewFailedWithStr:@"分享到QQ好友失败"];
+        }];
+    }
+}
+
+- (void)dismissShareView:(UIButton *)sender{
+    [_popups dismissAnimated:YES completion:nil];
+}
+
+- (void)hideMaskViewSucceedWithStr:(NSString *)str{
+    [WXProgressHUD showSuccessWithTittle:str];
+    [_popups dismissAnimated:YES completion:nil];
+}
+
+- (void)hideMaskViewFailedWithStr:(NSString *)str{
+    [WXProgressHUD showErrorWithTittle:str];
+    [_popups dismissAnimated:YES completion:nil];
+}
+//-(void)qqViewHandler:(UIButton*)btn{
+//    UISegmentedControl *seg=(UISegmentedControl*)[panel viewWithTag:2002];
+//    OSMessage *msg=[[OSMessage alloc] init];
+//    msg.title=[NSString stringWithFormat:@"Hello OpenShare (msg.title) %f",[[NSDate date] timeIntervalSince1970]];
+//    if (btn.tag>=2) {
+//        msg.image=testImage;
+//        msg.thumbnail=testThumbImage;
+//        msg.desc=[NSString stringWithFormat:@"这里写的是msg.description %f",[[NSDate date] timeIntervalSince1970]];
+//    }
+//    if(btn.tag==3){
+//        msg.link=@"http://sports.qq.com/a/20120510/000650.htm";
+//    }else if(btn.tag==4){
+//        msg.link=@"http://wfmusic.3g.qq.com/s?g_f=0&fr=&aid=mu_detail&id=2511915";
+//        msg.multimediaType=OSMultimediaTypeAudio;
+//    }else if(btn.tag==5){
+//        msg.link=@"http://v.youku.com/v_show/id_XOTU2MzA0NzY4.html";
+//        msg.multimediaType=OSMultimediaTypeVideo;
+//    }
+//    switch (seg.selectedSegmentIndex) {
+//        case 1:
+//        {
+//            [OpenShare shareToQQFriends:msg Success:^(OSMessage *message) {
+//                ULog(@"分享到QQ好友成功:%@",msg);
+//            } Fail:^(OSMessage *message, NSError *error) {
+//                ULog(@"分享到QQ好友失败:%@\n%@",msg,error);
+//            }];
+//        }
+//            break;
+//
+//        case 2:
+//        {
+//            [OpenShare shareToQQZone:msg Success:^(OSMessage *message) {
+//                ULog(@"分享到QQ空间成功:%@",msg);
+//            } Fail:^(OSMessage *message, NSError *error) {
+//                ULog(@"分享到QQ空间失败:%@\n%@",msg,error);
+//            }];
+//        }
+//            break;
+//        case 3:
+//        {
+//            [OpenShare shareToQQFavorites:msg Success:^(OSMessage *message) {
+//                ULog(@"分享到QQ收藏成功:%@",msg);
+//            } Fail:^(OSMessage *message, NSError *error) {
+//                ULog(@"分享到QQ收藏失败:%@\n%@",msg,error);
+//            }];
+//        }
+//            break;
+//
+//        case 4:
+//        {
+//            [OpenShare shareToQQDataline:msg Success:^(OSMessage *message) {
+//                ULog(@"分享到QQ数据线成功:%@",msg);
+//            } Fail:^(OSMessage *message, NSError *error) {
+//                ULog(@"分享到QQ数据线失败:%@\n%@",msg,error);
+//            }];
+//        }
+//            break;
+//        default:
+//            break;
+//    }
+//
+//}
 @end

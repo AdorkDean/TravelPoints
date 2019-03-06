@@ -229,6 +229,7 @@
 		93D2D5B7222A314700CCC61D /* QDCalendarCustomerTourTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D2D5B6222A314700CCC61D /* QDCalendarCustomerTourTopView.m */; };
 		93D2D630222E59D100CCC61D /* emptySource@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 93D2D62F222E59D100CCC61D /* emptySource@2x.png */; };
 		93D2D636222E82F900CCC61D /* QDKeyWordsHomePageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D2D635222E82F900CCC61D /* QDKeyWordsHomePageVC.m */; };
+		93D2D67A222F540F00CCC61D /* QDShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D2D679222F540F00CCC61D /* QDShareView.m */; };
 		93D400452221527E00633479 /* QDTradingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D400442221527E00633479 /* QDTradingViewController.m */; };
 		93E30E9A2224D158003CA771 /* PPNumberButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E30E992224D158003CA771 /* PPNumberButton.m */; };
 		93E30EA02224D18D003CA771 /* PGIndexBannerSubiew.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E30E9C2224D18D003CA771 /* PGIndexBannerSubiew.m */; };
@@ -679,6 +680,8 @@
 		93D2D62F222E59D100CCC61D /* emptySource@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "emptySource@2x.png"; sourceTree = "<group>"; };
 		93D2D634222E82F900CCC61D /* QDKeyWordsHomePageVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDKeyWordsHomePageVC.h; sourceTree = "<group>"; };
 		93D2D635222E82F900CCC61D /* QDKeyWordsHomePageVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDKeyWordsHomePageVC.m; sourceTree = "<group>"; };
+		93D2D678222F540F00CCC61D /* QDShareView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDShareView.h; sourceTree = "<group>"; };
+		93D2D679222F540F00CCC61D /* QDShareView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDShareView.m; sourceTree = "<group>"; };
 		93D400432221527E00633479 /* QDTradingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDTradingViewController.h; sourceTree = "<group>"; };
 		93D400442221527E00633479 /* QDTradingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDTradingViewController.m; sourceTree = "<group>"; };
 		93E30E982224D158003CA771 /* PPNumberButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPNumberButton.h; sourceTree = "<group>"; };
@@ -1343,6 +1346,7 @@
 		3BD9518621EC5A2200CD0627 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				93D2D677222F53FA00CCC61D /* Share */,
 				93E30EDD2228BE7A003CA771 /* RotePlanHeaderView */,
 				3BCA5816221959CA00DCEEF7 /* VipPurchase */,
 				3BF92D652216889C0019B941 /* TradeShells */,
@@ -1699,6 +1703,15 @@
 			path = SFDualWaySlide;
 			sourceTree = "<group>";
 		};
+		93D2D677222F53FA00CCC61D /* Share */ = {
+			isa = PBXGroup;
+			children = (
+				93D2D678222F540F00CCC61D /* QDShareView.h */,
+				93D2D679222F540F00CCC61D /* QDShareView.m */,
+			);
+			path = Share;
+			sourceTree = "<group>";
+		};
 		93E30E972224D158003CA771 /* PPNumberButton */ = {
 			isa = PBXGroup;
 			children = (
@@ -1994,6 +2007,7 @@
 				93E30EDC2228BD60003CA771 /* QDRotePlanViewController.m in Sources */,
 				3B0DC07C220034B30056C318 /* SDWebImagePrefetcher.m in Sources */,
 				3B2C1F8B21F72A3400DD94CD /* QDLogonWithNoFinancialAccountView.m in Sources */,
+				93D2D67A222F540F00CCC61D /* QDShareView.m in Sources */,
 				3B1DFDFB21F2CDDF007D4B12 /* SYHeaderView.m in Sources */,
 				93E30EE32228CA8E003CA771 /* ErrorInfoUtility.m in Sources */,
 				3B40EBBE21EC953E00656C1F /* UIView+YYText.m in Sources */,
