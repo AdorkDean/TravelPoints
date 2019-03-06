@@ -28,6 +28,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSMutableArray *dzyImgArr;
 
 @property (nonatomic, strong) NSMutableArray *mallInfoArr;
+
+@property (nonatomic, strong) NSArray *rankList;
 @property (nonatomic, strong) NSString *keyWords;
 @property (nonatomic, strong) NSString *cityName;
 @property (nonatomic, strong) NSString *hotelTypeId;    //酒店类型

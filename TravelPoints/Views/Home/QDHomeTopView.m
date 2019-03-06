@@ -12,16 +12,14 @@
 
 - (instancetype)initWithFrame:(CGRect)frame{
     if ([super initWithFrame:frame]) {
-        _imgView = [[UIImageView alloc] init];
-        _imgView.image = [UIImage imageNamed:@"ad_share_black"];
-        _imgView.layer.cornerRadius = SCREEN_WIDTH*0.027;
-        _imgView.layer.masksToBounds = YES;
-        [self addSubview:_imgView];
+        _returnBtn = [[UIButton alloc] init];
+        [_returnBtn setImage:[UIImage imageNamed:@"icon_return"] forState:UIControlStateNormal];
+        [self addSubview:_returnBtn];
         
         _goWhereLab = [[UILabel alloc] init];
         _goWhereLab.text = @"您想去哪里?";
         _goWhereLab.textColor = [UIColor whiteColor];
-        _goWhereLab.font = QDFont(30);
+        _goWhereLab.font = QDFont(25);
         [self addSubview:_goWhereLab];
         
         _infoLab = [[UILabel alloc] init];
@@ -46,14 +44,14 @@
 
 -(void)layoutSubviews{
     [super layoutSubviews];
-    [_imgView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_returnBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_top).offset(SCREEN_HEIGHT*0.07);
         make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH*0.05);
     }];
 
     [_goWhereLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.imgView);
-        make.left.equalTo(self.imgView.mas_right).offset(SCREEN_WIDTH*0.037);
+        make.centerY.equalTo(self.returnBtn);
+        make.left.equalTo(self.returnBtn.mas_right).offset(SCREEN_WIDTH*0.037);
     }];
 
     [_infoLab mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -11,9 +11,11 @@
 NS_ASSUME_NONNULL_BEGIN
 
 typedef enum : NSUInteger {
-    QDHotelReserve = 0,
-    QDCustomTour = 1,
-    QDMall = 2
+    QDHotelReserve = 0,     //酒店预订
+    QDCustomTour = 1,       //定制游
+    QDMall = 2,             //商场
+    QDRankList = 3,         //榜单
+    QDStrategy = 4          //攻略
 } QDPlayShellType;
 
 typedef enum: NSUInteger{

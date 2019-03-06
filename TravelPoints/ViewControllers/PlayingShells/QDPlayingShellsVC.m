@@ -433,6 +433,7 @@
         default:
             break;
     }
+    return 0.1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -450,6 +451,7 @@
         default:
             break;
     }
+    return 0.1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{

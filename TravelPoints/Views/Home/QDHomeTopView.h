@@ -12,8 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface QDHomeTopView : UIView
 
-@property (nonatomic, strong) UIImageView *backImg;
-@property (nonatomic, strong) UIImageView *imgView;
+@property (nonatomic, strong) UIButton *returnBtn;
 @property (nonatomic, strong) UILabel *goWhereLab;
 @property (nonatomic, strong) UILabel *infoLab;
 @property (nonatomic, strong) UISearchBar *searchBar;

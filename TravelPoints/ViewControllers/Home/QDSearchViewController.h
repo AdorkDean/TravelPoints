@@ -21,6 +21,8 @@ typedef void (^SearchHotelListResult)(NSMutableArray *hotelList, NSMutableArray 
 @property (nonatomic, copy) SearchHotelListResult searchHotelListResult;
 @property (nonatomic, assign) id <GetSearchStrDelegate> delegate;
 @property (nonatomic, assign) QDPlayShellType playShellType;
+
+@property (nonatomic, strong) NSArray *rankList;
 @property (nonatomic, strong) NSString *pushOrPresent;
 @property (nonatomic, strong) NSString *dateInStr;
 @property (nonatomic, strong) NSString *dateOutStr;

@@ -31,7 +31,9 @@
     NSMutableArray *_array1;
     NSMutableArray *_array2;
     NSMutableArray *_array3;
+    
 }
+@property (nonatomic, strong) QDSegmentControl *segmentControl;
 
 @end
 
@@ -133,7 +135,10 @@
         [_headView setHidden:YES];
         [_headViewT setHidden:NO];
     }
+    //这里是DropMenu或者Segment
     [self setDropMenu];
+    
+//    [self setSegments];
     [self initTableView];
 }
 
@@ -350,6 +355,18 @@
 //    }];
 //}
 
+#pragma mark - 针对榜单页面的
+- (void)setSegments{
+    //分段选择按钮
+    NSArray *segmentedTitles = @[@"榜单",@"酒店",@"定制游",@"商品",@"攻略"];
+    _segmentControl = [[QDSegmentControl alloc] initWithSectionTitles:segmentedTitles];
+    _segmentControl = [[QDSegmentControl alloc] initWithFrame:CGRectMake(0, 20+SCREEN_HEIGHT*0.1, SCREEN_WIDTH, 50)];
+    _segmentControl.sectionTitles = segmentedTitles;
+    [_segmentControl addTarget:self action:@selector(segmentedClicked:) forControlEvents:UIControlEventValueChanged];
+    _segmentControl.selectionIndicatorColor = APP_BLACKCOLOR;
+    _segmentControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
+    [self.view addSubview:_segmentControl];
+}
 - (void)setDropMenu{
     NSMutableArray *data1 = [NSMutableArray arrayWithObjects:_array1, _array2, @[@"价格"], _array3, nil];
     NSMutableArray *data2 = [NSMutableArray arrayWithObjects:@[], @[], @[], @[], nil];
@@ -443,7 +460,9 @@
             break;
         default:
             break;
-    }}
+    }
+    return 0.1;
+}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     switch (_playShellType) {
@@ -458,7 +477,9 @@
             break;
         default:
             break;
-    }}
+    }
+    return 0.1;
+}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     return 0.01;

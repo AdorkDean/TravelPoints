@@ -443,7 +443,9 @@
             break;
         default:
             break;
-    }}
+    }
+    return 0.1;
+}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     switch (_playShellType) {
@@ -458,7 +460,9 @@
             break;
         default:
             break;
-    }}
+    }
+    return 0.1;
+}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     return 0.01;

@@ -14,7 +14,7 @@
     if ([super initWithFrame:frame]) {
         _addressBtn = [[SPButton alloc] initWithImagePosition:SPButtonImagePositionRight];
         _addressBtn.imageTitleSpace = SCREEN_WIDTH*0.02;
-        [_addressBtn setTitle:@"云南大理" forState:UIControlStateNormal];
+        [_addressBtn setTitle:@"定位中" forState:UIControlStateNormal];
         [_addressBtn setImage:[UIImage imageNamed:@"icon_selectAddress"] forState:UIControlStateNormal];
         [_addressBtn setTitleColor:APP_BLACKCOLOR forState:UIControlStateNormal];
         _addressBtn.titleLabel.font = QDBoldFont(20);
@@ -39,7 +39,6 @@
         _searchBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
         [_searchBtn setTitleColor:APP_GRAYTEXTCOLOR forState:UIControlStateNormal];
         _searchBtn.titleLabel.font = QDFont(15);
-        _searchBtn.backgroundColor = APP_BLUECOLOR;
         [_topBackView addSubview:_searchBtn];
         
         _hysgBtn = [[UIButton alloc] init];

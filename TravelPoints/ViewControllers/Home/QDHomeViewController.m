@@ -36,6 +36,8 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController.navigationBar setHidden:YES];
+    [self.navigationController.tabBarController.tabBar setHidden:YES];
+    self.tabBarController.tabBar.frame = CGRectZero;
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
 }
 
@@ -163,9 +165,14 @@
     }
 }
 
+- (void)popReturn:(UIButton *)sender{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)initUI{
     _homeTopView = [[QDHomeTopView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.3)];
     _homeTopView.backgroundColor = APP_BLUECOLOR;
+    [_homeTopView.returnBtn addTarget:self action:@selector(popReturn:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_homeTopView];
     _homeTopView.searchBar.delegate = self;
     
@@ -208,7 +215,7 @@
     }];
     
     UIImageView *img = [[UIImageView alloc] init];
-    img.image = [UIImage imageNamed:@"icon_return"];
+    img.image = [UIImage imageNamed:@"home_dropDown"];
     [_bottomView addSubview:img];
     [img mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_bottomView);

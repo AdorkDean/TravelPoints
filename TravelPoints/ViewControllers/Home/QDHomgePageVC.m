@@ -20,9 +20,13 @@
 #import "QDRefreshHeader.h"
 #import "QDRefreshFooter.h"
 #import "QDCitySelectedViewController.h"
+#import "QDHomeViewController.h"
+#import "QDBridgeViewController.h"
+#import <CoreLocation/CoreLocation.h>
+
 static NSString *cellIdentifier = @"CellIdentifier";
 
-@interface QDHomgePageVC ()<UITableViewDelegate, UITableViewDataSource, NavigationViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, getChoosedAreaDelegate>{
+@interface QDHomgePageVC ()<UITableViewDelegate, UITableViewDataSource, NavigationViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, getChoosedAreaDelegate, CLLocationManagerDelegate>{
     QDHomePageTopView *_homePageTopView;
     NSMutableArray *_rankTypeArr;             //榜单类型type值数组
     NSMutableArray *_rankTotalArr;            //所有的榜单数据
@@ -32,6 +36,9 @@ static NSString *cellIdentifier = @"CellIdentifier";
 
 
 }
+@property (nonatomic, strong) CLLocationManager *locationManager;
+
+
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NavigationView *navigationView;
 @property (nonatomic, strong) ZLCollectionView *collectionView;
@@ -46,18 +53,10 @@ static NSString *cellIdentifier = @"CellIdentifier";
 
 @implementation QDHomgePageVC
 
-- (void)test{
-    QDLog(@"===================");
-}
-
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController.navigationBar setHidden:YES];
     [self.navigationController.tabBarController.tabBar setHidden:NO];
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(test)
-//                                                 name:@"123" object:nil];
-
     self.tabBarController.tabBar.frame = CGRectMake(0, SCREEN_HEIGHT - 49, SCREEN_WIDTH, 49);
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(horizontalSilde:) name:@"horizontalSilde" object:nil];
@@ -65,7 +64,7 @@ static NSString *cellIdentifier = @"CellIdentifier";
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    //    [self.navigationController.navigationBar setHidden:NO];
+    [self.locationManager stopUpdatingLocation];    //停止定位
 }
 
 - (void)viewWillLayoutSubviews {
@@ -95,33 +94,34 @@ static NSString *cellIdentifier = @"CellIdentifier";
     _rankTableViewData = [[NSMutableArray alloc] init];
     _currentTableViewData = [[NSMutableArray alloc] init];
     [self findRankType];
-//    [_navigationView.iconBtn addTarget:self action:@selector(theNewPage:) forControlEvents:UIControlEventTouchUpInside];
+    [self locate];
+
+}
+#pragma mark - locate
+- (void)locate{
+    if ([CLLocationManager locationServicesEnabled]) {
+        _locationManager = [[CLLocationManager alloc] init];
+        _locationManager.delegate = self;
+        _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+        _locationManager.distanceFilter = 10;
+        if([[[UIDevice currentDevice] systemVersion] floatValue] >= 8){
+            [_locationManager requestWhenInUseAuthorization];
+        }
+        [_locationManager startUpdatingLocation];   //开启定位
+    }else{
+        //提示用户无法进行定位操作
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"定位不成功 ,请确认开启定位" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        [alertView show];
+    }
+    // 开始定位
+    [_locationManager startUpdatingLocation];
+}
+//跳转到地图页面
+- (void)homeMapPage:(UIButton *)sender{
+    QDHomeViewController *homeVC = [[QDHomeViewController alloc] init];
+    [self.navigationController pushViewController:homeVC animated:YES];
 }
 
-/*
- 
- "interfaceName": "com.quantdo.lyjf.consumer.service.RanklistService",
- "interfaceVersion": "1.0.0",
- "method": "rankTypeToSort",
- "params": [[
- {
- "rankType": 5,
- "rankSort": 1
- 
- },
- {
- "rankType": 6,
- "rankSort": 2
- 
- }
- ]
- 
- ]
- }
- */
-/**
- 
- */
 - (void)getRankedSortingWithTypeStr:(NSString *)typeStr{
     NSDictionary * dic1 = @{@"listType":typeStr};
     [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_RankedSorting params:dic1 successBlock:^(QDResponseObject *responseObject) {
@@ -204,7 +204,7 @@ static NSString *cellIdentifier = @"CellIdentifier";
 
 - (void)theNewPage:(UIButton *)sender{
     QDSearchViewController *searchVC = [[QDSearchViewController alloc] init];
-    searchVC.playShellType = QDHotelReserve;
+    searchVC.playShellType = QDRankList;
     searchVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     [self presentViewController:searchVC animated:YES completion:nil];
 }
@@ -263,7 +263,7 @@ static NSString *cellIdentifier = @"CellIdentifier";
         _homePageTopView.iconBtn.layer.cornerRadius = SCREEN_WIDTH*0.11/2;
         _homePageTopView.iconBtn.layer.masksToBounds = YES;
         _homePageTopView.iconBtn.clipsToBounds = YES;
-        //    [self.view addSubview:_homePageTopView];
+        [_homePageTopView.iconBtn addTarget:self action:@selector(homeMapPage:) forControlEvents:UIControlEventTouchUpInside];
         _tableView.tableHeaderView = _homePageTopView;
         [self.view addSubview:_tableView];
         _tableView.mj_header = [QDRefreshHeader headerWithRefreshingBlock:^{
@@ -299,7 +299,8 @@ static NSString *cellIdentifier = @"CellIdentifier";
 #pragma mark - 首页搜索
 - (void)customerTourSearchAction:(UIButton *)sender{
     QDSearchViewController *searchVC = [[QDSearchViewController alloc] init];
-    searchVC.playShellType = QDCustomTour;
+    searchVC.playShellType = QDRankList;
+    searchVC.rankList = _rankTotalArr;
     [self.navigationController pushViewController:searchVC animated:YES];
 }
 
@@ -436,6 +437,15 @@ static NSString *cellIdentifier = @"CellIdentifier";
     return nil;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    [WXProgressHUD showErrorWithTittle:@"榜单详情暂未开放"];
+//    QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
+//    bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?id=%@", QD_JSURL, JS_PAYACTION, 2];
+//    QDLog(@"urlStr = %@", bridgeVC.urlStr);
+//    [self.navigationController pushViewController:bridgeVC animated:YES];
+}
+
 #pragma mark - ScrollViewDelegate
 //- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
 //    // 计算当前偏移位置
@@ -500,5 +510,53 @@ static NSString *cellIdentifier = @"CellIdentifier";
 - (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView{
     return SCREEN_HEIGHT*0.42;
 }
+
+#pragma mark - CLLocationManagerDelegate
+/**
+ *  只要定位到用户的位置，就会调用（调用频率特别高）
+ *  @param locations : 装着CLLocation对象
+ */
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+    
+    CLLocation *currentLocation = [locations lastObject];
+    // 获取当前所在的城市名
+    NSLog(@"经度=%f 纬度=%f 高度=%f", currentLocation.coordinate.latitude, currentLocation.coordinate.longitude, currentLocation.altitude);
+    
+    //根据经纬度反向地理编译出地址信息
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    [geocoder reverseGeocodeLocation:currentLocation completionHandler:^(NSArray *array, NSError *error) {
+        for (CLPlacemark * placemark in array) {
+            
+            NSDictionary *address = [placemark addressDictionary];
+            
+            //  Country(国家)  State(省)  City（市）
+            NSLog(@"#####%@",address);
+            
+            NSLog(@"%@", [address objectForKey:@"Country"]);
+            
+            NSLog(@"%@", [address objectForKey:@"State"]);
+            
+            NSLog(@"%@", [address objectForKey:@"City"]);
+            [_homePageTopView.addressBtn setTitle:[address objectForKey:@"City"] forState:UIControlStateNormal];
+            //发送通知
+        }
+    }];
+}
+
+-(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
+    
+    if ([error code] == kCLErrorDenied){
+        //访问被拒绝
+        [WXProgressHUD showErrorWithTittle:@"访问被拒绝"];
+        [_homePageTopView.addressBtn setTitle:@"定位失败" forState:UIControlStateNormal];
+    }
+    if ([error code] == kCLErrorLocationUnknown) {
+        //无法获取位置信息
+        [WXProgressHUD showErrorWithTittle:@"无法获取位置信息"];
+        [_homePageTopView.addressBtn setTitle:@"定位失败" forState:UIControlStateNormal];
+        QDLog(@"kCLErrorLocationUnknown");
+    }
+}
+
 
 @end

@@ -154,6 +154,41 @@
     }];
 }
 
+#pragma mark - 请求榜单列表列表信息
+//- (void)requestDZYList:(NSString *)urlStr{
+//    if (_dzyListInfoArr.count) {
+//        [_dzyListInfoArr removeAllObjects];
+//        [_dzyImgArr removeAllObjects];
+//    }
+//    NSDictionary * dic1 = @{@"travelName":_topCancelView.inputTF.text,
+//                            @"pageNum":@1,
+//                            @"pageSize":@20
+//                            };
+//    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:urlStr params:dic1 successBlock:^(QDResponseObject *responseObject) {
+//        if (responseObject.code == 0) {
+//            NSDictionary *dic = responseObject.result;
+//            NSArray *hotelArr = [dic objectForKey:@"result"];
+//            if (hotelArr.count) {
+//                for (NSDictionary *dic in hotelArr) {
+//                    CustomTravelDTO *infoModel = [CustomTravelDTO yy_modelWithDictionary:dic];
+//                    [_dzyListInfoArr addObject:infoModel];
+//                    NSDictionary *dic = [infoModel.imageList firstObject];
+//                    [_dzyImgArr addObject:[dic objectForKey:@"url"]];
+//                }
+//                QDKeyWordsSearchVC *ssVC = [[QDKeyWordsSearchVC alloc] init];
+//                ssVC.playShellType = _playShellType;
+//                ssVC.dzyImgArr = _dzyImgArr;
+//                ssVC.dzyListInfoArr = _dzyListInfoArr;
+//                ssVC.keyWords = _topCancelView.inputTF.text;
+//                [self.navigationController pushViewController:ssVC animated:YES];
+//            }else{
+//                [WXProgressHUD showErrorWithTittle:@"暂无定制游信息,请重新搜索"];
+//            }
+//        }
+//    } failureBlock:^(NSError *error) {
+//        [WXProgressHUD showErrorWithTittle:@"网络异常"];
+//    }];
+//}
 
 - (void)dismissView:(UIButton *)sender{
     [_topCancelView.inputTF resignFirstResponder];
@@ -181,6 +216,12 @@
             [self requestHotelInfoWithURL:api_GetHotelCondition];
         }else if (_playShellType == QDCustomTour){
             [self requestDZYList:api_GetDZYList];
+        }else if (_playShellType == QDRankList){
+            QDKeyWordsSearchVC *ssVC = [[QDKeyWordsSearchVC alloc] init];
+            ssVC.playShellType = _playShellType;
+            ssVC.rankList = _rankList;
+            ssVC.keyWords = _topCancelView.inputTF.text;
+            [self.navigationController pushViewController:ssVC animated:YES];
         }
     }
     return YES;
