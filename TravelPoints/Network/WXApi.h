@@ -14,10 +14,10 @@ const static NSString *APIKey = @"7c5deed88c0724736c2792a2979a321f";
 
 //static NSString * const QD_Domain = @"http://192.168.65.198:9083";
 //测试环境
-static NSString * const QD_Domain = @"http://203.110.179.27:60409";
+//static NSString * const QD_Domain = @"http://203.110.179.27:60409";
 //阿里云外网
 
-//static NSString * const QD_Domain = @"http://47.101.122.172:8080";
+static NSString * const QD_Domain = @"http://47.101.222.172:8080";
 
 static NSString * const QD_ProjectName = @"/lyjfapp/sso/";
 static NSString * const QD_MarkProjectName = @"/qdMarketJniServer/";
@@ -100,6 +100,9 @@ static NSString * const api_TryToRegister = @"/lyjfapp/api/v1/user/tryToRegister
 //验证用户是否注册
 static NSString * const api_VerificationRegister = @"/lyjfapp/api/v1/user/verificationRegister";
 
+static NSString * const api_ChangePwd = @"/lyjfapp/api/v1/user/changePwd";
+
+
 
 static NSString * const api_GetBasicPrice = @"/lyjfapp/api/v1/common/getBasicPrice";
 static NSString * const api_GetUserDetail = @"/lyjfapp/api/v1/user/detail";
@@ -130,11 +133,11 @@ static NSString * const api_FindAllMapDict = @"/lyjfapp/api/v1/common/findAllMap
  */
 
 
-//static NSString * const QD_JSURL                = @"http://192.168.40.7:3001";    //前端地址
-//static NSString * const QD_TESTJSURL                = @"http://192.168.40.7:3001/app/#";    //前端地址
+//static NSString * const QD_JSURL                = @"http://203.110.179.27:60409";    //前端地址
+//static NSString * const QD_TESTJSURL            = @"http://203.110.179.27:60409/app/#";    //前端地址
 
-static NSString * const QD_JSURL                = @"http://203.110.179.27:60409/app";    //前端地址
-static NSString * const QD_TESTJSURL                = @"http://203.110.179.27:60409/app/#";    //前端地址
+static NSString * const QD_JSURL                = @"http://47.101.222.172:8080/app";    //前端地址
+static NSString * const QD_TESTJSURL            = @"http://47.101.222.172:8080/app/#";    //前端地址
 
 static NSString * const JS_HOTELDETAIL          = @"/#/hotel/detail";               //酒店详情
 static NSString * const JS_CUSTOMERTRAVEL       = @"/#/coustomSwim/detail";         //定制游详情
@@ -144,7 +147,7 @@ static NSString * const JS_STRATEGYDETAIL       = @"/#/strategy/detail";        
 static NSString * const JS_RESTAURANTDETAIL     = @"/#/restaurant/detail";          //餐厅详情
 
 
-static NSString * const JS_ORDERS               = @"/#/my/orders";                  //全部订单
+static NSString * const JS_ORDERS               = @"/#/my/orders/home";                  //全部订单
 static NSString * const JS_INTEGRAL             = @"/#/my/integral";                //积分账户
 static NSString * const JS_ADDRESS              = @"/#/my/address";                 //地址
 static NSString * const JS_SECURITYCENTER       = @"/#/securityCenter/home";        //安全中心

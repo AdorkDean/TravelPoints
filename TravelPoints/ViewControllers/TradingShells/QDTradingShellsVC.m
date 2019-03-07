@@ -21,6 +21,8 @@
 #import "QDOrderDetailVC.h"
 #import <TYAlertView/TYAlertView.h>
 #import "BiddingPostersDTO.h"
+#import <DZNEmptyDataSet/UIScrollView+EmptyDataSet.h>
+
 #define K_T_Cell @"t_cell"
 #define K_C_Cell @"c_cell"
 
@@ -32,7 +34,7 @@ typedef enum : NSUInteger {
     QDPickUpOrders = 3
 } QDShellType;
 
-@interface QDTradingShellsVC ()<UITableViewDelegate, UITableViewDataSource, RootCellDelegate, SnailQuickMaskPopupsDelegate>{
+@interface QDTradingShellsVC ()<UITableViewDelegate, UITableViewDataSource, RootCellDelegate, SnailQuickMaskPopupsDelegate, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource>{
     QDTradeShellsSectionHeaderView *_sectionHeaderView;
     QDShellType _shellType;
     UIView *_backView;
@@ -85,6 +87,8 @@ typedef enum : NSUInteger {
     if (_ordersArr.count) {
         [_ordersArr removeAllObjects];
     }
+    [_tableView reloadData];
+    [_tableView reloadEmptyDataSet];
     NSDictionary * dic1 = @{@"postersStatus":@"",
                             @"postersType":@"1",
                             @"pageNum":@1,
@@ -167,6 +171,8 @@ typedef enum : NSUInteger {
     _tableView.backgroundColor = [UIColor whiteColor];
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    _tableView.emptyDataSetSource = self;
+    _tableView.emptyDataSetDelegate = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableView.showsVerticalScrollIndicator = NO;
     if (@available(iOS 11.0, *)) {
@@ -408,10 +414,10 @@ typedef enum : NSUInteger {
             _typeOneView.backgroundColor = APP_WHITECOLOR;
         }
         _popups = [SnailQuickMaskPopups popupsWithMaskStyle:MaskStyleBlackTranslucent aView:_typeOneView];
-        _popups.presentationStyle = PresentationStyleBottom;
+        _popups.presentationStyle = PresentationStyleTop;
         
         _popups.delegate = self;
-        [_popups presentInView:self.view animated:YES completion:NULL];
+        [_popups presentInView:_tableView animated:YES completion:NULL];
     }else if(_shellType == QDMyOrders){
         if (!_typeTwoView) {
             _typeTwoView = [[QDFilterTypeTwoView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.57)];
@@ -450,4 +456,19 @@ typedef enum : NSUInteger {
 - (void)snailQuickMaskPopupsDidDismiss:(SnailQuickMaskPopups *)popups{
     QDLog(@"snailQuickMaskPopupsDidDismiss");
 }
+
+#pragma mark - DZNEmtpyDataSet Delegate
+
+- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView{
+    return [UIImage imageNamed:@"emptySource"];
+}
+
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView{
+    NSString *text = @"未找到相关数据,请重试";
+    
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:16.0f],
+                                 NSForegroundColorAttributeName: [UIColor darkGrayColor]};
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
 @end

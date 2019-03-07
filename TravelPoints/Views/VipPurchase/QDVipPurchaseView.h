@@ -44,6 +44,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *bottomLab4;
 
 @property (nonatomic, strong) UIButton *confirmBtn;
+
+@property (nonatomic, assign) double basePrice;
 @end
 
 NS_ASSUME_NONNULL_END

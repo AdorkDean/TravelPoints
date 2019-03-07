@@ -201,7 +201,7 @@ typedef enum : NSUInteger {
                     QDHotelListInfoModel *infoModel = [QDHotelListInfoModel yy_modelWithDictionary:dic];
                     [_hotelListInfoArr addObject:infoModel];
                     NSDictionary *dic = [infoModel.imageList firstObject];
-                    NSString *urlStr = [NSString stringWithFormat:@"%@/%@", QD_Domain, [dic objectForKey:@"imageUrl"]];
+                    NSString *urlStr = [dic objectForKey:@"imageFullUrl"];
                     QDLog(@"urlStr = %@", urlStr);
                     NSData *imgData = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlStr]];
                     [_hotelImgArr addObject:imgData];

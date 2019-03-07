@@ -47,7 +47,7 @@
                     CustomTravelDTO *infoModel = [CustomTravelDTO yy_modelWithDictionary:dic];
                     [_dzyList addObject:infoModel];
                     NSDictionary *dic = [infoModel.imageList firstObject];
-                    NSString *urlStr = [NSString stringWithFormat:@"%@/%@", QD_Domain, [dic objectForKey:@"imageUrl"]];
+                    NSString *urlStr = [dic objectForKey:@"imageFullUrl"];
                     QDLog(@"urlStr = %@", urlStr);
                     [_imgList addObject:urlStr];
                 }

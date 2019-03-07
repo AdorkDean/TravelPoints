@@ -10,7 +10,7 @@
 #import "QDButton.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface QDForgetPwdView : UIView<UITextFieldDelegate>
+@interface QDForgetPwdView : UIView
 
 @property (nonatomic, strong) UILabel *loginLab;
 @property (nonatomic, strong) UIView *lineView;

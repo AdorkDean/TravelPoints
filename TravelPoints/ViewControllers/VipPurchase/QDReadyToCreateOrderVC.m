@@ -136,7 +136,14 @@
 #pragma mark - 代销申购
 - (void)conformToPayAction:(UIButton *)sender{
     if (_currentSale == nil) {
-        [WXProgressHUD showErrorWithTittle:@"请选择承销商"];
+        if (_salesInfoArr.count) {
+            //承销商有数据 可以不选择
+            QDSalesInfo *salesInfo = [[QDSalesInfo alloc] init];
+            salesInfo.saleCode = @"";
+            _currentSale = salesInfo;
+        }else{
+            [WXProgressHUD showErrorWithTittle:@"请选择承销商"];
+        }
     }else{
         //先查询全部
         [self showCurrentSaleViewInfo];
@@ -271,7 +278,7 @@
         if (responseObject.code == 0) {
             NSString *resultNum = responseObject.result;
             QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
-            bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?id=%@", QD_JSURL, JS_PAYACTION, resultNum];
+            bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?amount=%@&&id=%@", QD_JSURL, JS_PAYACTION,[subscribeTotalPriceNum stringValue], resultNum];
             QDLog(@"urlStr = %@", bridgeVC.urlStr);
             [self.navigationController pushViewController:bridgeVC animated:YES];
         }else{

@@ -290,7 +290,7 @@
 #pragma mark - 下一步按钮:注册行点&&找回密码
 - (void)registNextStep:(UIButton *)sender{
     
-    //先验证是否登录
+    //先验证是否注册
     [self checkIsRegister];
 //    if ([_registerView.nextBtn isEnabled]) {
 //        _userPhoneNum = _registerView.phoneTF.text;
@@ -355,7 +355,10 @@
     [_identifyInputView becomeFirstResponder];
     [_identifyInputView setHidden:NO];
     [_identifyView setHidden:NO];
+    _userPhoneNum = _forgetPwdView.phoneTF.text;
+    QDLog(@"_userPhoneNum = %@", _userPhoneNum);
 }
+
 #pragma mark --------- 获取验证码
 -(void)returnTextFieldContent:(NSString *)content{
     NSLog(@"%@================验证码",content);
@@ -428,6 +431,22 @@
 
 #pragma mark - 重置登录密码
 - (void)confirmToModeifyPwd:(UIButton *)sender{
-    
+    QDLog(@"resetPWD");
+    NSDictionary * dic = @{@"legalPhone":_userPhoneNum,
+                           @"userPwd":_resetLoginPwdView.theNewPwdTF.text,
+                           @"confirmUserPwd":_resetLoginPwdView.confirmPwdTF.text,
+                           };
+    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_ChangePwd params:dic successBlock:^(QDResponseObject *responseObject) {
+        if (responseObject.code == 0) {
+            [WXProgressHUD showSuccessWithTittle:@"重置密码成功"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self dismissViewControllerAnimated:YES completion:nil];
+            });
+        }else{
+            [WXProgressHUD showErrorWithTittle:responseObject.message];
+        }
+    } failureBlock:^(NSError *error) {
+        [WXProgressHUD showErrorWithTittle:@"网络请求失败"];
+    }];
 }
 @end

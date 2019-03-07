@@ -142,12 +142,11 @@
 }
 
 -(void)fillCustomTour:(CustomTravelDTO *)infoModel andImgURL:(NSString *)imgURL{
-    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     self.titleLab.text = infoModel.travelName;
     self.wanbei.text = [NSString stringWithFormat:@"%@", infoModel.creditPirce];
-    double ss = [infoModel.singleCost doubleValue] * delegate.basePirceRate;
-    self.rmbLab.text = [NSString stringWithFormat:@"¥%.2f", ss];
+    self.rmbLab.text = [NSString stringWithFormat:@"¥%@",infoModel.singleCost];
     self.info2Lab.text = [NSString stringWithFormat:@"%ld", (long)infoModel.preBuyDays];
     [self.thePic sd_setImageWithURL:[NSURL URLWithString:imgURL] placeholderImage:[UIImage imageNamed:@"placeHolder"] options:SDWebImageLowPriority];
 }
+
 @end

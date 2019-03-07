@@ -113,8 +113,9 @@
         
         _priceTF = [[UITextField alloc] init];
         _priceTF.placeholder = @"请输入金额";
+        [_priceTF addTarget:self action:@selector(textFieldChanged:) forControlEvents:UIControlEventEditingChanged];
         _priceTF.clearButtonMode = UITextFieldViewModeAlways;
-        _priceTF.secureTextEntry = YES;
+        _priceTF.keyboardType = UIKeyboardTypeDecimalPad;
         _priceTF.hidden = YES;
         [_priceTF setValue:APP_GRAYLINECOLOR forKeyPath:@"placeholderLabel.textColor"];
         [_priceTF setValue:QDFont(24) forKeyPath:@"_placeholderLabel.font"];
@@ -137,11 +138,11 @@
         _bottomLab2.textColor = APP_GRAYTEXTCOLOR;
         [self addSubview:_bottomLab2];
         
-        _bottomLab3 = [[UILabel alloc] init];
-        _bottomLab3.text = @"+0";
-        _bottomLab3.font = QDFont(14);
-        _bottomLab3.textColor = APP_BLUECOLOR;
-        [self addSubview:_bottomLab3];
+//        _bottomLab3 = [[UILabel alloc] init];
+//        _bottomLab3.text = @"+0";
+//        _bottomLab3.font = QDFont(14);
+//        _bottomLab3.textColor = APP_BLUECOLOR;
+//        [self addSubview:_bottomLab3];
         
         _bottomLab4 = [[UILabel alloc] init];
         _bottomLab4.text = @"个";
@@ -271,14 +272,18 @@
         make.left.equalTo(_bottomLab1.mas_right).offset(5);
     }];
     
-    [_bottomLab3 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(_bottomLab1);
-        make.left.equalTo(_bottomLab2.mas_right).offset(1);
-    }];
+//    [_bottomLab3 mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerY.equalTo(_bottomLab1);
+//        make.left.equalTo(_bottomLab2.mas_right).offset(1);
+//    }];
 
     [_bottomLab4 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_bottomLab1);
-        make.left.equalTo(_bottomLab3.mas_right).offset(3);
+        make.left.equalTo(_bottomLab2.mas_right).offset(1);
     }];
+}
+
+- (void)textFieldChanged:(UITextField *)textField{
+    _bottomLab2.text = [NSString stringWithFormat:@"%.lf", [_priceTF.text doubleValue] / _basePrice];
 }
 @end

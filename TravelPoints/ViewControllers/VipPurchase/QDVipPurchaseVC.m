@@ -15,6 +15,7 @@
 #import "QDBuyOrSellViewController.h"
 #import "QDSettingViewController.h"
 #import "NSString+QDDecimalNumberHandler.h"
+#import "AppDelegate.h"
 @interface QDVipPurchaseVC ()<NewPagedFlowViewDelegate, NewPagedFlowViewDataSource, UITableViewDelegate, UITableViewDataSource>{
     QDVipPurchaseView *_vipPurchaseView;
     UITableView *_tableView;
@@ -92,6 +93,9 @@
     _vipPurchaseView = [[QDVipPurchaseView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     [_vipPurchaseView.returnBtn addTarget:self action:@selector(popVC:) forControlEvents:UIControlEventTouchUpInside];
     [_vipPurchaseView.confirmBtn addTarget:self action:@selector(confirmToBuy:) forControlEvents:UIControlEventTouchUpInside];
+    AppDelegate *appD = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    _vipPurchaseView.basePrice = appD.basePirceRate;
+    QDLog(@"%lf", _vipPurchaseView.basePrice);
     if(_cardArr.count){
         VipCardDTO *model = _cardArr[0];
         _vipPurchaseView.bottomLab2.text = model.vipMoney;
@@ -209,9 +213,18 @@
     if (_currentModel == nil && _cardArr.count) {
         _currentModel = _cardArr[0];
     }
+    if (![_vipPurchaseView.priceTF isHidden] && (_vipPurchaseView.priceTF.text == nil || [_vipPurchaseView.priceTF.text isEqualToString:@""])) {
+        [WXProgressHUD showErrorWithTittle:@"请输入充值金额"];
+        return;
+    }
     if (_cardArr.count == 0) {
         [WXProgressHUD showErrorWithTittle:@"充值卡信息获取失败"];
         return;
+    }
+    //针对输入金额
+    if ([_currentModel.vipMoney isEqualToString:@"0"]) {
+        _currentModel.vipMoney = _vipPurchaseView.priceTF.text;
+        _currentModel.subscriptCount = _vipPurchaseView.bottomLab2.text;
     }
     orderVC.vipModel = _currentModel;
     [self.navigationController pushViewController:orderVC animated:YES];
@@ -233,11 +246,12 @@
         if ([_currentModel.vipMoney doubleValue] == 0) {
             _vipPurchaseView.price.hidden = YES;
             _vipPurchaseView.priceTF.hidden = NO;
+            _vipPurchaseView.bottomLab2.text = @"--";
         }else{
             _vipPurchaseView.price.hidden = NO;
             _vipPurchaseView.price.text = _currentModel.vipMoney;
             //折合玩贝
-            NSString *ss = [_currentModel.vipMoney stringByDividingBy:_currentModel.basePrice withRoundingMode:NSRoundPlain scale:1];
+            NSString *ss = [_currentModel.vipMoney stringByDividingBy:_currentModel.basePrice withRoundingMode:NSRoundPlain scale:0];
             _vipPurchaseView.bottomLab2.text = ss;
             _vipPurchaseView.priceTF.hidden = YES;
         }

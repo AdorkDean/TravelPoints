@@ -108,8 +108,8 @@
     [_topBackView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH*0.05);
         make.right.equalTo(self.mas_right).offset(-(SCREEN_WIDTH*0.05));
-        make.top.equalTo(self.mas_top).offset(SCREEN_HEIGHT*0.14);
-        make.height.mas_equalTo(SCREEN_HEIGHT*0.05);
+        make.top.equalTo(self.mas_top).offset(SCREEN_HEIGHT*0.12);
+        make.height.mas_equalTo(SCREEN_HEIGHT*0.06);
     }];
     
     [_imgView mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -24,6 +24,7 @@
 #import "BiddingPostersDTO.h"
 #import "QDMyPickOrderModel.h"
 #import "QDRefreshHeader.h"
+#import "QDRefreshFooter.h"
 #import <DZNEmptyDataSet/UIScrollView+EmptyDataSet.h>
 #import "QDBuyOrSellViewController.h"
 
@@ -48,6 +49,8 @@ typedef enum : NSUInteger {
     NSMutableArray *_myOrdersArr;       //我的报单
     NSMutableArray *_myPickOrdersArr;   //我的摘单
 }
+@property (nonatomic, strong) UIImageView *emptyView;
+@property (nonatomic, strong) UILabel *tipLab;
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableDictionary *dicH;
@@ -76,14 +79,14 @@ typedef enum : NSUInteger {
 }
 
 #pragma mark - 请求挂单的全部数据(买入与卖出)
-- (void)requestCanTradeData:(NSString *)urlStr{
+- (void)requestCanTradeData{
     //先查询全部
     NSDictionary * dic1 = @{@"postersStatus":@"",
                             @"postersType":@"",
                             @"pageNum":@1,
                             @"pageSize":@100,
                             };
-    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:urlStr params:dic1 successBlock:^(QDResponseObject *responseObject) {
+    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_FindCanTrade params:dic1 successBlock:^(QDResponseObject *responseObject) {
         if (responseObject.code == 0) {
             NSDictionary *dic = responseObject.result;
             NSArray *hotelArr = [dic objectForKey:@"result"];
@@ -102,14 +105,46 @@ typedef enum : NSUInteger {
             }
         }
     } failureBlock:^(NSError *error) {
-        [_tableView reloadData];
-        [_tableView reloadEmptyDataSet];
         [WXProgressHUD showErrorWithTittle:@"网络异常"];
+        if (_shellType == QDPlayShells || _shellType == QDTradeShells) {
+//            [_tableView addSubview:self.emptyView];
+//            [_tableView addSubview:self.tipLab];
+        }else{
+            [_tableView reloadData];
+            [_tableView reloadEmptyDataSet];
+        }
     }];
 }
 
+- (UIImageView *)emptyView{
+    if (!_emptyView) {
+        _emptyView = [[UIImageView alloc] init];
+        _emptyView.image = [UIImage imageNamed:@"emptySource@2x"];
+        [_tableView addSubview:_emptyView];
+        [_emptyView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(_tableView);
+            make.top.equalTo(_tableView.mas_top).offset(200);
+        }];
+    }
+    return _emptyView;
+}
+
+- (UILabel *)tipLab{
+    if (!_tipLab) {
+        _tipLab = [[UILabel alloc] init];
+        _tipLab.text = @"暂无数据";
+        _tipLab.font = QDFont(15);
+        _tipLab.textColor = APP_BLACKCOLOR;
+        [_tableView addSubview:_tipLab];
+        [_tipLab mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(_tableView);
+            make.top.equalTo(_tableView.mas_top).offset(350);
+        }];
+    }
+    return _tipLab;
+}
 #pragma mark - 请求我的报单数据(买入与卖出)
-- (void)requestMyBiddingPosters:(NSString *)urlStr{
+- (void)requestMyBiddingPosters{
     if (_myOrdersArr.count) {
         [_myOrdersArr removeAllObjects];
     }
@@ -118,7 +153,7 @@ typedef enum : NSUInteger {
                                  @"pageNum":@1,
                                  @"pageSize":@100,
                                  };
-    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:urlStr params:paramsDic successBlock:^(QDResponseObject *responseObject) {
+    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_FindMyBiddingPosterse params:paramsDic successBlock:^(QDResponseObject *responseObject) {
         if (responseObject.code == 0) {
             NSDictionary *dic = responseObject.result;
             NSArray *hotelArr = [dic objectForKey:@"result"];
@@ -144,7 +179,7 @@ typedef enum : NSUInteger {
 }
 
 #pragma mark - 请求我的摘单数据(买入与卖出)
-- (void)requestMyZhaiDanData:(NSString *)urlStr{
+- (void)requestMyZhaiDanData{
     if (_myPickOrdersArr.count) {
         [_myPickOrdersArr removeAllObjects];
     }
@@ -153,7 +188,7 @@ typedef enum : NSUInteger {
                                  @"pageNum":@1,
                                  @"pageSize":@100,
                                  };
-    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:urlStr params:paramsDic successBlock:^(QDResponseObject *responseObject) {
+    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_FindMyOrder params:paramsDic successBlock:^(QDResponseObject *responseObject) {
         if (responseObject.code == 0) {
             NSDictionary *dic = responseObject.result;
             NSArray *hotelArr = [dic objectForKey:@"result"];
@@ -183,7 +218,7 @@ typedef enum : NSUInteger {
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
     [self setTopView];
     [self initTableView];
-    [self requestCanTradeData:api_FindCanTrade];
+    [self requestCanTradeData];
     _ywbArr = [[NSMutableArray alloc] init];
     _zwbArr = [[NSMutableArray alloc] init];
     _myOrdersArr = [[NSMutableArray alloc] init];
@@ -232,15 +267,21 @@ typedef enum : NSUInteger {
     _tableView.emptyDataSetSource = self;
     _tableView.emptyDataSetDelegate = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    if (@available(iOS 11.0, *)) {
-        _tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-    } else {
-        self.automaticallyAdjustsScrollViewInsets = NO;
-    }
+//    if (@available(iOS 11.0, *)) {
+//        _tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+//    } else {
+//        self.automaticallyAdjustsScrollViewInsets = NO;
+//    }
     _tableView.contentInset = UIEdgeInsetsMake(0, 0, SCREEN_HEIGHT*0.24, 0);
     [self.view addSubview:_tableView];
     _tableView.mj_header = [QDRefreshHeader headerWithRefreshingBlock:^{
+        [self requestCurrentData];
         [self endRefreshing];
+    }];
+    
+    _tableView.mj_footer = [QDRefreshFooter footerWithRefreshingBlock:^{
+        [self endRefreshing];
+        [_tableView.mj_footer endRefreshingWithNoMoreData];
     }];
     //分段选择按钮
     NSArray *segmentedTitles = @[@"要玩贝",@"转玩贝",@"我的报单",@"我的摘单"];
@@ -293,8 +334,8 @@ typedef enum : NSUInteger {
             [_optionBtn setHidden:NO];
             [_optionBtn setTitle:@"要玩贝" forState:UIControlStateNormal];
             if (!_ywbArr.count) {
-                [_tableView reloadData];
-                [_tableView reloadEmptyDataSet];
+                _emptyView.hidden = NO;
+                _tipLab.hidden = NO;
             }else{
                 [_tableView reloadData];
             }
@@ -304,18 +345,23 @@ typedef enum : NSUInteger {
             [_optionBtn setHidden:NO];
             [_optionBtn setTitle:@"转玩贝" forState:UIControlStateNormal];
             if (!_zwbArr.count) {
-                [_tableView reloadEmptyDataSet];
+                _emptyView.hidden = NO;
+                _tipLab.hidden = NO;
             }
             [_tableView reloadData];
             break;
         case QDMyOrders: //我的报单
+            _emptyView.hidden = YES;
+            _tipLab.hidden = YES;
             [_optionBtn setHidden:YES];
-            [self requestMyBiddingPosters:api_FindMyBiddingPosterse];
+            [self requestMyBiddingPosters];
             QDLog(@"我的报单");
             break;
         case QDPickUpOrders: //我的摘单
+            _emptyView.hidden = YES;
+            _tipLab.hidden = YES;
             [_optionBtn setHidden:YES];
-            [self requestMyZhaiDanData:api_FindMyOrder];
+            [self requestMyZhaiDanData];
             break;
         default:
             break;
@@ -543,7 +589,6 @@ typedef enum : NSUInteger {
         }
         _popups = [SnailQuickMaskPopups popupsWithMaskStyle:MaskStyleBlackTranslucent aView:_typeOneView];
         _popups.presentationStyle = PresentationStyleBottom;
-        
         _popups.delegate = self;
         [_popups presentInView:self.view animated:YES completion:NULL];
     }else if(_shellType == QDMyOrders){
@@ -569,6 +614,17 @@ typedef enum : NSUInteger {
     }
 }
 
+#pragma mark - 下拉刷新请求数据
+- (void)requestCurrentData{
+    if (_shellType == QDPlayShells) {
+        [self requestCanTradeData];
+    }else if (_shellType == QDMyOrders){
+        [self requestMyBiddingPosters];
+    }else{
+        [self requestMyZhaiDanData];
+    }
+}
+
 #pragma mark - emptyDataSource
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView{
     return [UIImage imageNamed:@"emptySource"];
@@ -585,5 +641,9 @@ typedef enum : NSUInteger {
 //- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView{
 //    return SCREEN_HEIGHT*0.21;
 //}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    QDLog(@"%lf", scrollView.contentOffset.y);
+}
 
 @end

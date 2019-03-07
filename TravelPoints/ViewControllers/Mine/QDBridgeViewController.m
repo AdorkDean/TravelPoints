@@ -60,6 +60,7 @@
     [super viewWillDisappear:animated];
     [self.tabBarController.tabBar setHidden:NO];
      self.tabBarController.tabBar.frame = CGRectMake(0, SCREEN_HEIGHT - 49, SCREEN_WIDTH, 49);
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -67,7 +68,6 @@
     [self.navigationController.navigationBar setHidden:YES];
     [self.tabBarController.tabBar setHidden:YES];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     self.tabBarController.tabBar.frame = CGRectZero;
     
 }

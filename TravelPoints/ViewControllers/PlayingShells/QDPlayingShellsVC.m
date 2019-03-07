@@ -150,9 +150,8 @@
                     [_hotelListInfoArr addObject:infoModel];
 
                     NSDictionary *dic = [infoModel.imageList firstObject];
-                    NSString *urlStr = [NSString stringWithFormat:@"%@/%@", QD_Domain, [dic objectForKey:@"imageUrl"]];
+                    NSString *urlStr = [dic objectForKey:@"imageFullUrl"];
                     QDLog(@"urlStr = %@", urlStr);
-                    //                    NSData *imgData = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlStr]];
                     [_hotelImgArr addObject:urlStr];
                 }
                 if (pushVC) {
@@ -186,6 +185,8 @@
 }
 
 - (void)segmentedClicked:(QDSegmentControl *)segmentControl{
+    //先将tableView置于顶部
+    [_tableView setContentOffset:CGPointMake(0, 0) animated:YES];
     _playShellType = (QDPlayShellType)segmentControl.selectedSegmentIndex;
     switch (_playShellType) {
         case QDHotelReserve: //酒店预定
@@ -315,7 +316,6 @@
     [self.view addSubview:_tableView];
     
     _tableView.mj_header = [QDRefreshHeader headerWithRefreshingBlock:^{
-        QDLog(@"123");
         if (_playShellType == QDHotelReserve) {
             [self requestHotelInfoWithURL:api_GetHotelCondition andIsPushVC:NO];
         }else if (_playShellType == QDCustomTour){
@@ -323,6 +323,11 @@
         }else{
             [self requestMallList:api_GetMallList];
         }
+    }];
+    
+    _tableView.mj_footer = [QDRefreshFooter footerWithRefreshingBlock:^{
+        [self endRefreshing];
+        [_tableView.mj_footer endRefreshingWithNoMoreData];
     }];
     //手动刷新请求最新数据
     _tableView.mj_footer = [QDRefreshFooter footerWithRefreshingBlock:^{

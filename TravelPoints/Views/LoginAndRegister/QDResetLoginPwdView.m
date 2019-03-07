@@ -31,6 +31,7 @@
         
         _theNewPwdTF = [[UITextField alloc] init];
         _theNewPwdTF.placeholder = @"请输入新登录密码";
+        _theNewPwdTF.clearButtonMode = UITextFieldViewModeWhileEditing;
         _theNewPwdTF.secureTextEntry = YES;
         [_theNewPwdTF setValue:APP_GRAYLAYERCOLOR forKeyPath:@"placeholderLabel.textColor"];
         [_theNewPwdTF setValue:[UIFont systemFontOfSize:15] forKeyPath:@"_placeholderLabel.font"];
@@ -38,14 +39,21 @@
         
         _confirmPwdTF = [[UITextField alloc] init];
         _confirmPwdTF.placeholder = @"请确认登录密码";
+        _confirmPwdTF.clearButtonMode = UITextFieldViewModeWhileEditing;
         _confirmPwdTF.secureTextEntry = YES;
         [_confirmPwdTF setValue:APP_GRAYLAYERCOLOR forKeyPath:@"placeholderLabel.textColor"];
         [_confirmPwdTF setValue:[UIFont systemFontOfSize:15] forKeyPath:@"_placeholderLabel.font"];
         [self addSubview:_confirmPwdTF];
 
         _confirmBtn = [[UIButton alloc] init];
+        CAGradientLayer *gradientLayer =  [CAGradientLayer layer];
+        gradientLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH*0.89, SCREEN_HEIGHT*0.068);
+        gradientLayer.startPoint = CGPointMake(0, 0);
+        gradientLayer.endPoint = CGPointMake(1, 0);
+        gradientLayer.locations = @[@(0.5),@(1.0)];//渐变点
+        [gradientLayer setColors:@[(id)[[UIColor colorWithHexString:@"#159095"] CGColor],(id)[[UIColor colorWithHexString:@"#3CC8B1"] CGColor]]];//渐变数组
+        [_confirmBtn.layer addSublayer:gradientLayer];
         [_confirmBtn setTitle:@"确认" forState:UIControlStateNormal];
-        _confirmBtn.backgroundColor = APP_BLUECOLOR;
         [self addSubview:_confirmBtn];
     }
     return self;
@@ -75,6 +83,7 @@
     [_theNewPwdTF mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH*0.053);
         make.bottom.equalTo(self.lineViewTop.mas_top).offset(-(SCREEN_HEIGHT*0.015));
+        make.right.equalTo(_lineViewTop.mas_right).offset(-10);
     }];
     
     [_lineViewBottom mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -87,6 +96,7 @@
     [_confirmPwdTF mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH*0.053);
         make.bottom.equalTo(self.lineViewBottom.mas_top).offset(-(SCREEN_HEIGHT*0.015));
+        make.right.equalTo(_lineViewBottom.mas_right).offset(-10);
     }];
     
     [_confirmBtn mas_makeConstraints:^(MASConstraintMaker *make) {
