@@ -39,7 +39,6 @@
     [self.navigationController.navigationBar setHidden:YES];
     [self.navigationController.tabBarController.tabBar setHidden:NO];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
-    self.tabBarController.tabBar.frame = CGRectMake(0, SCREEN_HEIGHT - 49, SCREEN_WIDTH, 49);
     [self queryUserStatus:api_GetUserDetail isViewWillAppear:YES];
 }
 
@@ -135,7 +134,7 @@
     _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableView.showsVerticalScrollIndicator = NO;
-    _tableView.contentInset = UIEdgeInsetsMake(0, 0, 67, 0);
+    _tableView.contentInset = UIEdgeInsetsMake(0, 0, SafeAreaTopHeight, 0);
     _tableView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_tableView];
     
@@ -170,7 +169,7 @@
     QDLog(@"lookAccountInfo");
     
     QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
-    bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@", QD_JSURL, JS_INTEGRAL];
+    bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@", [QDUserDefaults getObjectForKey:@"QD_JSURL"], JS_INTEGRAL];
     QDLog(@"urlStr = %@", bridgeVC.urlStr);
     [self.navigationController pushViewController:bridgeVC animated:YES];
 }
@@ -201,7 +200,7 @@
 #pragma mark - 开通资金账户
 - (void)openFinancialAction:(UIButton *)sender{
     QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
-    bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@", QD_JSURL, JS_OPENACCOUNT];
+    bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@", [QDUserDefaults getObjectForKey:@"QD_JSURL"], JS_OPENACCOUNT];
     QDLog(@"urlStr = %@", bridgeVC.urlStr);
     [self.navigationController pushViewController:bridgeVC animated:YES];
 }
@@ -249,22 +248,22 @@
             [self inviteFriends];
             break;
         case 1: //攻略
-            [self pushBridgeVCWithStr:[QD_JSURL stringByAppendingString:JS_STRATEGY]];
+            [self pushBridgeVCWithStr:[[QDUserDefaults getObjectForKey:@"QD_JSURL"] stringByAppendingString:JS_STRATEGY]];
             break;
         case 2: //收藏
-            [self pushBridgeVCWithStr:[QD_JSURL stringByAppendingString:JS_COLLECTION]];
+            [self pushBridgeVCWithStr:[[QDUserDefaults getObjectForKey:@"QD_JSURL"] stringByAppendingString:JS_COLLECTION]];
             break;
         case 3: //我的银行卡
-            [self pushBridgeVCWithStr:[QD_JSURL stringByAppendingString:JS_BANKCARD]];
+            [self pushBridgeVCWithStr:[[QDUserDefaults getObjectForKey:@"QD_JSURL"] stringByAppendingString:JS_BANKCARD]];
             break;
         case 4: //房券
-            [self pushBridgeVCWithStr:[QD_JSURL stringByAppendingString:JS_STRATEGY]];
+            [self pushBridgeVCWithStr:[[QDUserDefaults getObjectForKey:@"QD_JSURL"] stringByAppendingString:JS_STRATEGY]];
             break;
         case 5: //地址
-            [self pushBridgeVCWithStr:[QD_JSURL stringByAppendingString:JS_ADDRESS]];
+            [self pushBridgeVCWithStr:[[QDUserDefaults getObjectForKey:@"QD_JSURL"] stringByAppendingString:JS_ADDRESS]];
             break;
         case 6: //安全中心
-            [self pushBridgeVCWithStr:[QD_JSURL stringByAppendingString:JS_SECURITYCENTER]];
+            [self pushBridgeVCWithStr:[[QDUserDefaults getObjectForKey:@"QD_JSURL"] stringByAppendingString:JS_SECURITYCENTER]];
             break;
         default:
             break;
@@ -280,7 +279,7 @@
     if ([[QDUserDefaults getObjectForKey:@"loginType"] isEqualToString:@"0"]) {
         [WXProgressHUD showErrorWithTittle:@"未登录"];
     }else{
-        [self pushBridgeVCWithStr:[QD_JSURL stringByAppendingString:JS_ORDERS]];
+        [self pushBridgeVCWithStr:[[QDUserDefaults getObjectForKey:@"QD_JSURL"] stringByAppendingString:JS_ORDERS]];
     }
 }
 
@@ -289,7 +288,7 @@
     if ([[QDUserDefaults getObjectForKey:@"loginType"] isEqualToString:@"0"]) {
         [WXProgressHUD showErrorWithTittle:@"未登录"];
     }else{
-        [self pushBridgeVCWithStr:[QD_JSURL stringByAppendingString:JS_INTEGRAL]];
+        [self pushBridgeVCWithStr:[[QDUserDefaults getObjectForKey:@"QD_JSURL"] stringByAppendingString:JS_INTEGRAL]];
     }
 }
 
@@ -299,7 +298,7 @@
     if ([[QDUserDefaults getObjectForKey:@"loginType"] isEqualToString:@"0"]) {
         [WXProgressHUD showErrorWithTittle:@"未登录"];
     }else{
-        [self pushBridgeVCWithStr:[QD_JSURL stringByAppendingString:JS_NOTICE]];
+        [self pushBridgeVCWithStr:[[QDUserDefaults getObjectForKey:@"QD_JSURL"] stringByAppendingString:JS_NOTICE]];
     }
 }
 

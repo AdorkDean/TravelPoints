@@ -59,7 +59,7 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [self.tabBarController.tabBar setHidden:NO];
-     self.tabBarController.tabBar.frame = CGRectMake(0, SCREEN_HEIGHT - 49, SCREEN_WIDTH, 49);
+    self.tabBarController.tabBar.frame = CGRectMake(0, SCREEN_HEIGHT - TabbarSafeBottomMarginT, SCREEN_WIDTH, TabbarSafeBottomMarginT);
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
 
@@ -117,7 +117,7 @@
         [[QDServiceClient shareClient] requestWithHTMLType:kHTTPRequestTypePOST urlString:urlStr params:dataDic successBlock:^(id responseObject) {
             QDLog(@"responseObject");
             NSInteger code = [[responseObject objectForKey:@"code"] integerValue];
-            if (code == 1) {
+            if (code == 2) {
                 //                [QDServiceErrorHandler handleError:code];
                 QDLoginAndRegisterVC *loginVC = [[QDLoginAndRegisterVC alloc] init];
                 [self presentViewController:loginVC animated:YES completion:nil];
@@ -141,7 +141,6 @@
         _weiboImgUrl = [NSData dataWithContentsOfURL:[NSURL URLWithString:[data objectForKey:@"imgeUrl"]]];
         _popups = [SnailQuickMaskPopups popupsWithMaskStyle:MaskStyleBlackTranslucent aView:_shareView];
         _popups.presentationStyle = PresentationStyleBottom;
-        
         _popups.delegate = self;
         [_popups presentInView:self.view animated:YES completion:NULL];
     }];
@@ -278,7 +277,7 @@
         }
         else{
             QDBridgeTViewController *bridgeVC = [[QDBridgeTViewController alloc] init];
-            NSString *sss = [NSString stringWithFormat:@"%@%@",QD_TESTJSURL, arr.lastObject];
+            NSString *sss = [NSString stringWithFormat:@"%@%@",[QDUserDefaults getObjectForKey:@"QD_TESTJSURL"], arr.lastObject];
             QDLog(@"sss = %@", sss);
             bridgeVC.urlStr = sss;
             [self.navigationController pushViewController:bridgeVC animated:YES];

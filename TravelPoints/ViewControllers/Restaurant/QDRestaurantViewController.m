@@ -141,7 +141,7 @@
     CustomTravelDTO *model = _dzyList[indexPath.section];
     //传递ID
     QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
-    bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?id=%ld", QD_JSURL, JS_CUSTOMERTRAVEL, (long)model.id];
+    bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?id=%ld", [QDUserDefaults getObjectForKey:@"QD_JSURL"], JS_CUSTOMERTRAVEL, (long)model.id];
     QDLog(@"urlStr = %@", bridgeVC.urlStr);
     bridgeVC.customTravelModel = model;
     self.tabBarController.hidesBottomBarWhenPushed = YES;

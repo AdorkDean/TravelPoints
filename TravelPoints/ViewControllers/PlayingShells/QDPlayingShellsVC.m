@@ -52,12 +52,22 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [self.navigationController.navigationBar setHidden:YES];
+    [self.navigationController.tabBarController.tabBar setHidden:NO];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(switchSegmented:) name:@"switchSegmented" object:nil];
+    QDLog(@"%f", self.tabBarController.tabBar.frame.size.height);
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeTabBarBtn) name:@"removeTabBarBtn" object:nil];
+}
+
+- (void)switchSegmented:(NSNotification *)noti{
+    QDLog(@"===================");
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [self.locationManager stopUpdatingLocation];    //停止定位
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"switchSegmented" object:nil];
 }
 
 - (void)removeTabBarBtn
@@ -106,7 +116,11 @@
     }];
     [self initTableView];
     [self locate];
-    [self requestHotelInfoWithURL:api_GetHotelCondition andIsPushVC:NO];
+    if (_segmentControl.selectedSegmentIndex == 0) {
+        [self requestHotelInfoWithURL:api_GetHotelCondition andIsPushVC:NO];
+    }else if (_segmentControl.selectedSegmentIndex == 1){
+        [self requestDZYList:api_GetDZYList];
+    }
 }
 
 #pragma mark - locate
@@ -295,7 +309,7 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.showsVerticalScrollIndicator = NO;
-    _tableView.contentInset = UIEdgeInsetsMake(0, 0, 67, 0);
+    _tableView.contentInset = UIEdgeInsetsMake(0, 0, SafeAreaTopHeight, 0);
     _tableView.emptyDataSetDelegate = self;
     _tableView.emptyDataSetSource = self;
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.41)];
@@ -536,7 +550,7 @@
             QDHotelListInfoModel *model = _hotelListInfoArr[indexPath.row];
             //传递ID
             QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
-            bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?id=%ld&&startDate=%@&&endDate=%@", QD_JSURL, JS_HOTELDETAIL, (long)model.id, _dateInPassedVal, _dateOutPassedVal];
+            bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?id=%ld&&startDate=%@&&endDate=%@", [QDUserDefaults getObjectForKey:@"QD_JSURL"], JS_HOTELDETAIL, (long)model.id, _dateInPassedVal, _dateOutPassedVal];
             QDLog(@"urlStr = %@", bridgeVC.urlStr);
             bridgeVC.infoModel = model;
             self.tabBarController.hidesBottomBarWhenPushed = YES;
@@ -547,17 +561,16 @@
             CustomTravelDTO *model = _dzyListInfoArr[indexPath.row];
             //传递ID
             QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
-            bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?id=%ld", QD_JSURL, JS_CUSTOMERTRAVEL, (long)model.id];
+            bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?id=%ld", [QDUserDefaults getObjectForKey:@"QD_JSURL"], JS_CUSTOMERTRAVEL, (long)model.id];
             QDLog(@"urlStr = %@", bridgeVC.urlStr);
             bridgeVC.customTravelModel = model;
-            self.tabBarController.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:bridgeVC animated:YES];
         }
     }else{
         if (_mallInfoArr.count) {
             QDMallModel *model = _mallInfoArr[indexPath.row];
             QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
-            bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?id=%ld", QD_JSURL, JS_SHOPPING, (long)model.id];
+            bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?id=%ld", [QDUserDefaults getObjectForKey:@"QD_JSURL"], JS_SHOPPING, (long)model.id];
             QDLog(@"urlStr = %@", bridgeVC.urlStr);
             bridgeVC.mallModel = model;
             self.tabBarController.hidesBottomBarWhenPushed = YES;

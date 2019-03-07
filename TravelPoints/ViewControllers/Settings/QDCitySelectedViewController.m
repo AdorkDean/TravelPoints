@@ -89,7 +89,7 @@
 }
 
 - (void)initUI{
-    _topView = [[QDLocationTopSelectView alloc] initWithFrame:CGRectMake(0, 24, SCREEN_WIDTH, SCREEN_HEIGHT*0.05)];
+    _topView = [[QDLocationTopSelectView alloc] initWithFrame:CGRectMake(0, SafeAreaTopHeight - 34, SCREEN_WIDTH, SCREEN_HEIGHT*0.05)];
     [_topView.cancelBtn addTarget:self action:@selector(cancelDidClick) forControlEvents:UIControlEventTouchUpInside];
     _topView.inputTF.delegate = self;
     [_topView.inputTF addTarget:self action:@selector(textFieldTextChange:) forControlEvents:UIControlEventEditingChanged];

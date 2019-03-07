@@ -21,6 +21,9 @@
 //#define SCREEN_WIDTH   [UIScreen mainScreen].bounds.size.width
 //#define SCREENH_HEIGHT [UIScreen mainScreen].bounds.size.height
 
+#define TabbarSafeBottomMargin  (IS_IPHONE_X ? 34.f : 0.f)
+#define TabbarSafeBottomMarginT (IS_IPHONE_X ? 83.f : 49.f)
+
 #define SafeAreaTopHeight (SCREEN_HEIGHT == 812.0 ?88: 64)
 //需要横屏或者竖屏，获取屏幕宽度与高度
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000 // 当前Xcode支持iOS8及以上

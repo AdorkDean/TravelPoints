@@ -220,6 +220,8 @@
 		9326111B222388E900E3D0BA /* QDMySaleOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9326111A222388E900E3D0BA /* QDMySaleOrderCell.m */; };
 		9326111E2223B6E800E3D0BA /* QDOrderField.m in Sources */ = {isa = PBXBuildFile; fileRef = 9326111D2223B6E800E3D0BA /* QDOrderField.m */; };
 		932611212223C72C00E3D0BA /* QDMyPickOrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 932611202223C72C00E3D0BA /* QDMyPickOrderModel.m */; };
+		937344CB2230FB6A0054D753 /* QDTestVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 937344CA2230FB6A0054D753 /* QDTestVC.m */; };
+		937344E4223137850054D753 /* LQPopUpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 937344E3223137850054D753 /* LQPopUpView.m */; };
 		93BB7AAF2220F97F0061FB9C /* QDHomeTopCancelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BB7AAE2220F97F0061FB9C /* QDHomeTopCancelView.m */; };
 		93BB7AB222212D710061FB9C /* WaterLayou.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BB7AB022212D700061FB9C /* WaterLayou.m */; };
 		93BB7ABA2221466A0061FB9C /* BiddingPostersDTO.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BB7AB92221466A0061FB9C /* BiddingPostersDTO.m */; };
@@ -663,6 +665,10 @@
 		9326111D2223B6E800E3D0BA /* QDOrderField.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDOrderField.m; sourceTree = "<group>"; };
 		9326111F2223C72C00E3D0BA /* QDMyPickOrderModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDMyPickOrderModel.h; sourceTree = "<group>"; };
 		932611202223C72C00E3D0BA /* QDMyPickOrderModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDMyPickOrderModel.m; sourceTree = "<group>"; };
+		937344C92230FB6A0054D753 /* QDTestVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDTestVC.h; sourceTree = "<group>"; };
+		937344CA2230FB6A0054D753 /* QDTestVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDTestVC.m; sourceTree = "<group>"; };
+		937344E2223137850054D753 /* LQPopUpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LQPopUpView.h; sourceTree = "<group>"; };
+		937344E3223137850054D753 /* LQPopUpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LQPopUpView.m; sourceTree = "<group>"; };
 		93BB7AAD2220F97F0061FB9C /* QDHomeTopCancelView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDHomeTopCancelView.h; sourceTree = "<group>"; };
 		93BB7AAE2220F97F0061FB9C /* QDHomeTopCancelView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDHomeTopCancelView.m; sourceTree = "<group>"; };
 		93BB7AB022212D700061FB9C /* WaterLayou.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaterLayou.m; sourceTree = "<group>"; };
@@ -977,6 +983,8 @@
 		3B40EB7321EC952800656C1F /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				937344E2223137850054D753 /* LQPopUpView.h */,
+				937344E3223137850054D753 /* LQPopUpView.m */,
 				93D2D5AB222A149000CCC61D /* SFDualWaySlide */,
 				93E30EE42228CB1E003CA771 /* AMapUtility */,
 				93E30EB22225463B003CA771 /* CWActionSheet */,
@@ -1639,6 +1647,8 @@
 				3B76368A22180E9200F77007 /* QDBuyOrSellViewController.m */,
 				93D400432221527E00633479 /* QDTradingViewController.h */,
 				93D400442221527E00633479 /* QDTradingViewController.m */,
+				937344C92230FB6A0054D753 /* QDTestVC.h */,
+				937344CA2230FB6A0054D753 /* QDTestVC.m */,
 			);
 			path = TradingShells;
 			sourceTree = "<group>";
@@ -2082,6 +2092,7 @@
 				93E30EA12224D18D003CA771 /* NewPagedFlowView.m in Sources */,
 				3BC3C863221B9A9A00E68D85 /* QDCustomTourSectionHeaderView.m in Sources */,
 				3BD9519B21EC605A00CD0627 /* QDMallViewController.m in Sources */,
+				937344E4223137850054D753 /* LQPopUpView.m in Sources */,
 				3B40EBBB21EC953E00656C1F /* NSAttributedString+YYText.m in Sources */,
 				3B40EBAD21EC953E00656C1F /* YYTextInput.m in Sources */,
 				3B1DFE2421F33C08007D4B12 /* QDMallTopView.m in Sources */,
@@ -2112,6 +2123,7 @@
 				3B04DF4521F80391001909CD /* UserCreditDTO.m in Sources */,
 				3B76368B22180E9200F77007 /* QDBuyOrSellViewController.m in Sources */,
 				3BF92D6422165F290019B941 /* QDTradingShellsVC.m in Sources */,
+				937344CB2230FB6A0054D753 /* QDTestVC.m in Sources */,
 				3B76367D2217E9F800F77007 /* QDOrderDetailVC.m in Sources */,
 				93E30E9A2224D158003CA771 /* PPNumberButton.m in Sources */,
 				3B40EBEA21ED925F00656C1F /* VertificationCodeInputLabel.m in Sources */,

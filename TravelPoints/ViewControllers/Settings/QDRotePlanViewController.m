@@ -62,7 +62,6 @@ static const NSInteger RoutePlanningPaddingEdge                    = 20;
     [super viewWillAppear:animated];
     [self.navigationController.navigationBar setHidden:YES];
     [self.navigationController.tabBarController.tabBar setHidden:YES];
-    self.tabBarController.tabBar.frame = CGRectZero;
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
 }
 

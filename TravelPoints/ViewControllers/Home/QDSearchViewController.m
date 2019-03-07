@@ -31,7 +31,6 @@
     [super viewWillAppear:animated];
     [self.navigationController.navigationBar setHidden:YES];
     [self.navigationController.tabBarController.tabBar setHidden:YES];
-    self.tabBarController.tabBar.frame = CGRectZero;
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
 }
 
@@ -108,7 +107,6 @@
                     self.searchHotelListResult(_hotelListInfoArr, _hotelImgArr);
                 }
                 [self dismissViewControllerAnimated:YES completion:nil];
-//                [self.navigationController pushViewController:ssVC animated:YES];
             }else{
                 [WXProgressHUD showErrorWithTittle:@"暂无酒店信息,请重新搜索"];
             }

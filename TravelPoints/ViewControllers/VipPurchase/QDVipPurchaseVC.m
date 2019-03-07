@@ -49,15 +49,12 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController.tabBarController.tabBar setHidden:YES];
-//    self.tabBarController.tabBar.frame = CGRectMake(0, SCREEN_HEIGHT - 49, SCREEN_WIDTH, 49);
-
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [self.navigationController.tabBarController.tabBar setHidden:NO];
-//    self.tabBarController.tabBar.frame = CGRectZero;
 }
 
 - (UIScrollView *)scrollView{

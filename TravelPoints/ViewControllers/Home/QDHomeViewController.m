@@ -45,6 +45,7 @@
     [super viewWillDisappear:animated];
     [self.locationManager stopUpdatingHeading];
     [self.locationManager stopUpdatingLocation];
+    self.tabBarController.tabBar.frame = CGRectMake(0, SCREEN_HEIGHT - TabbarSafeBottomMarginT, SCREEN_WIDTH, TabbarSafeBottomMarginT);
     [self.navigationController.navigationBar setHidden:NO];
 }
 

@@ -54,10 +54,6 @@ typedef enum : NSUInteger {
     [self requestHotelInfoWithURL:api_GetHotelCondition];
 }
 
-- (void)viewWillDisappear:(BOOL)animated{
-//    [self.navigationController.tabBarController.tabBar setHidden:YES];
-//    self.navigationController.tabBarController.tabBar.frame = CGRectZero;
-}
 - (void)requestHotelInfoWithURL:(NSString *)urlStr{
     if (_hotelListInfoArr.count) {
         [_hotelListInfoArr removeAllObjects];
@@ -244,7 +240,7 @@ typedef enum : NSUInteger {
     QDHotelListInfoModel *model = _hotelListInfoArr[indexPath.row];
     //传递ID
     QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
-    bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?id=%ld", QD_JSURL, JS_HOTELDETAIL, (long)model.id];
+    bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?id=%ld", [QDUserDefaults getObjectForKey:@"QD_JSURL"], JS_HOTELDETAIL, (long)model.id];
     QDLog(@"urlStr = %@", bridgeVC.urlStr);
     bridgeVC.infoModel = model;
     self.tabBarController.hidesBottomBarWhenPushed = YES;

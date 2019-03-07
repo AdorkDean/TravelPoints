@@ -393,12 +393,15 @@ typedef enum : NSUInteger {
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
 }
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (_shellType == QDPlayShells || _shellType == QDTradeShells) {
         return 1;
     }else if(_shellType == QDMyOrders){
+        QDLog(@"_myOrdersArr.count = %ld", (long)_myOrdersArr.count);
         return _myOrdersArr.count;
     }else{
+        QDLog(@"_myPickOrdersArr = %ld", (long)_myPickOrdersArr.count);
         return _myPickOrdersArr.count;
     }
     return 1;
@@ -409,14 +412,19 @@ typedef enum : NSUInteger {
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (_shellType == QDPlayShells || _shellType == QDTradeShells) {
-        if (self.dicH[indexPath]) {
-            QDLog(@"dicH = %@", self.dicH);
-            NSNumber *num = self.dicH[indexPath];
-            return [num floatValue];
-        } else {
-            return 60;
-        }
+    if (_shellType == QDPlayShells) {
+        return _ywbArr.count * SCREEN_HEIGHT*0.075 + 200;
+    }else if(_shellType == QDTradeShells){
+        return _zwbArr.count * SCREEN_HEIGHT*0.075 + 200;
+//    if (_shellType == QDPlayShells || _shellType == QDTradeShells) {
+//        if (self.dicH[indexPath]) {
+//            QDLog(@"dicH = %@", self.dicH);
+//            NSNumber *num = self.dicH[indexPath];
+//            QDLog(@"num = %.lf", [num floatValue]);
+//            return [num floatValue];
+//        } else {
+//            return 60;
+//        }
     }else{
         return 192;
     }

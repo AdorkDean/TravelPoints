@@ -17,6 +17,7 @@
 #import <PgySDK/PgyManager.h>
 #import <PgyUpdate/PgyUpdateManager.h>
 #import <OpenShareHeader.h>
+#import "QDTestVC.h"
 @interface AppDelegate ()
 
 @property(nonatomic, strong) UITabBarController *rootTabbarCtr;
@@ -41,6 +42,7 @@
     QDPlayingShellsVC *playShellsVC = [[QDPlayingShellsVC alloc] init];
     UINavigationController *navPlayShell= [[UINavigationController alloc] initWithRootViewController:playShellsVC];
     
+//    QDTestVC *tradeShellsVC = [[QDTestVC alloc] init];
     QDTradingViewController *tradeShellsVC = [[QDTradingViewController alloc] init];
     UINavigationController *navTradeShell = [[UINavigationController alloc] initWithRootViewController:tradeShellsVC];
 //
@@ -103,6 +105,17 @@
     [OpenShare connectQQWithAppId:@"1103194207"];
     [OpenShare connectWeiboWithAppKey:@"402180334"];
     [OpenShare connectWeixinWithAppId:@"wxd930ea5d5a258f4f"];
+    
+
+    //添加默认地址
+    if ([QDUserDefaults getObjectForKey:@"QD_Domain"] == nil || [[QDUserDefaults getObjectForKey:@"QD_Domain"] isEqualToString:@""]) {
+        [QDUserDefaults setObject:@"http://47.101.222.172:8080" forKey:@"QD_Domain"];
+    }
+    if ([QDUserDefaults getObjectForKey:@"QD_Domain"] == nil || [[QDUserDefaults getObjectForKey:@"QD_JSURL"] isEqualToString:@""]) {
+        [QDUserDefaults setObject:@"http://47.101.222.172:8080/app" forKey:@"QD_JSURL"];
+    }    if ([QDUserDefaults getObjectForKey:@"QD_Domain"] == nil || [[QDUserDefaults getObjectForKey:@"QD_TESTJSURL"] isEqualToString:@""]) {
+        [QDUserDefaults setObject:@"http://47.101.222.172:8080/app/#" forKey:@"QD_TESTJSURL"];
+    }
     return YES;
 }
 

@@ -23,6 +23,9 @@
 #import "QDHomeViewController.h"
 #import "QDBridgeViewController.h"
 #import <CoreLocation/CoreLocation.h>
+#import "AppDelegate.h"
+#import "LQPopUpView.h"
+
 
 static NSString *cellIdentifier = @"CellIdentifier";
 
@@ -57,7 +60,6 @@ static NSString *cellIdentifier = @"CellIdentifier";
     [super viewWillAppear:animated];
     [self.navigationController.navigationBar setHidden:YES];
     [self.navigationController.tabBarController.tabBar setHidden:NO];
-    self.tabBarController.tabBar.frame = CGRectMake(0, SCREEN_HEIGHT - 49, SCREEN_WIDTH, 49);
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(horizontalSilde:) name:@"horizontalSilde" object:nil];
 }
@@ -67,9 +69,9 @@ static NSString *cellIdentifier = @"CellIdentifier";
     [self.locationManager stopUpdatingLocation];    //停止定位
 }
 
-- (void)viewWillLayoutSubviews {
-    [super viewWillLayoutSubviews];
-}
+//- (void)viewWillLayoutSubviews {
+//    [super viewWillLayoutSubviews];
+//}
 
 - (void)horizontalSilde:(NSNotification *)notification {
     QDLog(@"info = %@", notification.object);
@@ -239,6 +241,33 @@ static NSString *cellIdentifier = @"CellIdentifier";
     }
 }
 
+- (void)handleDoubleTap:(UITapGestureRecognizer *)sender{
+    QDLog(@"doubleTapGesture");
+    LQPopUpView *popUpView = [[LQPopUpView alloc] initWithTitle:@"提示" message:@"在做账号密码登录时，可以选择这种方式"];
+    __weak typeof(LQPopUpView) *weakPopUpView = popUpView;
+    
+    [popUpView addTextFieldWithPlaceholder:@"请输入完整的URL地址(含http)" text:nil secureEntry:NO];
+    
+    [popUpView addBtnWithTitle:@"取消" type:LQPopUpBtnStyleCancel handler:^{
+        // do something...
+    }];
+    
+    [popUpView addBtnWithTitle:@"确定" type:LQPopUpBtnStyleDefault handler:^{
+        // do something...
+        UITextField *tf = weakPopUpView.textFieldArray[0];
+        NSLog(@"输入框的文字是：%@", tf.text);
+
+        [QDUserDefaults setObject:tf.text forKey:@"QD_Domain"];
+        NSString *jsurl = [tf.text stringByAppendingString:@"/app"];
+        [QDUserDefaults setObject:jsurl forKey:@"QD_JSURL"];
+        NSString *testjsurl = [tf.text stringByAppendingString:@"/app/#"];
+        [QDUserDefaults setObject:testjsurl forKey:@"QD_TESTJSURL"];
+        [WXProgressHUD showSuccessWithTittle:@"地址保存成功"];
+
+    }];
+    [popUpView showInView:self.view preferredStyle:LQPopUpViewStyleAlert];    
+}
+
 - (UITableView *)tableView{
     if (!_tableView) {
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) style:UITableViewStyleGrouped];
@@ -260,14 +289,19 @@ static NSString *cellIdentifier = @"CellIdentifier";
         [_homePageTopView.scBtn addTarget:self action:@selector(hysgAction:) forControlEvents:UIControlEventTouchUpInside];
         [_homePageTopView.searchBtn addTarget:self action:@selector(customerTourSearchAction:) forControlEvents:UIControlEventTouchUpInside];
         
+        [_homePageTopView.dzyBtn addTarget:self action:@selector(dzyAction:) forControlEvents:UIControlEventTouchUpInside];
         _homePageTopView.iconBtn.layer.cornerRadius = SCREEN_WIDTH*0.11/2;
         _homePageTopView.iconBtn.layer.masksToBounds = YES;
         _homePageTopView.iconBtn.clipsToBounds = YES;
         [_homePageTopView.iconBtn addTarget:self action:@selector(homeMapPage:) forControlEvents:UIControlEventTouchUpInside];
         _tableView.tableHeaderView = _homePageTopView;
+        
+        UITapGestureRecognizer *doubleTapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleDoubleTap:)];
+        doubleTapGesture.numberOfTapsRequired =2;
+        [_homePageTopView addGestureRecognizer:doubleTapGesture];
+        
         [self.view addSubview:_tableView];
         _tableView.mj_header = [QDRefreshHeader headerWithRefreshingBlock:^{
-            QDLog(@"===================");
             if (_rankTotalArr.count) {
                 [_rankTotalArr removeAllObjects];
             }
@@ -276,7 +310,6 @@ static NSString *cellIdentifier = @"CellIdentifier";
             [self endRefreshing];
         }];
         _tableView.mj_footer = [QDRefreshFooter footerWithRefreshingBlock:^{
-            QDLog(@"===================");
             [self endRefreshing];
             [_tableView.mj_footer endRefreshingWithNoMoreData];
             [_tableView.mj_footer setState:MJRefreshStateNoMoreData];
@@ -558,5 +591,15 @@ static NSString *cellIdentifier = @"CellIdentifier";
     }
 }
 
+- (void)getChoosedAreaName:(NSString *)areaStr{
+    [_homePageTopView.addressBtn setTitle:areaStr forState:UIControlStateNormal];
+}
 
+- (void)dzyAction:(UIButton *)sender{
+    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    UITabBarController *tabVC = (UITabBarController *)delegate.window.rootViewController;
+    [tabVC setSelectedIndex:1];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"switchSegmented" object:nil];
+    [QDUserDefaults setObject:@"0" forKey:@"switchSegmented"];
+}
 @end

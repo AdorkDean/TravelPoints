@@ -34,13 +34,12 @@
     [super viewWillAppear:animated];
     [self.navigationController.tabBarController.tabBar setHidden:YES];
     [self.navigationController.navigationBar setHidden:YES];
-    self.tabBarController.tabBar.frame = CGRectZero;
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [self.navigationController.tabBarController.tabBar setHidden:NO];
-    self.tabBarController.tabBar.frame = CGRectMake(0, SCREEN_HEIGHT - 49, SCREEN_WIDTH, 49);
+//    self.tabBarController.tabBar.frame = CGRectMake(0, SCREEN_HEIGHT - 49, SCREEN_WIDTH, 49);
 }
 
 #pragma mark - 积分充值卡查询
@@ -278,7 +277,7 @@
         if (responseObject.code == 0) {
             NSString *resultNum = responseObject.result;
             QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
-            bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?amount=%@&&id=%@", QD_JSURL, JS_PAYACTION,[subscribeTotalPriceNum stringValue], resultNum];
+            bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?amount=%@&&id=%@", [QDUserDefaults getObjectForKey:@"QD_JSURL"], JS_PAYACTION,[subscribeTotalPriceNum stringValue], resultNum];
             QDLog(@"urlStr = %@", bridgeVC.urlStr);
             [self.navigationController pushViewController:bridgeVC animated:YES];
         }else{

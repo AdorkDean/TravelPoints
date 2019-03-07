@@ -45,7 +45,6 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [self.tabBarController.tabBar setHidden:NO];
-    self.tabBarController.tabBar.frame = CGRectMake(0, SCREEN_HEIGHT - 49, SCREEN_WIDTH, 49);
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -55,7 +54,6 @@
     [self.tabBarController.tabBar setHidden:YES];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    self.tabBarController.tabBar.frame = CGRectZero;
 }
 
 - (void)viewDidLoad {
@@ -103,8 +101,7 @@
         [[QDServiceClient shareClient] requestWithHTMLType:kHTTPRequestTypePOST urlString:urlStr params:dataDic successBlock:^(id responseObject) {
             QDLog(@"responseObject");
             NSInteger code = [[responseObject objectForKey:@"code"] integerValue];
-            if (code == 1) {
-                //                [QDServiceErrorHandler handleError:code];
+            if (code == 2) {
                 QDLoginAndRegisterVC *loginVC = [[QDLoginAndRegisterVC alloc] init];
                 [self presentViewController:loginVC animated:YES completion:nil];
             }else{
@@ -244,7 +241,7 @@
         }
         else{
             QDBridgeTViewController *bridgeVC = [[QDBridgeTViewController alloc] init];
-            NSString *sss = [NSString stringWithFormat:@"%@%@",QD_TESTJSURL, arr.lastObject];
+            NSString *sss = [NSString stringWithFormat:@"%@%@",[QDUserDefaults getObjectForKey:@"QD_TESTJSURL"], arr.lastObject];
             QDLog(@"sss = %@", sss);
             bridgeVC.urlStr = sss;
             [self.navigationController pushViewController:bridgeVC animated:YES];

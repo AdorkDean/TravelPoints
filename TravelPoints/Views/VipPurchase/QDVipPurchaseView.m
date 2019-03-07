@@ -35,7 +35,7 @@
         [self addSubview:_info1Lab];
         
         _info2Lab = [[UILabel alloc] init];
-        _info2Lab.text = @"铂金会员";
+        _info2Lab.text = @"白金会员";
         _info2Lab.textColor = APP_BLACKCOLOR;
         _info2Lab.font = QDBoldFont(17);
         [self addSubview:_info2Lab];
