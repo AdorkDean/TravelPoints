@@ -110,6 +110,8 @@
             }else{
                 [WXProgressHUD showErrorWithTittle:@"暂无酒店信息,请重新搜索"];
             }
+        }else{
+            [WXProgressHUD showErrorWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
         [WXProgressHUD showErrorWithTittle:@"网络异常"];

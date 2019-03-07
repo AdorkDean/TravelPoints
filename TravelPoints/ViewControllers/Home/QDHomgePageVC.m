@@ -168,6 +168,8 @@ static NSString *cellIdentifier = @"CellIdentifier";
                     [self initTableView];
                 }
             }
+        }else{
+            [WXProgressHUD showErrorWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
         [WXProgressHUD showErrorWithTittle:@"网络异常"];
@@ -265,7 +267,7 @@ static NSString *cellIdentifier = @"CellIdentifier";
         [WXProgressHUD showSuccessWithTittle:@"地址保存成功"];
 
     }];
-    [popUpView showInView:self.view preferredStyle:LQPopUpViewStyleAlert];    
+    [popUpView showInView:self.view preferredStyle:LQPopUpViewStyleAlert];
 }
 
 - (UITableView *)tableView{

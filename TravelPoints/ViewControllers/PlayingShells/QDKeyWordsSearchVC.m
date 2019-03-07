@@ -278,6 +278,8 @@
                 }];
                 [_tableView reloadData];
             }
+        }else{
+            [WXProgressHUD showErrorWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
         [_tableView reloadData];

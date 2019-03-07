@@ -215,6 +215,8 @@ typedef enum : NSUInteger {
                 [_tableView reloadData];
                 [_tableView reloadEmptyDataSet];
             }
+        }else{
+            [WXProgressHUD showErrorWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
         

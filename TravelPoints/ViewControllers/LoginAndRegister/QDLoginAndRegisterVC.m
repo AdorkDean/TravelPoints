@@ -401,6 +401,8 @@
             }else{
                 [_setLogPwdView setHidden:NO];
             }
+        }else{
+            [WXProgressHUD showErrorWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
         

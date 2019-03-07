@@ -292,6 +292,8 @@
                 QDLog(@"_mallInfoArr = %@", _mallInfoArr);
                 [_tableView reloadData];
             }
+        }else{
+            [WXProgressHUD showErrorWithTittle:responseObject.message];
         }
         [self endRefreshing];
     } failureBlock:^(NSError *error) {

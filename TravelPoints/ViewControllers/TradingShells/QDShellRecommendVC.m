@@ -67,7 +67,7 @@
             }else{
                 [WXProgressHUD showErrorWithTittle:@"挂单ID无法获取"];
             }
-        }else if (responseObject.code == 1){
+        }else{
             [WXProgressHUD showErrorWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
@@ -98,6 +98,8 @@
                 }
                 [_tableView reloadData];
             }
+        }else{
+            [WXProgressHUD showErrorWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
         [_tableView reloadData];

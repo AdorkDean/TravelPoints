@@ -103,6 +103,8 @@ typedef enum : NSUInteger {
                 }
                 [self.tableView reloadData];
             }
+        }else{
+            [WXProgressHUD showErrorWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
         [WXProgressHUD showErrorWithTittle:@"网络异常"];
@@ -165,7 +167,7 @@ typedef enum : NSUInteger {
                 }
                 [self.tableView reloadData];
             }
-        }else if (responseObject.code == 1){
+        }else{
             [_tableView reloadData];
             [WXProgressHUD showErrorWithTittle:responseObject.message];
         }
@@ -199,7 +201,7 @@ typedef enum : NSUInteger {
                 }
                 [self.tableView reloadData];
             }
-        }else if (responseObject.code == 1){
+        }else{
             [_tableView reloadData];
             [_tableView reloadEmptyDataSet];
             [WXProgressHUD showErrorWithTittle:responseObject.message];
