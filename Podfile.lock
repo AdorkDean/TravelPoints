@@ -33,6 +33,7 @@ PODS:
   - PgyUpdate (1.6)
   - Toast (4.0.0)
   - TYAlertView (0.1.1)
+  - WMPageController (2.5.2)
   - YYCache (1.0.4)
   - YYModel (1.0.4)
   - zhPopupController (1.0.3)
@@ -54,6 +55,7 @@ DEPENDENCIES:
   - PgyUpdate
   - Toast
   - TYAlertView
+  - WMPageController
   - YYCache
   - YYModel
   - zhPopupController
@@ -77,6 +79,7 @@ SPEC REPOS:
     - PgyUpdate
     - Toast
     - TYAlertView
+    - WMPageController
     - YYCache
     - YYModel
     - zhPopupController
@@ -99,10 +102,11 @@ SPEC CHECKSUMS:
   PgyUpdate: cd6c2ada5928f36a9f904d8f96a9b3b53e190755
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
   TYAlertView: 5dd26bb314f65b87fe15ab2d9b06276d42587fd7
+  WMPageController: 0c7624d2b48e4f1ab92371688cf6744ed701575d
   YYCache: 8105b6638f5e849296c71f331ff83891a4942952
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
   zhPopupController: 4e6bd734062cb9c7ebe8113568550bade168bed7
 
-PODFILE CHECKSUM: 3a70739f1ab9969f698ad44f1b2a8597a05d940b
+PODFILE CHECKSUM: 08e37678b12fd7570833bb12c763fb60e2c3fb5f
 
 COCOAPODS: 1.5.3
