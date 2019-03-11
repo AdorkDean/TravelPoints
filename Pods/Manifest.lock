@@ -25,7 +25,6 @@ PODS:
   - FSCalendar (2.7.9)
   - HMSegmentedControl (1.5.5)
   - IQKeyboardManager (6.1.1)
-  - JXCategoryView (1.0.3)
   - Masonry (1.1.0)
   - MBProgressHUD (1.1.0)
   - MJRefresh (3.1.15.6)
@@ -47,7 +46,6 @@ DEPENDENCIES:
   - FSCalendar
   - HMSegmentedControl
   - IQKeyboardManager
-  - JXCategoryView
   - Masonry
   - MBProgressHUD
   - MJRefresh
@@ -71,7 +69,6 @@ SPEC REPOS:
     - FSCalendar
     - HMSegmentedControl
     - IQKeyboardManager
-    - JXCategoryView
     - Masonry
     - MBProgressHUD
     - MJRefresh
@@ -94,7 +91,6 @@ SPEC CHECKSUMS:
   FSCalendar: a04b09f16f811bc92e82f3cf852a15225233b9d5
   HMSegmentedControl: f514c6dad47aa3065e0ed2e8046b73efc71221b9
   IQKeyboardManager: 79c57795f5c2408d259d37b9da2ed07efcbb5225
-  JXCategoryView: ce8d714b75989e91dbf440fbad431908ea815c29
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   MJRefresh: 0efa19656679d70a0f47cbe76e56c2271fe53a97
@@ -107,6 +103,6 @@ SPEC CHECKSUMS:
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
   zhPopupController: 4e6bd734062cb9c7ebe8113568550bade168bed7
 
-PODFILE CHECKSUM: b7bbbf78ca74daccf9d6a78071ab9167a74de5ba
+PODFILE CHECKSUM: 3a70739f1ab9969f698ad44f1b2a8597a05d940b
 
 COCOAPODS: 1.5.3
