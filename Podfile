@@ -24,4 +24,5 @@ target 'TravelPoints' do
   pod 'PgyUpdate'
   pod 'zhPopupController'
   pod 'OpenShare'
+  pod 'JXCategoryView'
 end
