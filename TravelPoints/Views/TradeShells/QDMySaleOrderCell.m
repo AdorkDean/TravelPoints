@@ -237,7 +237,7 @@
     }];
 
     [_balanceLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_amountLab.mas_bottom).offset(2);
+        make.centerY.equalTo(_price);
         make.left.equalTo(_amountLab);
     }];
 
@@ -247,7 +247,7 @@
     }];
 
     [_transferLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_balanceLab.mas_bottom).offset(2);
+        make.centerY.equalTo(_orderStatusLab);
         make.centerX.equalTo(_balanceLab);
     }];
 
@@ -258,14 +258,14 @@
     
     [_lineView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(_backView);
-        make.top.equalTo(_status.mas_bottom).offset(SCREEN_HEIGHT*0.02);
+        make.top.equalTo(_status.mas_bottom).offset(8);
         make.height.mas_equalTo(1);
         make.width.mas_equalTo(SCREEN_WIDTH*0.81);
     }];
 
     [_orderStatusLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_statusImg);
-        make.top.equalTo(_lineView.mas_bottom).offset(13);
+        make.top.equalTo(_lineView.mas_bottom).offset(3);
     }];
     
     [_withdrawBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -318,7 +318,7 @@
 
 //我的报单 卖出
 - (void)loadSaleOrderDataWithModel:(BiddingPostersDTO *)DTO{
-    if (DTO.balance == nil) {
+    if (DTO.price == nil) {
         self.price.text = @"--";
     }else{
         self.price.text= DTO.price;

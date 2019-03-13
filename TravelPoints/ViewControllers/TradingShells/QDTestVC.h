@@ -1,17 +1,17 @@
 //
-//  QDTestVC.h
-//  TravelPoints
+//  WMCustomizedPageController.h
+//  WMPageControllerExample
 //
-//  Created by WJ-Shao on 2019/3/7.
-//  Copyright © 2019 Charles Ran. All rights reserved.
+//  Created by Mark on 2017/6/21.
+//  Copyright © 2017年 Mark. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "WMPageController.h"
+typedef NS_ENUM(NSUInteger, WMMenuViewPosition) {
+    WMMenuViewPositionDefault,
+    WMMenuViewPositionBottom,
+};
 
-NS_ASSUME_NONNULL_BEGIN
-
-@interface QDTestVC : UIViewController
-
+@interface QDTestVC : WMPageController
+@property (nonatomic, assign) WMMenuViewPosition menuViewPosition;
 @end
-
-NS_ASSUME_NONNULL_END

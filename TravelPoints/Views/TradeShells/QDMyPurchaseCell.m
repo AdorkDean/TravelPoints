@@ -166,7 +166,7 @@
     }];
     
     [_balanceLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_amountLab.mas_bottom).offset(2);
+        make.centerY.equalTo(_price);
         make.left.equalTo(_amountLab);
     }];
     
@@ -190,7 +190,7 @@
     
     [_orderStatusLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_priceTextLab);
-        make.bottom.equalTo(_backView.mas_bottom).offset(-13);
+        make.top.equalTo(_lineView.mas_bottom).offset(6);
     }];
     
     [_withdrawBtn mas_makeConstraints:^(MASConstraintMaker *make) {

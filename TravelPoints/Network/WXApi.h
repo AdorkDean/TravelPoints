@@ -11,7 +11,7 @@
 
 const static NSString *APIKey = @"7c5deed88c0724736c2792a2979a321f";
 
-//static NSString * const QD_Domain = @"http://appuat.wedotting.com";
+static NSString * const QD_Domain = @"http://appuat.wedotting.com";
 
 
 //static NSString * const QD_Domain = @"http://192.168.65.198:9083";
@@ -19,7 +19,7 @@ const static NSString *APIKey = @"7c5deed88c0724736c2792a2979a321f";
 //static NSString * const QD_Domain = @"http://203.110.179.27:60409";
 //阿里云外网
 
-static NSString * const QD_Domain = @"http://47.101.222.172:8080";
+//static NSString * const QD_Domain = @"http://47.101.222.172:8080";
 
 static NSString * const QD_ProjectName = @"/lyjfapp/sso/";
 static NSString * const QD_MarkProjectName = @"/qdMarketJniServer/";
@@ -139,11 +139,11 @@ static NSString * const api_FindAllMapDict = @"/lyjfapp/api/v1/common/findAllMap
 //static NSString * const QD_TESTJSURL            = @"http://203.110.179.27:60409/app/#";    //前端地址
 
 
-//static NSString * const QD_JSURL                = @"http://appuat.wedotting.com";    //前端地址
-//static NSString * const QD_TESTJSURL            = @"http://appuat.wedotting.com/app/#";    //前端地址
+static NSString * const QD_JSURL                = @"http://appuat.wedotting.com";    //前端地址
+static NSString * const QD_TESTJSURL            = @"http://appuat.wedotting.com/app/#";    //前端地址
 
-static NSString * const QD_JSURL                = @"http://47.101.222.172:8080/app";    //前端地址
-static NSString * const QD_TESTJSURL            = @"http://47.101.222.172:8080/app/#";    //前端地址
+//static NSString * const QD_JSURL                = @"http://47.101.222.172:8080/app";    //前端地址
+//static NSString * const QD_TESTJSURL            = @"http://47.101.222.172:8080/app/#";    //前端地址
 
 static NSString * const JS_HOTELDETAIL          = @"/#/hotel/detail";               //酒店详情
 static NSString * const JS_CUSTOMERTRAVEL       = @"/#/coustomSwim/detail";         //定制游详情

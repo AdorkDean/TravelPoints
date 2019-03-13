@@ -48,6 +48,8 @@ typedef enum : NSUInteger {
     NSMutableArray *_zwbArr;            //转玩贝arr
     NSMutableArray *_myOrdersArr;       //我的报单
     NSMutableArray *_myPickOrdersArr;   //我的摘单
+    int _pageSize;
+    int _pageNum;
 }
 @property (nonatomic, strong) UIImageView *emptyView;
 @property (nonatomic, strong) UILabel *tipLab;
@@ -82,10 +84,11 @@ typedef enum : NSUInteger {
 - (void)requestCanTradeData{
     //先查询全部
     NSDictionary * dic1 = @{@"postersStatus":@"",
-                            @"postersType":@"",
-                            @"pageNum":@1,
-                            @"pageSize":@100,
+                            @"postersType":@"1",
+                            @"pageNum":[NSNumber numberWithInt:_pageNum],
+                            @"pageSize":[NSNumber numberWithInt:_pageSize]
                             };
+
     [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_FindCanTrade params:dic1 successBlock:^(QDResponseObject *responseObject) {
         if (responseObject.code == 0) {
             NSDictionary *dic = responseObject.result;
@@ -93,15 +96,11 @@ typedef enum : NSUInteger {
             if (hotelArr.count) {
                 for (NSDictionary *dic in hotelArr) {
                     BiddingPostersDTO *infoModel = [BiddingPostersDTO yy_modelWithDictionary:dic];
-                    if ([infoModel.postersType isEqualToString:@"1"]) {
-                        [_ywbArr addObject:infoModel];
-                    }else{
-                        [_zwbArr addObject:infoModel];
-                    }
+                    [_ywbArr addObject:infoModel];
                     QDLog(@"_ywbArr = %@", _ywbArr);
-                    QDLog(@"_zwbArr = %@", _zwbArr);
                 }
                 [self.tableView reloadData];
+                [self endRefreshing];
             }
         }else{
             [WXProgressHUD showErrorWithTittle:responseObject.message];
@@ -216,6 +215,8 @@ typedef enum : NSUInteger {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _pageSize = 2;
+    _pageNum = 1;
     _shellType = QDPlayShells;
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
     [self setTopView];
@@ -277,13 +278,14 @@ typedef enum : NSUInteger {
     _tableView.contentInset = UIEdgeInsetsMake(0, 0, SCREEN_HEIGHT*0.24, 0);
     [self.view addSubview:_tableView];
     _tableView.mj_header = [QDRefreshHeader headerWithRefreshingBlock:^{
-        [self requestCurrentData];
+        _pageNum++;
+        [self requestCanTradeData];
         [self endRefreshing];
     }];
     
     _tableView.mj_footer = [QDRefreshFooter footerWithRefreshingBlock:^{
+        [self requestCanTradeData];
         [self endRefreshing];
-        [_tableView.mj_footer endRefreshingWithNoMoreData];
     }];
     //分段选择按钮
     NSArray *segmentedTitles = @[@"要玩贝",@"转玩贝",@"我的报单",@"我的摘单"];
@@ -414,19 +416,19 @@ typedef enum : NSUInteger {
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (_shellType == QDPlayShells) {
-        return _ywbArr.count * SCREEN_HEIGHT*0.075 + 200;
-    }else if(_shellType == QDTradeShells){
-        return _zwbArr.count * SCREEN_HEIGHT*0.075 + 200;
-//    if (_shellType == QDPlayShells || _shellType == QDTradeShells) {
-//        if (self.dicH[indexPath]) {
-//            QDLog(@"dicH = %@", self.dicH);
-//            NSNumber *num = self.dicH[indexPath];
-//            QDLog(@"num = %.lf", [num floatValue]);
-//            return [num floatValue];
-//        } else {
-//            return 60;
-//        }
+//    if (_shellType == QDPlayShells) {
+//        return _ywbArr.count * SCREEN_HEIGHT*0.075 + 200;
+//    }else if(_shellType == QDTradeShells){
+//        return _zwbArr.count * SCREEN_HEIGHT*0.075 + 200;
+    if (_shellType == QDPlayShells || _shellType == QDTradeShells) {
+        if (self.dicH[indexPath]) {
+            QDLog(@"dicH = %@", self.dicH);
+            NSNumber *num = self.dicH[indexPath];
+            QDLog(@"num = %.lf", [num floatValue]);
+            return [num floatValue];
+        } else {
+            return 60;
+        }
     }else{
         return 192;
     }
@@ -469,7 +471,7 @@ typedef enum : NSUInteger {
         }else if (_shellType == QDTradeShells){
             if (_zwbArr.count) {
                 cell.dataAry = _zwbArr;
-                [cell.collectionView reloadData];
+//                [cell.collectionView reloadData];
             }
         }
         return cell;
@@ -546,7 +548,7 @@ typedef enum : NSUInteger {
 - (void)updateTableViewCellHeight:(RootTableCell *)cell andheight:(CGFloat)height andIndexPath:(NSIndexPath *)indexPath {
     if (![self.dicH[indexPath] isEqualToNumber:@(height)]) {
         self.dicH[indexPath] = @(height);
-        [self.tableView reloadData];
+//        [self.tableView reloadData];
     }
 }
 

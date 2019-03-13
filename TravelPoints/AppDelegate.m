@@ -109,12 +109,21 @@
 
     //添加默认地址
     if ([QDUserDefaults getObjectForKey:@"QD_Domain"] == nil || [[QDUserDefaults getObjectForKey:@"QD_Domain"] isEqualToString:@""]) {
+//        [QDUserDefaults setObject:@"http://203.110.179.27:60409" forKey:@"QD_Domain"];
         [QDUserDefaults setObject:@"http://47.101.222.172:8080" forKey:@"QD_Domain"];
+//        [QDUserDefaults setObject:@"http://appuat.wedotting.com" forKey:@"QD_Domain"];
+
     }
-    if ([QDUserDefaults getObjectForKey:@"QD_Domain"] == nil || [[QDUserDefaults getObjectForKey:@"QD_JSURL"] isEqualToString:@""]) {
+    if ([QDUserDefaults getObjectForKey:@"QD_JSURL"] == nil || [[QDUserDefaults getObjectForKey:@"QD_JSURL"] isEqualToString:@""]) {
+//        [QDUserDefaults setObject:@"http://203.110.179.27:60409/app" forKey:@"QD_JSURL"];
         [QDUserDefaults setObject:@"http://47.101.222.172:8080/app" forKey:@"QD_JSURL"];
-    }    if ([QDUserDefaults getObjectForKey:@"QD_Domain"] == nil || [[QDUserDefaults getObjectForKey:@"QD_TESTJSURL"] isEqualToString:@""]) {
-        [QDUserDefaults setObject:@"http://47.101.222.172:8080/app/#" forKey:@"QD_TESTJSURL"];
+//        [QDUserDefaults setObject:@"http://appuat.wedotting.com/app" forKey:@"QD_JSURL"];
+
+    }    if ([QDUserDefaults getObjectForKey:@"QD_TESTJSURL"] == nil || [[QDUserDefaults getObjectForKey:@"QD_TESTJSURL"] isEqualToString:@""]) {
+//        [QDUserDefaults setObject:@"http://203.110.179.27:60409/app/#" forKey:@"QD_TESTJSURL"];
+//        [QDUserDefaults setObject:@"http://47.101.222.172:8080/app/#" forKey:@"QD_TESTJSURL"];
+        [QDUserDefaults setObject:@"http://appuat.wedotting.com/app/#" forKey:@"QD_TESTJSURL"];
+
     }
     return YES;
 }

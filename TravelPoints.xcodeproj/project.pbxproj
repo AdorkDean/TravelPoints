@@ -220,6 +220,9 @@
 		9326111B222388E900E3D0BA /* QDMySaleOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9326111A222388E900E3D0BA /* QDMySaleOrderCell.m */; };
 		9326111E2223B6E800E3D0BA /* QDOrderField.m in Sources */ = {isa = PBXBuildFile; fileRef = 9326111D2223B6E800E3D0BA /* QDOrderField.m */; };
 		932611212223C72C00E3D0BA /* QDMyPickOrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 932611202223C72C00E3D0BA /* QDMyPickOrderModel.m */; };
+		936CB21522367C2200D67896 /* QDFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 936CB21422367C2200D67896 /* QDFirstViewController.m */; };
+		936CB21822367C3800D67896 /* QDSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 936CB21722367C3800D67896 /* QDSecondViewController.m */; };
+		936CB21B22367C5300D67896 /* QDThirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 936CB21A22367C5300D67896 /* QDThirdViewController.m */; };
 		937344CB2230FB6A0054D753 /* QDTestVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 937344CA2230FB6A0054D753 /* QDTestVC.m */; };
 		937344E4223137850054D753 /* LQPopUpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 937344E3223137850054D753 /* LQPopUpView.m */; };
 		93BB7AAF2220F97F0061FB9C /* QDHomeTopCancelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BB7AAE2220F97F0061FB9C /* QDHomeTopCancelView.m */; };
@@ -233,6 +236,7 @@
 		93D2D636222E82F900CCC61D /* QDKeyWordsHomePageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D2D635222E82F900CCC61D /* QDKeyWordsHomePageVC.m */; };
 		93D2D67A222F540F00CCC61D /* QDShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D2D679222F540F00CCC61D /* QDShareView.m */; };
 		93D400452221527E00633479 /* QDTradingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D400442221527E00633479 /* QDTradingViewController.m */; };
+		93DC043022374B5400485100 /* QDFourViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DC042F22374B5400485100 /* QDFourViewController.m */; };
 		93E30E9A2224D158003CA771 /* PPNumberButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E30E992224D158003CA771 /* PPNumberButton.m */; };
 		93E30EA02224D18D003CA771 /* PGIndexBannerSubiew.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E30E9C2224D18D003CA771 /* PGIndexBannerSubiew.m */; };
 		93E30EA12224D18D003CA771 /* NewPagedFlowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E30E9D2224D18D003CA771 /* NewPagedFlowView.m */; };
@@ -665,6 +669,12 @@
 		9326111D2223B6E800E3D0BA /* QDOrderField.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDOrderField.m; sourceTree = "<group>"; };
 		9326111F2223C72C00E3D0BA /* QDMyPickOrderModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDMyPickOrderModel.h; sourceTree = "<group>"; };
 		932611202223C72C00E3D0BA /* QDMyPickOrderModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDMyPickOrderModel.m; sourceTree = "<group>"; };
+		936CB21322367C2200D67896 /* QDFirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDFirstViewController.h; sourceTree = "<group>"; };
+		936CB21422367C2200D67896 /* QDFirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDFirstViewController.m; sourceTree = "<group>"; };
+		936CB21622367C3800D67896 /* QDSecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDSecondViewController.h; sourceTree = "<group>"; };
+		936CB21722367C3800D67896 /* QDSecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDSecondViewController.m; sourceTree = "<group>"; };
+		936CB21922367C5300D67896 /* QDThirdViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDThirdViewController.h; sourceTree = "<group>"; };
+		936CB21A22367C5300D67896 /* QDThirdViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDThirdViewController.m; sourceTree = "<group>"; };
 		937344C92230FB6A0054D753 /* QDTestVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDTestVC.h; sourceTree = "<group>"; };
 		937344CA2230FB6A0054D753 /* QDTestVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDTestVC.m; sourceTree = "<group>"; };
 		937344E2223137850054D753 /* LQPopUpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LQPopUpView.h; sourceTree = "<group>"; };
@@ -690,6 +700,8 @@
 		93D2D679222F540F00CCC61D /* QDShareView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDShareView.m; sourceTree = "<group>"; };
 		93D400432221527E00633479 /* QDTradingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDTradingViewController.h; sourceTree = "<group>"; };
 		93D400442221527E00633479 /* QDTradingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDTradingViewController.m; sourceTree = "<group>"; };
+		93DC042E22374B5400485100 /* QDFourViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDFourViewController.h; sourceTree = "<group>"; };
+		93DC042F22374B5400485100 /* QDFourViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDFourViewController.m; sourceTree = "<group>"; };
 		93E30E982224D158003CA771 /* PPNumberButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPNumberButton.h; sourceTree = "<group>"; };
 		93E30E992224D158003CA771 /* PPNumberButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPNumberButton.m; sourceTree = "<group>"; };
 		93E30E9C2224D18D003CA771 /* PGIndexBannerSubiew.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGIndexBannerSubiew.m; sourceTree = "<group>"; };
@@ -1649,6 +1661,14 @@
 				93D400442221527E00633479 /* QDTradingViewController.m */,
 				937344C92230FB6A0054D753 /* QDTestVC.h */,
 				937344CA2230FB6A0054D753 /* QDTestVC.m */,
+				936CB21322367C2200D67896 /* QDFirstViewController.h */,
+				936CB21422367C2200D67896 /* QDFirstViewController.m */,
+				936CB21622367C3800D67896 /* QDSecondViewController.h */,
+				936CB21722367C3800D67896 /* QDSecondViewController.m */,
+				936CB21922367C5300D67896 /* QDThirdViewController.h */,
+				936CB21A22367C5300D67896 /* QDThirdViewController.m */,
+				93DC042E22374B5400485100 /* QDFourViewController.h */,
+				93DC042F22374B5400485100 /* QDFourViewController.m */,
 			);
 			path = TradingShells;
 			sourceTree = "<group>";
@@ -2108,6 +2128,7 @@
 				3B40EBF421EDBB2800656C1F /* QDSetLoginPwdView.m in Sources */,
 				3B1DFE1C21F3226E007D4B12 /* QDRestaurantTopView.m in Sources */,
 				93E30EAE22252A55003CA771 /* QDReadyToCreateOrderVC.m in Sources */,
+				936CB21B22367C5300D67896 /* QDThirdViewController.m in Sources */,
 				3B7636952218E8B200F77007 /* QDHomePageTopView.m in Sources */,
 				3B40EBB921EC953E00656C1F /* YYTextUtilities.m in Sources */,
 				3BF92D7222168E300019B941 /* MyTableCell.m in Sources */,
@@ -2117,6 +2138,7 @@
 				3B40EC1821EECDED00656C1F /* QDSettingViewController.m in Sources */,
 				3BCA5826221AAD1600DCEEF7 /* QDHotelReserveTableHeaderView.m in Sources */,
 				93E30EE72228CB3F003CA771 /* CommonUtility.m in Sources */,
+				936CB21822367C3800D67896 /* QDSecondViewController.m in Sources */,
 				3B40EBB621EC953E00656C1F /* YYTextAttribute.m in Sources */,
 				3B0CD73C21F1A4940020824A /* QDHomeTopView.m in Sources */,
 				3B2C1F9121F7383200DD94CD /* QDMineInfoTableViewCell.m in Sources */,
@@ -2139,6 +2161,8 @@
 				3BF92D7322168E300019B941 /* RootTableCell.m in Sources */,
 				93D2D636222E82F900CCC61D /* QDKeyWordsHomePageVC.m in Sources */,
 				3B04DF5321F83E6F001909CD /* QDRoomTypeDTO.m in Sources */,
+				93DC043022374B5400485100 /* QDFourViewController.m in Sources */,
+				936CB21522367C2200D67896 /* QDFirstViewController.m in Sources */,
 				3B1DFE0721F2D005007D4B12 /* SYCitysCell.m in Sources */,
 				3BCE3C1E21EC7FED005D518F /* QDServiceClient.m in Sources */,
 				3B40EBC021EC953E00656C1F /* YYTextWeakProxy.m in Sources */,
@@ -2356,7 +2380,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.quantdo.customTour;
+				PRODUCT_BUNDLE_IDENTIFIER = com.quantdo.travelPoints;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -2382,7 +2406,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.quantdo.customTour;
+				PRODUCT_BUNDLE_IDENTIFIER = com.quantdo.travelPoints;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
