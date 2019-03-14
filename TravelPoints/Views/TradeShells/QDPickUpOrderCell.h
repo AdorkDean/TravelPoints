@@ -15,20 +15,25 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIView *backView;
 @property (nonatomic, strong) UIView *shadowView;
 @property (nonatomic, strong) UILabel *operationTypeLab;
-@property (nonatomic, strong) UILabel *statusLab;
+@property (nonatomic, strong) UILabel *totalPriceTextLab;
 @property (nonatomic, strong) UILabel *totalPriceLab;
 @property (nonatomic, strong) UILabel *totalPrice;
+
 @property (nonatomic, strong) UILabel *amountLab;
-@property (nonatomic, strong) UILabel *priceLab;
+@property (nonatomic, strong) UILabel *amount;
 
-@property (nonatomic, strong) UILabel *dealAmountLab;
-@property (nonatomic, strong) UILabel *dealAmount;
+@property (nonatomic, strong) UILabel *balanceLab;
+@property (nonatomic, strong) UILabel *balance;
+
 @property (nonatomic, strong) UILabel *transferLab;
+@property (nonatomic, strong) UILabel *transfer;
+@property (nonatomic, strong) UIView *lineView;
+
 @property (nonatomic, strong) UIView *centerLine;
+@property (nonatomic, strong) UILabel *statusLab;
 
-- (void)loadPurchaseDataWithModel:(QDMyPickOrderModel *)model;
 
-- (void)loadSaleDataWithModel:(QDMyPickOrderModel *)model;
+- (void)loadPickOrderWithModel:(QDMyPickOrderModel *)model;
 
 @end
 

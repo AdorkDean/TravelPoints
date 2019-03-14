@@ -6,13 +6,13 @@
 //  Copyright © 2019 Charles Ran. All rights reserved.
 //
 
-#import "QDBaseViewController.h"
+#import <UIKit/UIKit.h>
 #import "QDPickUpOrderCell.h"
 #import "QDOrderDetailView.h"
-
+#import "QDMyPickOrderModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface QDOrderDetailVC : QDBaseViewController
+@interface QDOrderDetailVC : UIViewController
 
 @property (nonatomic, strong) UILabel *clockLab;
 @property (nonatomic, strong) UILabel *infoLab;
@@ -30,6 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *zdTimeLab;
 @property (nonatomic, strong) UILabel *zdTime;
 
+@property (nonatomic, strong) QDMyPickOrderModel *orderModel;
 @end
 
 NS_ASSUME_NONNULL_END

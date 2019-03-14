@@ -40,11 +40,40 @@
         _operationTypeLab = [[UILabel alloc] init];
         _operationTypeLab.text = @"买入";
         _operationTypeLab.textColor = [UIColor colorWithHexString:@"#CAA45B"];
-        _operationTypeLab.font = QDFont(16);
+        _operationTypeLab.font = QDFont(15);
         [_shadowView addSubview:_operationTypeLab];
         
+        _dealLab = [[UILabel alloc] init];
+        _dealLab.text = @"已成交";
+        _dealLab.font = QDFont(14);
+        _dealLab.textColor = APP_BLUECOLOR;
+        [_shadowView addSubview:_dealLab];
+        
+        _deal = [[UILabel alloc] init];
+        _deal.text = @"0";
+        _deal.font = QDFont(14);
+        _deal.textColor = APP_BLUECOLOR;
+        [_shadowView addSubview:_deal];
+        
+        _frozenLab = [[UILabel alloc] init];
+        _frozenLab.text = @"冻结";
+        _frozenLab.font = QDFont(14);
+        _frozenLab.textColor = APP_BLUECOLOR;
+        [_shadowView addSubview:_frozenLab];
+        
+        _frozen = [[UILabel alloc] init];
+        _frozen.text = @"0";
+        _frozen.font = QDFont(14);
+        _frozen.textColor = APP_BLUECOLOR;
+        [_shadowView addSubview:_frozen];
+        
+        _centerLine = [[UIView alloc] init];
+        _centerLine.backgroundColor = APP_GRAYLINECOLOR;
+        _centerLine.alpha = 0.2;
+        [_backView addSubview:_centerLine];
+        
         _priceTextLab = [[UILabel alloc] init];
-        _priceTextLab.text = @"金额";
+        _priceTextLab.text = @"单价";
         _priceTextLab.font = QDFont(14);
         _priceTextLab.textColor = APP_GRAYLINECOLOR;
         [_backView addSubview:_priceTextLab];
@@ -81,7 +110,7 @@
         
         
         _balanceLab = [[UILabel alloc] init];
-        _balanceLab.text = @"单价";
+        _balanceLab.text = @"金额";
         _balanceLab.textColor = APP_GRAYLINECOLOR;
         _balanceLab.font = QDFont(14);
         [_backView addSubview:_balanceLab];
@@ -115,6 +144,7 @@
         [_withdrawBtn setTitle:@"撤单" forState:UIControlStateNormal];
         _withdrawBtn.titleLabel.font = QDFont(16);
         _withdrawBtn.layer.cornerRadius = 10;
+        _withdrawBtn.hidden = YES;
         _withdrawBtn.layer.masksToBounds = YES;
         [_backView addSubview:_withdrawBtn];
     }
@@ -138,6 +168,26 @@
     [_operationTypeLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_shadowView);
         make.left.equalTo(_shadowView.mas_left).offset(SCREEN_WIDTH*0.04);
+    }];
+    
+    [_dealLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_operationTypeLab);
+        make.left.equalTo(_shadowView.mas_left).offset(SCREEN_WIDTH*0.44);
+    }];
+    
+    [_deal mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_shadowView);
+        make.left.equalTo(_dealLab.mas_right).offset(4);
+    }];
+
+    [_frozenLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_shadowView);
+        make.left.equalTo(_deal.mas_right).offset(10);
+    }];
+
+    [_frozen mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_shadowView);
+        make.left.equalTo(_frozenLab.mas_right).offset(4);
     }];
     
     [_priceTextLab mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -183,37 +233,49 @@
     
     [_lineView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(_backView);
-        make.top.equalTo(_status.mas_bottom).offset(SCREEN_HEIGHT*0.02);
+        make.bottom.equalTo(_backView.mas_bottom).offset(-(SCREEN_HEIGHT*0.07));
         make.height.mas_equalTo(1);
         make.width.mas_equalTo(SCREEN_WIDTH*0.81);
     }];
     
+    [_centerLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(_lineView);
+        make.top.equalTo(_shadowView.mas_bottom).offset(SCREEN_HEIGHT*0.02);
+        make.bottom.equalTo(_lineView.mas_top).offset(-(SCREEN_HEIGHT*0.02));
+        make.width.mas_equalTo(1);
+    }];
+
     [_orderStatusLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_priceTextLab);
         make.top.equalTo(_lineView.mas_bottom).offset(6);
     }];
-    
+
     [_withdrawBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_orderStatusLab);
-        make.left.equalTo(_backView.mas_left).offset(SCREEN_WIDTH*0.45);
-        make.width.mas_equalTo(SCREEN_WIDTH*0.19);
+        make.left.equalTo(_balanceLab);
+        make.width.mas_equalTo(SCREEN_WIDTH*0.2);
         make.height.mas_equalTo(SCREEN_HEIGHT*0.04);
     }];
 }
 
 - (void)loadPurchaseDataWithModel:(BiddingPostersDTO *)DTO{
-    if (DTO.balance == nil) {
+    //单价
+    if (DTO.price == nil) {
         self.price.text = @"--";
     }else{
-        self.price.text= DTO.balance;
+        self.price.text= DTO.price;
     }
     //剩余数量
-    if (DTO.buyVolume == nil) {
+    if (DTO.surplusVolume == nil) {
         self.amount.text = @"--";
     }else{
         self.amount.text= DTO.surplusVolume;
     }
-    self.balance.text = DTO.price;
+    if (DTO.price == nil || [DTO.price isEqualToString:@""] || DTO.surplusVolume == nil || [DTO.surplusVolume isEqualToString:@""]) {
+        self.balance.text = @"--";
+    }else{
+        self.balance.text = [NSString stringWithFormat:@"%.2lf", [DTO.price doubleValue] * [DTO.surplusVolume doubleValue]];
+    }
     if ([DTO.isPartialDeal isEqualToString:@"0"]) {
         self.status.text = @"不可部分成交";
         self.status.textColor = APP_GRAYLINECOLOR;
@@ -222,7 +284,7 @@
         self.status.textColor = APP_BLUECOLOR;
     }
     
-    //未成交  c
+    //未成交与部分成交的时候 并且
     switch ([DTO.postersStatus integerValue]) {
         case QD_ORDERSTATUS_NOTTRADED:
             self.orderStatusLab.text = @"未成交";
@@ -246,6 +308,14 @@
             break;
         case QD_ORDERSTATUS_ISCANCELED:
             self.orderStatusLab.text = @"已取消";
+            self.withdrawBtn.hidden = YES;
+            break;
+        case QD_ORDERSTATUS_INTENTION:
+            self.orderStatusLab.text = @"意向单";
+            self.withdrawBtn.hidden = YES;
+            break;
+        case QD_ORDERSTATUS_WAITPAY:
+            self.orderStatusLab.text = @"待付款";
             self.withdrawBtn.hidden = YES;
             break;
         default:

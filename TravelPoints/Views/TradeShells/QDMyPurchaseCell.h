@@ -16,6 +16,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIView *shadowView;
 @property (nonatomic, strong) UILabel *operationTypeLab;
 
+//已成交 已冻结
+@property (nonatomic, strong) UILabel *dealLab;
+@property (nonatomic, strong) UILabel *deal;
+@property (nonatomic, strong) UILabel *frozenLab;
+@property (nonatomic, strong) UILabel *frozen;
+
+@property (nonatomic, strong) UIView *centerLine;
+
 @property (nonatomic, strong) UILabel *priceTextLab;
 @property (nonatomic, strong) UILabel *priceLab;
 @property (nonatomic, strong) UILabel *price;

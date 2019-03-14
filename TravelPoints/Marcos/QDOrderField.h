@@ -25,7 +25,8 @@ typedef enum: NSUInteger{
     QD_ORDERSTATUS_ALLCANCELED = 3,  //全部撤单
     QD_ORDERSTATUS_PARTCANCELED = 4, //部成部撤
     QD_ORDERSTATUS_ISCANCELED = 5,   //已取消
-    QD_ORDERSTATUS_INTENTION = 6     //意向单
+    QD_ORDERSTATUS_INTENTION = 6,    //意向单
+    QD_ORDERSTATUS_WAITPAY = 7       //待付款
 }QDORDERSTATUS;
 
 

@@ -7,7 +7,7 @@
 //
 
 #import "QDPickUpOrderCell.h"
-
+#import "QDOrderField.h"
 @implementation QDPickUpOrderCell
 
 - (void)awakeFromNib {
@@ -43,59 +43,77 @@
         _operationTypeLab.font = QDFont(13);
         [_shadowView addSubview:_operationTypeLab];
         
-        _statusLab = [[UILabel alloc] init];
-        _statusLab.text = @"部分成交";
-        _statusLab.textColor = APP_BLUECOLOR;
-        _statusLab.font = QDFont(13);
-        [_shadowView addSubview:_statusLab];
+        _totalPriceTextLab = [[UILabel alloc] init];
+        _totalPriceTextLab.text = @"单价";
+        _totalPriceTextLab.textColor = APP_GRAYTEXTCOLOR;
+        _totalPriceTextLab.font = QDFont(13);
+        [_backView addSubview:_totalPriceTextLab];
         
         _totalPriceLab = [[UILabel alloc] init];
-        _totalPriceLab.text = @"金额(元)";
-        _totalPriceLab.textColor = APP_GRAYTEXTCOLOR;
-        _totalPriceLab.font = QDFont(12);
+        _totalPriceLab.text = @"¥";
+        _totalPriceLab.font = QDBoldFont(17);
+        _totalPriceLab.textColor = APP_ORANGETEXTCOLOR;
         [_backView addSubview:_totalPriceLab];
         
         _totalPrice = [[UILabel alloc] init];
-        _totalPrice.text = @"¥15,000.00";
-        _totalPrice.textColor = APP_BLUECOLOR;
-        _totalPrice.font = QDBoldFont(15);
+        _totalPrice.text = @"34.00";
+        _totalPrice.font = QDBoldFont(23);
+        _totalPrice.textColor = APP_ORANGETEXTCOLOR;
         [_backView addSubview:_totalPrice];
         
         _amountLab = [[UILabel alloc] init];
-        _amountLab.text = @"数量1000";
-        _amountLab.font = QDFont(12);
-        _amountLab.textColor = APP_GRAYTEXTCOLOR;
+        _amountLab.text = @"数量";
+        _amountLab.textColor = APP_GRAYLINECOLOR;
+        _amountLab.font = QDFont(14);
         [_backView addSubview:_amountLab];
         
-        _priceLab = [[UILabel alloc] init];
-        _priceLab.text = @"价格¥15.00";
-        _priceLab.font = QDFont(12);
-        _priceLab.textColor = APP_GRAYTEXTCOLOR;
+        _amount = [[UILabel alloc] init];
+        _amount.text = @"2000";
+        _amount.font = QDFont(14);
+        _amount.textColor = APP_GRAYTEXTCOLOR;
+        [_backView addSubview:_amount];
         
-        [_backView addSubview:_priceLab];
         
-        _dealAmountLab = [[UILabel alloc] init];
-        _dealAmountLab.text = @"成交(个)";
-        _dealAmountLab.textColor = APP_GRAYTEXTCOLOR;
-        _dealAmountLab.font = QDFont(12);
-        [_backView addSubview:_dealAmountLab];
+        _balanceLab = [[UILabel alloc] init];
+        _balanceLab.text = @"金额";
+        _balanceLab.textColor = APP_GRAYLINECOLOR;
+        _balanceLab.font = QDFont(14);
+        [_backView addSubview:_balanceLab];
         
-        _dealAmount = [[UILabel alloc] init];
-        _dealAmount.text = @"200";
-        _dealAmount.font = QDBoldFont(15);
-        _dealAmount.textColor = APP_BLUECOLOR;
-        [_backView addSubview:_dealAmount];
+        _balance = [[UILabel alloc] init];
+        _balance.text = @"¥60000.00";
+        _balance.font = QDFont(14);
+        _balance.textColor = APP_GRAYTEXTCOLOR;
+        [_backView addSubview:_balance];
+        
         
         _transferLab = [[UILabel alloc] init];
-        _transferLab.text = @"手续费¥100.00";
-        _transferLab.font = QDFont(12);
-        _transferLab.textColor = APP_GRAYTEXTCOLOR;
+        _transferLab.text = @"手续费";
+        _transferLab.textColor = APP_GRAYLINECOLOR;
+        _transferLab.font = QDFont(14);
         [_backView addSubview:_transferLab];
+        
+        _transfer = [[UILabel alloc] init];
+        _transfer.text = @"¥30.00";
+        _transfer.textColor = APP_GRAYTEXTCOLOR;
+        _transfer.font = QDFont(14);
+        [_backView addSubview:_transfer];
+        
+        _lineView = [[UIView alloc] init];
+        _lineView.backgroundColor = APP_GRAYLINECOLOR;
+        _lineView.alpha = 0.2;
+        [_backView addSubview:_lineView];
         
         _centerLine = [[UIView alloc] init];
         _centerLine.backgroundColor = APP_GRAYLINECOLOR;
         _centerLine.alpha = 0.2;
         [_backView addSubview:_centerLine];
+        
+        _statusLab = [[UILabel alloc] init];
+        _statusLab.text = @"已取消";
+        _statusLab.textColor = APP_GRAYLINECOLOR;
+        _statusLab.font = QDFont(14);
+        [_backView addSubview:_statusLab];
     }
     return self;
 }
@@ -119,56 +137,110 @@
         make.left.equalTo(_shadowView.mas_left).offset(SCREEN_WIDTH*0.04);
     }];
     
-    [_statusLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(_shadowView);
-        make.right.equalTo(_shadowView.mas_right).offset(-(SCREEN_WIDTH*0.04));
-    }];
-    
-    [_totalPriceLab mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_totalPriceTextLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_shadowView.mas_bottom).offset(SCREEN_HEIGHT*0.03);
         make.left.equalTo(_operationTypeLab);
     }];
     
+    [_totalPriceLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_totalPriceTextLab.mas_bottom).offset(SCREEN_HEIGHT*0.015);
+        make.left.equalTo(_totalPriceTextLab);
+    }];
+    
     [_totalPrice mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_totalPriceLab.mas_bottom).offset(SCREEN_HEIGHT*0.015);
-        make.left.equalTo(_operationTypeLab);
+        make.left.equalTo(_totalPriceLab.mas_right).offset(1);
+        make.centerY.equalTo(_totalPriceLab);
     }];
     
     [_amountLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_totalPrice.mas_bottom).offset(SCREEN_HEIGHT*0.015);
-        make.left.equalTo(_operationTypeLab);
+        make.centerY.equalTo(_totalPriceTextLab);
+        make.left.equalTo(_backView.mas_left).offset(SCREEN_WIDTH*0.53);
     }];
     
-    [_priceLab mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_amount mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_amountLab);
-        make.left.equalTo(_backView.mas_left).offset(SCREEN_WIDTH*0.19);
+        make.left.equalTo(_amountLab.mas_right).offset(12);
+    }];
+    
+    [_balanceLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_amount.mas_bottom).offset(4);
+        make.left.equalTo(_amountLab);
+    }];
+    
+    [_balance mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_balanceLab);
+        make.left.equalTo(_amount);
+    }];
+    
+    [_transferLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_balanceLab.mas_bottom).offset(4);
+        make.left.equalTo(_balanceLab);
+    }];
+    
+    [_transfer mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_transferLab);
+        make.left.equalTo(_transferLab.mas_right).offset(4);
+    }];
+    
+    [_lineView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(_backView);
+        make.top.equalTo(_transfer.mas_bottom).offset(8);
+        make.height.mas_equalTo(1);
+        make.width.mas_equalTo(SCREEN_WIDTH*0.81);
     }];
     
     [_centerLine mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(_backView);
-        make.top.equalTo(_shadowView.mas_bottom).offset(SCREEN_HEIGHT*0.03);
+        make.top.equalTo(_shadowView.mas_bottom).offset(SCREEN_HEIGHT*0.02);
+        make.bottom.equalTo(_lineView.mas_top).offset(-(SCREEN_HEIGHT*0.02));
         make.width.mas_equalTo(1);
-        make.height.mas_equalTo(SCREEN_HEIGHT*0.07);
     }];
     
-    [_dealAmountLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(_totalPriceLab);
-        make.left.equalTo(_centerLine.mas_left).offset(SCREEN_WIDTH*0.04);
-    }];
-    
-    [_dealAmount mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(_totalPrice);
-        make.left.equalTo(_dealAmountLab);
-    }];
-    
-    [_transferLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(_amountLab);
-        make.left.equalTo(_dealAmount.mas_left);
+    [_statusLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_lineView.mas_bottom).offset(5);
+        make.left.equalTo(_totalPriceTextLab);
     }];
 }
 
-- (void)loadSaleDataWithModel:(QDMyPickOrderModel *)model{
-    
+- (void)loadPickOrderWithModel:(QDMyPickOrderModel *)model{
+    //单价
+    if ([model.businessType isEqualToString:@"0"]) {
+        self.operationTypeLab.text = @"买入";
+    }else{
+        self.operationTypeLab.text = @"卖出";
+    }
+    if (model.price == nil) {
+        self.totalPrice.text = @"--";
+    }else{
+        self.totalPrice.text= model.price;
+    }
+    if (model.number == nil) {
+        self.amount.text = @"--";
+    }else{
+        self.amount.text= model.number;
+    }
+    self.balance.text = model.amount;
+    //手续费
+    self.transfer.text = model.poundage;
+    switch ([model.state integerValue]) {
+        case QD_WaitForPurchase:
+            self.statusLab.text = @"待付款";
+            break;
+        case QD_HavePurchased:
+            self.statusLab.text = @"已付款";
+            break;
+        case QD_HaveFinished:
+            self.statusLab.text = @"已完成";
+            break;
+        case QD_OverTimeCanceled:
+            self.statusLab.text = @"超时取消";
+            break;
+        case QD_ManualCanceled:
+            self.statusLab.text = @"手工取消";
+            break;
+        default:
+            break;
+    }
 }
 
 @end

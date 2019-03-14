@@ -69,15 +69,28 @@ typedef enum : NSUInteger {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
     _pageNum = 1;
     _pageSize = 10;
     _totalPage = 0; //总页数默认为1
     _ordersArr = [[NSMutableArray alloc] init];
-    self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    
-    [self setTopView];
     [self initTableView];
-//    _ordersArr = [[NSMutableArray alloc] initWithObjects:@"1", @"1", @"1", @"1", @"1", @"1", @"1", @"1", @"1",nil];
+    _optionBtn = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*0.31, SCREEN_HEIGHT*0.72, SCREEN_WIDTH*0.37, SCREEN_HEIGHT*0.06)];
+    [_optionBtn addTarget:self action:@selector(operateAction:) forControlEvents:UIControlEventTouchUpInside];
+    CAGradientLayer *gradientLayer =  [CAGradientLayer layer];
+    gradientLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH*0.37, SCREEN_HEIGHT*0.06);
+    gradientLayer.startPoint = CGPointMake(0, 0);
+    gradientLayer.endPoint = CGPointMake(1, 0);
+    gradientLayer.locations = @[@(0.5),@(1.0)];//渐变点
+    [gradientLayer setColors:@[(id)[[UIColor colorWithHexString:@"#159095"] CGColor],(id)[[UIColor colorWithHexString:@"#3CC8B1"] CGColor]]];//渐变数组
+    [_optionBtn.layer addSublayer:gradientLayer];
+    [_optionBtn setTitle:@"要玩贝" forState:UIControlStateNormal];
+    _optionBtn.backgroundColor = [UIColor redColor];
+    _optionBtn.layer.cornerRadius = SCREEN_HEIGHT*0.03;
+    _optionBtn.layer.masksToBounds = YES;
+    _optionBtn.titleLabel.font = QDFont(17);
+    [self.view addSubview:_optionBtn];
+
     [self requestYWBData];
 }
 
@@ -90,6 +103,7 @@ typedef enum : NSUInteger {
  IS_CANCELED(5,"已取消"), // 已取消
  INTENTION(6,"意向单") ; // 意向单
  */
+#pragma 要玩贝数据与上拉刷新数据请求
 - (void)requestYWBData{
     if (_totalPage != 0) {
         if (_pageNum >= _totalPage) {
@@ -122,13 +136,14 @@ typedef enum : NSUInteger {
                             self.tableView.mj_footer.state = MJRefreshStateNoMoreData;
                         }
                     }else{
-                        [self.tableView reloadData];
                         [_ordersArr addObjectsFromArray:arr];
+                        [self.tableView reloadData];
+                        self.tableView.mj_footer.state = MJRefreshStateIdle;
                         QDLog(@"count = %ld", (long)_ordersArr.count);
                     }
                 }
             }else{
-                [_tableView.mj_footer endRefreshing];
+                [self endRefreshing];
                 [_tableView.mj_footer endRefreshingWithNoMoreData];
 
             }
@@ -142,7 +157,51 @@ typedef enum : NSUInteger {
     }];
 }
 
-
+#pragma mark - 下拉刷新数据  只请求第一页的数据
+- (void)requestHeaderTopData{
+    if (_ordersArr.count) {
+        [_ordersArr removeAllObjects];
+    }
+    NSDictionary * dic1 = @{@"postersStatus":@"",
+                            @"postersType":@"1",
+                            @"pageNum":@1,
+                            @"pageSize":[NSNumber numberWithInt:_pageSize],
+                            };
+    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_FindCanTrade params:dic1 successBlock:^(QDResponseObject *responseObject) {
+        if (responseObject.code == 0) {
+            NSDictionary *dic = responseObject.result;
+            _totalPage = [[dic objectForKey:@"totalPage"] intValue];
+            NSArray *hotelArr = [dic objectForKey:@"result"];
+            if (hotelArr.count) {
+                NSMutableArray *arr = [[NSMutableArray alloc] init];
+                for (NSDictionary *dic in hotelArr) {
+                    BiddingPostersDTO *infoModel = [BiddingPostersDTO yy_modelWithDictionary:dic];
+                    [arr addObject:infoModel];
+                }
+                if (arr) {
+                    if (arr.count < _pageSize) {   //不满10个
+                        [_ordersArr addObjectsFromArray:arr];
+                        [self.tableView reloadData];
+                    }else{
+                        [_ordersArr addObjectsFromArray:arr];
+                        [self.tableView reloadData];
+                    }
+                    if ([self.tableView.mj_header isRefreshing]) {
+                        [self.tableView.mj_header endRefreshing];
+                    }
+                }
+            }else{
+                [self.tableView.mj_header endRefreshing];
+            }
+        }else{
+            [WXProgressHUD showErrorWithTittle:responseObject.message];
+        }
+    } failureBlock:^(NSError *error) {
+        [_tableView reloadData];
+        [_tableView reloadEmptyDataSet];
+        [WXProgressHUD showErrorWithTittle:@"网络异常"];
+    }];
+}
 - (void)endRefreshing
 {
     if (_tableView) {
@@ -151,51 +210,9 @@ typedef enum : NSUInteger {
     }
 }
 
--(void)leftClick
-{
-    //下落动画 时间短一些
-    [UIView beginAnimations:@"text" context:nil];
-    [UIView setAnimationDelay:0];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationDuration:0.3];
-    _backView.frame=CGRectMake(0,40, self.view.bounds.size.width, self.view.bounds.size.height);
-    [UIView commitAnimations];
-    
-    //恢复动画 时间长一些
-    [UIView beginAnimations:@"text" context:nil];
-    [UIView setAnimationDelay:0];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
-    [UIView setAnimationDuration:0.5];
-    _backView.frame=CGRectMake(0,0, self.view.bounds.size.width, self.view.bounds.size.height);
-    [UIView commitAnimations];
-    
-}
--(void)tapclick
-{
-    [UIView beginAnimations:@"text" context:nil];
-    [UIView setAnimationDelay:0];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-    [UIView setAnimationDuration:0.3];
-    _backView.frame=CGRectMake(0, -self.view.bounds.size.height, self.view.bounds.size.width, self.view.bounds.size.height);
-    [UIView commitAnimations];
-}
-- (void)setTopView{
-    UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.17)];
-    topView.backgroundColor = APP_WHITECOLOR;
-    [self.view addSubview:topView];
-    UILabel *titleLab = [[UILabel alloc] init];
-    titleLab.text = @"转贝";
-    titleLab.font = QDFont(17);
-    [topView addSubview:titleLab];
-    [titleLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view.mas_top).offset(SCREEN_HEIGHT*0.046);
-        make.centerX.equalTo(self.view);
-    }];
-}
-
 - (void)initTableView{
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64) style:UITableViewStylePlain];
-    _tableView.backgroundColor = APP_BLUECOLOR;
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) style:UITableViewStylePlain];
+    _tableView.backgroundColor = APP_WHITECOLOR;
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.emptyDataSetSource = self;
@@ -208,7 +225,8 @@ typedef enum : NSUInteger {
     } else {
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
-    _tableView.contentInset = UIEdgeInsetsMake(0, 0, 64, 0);
+    _tableView.contentInset = UIEdgeInsetsMake(0, 0, 110, 0);
+//    self.view = _tableView;
     [self.view addSubview:_tableView];
     
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.23)];
@@ -221,19 +239,16 @@ typedef enum : NSUInteger {
     
     _tableView.mj_header = [QDRefreshHeader headerWithRefreshingBlock:^{
         QDLog(@"下拉刷新");
-        [_collectionView reloadData];
-        
-        [UIView performWithoutAnimation:^{
-            //                [_collectionView reloadData];
-            [_tableView reloadSections:[[NSIndexSet alloc]initWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
-        }];            // 结束刷新
-        [_tableView.mj_header endRefreshing];
+        [self requestHeaderTopData];
     }];
+    
     _tableView.mj_footer = [QDRefreshFooter footerWithRefreshingBlock:^{
         QDLog(@"上拉刷新");
         _pageNum++;
         [self requestYWBData];
     }];
+    
+
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -249,8 +264,11 @@ typedef enum : NSUInteger {
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return _ordersArr.count * SCREEN_HEIGHT * 0.2;
-    //    return SCREEN_HEIGHT*0.5;
+    if (_ordersArr.count % 2 == 0) {
+        return _ordersArr.count /2  * SCREEN_HEIGHT * 0.33 + _ordersArr.count/2 * 10 + 10;
+    }else{
+        return (_ordersArr.count /2 + 1) * SCREEN_HEIGHT * 0.33 + (_ordersArr.count/2 + 1) * 10 + 10;
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
@@ -262,8 +280,14 @@ typedef enum : NSUInteger {
         //创建瀑布流布局
         WaterLayou *layou = [[WaterLayou alloc] init];
         //创建collectionView
-        self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, _ordersArr.count * SCREEN_HEIGHT * 0.2) collectionViewLayout:layou];
-        self.collectionView.backgroundColor = APP_ORANGETEXTCOLOR;
+        CGFloat y = 0;
+        if (_ordersArr.count % 2 == 0) {
+            y = _ordersArr.count /2  * SCREEN_HEIGHT * 0.33 + _ordersArr.count/2 * 10 + 10;
+        }else{
+            y = (_ordersArr.count /2 + 1) * SCREEN_HEIGHT * 0.33 + (_ordersArr.count/2 + 1) * 10 + 10;
+        }
+        self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, y) collectionViewLayout:layou];
+        self.collectionView.backgroundColor = APP_WHITECOLOR;
         self.collectionView.scrollEnabled = NO;
         //注册单元格
         [_collectionView registerClass:[RootCollectionCell class] forCellWithReuseIdentifier:@"cell"];
@@ -279,10 +303,16 @@ typedef enum : NSUInteger {
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
-    cell.backgroundColor = [UIColor redColor];
+    cell.backgroundColor = APP_WHITECOLOR;
     cell.userInteractionEnabled = YES;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    self.collectionView.frame = CGRectMake(0, 0, SCREEN_WIDTH, _ordersArr.count * SCREEN_HEIGHT * 0.2);
+    CGFloat y = 0;
+    if (_ordersArr.count % 2 == 0) {
+        y = _ordersArr.count /2  * SCREEN_HEIGHT * 0.33 + _ordersArr.count/2 * 10 + 10;
+    }else{
+        y = (_ordersArr.count /2 + 1) * SCREEN_HEIGHT * 0.33 + (_ordersArr.count/2 + 1) * 10 + 10;
+    }
+    self.collectionView.frame = CGRectMake(0, 0, SCREEN_WIDTH, y);
     if (_ordersArr.count) {
         [self.collectionView reloadData];
     }

@@ -121,4 +121,9 @@
 + (NSString*)weekdayStringFromDate:(NSDate*)inputDate;
 
 + (NSInteger)compareDate:(NSString*)aDate withDate:(NSString*)bDate;
+
+/**
+ 时间戳转字符串
+ */
++(NSString *)timeStampConversionNSString:(NSString *)timeStamp;
 @end

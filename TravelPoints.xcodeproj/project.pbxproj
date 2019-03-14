@@ -225,6 +225,7 @@
 		936CB21B22367C5300D67896 /* QDThirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 936CB21A22367C5300D67896 /* QDThirdViewController.m */; };
 		937344CB2230FB6A0054D753 /* QDTestVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 937344CA2230FB6A0054D753 /* QDTestVC.m */; };
 		937344E4223137850054D753 /* LQPopUpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 937344E3223137850054D753 /* LQPopUpView.m */; };
+		93744F472239DC37000708A3 /* QDPickOrderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93744F462239DC37000708A3 /* QDPickOrderView.m */; };
 		93BB7AAF2220F97F0061FB9C /* QDHomeTopCancelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BB7AAE2220F97F0061FB9C /* QDHomeTopCancelView.m */; };
 		93BB7AB222212D710061FB9C /* WaterLayou.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BB7AB022212D700061FB9C /* WaterLayou.m */; };
 		93BB7ABA2221466A0061FB9C /* BiddingPostersDTO.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BB7AB92221466A0061FB9C /* BiddingPostersDTO.m */; };
@@ -679,6 +680,8 @@
 		937344CA2230FB6A0054D753 /* QDTestVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDTestVC.m; sourceTree = "<group>"; };
 		937344E2223137850054D753 /* LQPopUpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LQPopUpView.h; sourceTree = "<group>"; };
 		937344E3223137850054D753 /* LQPopUpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LQPopUpView.m; sourceTree = "<group>"; };
+		93744F452239DC37000708A3 /* QDPickOrderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDPickOrderView.h; sourceTree = "<group>"; };
+		93744F462239DC37000708A3 /* QDPickOrderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDPickOrderView.m; sourceTree = "<group>"; };
 		93BB7AAD2220F97F0061FB9C /* QDHomeTopCancelView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDHomeTopCancelView.h; sourceTree = "<group>"; };
 		93BB7AAE2220F97F0061FB9C /* QDHomeTopCancelView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDHomeTopCancelView.m; sourceTree = "<group>"; };
 		93BB7AB022212D700061FB9C /* WaterLayou.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaterLayou.m; sourceTree = "<group>"; };
@@ -1698,6 +1701,8 @@
 				93261117222388C000E3D0BA /* QDMyPurchaseCell.m */,
 				93261119222388E900E3D0BA /* QDMySaleOrderCell.h */,
 				9326111A222388E900E3D0BA /* QDMySaleOrderCell.m */,
+				93744F452239DC37000708A3 /* QDPickOrderView.h */,
+				93744F462239DC37000708A3 /* QDPickOrderView.m */,
 			);
 			path = TradeShells;
 			sourceTree = "<group>";
@@ -2060,6 +2065,7 @@
 				3B7636832217F44F00F77007 /* QDOrderDetailView.m in Sources */,
 				3B0DC04B21FFDB4E0056C318 /* PooCodeView.m in Sources */,
 				3BD9516C21EC2A1800CD0627 /* ViewController.m in Sources */,
+				93744F472239DC37000708A3 /* QDPickOrderView.m in Sources */,
 				3B40EBB121EC953E00656C1F /* YYTextKeyboardManager.m in Sources */,
 				3BD9517721EC2A1C00CD0627 /* main.m in Sources */,
 				3B40EBB821EC953E00656C1F /* YYTextRubyAnnotation.m in Sources */,

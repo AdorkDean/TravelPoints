@@ -650,12 +650,4 @@ typedef enum : NSUInteger {
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
 
-//- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView{
-//    return SCREEN_HEIGHT*0.21;
-//}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    QDLog(@"%lf", scrollView.contentOffset.y);
-}
-
 @end

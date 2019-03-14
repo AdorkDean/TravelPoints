@@ -141,9 +141,9 @@
     [alertView addAction:[TYAlertAction actionWithTitle:@"确定" style:TYAlertActionStyleDestructive handler:^(TYAlertAction *action) {
         [self logout];
     }]];
-    [alertView setButtonTitleColor:[UIColor colorWithHexString:@"#648AC7"] forActionStyle:TYAlertActionStyleCancel forState:UIControlStateNormal];
-    [alertView setButtonTitleColor:[UIColor colorWithHexString:@"#648AC7"] forActionStyle:TYAlertActionStyleBlod forState:UIControlStateNormal];
-    [alertView setButtonTitleColor:[UIColor colorWithHexString:@"#648AC7"] forActionStyle:TYAlertActionStyleDestructive forState:UIControlStateNormal];
+    [alertView setButtonTitleColor:APP_BLUECOLOR forActionStyle:TYAlertActionStyleCancel forState:UIControlStateNormal];
+    [alertView setButtonTitleColor:APP_BLUECOLOR forActionStyle:TYAlertActionStyleBlod forState:UIControlStateNormal];
+    [alertView setButtonTitleColor:APP_BLUECOLOR forActionStyle:TYAlertActionStyleDestructive forState:UIControlStateNormal];
     [alertView show];
 }
 

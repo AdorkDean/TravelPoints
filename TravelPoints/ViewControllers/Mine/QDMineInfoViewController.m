@@ -39,7 +39,7 @@
     [self.navigationController.navigationBar setHidden:YES];
     [self.navigationController.tabBarController.tabBar setHidden:NO];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
-    [self queryUserStatus:api_GetUserDetail isViewWillAppear:YES];
+    [self queryUserStatus:api_GetUserDetail isViewWillAppear:NO];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -61,10 +61,11 @@
 #pragma mark - 刷新请求用户状态
 - (void)requestUserStatus{
     QDLog(@"requestUserStatus");
+    [self queryUserStatus:api_GetUserDetail isViewWillAppear:NO];
     [_tableView.mj_header endRefreshing];
 }
 
-#pragma mark - 个人积分账户详情
+#pragma mark - 个人积分账户详  情
 - (void)queryUserStatus:(NSString *)urlStr isViewWillAppear:(BOOL)isAppear{
     NSString *cookie = [NSString stringWithFormat:@"%@", [QDUserDefaults getCookies]];
     QDLog(@"cookie = %@", cookie);
@@ -96,6 +97,8 @@
             }else{
                 [QDUserDefaults setObject:@"0" forKey:@"loginType"];
                 if (!isAppear) {
+                    [WXProgressHUD showInfoWithTittle:@"未登录"];
+                }else{
                     [WXProgressHUD showErrorWithTittle:responseObject.message];
                 }
             }
@@ -116,6 +119,7 @@
         //会员等级
         _tableView.tableHeaderView = _noFinancialView;
     }else{
+        _haveFinancialView.userNameLab.text = _currentQDMemberTDO.userName;
         _tableView.tableHeaderView = _haveFinancialView;
     }
     [_tableView reloadData];
@@ -147,10 +151,15 @@
     _noFinancialView = [[QDLogonWithNoFinancialAccountView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.54)];
     _noFinancialView.backgroundColor = APP_WHITECOLOR;
     [_noFinancialView.settingBtn addTarget:self action:@selector(userSettings:) forControlEvents:UIControlEventTouchUpInside];
+    [_noFinancialView.voiceBtn addTarget:self action:@selector(notices:) forControlEvents:UIControlEventTouchUpInside];
+
     [_noFinancialView.openFinancialBtn addTarget:self action:@selector(openFinancialAction:) forControlEvents:UIControlEventTouchUpInside];
     [_noFinancialView.accountInfo addTarget:self action:@selector(lookAccountInfo:) forControlEvents:UIControlEventTouchUpInside];
-    _haveFinancialView = [[QDMineHeaderFinancialAccountView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.58)];
+    //已经开通资金账户的
+    _haveFinancialView = [[QDMineHeaderFinancialAccountView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.55)];
     _haveFinancialView.backgroundColor = APP_WHITECOLOR;
+    [_haveFinancialView.voiceBtn addTarget:self action:@selector(notices:) forControlEvents:UIControlEventTouchUpInside];
+    [_haveFinancialView.accountInfo addTarget:self action:@selector(lookAccountInfo:) forControlEvents:UIControlEventTouchUpInside];
     [_haveFinancialView.settingBtn addTarget:self action:@selector(userSettings:) forControlEvents:UIControlEventTouchUpInside];
     [_haveFinancialView.rechargeBtn addTarget:self action:@selector(rechargeAction:) forControlEvents:UIControlEventTouchUpInside];
     [_haveFinancialView.withdrawBtn addTarget:self action:@selector(withdrawAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -180,6 +189,12 @@
     return _sectionHeaderView;
 }
 
+- (void)notices:(UIButton *)sender{
+    QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
+    bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@", [QDUserDefaults getObjectForKey:@"QD_JSURL"], JS_NOTICE];
+    QDLog(@"urlStr = %@", bridgeVC.urlStr);
+    [self.navigationController pushViewController:bridgeVC animated:YES];
+}
 #pragma mark - 用户登录注册
 - (void)userLogin:(UIButton *)sender{
     QDLog(@"userLogin");
@@ -190,9 +205,6 @@
 
 #pragma mark - 设置页面
 - (void)userSettings:(UIButton *)sender{
-    
-//    QDBuyOrSellViewController *buyVC = [[QDBuyOrSellViewController alloc] init];
-//    [self.navigationController pushViewController:buyVC animated:YES];
     QDSettingViewController *settingVC = [[QDSettingViewController alloc] init];
     [self.navigationController pushViewController:settingVC animated:YES];
 }
@@ -210,11 +222,18 @@
 
 #pragma mark - 充值
 - (void)rechargeAction:(UIButton *)sender{
-    
+    QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
+    bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@", [QDUserDefaults getObjectForKey:@"QD_TESTJSURL"], JS_RECHARGE];
+    QDLog(@"urlStr = %@", bridgeVC.urlStr);
+    [self.navigationController pushViewController:bridgeVC animated:YES];
 }
 
 #pragma mark - 提现
 - (void)withdrawAction:(UIButton *)sender{
+    QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
+    bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@", [QDUserDefaults getObjectForKey:@"QD_TESTJSURL"], JS_WITHDRAW];
+    QDLog(@"urlStr = %@", bridgeVC.urlStr);
+    [self.navigationController pushViewController:bridgeVC animated:YES];
 }
 
 #pragma mark -- tableView delegate

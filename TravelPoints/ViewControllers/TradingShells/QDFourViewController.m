@@ -27,6 +27,8 @@
 #import "QDRefreshFooter.h"
 #import <DZNEmptyDataSet/UIScrollView+EmptyDataSet.h>
 #import "QDBuyOrSellViewController.h"
+#import "QDSettingViewController.h"
+#import "QDDateUtils.h"
 
 #define K_T_Cell @"t_cell"
 #define K_C_Cell @"c_cell"
@@ -68,7 +70,6 @@ typedef enum : NSUInteger {
     [super viewWillAppear:animated];
     [self.navigationController.navigationBar setHidden:YES];
     [self.navigationController.tabBarController.tabBar setHidden:NO];
-    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -164,7 +165,7 @@ typedef enum : NSUInteger {
     _pageSize = 10;
     _pageNum = 1;
     _totalPage = 0; //总页数默认
-    self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    self.view.backgroundColor = APP_WHITECOLOR;
     [self initTableView];
     [self requestMyZhaiDanData];
 }
@@ -185,7 +186,8 @@ typedef enum : NSUInteger {
     _tableView.emptyDataSetDelegate = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    [self.view addSubview:_tableView];
+//    [self.view addSubview:_tableView];
+    self.view = _tableView;
     _tableView.mj_header = [QDRefreshHeader headerWithRefreshingBlock:^{
         [UIView performWithoutAnimation:^{
             [_tableView reloadSections:[[NSIndexSet alloc]initWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
@@ -242,7 +244,7 @@ typedef enum : NSUInteger {
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return SCREEN_HEIGHT*0.288;
+    return SCREEN_HEIGHT*0.27;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
@@ -251,28 +253,15 @@ typedef enum : NSUInteger {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (_myPickOrdersArr.count) {
-        QDMyPickOrderModel *infoModel = _myPickOrdersArr[indexPath.row];
-        if ([infoModel.businessType isEqualToString:@"0"]) {
-            static NSString *identifier = @"QDMyPurchaseCell";
-            QDMyPurchaseCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-            if (cell == nil) {
-                cell = [[QDMyPurchaseCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-            }
-            [cell loadMyPickPurchaseDataWithModel:infoModel];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            cell.backgroundColor = APP_WHITECOLOR;
-            return cell;
-        }else{
-            static NSString *identifier = @"QDMySaleOrderCell";
-            QDMySaleOrderCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-            if (cell == nil) {
-                cell = [[QDMySaleOrderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-            }
-            [cell loadMyPickSaleDataWithModel:infoModel];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            cell.backgroundColor = APP_WHITECOLOR;
-            return cell;
+        static NSString *identifier = @"QDPickUpOrderCell";
+        QDPickUpOrderCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+        if (cell == nil) {
+            cell = [[QDPickUpOrderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
         }
+        [cell loadPickOrderWithModel:_myPickOrdersArr[indexPath.row]];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.backgroundColor = APP_WHITECOLOR;
+        return cell;
     }
     return nil;
 }
@@ -280,6 +269,7 @@ typedef enum : NSUInteger {
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIView *vv = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.075)];
+    vv.backgroundColor = APP_WHITECOLOR;
     [vv addSubview:self.filterBtn];
     [self.filterBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.and.height.equalTo(vv);
@@ -291,7 +281,12 @@ typedef enum : NSUInteger {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    QDMyPickOrderModel *model = _myPickOrdersArr[indexPath.row];
     QDOrderDetailVC *detailVC = [[QDOrderDetailVC alloc] init];
+    detailVC.orderModel = model;
+    
+    NSString *ss = [QDDateUtils timeStampConversionNSString:model.createTime];
+
     [self.navigationController pushViewController:detailVC animated:YES];
 }
 
@@ -331,14 +326,6 @@ typedef enum : NSUInteger {
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:16.0f],
                                  NSForegroundColorAttributeName: [UIColor darkGrayColor]};
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
-}
-
-//- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView{
-//    return SCREEN_HEIGHT*0.21;
-//}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    QDLog(@"%lf", scrollView.contentOffset.y);
 }
 
 - (SPButton *)filterBtn{

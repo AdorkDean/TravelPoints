@@ -41,6 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL isSelect;
 @property (nonatomic, assign) BOOL isResetPwdNextStep;
 
+@property (nonatomic, strong) NSString *pushVCTag;  //如果是其它页面跳转到登录页面 就置为0。如果是登录页面 就为1
 @end
 
 NS_ASSUME_NONNULL_END

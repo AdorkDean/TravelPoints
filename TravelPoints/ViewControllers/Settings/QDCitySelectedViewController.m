@@ -247,10 +247,6 @@
     UIButton *btn = [searchBar valueForKey:@"_cancelButton"];
     [btn setTitle:@"取消" forState:UIControlStateNormal];
 }
-#pragma mark - UIScrollViewDelegate
-//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-//    [_searchVc.searchBar resignFirstResponder];
-//}
 
 #pragma mark - UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

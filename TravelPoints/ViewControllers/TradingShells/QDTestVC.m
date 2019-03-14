@@ -19,6 +19,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = APP_WHITECOLOR;
     self.progressViewIsNaughty = YES;
     self.progressWidth = 10;
 }
@@ -30,12 +31,26 @@
     [self.navigationController.tabBarController.tabBar setHidden:NO];
 }
 
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self.navigationController.navigationBar setHidden:YES];
+    [self.navigationController.tabBarController.tabBar setHidden:YES];
+}
+
 - (UIColor *)progressColor{
     return APP_BLUECOLOR;
 }
 
 - (UIColor *)titleColorSelected{
     return APP_BLACKCOLOR;
+}
+
+- (CGFloat)titleSizeNormal{
+    return 15;
+}
+
+- (CGFloat)titleSizeSelected{
+    return 16;
 }
 
 - (WMMenuViewStyle)menuViewStyle{
@@ -45,11 +60,6 @@
 - (UIColor *)titleColorNormal{
     return APP_GRAYTEXTCOLOR;
 }
-
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-}
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

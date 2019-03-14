@@ -42,8 +42,8 @@
     QDPlayingShellsVC *playShellsVC = [[QDPlayingShellsVC alloc] init];
     UINavigationController *navPlayShell= [[UINavigationController alloc] initWithRootViewController:playShellsVC];
     
-//    QDTestVC *tradeShellsVC = [[QDTestVC alloc] init];
-    QDTradingViewController *tradeShellsVC = [[QDTradingViewController alloc] init];
+    QDTestVC *tradeShellsVC = [[QDTestVC alloc] init];
+//    QDTradingViewController *tradeShellsVC = [[QDTradingViewController alloc] init];
     UINavigationController *navTradeShell = [[UINavigationController alloc] initWithRootViewController:tradeShellsVC];
 //
 //    QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
@@ -87,13 +87,10 @@
     [self initRootVC];
     [self configureAPIKey];
     [self.window makeKeyAndVisible];
+    self.window.backgroundColor = APP_WHITECOLOR;
     _hotelLevel = [[NSMutableArray alloc] init];    //酒店等级
     _hotelTypeId = [[NSMutableArray alloc] init];   //酒店类型
     _level = [[NSMutableArray alloc] init];         //会员等级
-    [QDServiceClient startMonitoringNetworking];
-    //获取基准价
-    [self getBasicPrice];
-    [self findAllMapDict];
     //启动Pgyer基本SDK
 //    [[PgyManager sharedPgyManager] startManagerWithAppId:@"5b299d00b8ccffac5b2ea7908a03d716"];
 //
@@ -109,22 +106,26 @@
 
     //添加默认地址
     if ([QDUserDefaults getObjectForKey:@"QD_Domain"] == nil || [[QDUserDefaults getObjectForKey:@"QD_Domain"] isEqualToString:@""]) {
-//        [QDUserDefaults setObject:@"http://203.110.179.27:60409" forKey:@"QD_Domain"];
-        [QDUserDefaults setObject:@"http://47.101.222.172:8080" forKey:@"QD_Domain"];
+        [QDUserDefaults setObject:@"http://203.110.179.27:60409" forKey:@"QD_Domain"];
+//        [QDUserDefaults setObject:@"http://47.101.222.172:8080" forKey:@"QD_Domain"];
 //        [QDUserDefaults setObject:@"http://appuat.wedotting.com" forKey:@"QD_Domain"];
 
     }
     if ([QDUserDefaults getObjectForKey:@"QD_JSURL"] == nil || [[QDUserDefaults getObjectForKey:@"QD_JSURL"] isEqualToString:@""]) {
-//        [QDUserDefaults setObject:@"http://203.110.179.27:60409/app" forKey:@"QD_JSURL"];
-        [QDUserDefaults setObject:@"http://47.101.222.172:8080/app" forKey:@"QD_JSURL"];
+        [QDUserDefaults setObject:@"http://203.110.179.27:60409/app" forKey:@"QD_JSURL"];
+//        [QDUserDefaults setObject:@"http://47.101.222.172:8080/app" forKey:@"QD_JSURL"];
 //        [QDUserDefaults setObject:@"http://appuat.wedotting.com/app" forKey:@"QD_JSURL"];
 
     }    if ([QDUserDefaults getObjectForKey:@"QD_TESTJSURL"] == nil || [[QDUserDefaults getObjectForKey:@"QD_TESTJSURL"] isEqualToString:@""]) {
-//        [QDUserDefaults setObject:@"http://203.110.179.27:60409/app/#" forKey:@"QD_TESTJSURL"];
+        [QDUserDefaults setObject:@"http://203.110.179.27:60409/app/#" forKey:@"QD_TESTJSURL"];
 //        [QDUserDefaults setObject:@"http://47.101.222.172:8080/app/#" forKey:@"QD_TESTJSURL"];
-        [QDUserDefaults setObject:@"http://appuat.wedotting.com/app/#" forKey:@"QD_TESTJSURL"];
+//        [QDUserDefaults setObject:@"http://appuat.wedotting.com/app/#" forKey:@"QD_TESTJSURL"];
 
     }
+    [QDServiceClient startMonitoringNetworking];
+    //获取基准价
+    [self getBasicPrice];
+    [self findAllMapDict];
     return YES;
 }
 

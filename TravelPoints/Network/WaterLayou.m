@@ -80,7 +80,7 @@ static const UIEdgeInsets edge = {10,10,10,10};
     CGFloat collectViewW = self.collectionView.frame.size.width;
     CGFloat w = (collectViewW - edge.left - edge.right - columnmagin * (count - 1)) / count;
     CGFloat h;
-    if (indexPath.row %2 == 0) {
+    if (indexPath.row == 0) {
         h = SCREEN_HEIGHT*0.28;
     }else{
         h = SCREEN_HEIGHT*0.33;

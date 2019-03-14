@@ -27,7 +27,7 @@
 #import "QDRefreshFooter.h"
 #import <DZNEmptyDataSet/UIScrollView+EmptyDataSet.h>
 #import "QDBuyOrSellViewController.h"
-
+#import "QDLoginAndRegisterVC.h"
 #define K_T_Cell @"t_cell"
 #define K_C_Cell @"c_cell"
 
@@ -68,10 +68,32 @@ typedef enum : NSUInteger {
     [self.navigationController.navigationBar setHidden:YES];
     [self.navigationController.tabBarController.tabBar setHidden:NO];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(test:) name:@"test" object:nil];
+    
+    //判断用户是否登录
+//    [self judgeIsLogin];
 }
 
+- (void)judgeIsLogin{
+    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_IsLogin params:nil successBlock:^(QDResponseObject *responseObject) {
+        if (responseObject.code == 0) {
+            //是登录的
+//            [self requestMyOrdersData];
+        }else{
+            
+        }
+        QDLog(@"qqqq");
+    } failureBlock:^(NSError *error) {
+        QDLog(@"123");
+    }];
+}
+- (void)test:(NSNotification *)noti{
+    QDLog(@"=========================");
+    [self requestMyOrdersData];
+}
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"test" object:nil];
 }
 
 - (UIImageView *)emptyView{
@@ -104,56 +126,66 @@ typedef enum : NSUInteger {
 
 #pragma mark - 请求我的报单数据
 - (void)requestMyOrdersData{
-    if (_totalPage != 0) {
-        if (_pageNum >= _totalPage) {
-            [self.tableView.mj_footer endRefreshingWithNoMoreData];
-            return;
-        }
-    }
-    NSDictionary * paramsDic = @{@"postersStatus":@"",
-                                 @"postersType":@"",
-                                 @"pageNum":[NSNumber numberWithInt:_pageNum],
-                                 @"pageSize":[NSNumber numberWithInt:_pageSize]
-                                 };
-    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_FindMyBiddingPosterse params:paramsDic successBlock:^(QDResponseObject *responseObject) {
-        if (responseObject.code == 0) {
-            NSDictionary *dic = responseObject.result;
-            NSArray *hotelArr = [dic objectForKey:@"result"];
-            _totalPage = [[dic objectForKey:@"totalPage"] intValue];
-            if (hotelArr.count) {
-                NSMutableArray *arr = [[NSMutableArray alloc] init];
-                for (NSDictionary *dic in hotelArr) {
-                    BiddingPostersDTO *infoModel = [BiddingPostersDTO yy_modelWithDictionary:dic];
-                    [arr addObject:infoModel];
-                }
-                if (arr) {
-                    if (arr.count < _pageSize) {   //不满10个
-                        [_myOrdersArr addObjectsFromArray:arr];
-                        [self.tableView reloadData];
-                        if ([self.tableView.mj_footer isRefreshing]) {
-                            [self endRefreshing];
-                            self.tableView.mj_footer.state = MJRefreshStateNoMoreData;
-                        }
-                    }else{
-                        [_myOrdersArr addObjectsFromArray:arr];
-                        self.tableView.mj_footer.state = MJRefreshStateIdle;
-                        [self.tableView reloadData];
-                    }
-                }
-            }else{
-                [_tableView.mj_footer endRefreshing];
-                [_tableView.mj_footer endRefreshingWithNoMoreData];
+    NSString *str = [QDUserDefaults getObjectForKey:@"loginType"];
+    if ([str isEqualToString:@"0"] || str == nil) { //未登录
+        QDLoginAndRegisterVC *loginVC = [[QDLoginAndRegisterVC alloc] init];
+        loginVC.pushVCTag = @"0";
+        [self presentViewController:loginVC animated:YES completion:nil];
+    }else{
+            if (_totalPage != 0) {
+            if (_pageNum >= _totalPage) {
+                [self.tableView.mj_footer endRefreshingWithNoMoreData];
+                return;
             }
-        }else{
+        }
+        NSDictionary * paramsDic = @{@"postersStatus":@"",
+                                     @"postersType":@"",
+                                     @"pageNum":[NSNumber numberWithInt:_pageNum],
+                                     @"pageSize":[NSNumber numberWithInt:_pageSize]
+                                     };
+        [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_FindMyBiddingPosterse params:paramsDic successBlock:^(QDResponseObject *responseObject) {
+            if (responseObject.code == 0) {
+                NSDictionary *dic = responseObject.result;
+                NSArray *hotelArr = [dic objectForKey:@"result"];
+                _totalPage = [[dic objectForKey:@"totalPage"] intValue];
+                if (hotelArr.count) {
+                    NSMutableArray *arr = [[NSMutableArray alloc] init];
+                    for (NSDictionary *dic in hotelArr) {
+                        BiddingPostersDTO *infoModel = [BiddingPostersDTO yy_modelWithDictionary:dic];
+                        [arr addObject:infoModel];
+                    }
+                    if (arr) {
+                        if (arr.count < _pageSize) {   //不满10个
+                            [_myOrdersArr addObjectsFromArray:arr];
+                            [self.tableView reloadData];
+                            if ([self.tableView.mj_footer isRefreshing]) {
+                                [self endRefreshing];
+                                self.tableView.mj_footer.state = MJRefreshStateNoMoreData;
+                            }
+                        }else{
+                            [_myOrdersArr addObjectsFromArray:arr];
+                            self.tableView.mj_footer.state = MJRefreshStateIdle;
+                            [self.tableView reloadData];
+                        }
+                    }
+                }else{
+                    [_tableView.mj_footer endRefreshing];
+                    [_tableView.mj_footer endRefreshingWithNoMoreData];
+                }
+            }else if (responseObject.code == 2){
+                [WXProgressHUD showErrorWithTittle:@"请先登录"];
+
+            }else{
+                [_tableView reloadData];
+                [_tableView reloadEmptyDataSet];
+                [WXProgressHUD showErrorWithTittle:responseObject.message];
+            }
+        } failureBlock:^(NSError *error) {
             [_tableView reloadData];
             [_tableView reloadEmptyDataSet];
-            [WXProgressHUD showErrorWithTittle:responseObject.message];
-        }
-    } failureBlock:^(NSError *error) {
-        [_tableView reloadData];
-        [_tableView reloadEmptyDataSet];
-        [WXProgressHUD showErrorWithTittle:@"网络异常"];
-    }];
+            [WXProgressHUD showErrorWithTittle:@"网络异常"];
+        }];
+    }
 }
 
 - (void)viewDidLoad {
@@ -240,7 +272,7 @@ typedef enum : NSUInteger {
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return SCREEN_HEIGHT*0.288;
+    return SCREEN_HEIGHT*0.31;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
@@ -256,6 +288,8 @@ typedef enum : NSUInteger {
             if (cell == nil) {
                 cell = [[QDMyPurchaseCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
             }
+            cell.userInteractionEnabled = YES;
+            [cell.withdrawBtn addTarget:self action:@selector(withdrawAction:) forControlEvents:UIControlEventTouchUpInside];
             [cell loadPurchaseDataWithModel:infoModel];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.backgroundColor = APP_WHITECOLOR;
@@ -266,6 +300,8 @@ typedef enum : NSUInteger {
             if (cell == nil) {
                 cell = [[QDMySaleOrderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
             }
+            cell.userInteractionEnabled = YES;
+            [cell.withdrawBtn addTarget:self action:@selector(withdrawAction:) forControlEvents:UIControlEventTouchUpInside];
             [cell loadSaleOrderDataWithModel:infoModel];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.backgroundColor = APP_WHITECOLOR;
@@ -320,9 +356,9 @@ typedef enum : NSUInteger {
 }
 
 #pragma mark - emptyDataSource
-- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView{
-    return [UIImage imageNamed:@"emptySource"];
-}
+//- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView{
+//    return [UIImage imageNamed:@"emptySource"];
+//}
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView{
     NSString *text = @"暂无数据";
@@ -330,6 +366,14 @@ typedef enum : NSUInteger {
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:16.0f],
                                  NSForegroundColorAttributeName: [UIColor darkGrayColor]};
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+- (UIImage *)buttonImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state{
+    return [UIImage imageNamed:@"emptySource"];
+}
+
+- (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button{
+    QDLog(@"123");
 }
 
 - (SPButton *)filterBtn{

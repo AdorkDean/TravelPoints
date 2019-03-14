@@ -130,6 +130,9 @@ static NSString * const api_SaleByProxyApply = @"/lyjfapp/api/v1/ctrade/saleByPr
 static NSString * const api_FindRankTypeToSort = @"/lyjfapp/api/v1/ranklist/findRankTypeToSort";   //榜单类型排序查询
 static NSString * const api_FindAllMapDict = @"/lyjfapp/api/v1/common/findAllMapDict";   //数据字典
 
+static NSString * const api_IsLogin = @"/lyjfapp/api/v1/user/isLogin";           //检查用户是否登录
+
+
 /**
  JAVAScriptBridgeWebView
  */

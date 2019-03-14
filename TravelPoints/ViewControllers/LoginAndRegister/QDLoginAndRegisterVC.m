@@ -10,8 +10,8 @@
 #import "QDMemberDTO.h"
 
 @interface QDLoginAndRegisterVC ()<getTextFieldContentDelegate>
-@property (nonatomic, strong) QDMemberDTO *qdMemberTDO;
 
+@property (nonatomic, strong) QDMemberDTO *qdMemberTDO;
 #pragma mark - 注册人手机号跟用户名
 @property (nonatomic, strong) NSString *userPhoneNum;
 @property (nonatomic, strong) NSString *userName;
@@ -240,7 +240,16 @@
             [WXProgressHUD showSuccessWithTittle:@"登录成功"];
             [QDUserDefaults setObject:_loginView.phoneTF.text forKey:@"userID"];
             [QDUserDefaults setObject:_loginView.userNameTF.text forKey:@"userPwd"];
-            [self findMyUserCreditWithUrlStr:api_GetUserDetail];
+            if ([_pushVCTag isEqualToString:@"0"]) {
+                [self findMyUserCreditWithUrlStr:api_GetUserDetail];
+
+//                [self dismissViewControllerAnimated:YES completion:^{
+//                    //登录成功
+//                    [[NSNotificationCenter defaultCenter] postNotificationName:@"test" object:nil];
+//                }];
+            }else{
+                [self findMyUserCreditWithUrlStr:api_GetUserDetail];
+            }
         }else{
             [WXProgressHUD showErrorWithTittle:responseObject.message];
         }
@@ -259,12 +268,17 @@
             if (responseObject.result != nil) {
                 [WXProgressHUD hideHUD];
                 self.qdMemberTDO = [QDMemberDTO yy_modelWithDictionary:responseObject.result];
-                if (self.qdMemberTDO.accountId == nil) {
+                if ([self.qdMemberTDO.isYepay isEqualToString:@"0"] || self.qdMemberTDO.isYepay == nil) {
                     //未开通资金帐户
+                    
                     [QDUserDefaults setObject:@"1" forKey:@"loginType"];
-                    [self dismissViewControllerAnimated:YES completion:^{
-                    }];
+                }else{
+                    //已开通资金帐户
+                    [QDUserDefaults setObject:@"2" forKey:@"loginType"];
                 }
+                [self dismissViewControllerAnimated:YES completion:^{
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"test" object:nil];
+                }];
             }
         }else{
             [WXProgressHUD showErrorWithTittle:responseObject.message];

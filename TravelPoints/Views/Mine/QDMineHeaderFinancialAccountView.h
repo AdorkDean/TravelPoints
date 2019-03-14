@@ -36,6 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) UILabel *info8Lab;
 @property (nonatomic, strong) UILabel *info9Lab;
+@property (nonatomic, strong) UIButton *accountInfo;
 
 
 

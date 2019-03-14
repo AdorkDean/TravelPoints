@@ -144,7 +144,7 @@
     self.sell.tag = btnTag;
     self.nameLab.text = infoModel.userId;
     self.price.text = infoModel.price;
-    self.amount.text = infoModel.volume;
+    self.amount.text = infoModel.surplusVolume;
     if ([str isEqualToString:@"0"]) {
         [self.sell setTitle:@"买入" forState:UIControlStateNormal];
     }else{
