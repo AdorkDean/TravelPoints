@@ -365,7 +365,6 @@ typedef enum : NSUInteger {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     QDMyPickOrderModel *model = _myPickOrdersArr[indexPath.row];
     QDOrderDetailVC *detailVC = [[QDOrderDetailVC alloc] init];
-    detailVC.typeStr = @"1";
     detailVC.orderModel = model;
     [self.navigationController pushViewController:detailVC animated:YES];
 }

@@ -161,7 +161,7 @@ typedef enum : NSUInteger {
 }
 
 #pragma mark - 下拉刷新数据  只请求第一页的数据
-- (void)requestHeaderTopData{
+- (void)requestYWBHeaderTopData{
     if (_ordersArr.count) {
         [_ordersArr removeAllObjects];
     }
@@ -243,7 +243,7 @@ typedef enum : NSUInteger {
     
     _tableView.mj_header = [QDRefreshHeader headerWithRefreshingBlock:^{
         QDLog(@"下拉刷新");
-        [self requestHeaderTopData];
+        [self requestYWBHeaderTopData];
     }];
     
     _tableView.mj_footer = [QDRefreshFooter footerWithRefreshingBlock:^{
@@ -362,6 +362,7 @@ typedef enum : NSUInteger {
 #pragma mark - 要/转玩贝操作按钮
 - (void)operateAction:(UIButton *)sender{
     QDFindSatifiedDataVC *satifiedVC = [[QDFindSatifiedDataVC alloc] init];
+    satifiedVC.typeStr = @"1";  //请求市场上的卖单数据
     [self.navigationController pushViewController:satifiedVC animated:YES];
 }
 

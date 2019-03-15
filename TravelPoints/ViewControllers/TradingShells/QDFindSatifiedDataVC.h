@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface QDFindSatifiedDataVC : UIViewController
 
+@property (nonatomic, strong) NSString *typeStr;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -31,11 +31,7 @@
     [super viewWillAppear:animated];
     [self.navigationController.navigationBar setHidden:NO];
     [self.navigationController.tabBarController.tabBar setHidden:YES];
-    if ([_typeStr isEqualToString:@"0"]) {  //报单
-        [self requestBiddingOrderDetail];
-    }else{  //摘单
-        [self requestOrderDetail];
-    }
+    [self requestOrderDetail];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -122,63 +118,6 @@
     }];
 }
 
-#pragma mark - 查看挂单(报单)详情
-- (void)requestBiddingOrderDetail{
-    NSDictionary * paramsDic = @{@"orderNumber":_posterDTO.postersId,
-                                 @"orderType":@4
-                                 };
-    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_GetBiddingPosterByPosterId params:paramsDic successBlock:^(QDResponseObject *responseObject) {
-        if (responseObject.code == 0) {
-            QDLog(@"123");
-            NSDictionary *dic = responseObject.result;
-            _pickOrderView.bdNum.text = [dic objectForKey:@"postersId"];
-            _orderID = [dic objectForKey:@"orderId"];
-            _pickOrderView.zdNum.text = _orderID;
-            _pickOrderView.bdTime.text = [QDDateUtils timeStampConversionNSString:[dic objectForKey:@"createTime"]];
-            if ([[dic objectForKey:@"postersStatus"] intValue] == 0) {  //待付款情况
-            }else{
-                _pickOrderView.infoLab.hidden = YES;
-                _pickOrderView.remain.hidden = YES;
-                _pickOrderView.remainLab.hidden = YES;
-                _pickOrderView.payBtn.hidden = YES;
-                _pickOrderView.withdrawBtn.hidden = YES;
-                //未成交与部分成交的时候 并且
-                switch ([[dic objectForKey:@"postersStatus"] integerValue]) {
-                    case QD_ORDERSTATUS_NOTTRADED:
-                        _pickOrderView.statusLab.text = @"未成交";
-                        break;
-                    case QD_ORDERSTATUS_PARTTRADED:
-                        _pickOrderView.statusLab.text = @"部分成交";
-                        break;
-                    case QD_ORDERSTATUS_ALLTRADED:
-                        _pickOrderView.statusLab.text = @"全部成交";
-                        break;
-                    case QD_ORDERSTATUS_ALLCANCELED:
-                        _pickOrderView.statusLab.text = @"全部撤单";
-                        break;
-                    case QD_ORDERSTATUS_PARTCANCELED:
-                        _pickOrderView.statusLab.text = @"全成部撤";
-                        break;
-                    case QD_ORDERSTATUS_ISCANCELED:
-                        _pickOrderView.statusLab.text = @"已取消";
-                        break;
-                    case QD_ORDERSTATUS_INTENTION:
-                        _pickOrderView.statusLab.text = @"意向单";
-                        break;
-                    case QD_ORDERSTATUS_WAITPAY:
-                        _pickOrderView.statusLab.text = @"待付款";
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }else{
-            [WXProgressHUD showErrorWithTittle:responseObject.message];
-        }
-    } failureBlock:^(NSError *error) {
-        [WXProgressHUD showErrorWithTittle:@"网络异常"];
-    }];
-}
 #pragma mark - 取消订单
 - (void)cancelOrderForm{
     NSDictionary *dic = @{@"orderId":_orderID};

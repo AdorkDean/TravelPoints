@@ -25,6 +25,7 @@
 #import "QDRefreshFooter.h"
 #import "RootCollectionCell.h"
 #import "WaterLayou.h"
+#import "QDBuyOrSellViewController.h"
 #define K_T_Cell @"t_cell"
 #define K_C_Cell @"c_cell"
 
@@ -211,10 +212,9 @@ typedef enum : NSUInteger {
     _tableView.dataSource = self;
     _tableView.emptyDataSetSource = self;
     _tableView.emptyDataSetDelegate = self;
-    _tableView.estimatedRowHeight = 0;
-    _tableView.estimatedSectionFooterHeight = 0;
-    _tableView.estimatedSectionHeaderHeight = 0;
-
+//    _tableView.estimatedRowHeight = 0;
+//    _tableView.estimatedSectionFooterHeight = 0;
+//    _tableView.estimatedSectionHeaderHeight = 0;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableView.showsVerticalScrollIndicator = NO;
     if (@available(iOS 11.0, *)) {
@@ -236,7 +236,7 @@ typedef enum : NSUInteger {
 
     _tableView.mj_header = [QDRefreshHeader headerWithRefreshingBlock:^{
         QDLog(@"下拉刷新");
-        [self requestHeaderTopData];
+        [self requestZWBHeaderTopData];
     }];
     _tableView.mj_footer = [QDRefreshFooter footerWithRefreshingBlock:^{
         QDLog(@"上拉刷新");
@@ -246,12 +246,12 @@ typedef enum : NSUInteger {
 }
 
 #pragma mark - 下拉刷新数据  只请求第一页的数据
-- (void)requestHeaderTopData{
+- (void)requestZWBHeaderTopData{
     if (_ordersArr.count) {
         [_ordersArr removeAllObjects];
     }
     NSDictionary * dic1 = @{@"postersStatus":@"",
-                            @"postersType":@"1",
+                            @"postersType":@"0",
                             @"pageNum":@1,
                             @"pageSize":[NSNumber numberWithInt:_pageSize],
                             };
@@ -261,32 +261,25 @@ typedef enum : NSUInteger {
             _totalPage = [[dic objectForKey:@"totalPage"] intValue];
             NSArray *hotelArr = [dic objectForKey:@"result"];
             if (hotelArr.count) {
-                NSMutableArray *arr = [[NSMutableArray alloc] init];
                 for (NSDictionary *dic in hotelArr) {
                     BiddingPostersDTO *infoModel = [BiddingPostersDTO yy_modelWithDictionary:dic];
-                    [arr addObject:infoModel];
+                    [_ordersArr addObject:infoModel];
                 }
-                if (arr) {
-                    if (arr.count < _pageSize) {   //不满10个
-                        [_ordersArr addObjectsFromArray:arr];
-                        [self.tableView reloadData];
-                    }else{
-                        [_ordersArr addObjectsFromArray:arr];
-                        [self.tableView reloadData];
-                    }
-                    if ([self.tableView.mj_header isRefreshing]) {
-                        [self.tableView.mj_header endRefreshing];
-                    }
+                if ([self.tableView.mj_header isRefreshing]) {
+                    [self.tableView.mj_header endRefreshing];
                 }
+                [_tableView reloadData];
             }else{
                 [self.tableView.mj_header endRefreshing];
             }
         }else{
+            [self endRefreshing];
             [WXProgressHUD showErrorWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
         [_tableView reloadData];
         [_tableView reloadEmptyDataSet];
+        [self endRefreshing];
         [WXProgressHUD showErrorWithTittle:@"网络异常"];
     }];
 }
@@ -304,8 +297,11 @@ typedef enum : NSUInteger {
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return _ordersArr.count /2  * SCREEN_HEIGHT * 0.33 + _ordersArr.count/2 * 10 + 10;
-}
+    if (_ordersArr.count % 2 == 0) {
+        return _ordersArr.count /2  * SCREEN_HEIGHT * 0.33 + _ordersArr.count/2 * 10 + 10;
+    }else{
+        return (_ordersArr.count /2 + 1) * SCREEN_HEIGHT * 0.33 + (_ordersArr.count/2 + 1) * 10 + 10;
+    }}
 
 - (UICollectionView *)collectionView{
     if (!_collectionView) {
@@ -313,12 +309,10 @@ typedef enum : NSUInteger {
         WaterLayou *layou = [[WaterLayou alloc] init];
         //创建collectionView
         CGFloat y = 0;
-        if (_ordersArr.count) {
-            if (_ordersArr.count % 2 == 0) {
-                y = _ordersArr.count / 2 * SCREEN_HEIGHT * 0.33;
-            }else{
-                y = ((_ordersArr.count / 2) + 1) * SCREEN_HEIGHT*0.28;
-            }
+        if (_ordersArr.count % 2 == 0) {
+            y = _ordersArr.count /2  * SCREEN_HEIGHT * 0.33 + _ordersArr.count/2 * 10 + 10;
+        }else{
+            y = (_ordersArr.count /2 + 1) * SCREEN_HEIGHT * 0.33 + (_ordersArr.count/2 + 1) * 10 + 10;
         }
         self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, y) collectionViewLayout:layou];
         self.collectionView.backgroundColor = APP_WHITECOLOR;
@@ -337,10 +331,16 @@ typedef enum : NSUInteger {
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
-    cell.backgroundColor = [UIColor redColor];
+    cell.backgroundColor = APP_WHITECOLOR;
     cell.userInteractionEnabled = YES;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    self.collectionView.frame = CGRectMake(0, 0, SCREEN_WIDTH, _ordersArr.count /2  * SCREEN_HEIGHT * 0.33 + _ordersArr.count/2 * 10 + 10);
+    CGFloat y = 0;
+    if (_ordersArr.count % 2 == 0) {
+        y = _ordersArr.count /2  * SCREEN_HEIGHT * 0.33 + _ordersArr.count/2 * 10 + 10;
+    }else{
+        y = (_ordersArr.count /2 + 1) * SCREEN_HEIGHT * 0.33 + (_ordersArr.count/2 + 1) * 10 + 10;
+    }
+    self.collectionView.frame = CGRectMake(0, 0, SCREEN_WIDTH, y);
     if (_ordersArr.count) {
         [self.collectionView reloadData];
     }
@@ -385,8 +385,9 @@ typedef enum : NSUInteger {
 
 #pragma mark - 要/转玩贝操作按钮
 - (void)operateAction:(UIButton *)sender{
-    QDFindSatifiedDataVC *recommendVC = [[QDFindSatifiedDataVC alloc] init];
-    [self.navigationController pushViewController:recommendVC animated:YES];
+    QDFindSatifiedDataVC *satifiedVC = [[QDFindSatifiedDataVC alloc] init];
+    satifiedVC.typeStr = @"0";  //请求市场上的买单数据
+    [self.navigationController pushViewController:satifiedVC animated:YES];
 }
 
 - (void)filterAction:(UIButton *)sender{
@@ -464,7 +465,9 @@ typedef enum : NSUInteger {
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     RootCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     [cell loadDataWithDataArr:_ordersArr[indexPath.row] andTypeStr:@"1" andTag:1];
-    [cell.sell addTarget:self action:@selector(test:) forControlEvents:UIControlEventTouchUpInside];
+    cell.sell.tag = indexPath.row;
+    QDLog(@"cell.sell.tag = %ld", (long)cell.tag);
+    [cell.sell addTarget:self action:@selector(buyOrSellAction:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }
 
@@ -472,7 +475,11 @@ typedef enum : NSUInteger {
     QDLog(@"%ld", (long)indexPath.row);
 }
 
-- (void)test:(UIButton *)sender{
-    QDLog(@"test");
+- (void)buyOrSellAction:(UIButton *)sender{
+    QDBuyOrSellViewController *vc = [[QDBuyOrSellViewController alloc] init];
+    QDLog(@"cell.sell.tag = %ld", (long)sender.tag);
+    vc.operateModel = _ordersArr[sender.tag];
+    [self.navigationController pushViewController:vc animated:YES];
 }
+
 @end

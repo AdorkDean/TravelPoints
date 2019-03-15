@@ -152,8 +152,6 @@ static NSString *cellIdentifier = @"CellIdentifier";
                     RanklistDTO *model = [_rankTotalArr[i] firstObject];
                     [_rankFirstArr addObject:model];
                 }
-                QDLog(@"_rankFirstArr = %@", _rankFirstArr);
-                
                 //tableView的数据源
                 for (int i = 0; i < _rankTotalArr.count; i++) {
                     NSMutableArray *arr = _rankTotalArr[i];
@@ -161,7 +159,6 @@ static NSString *cellIdentifier = @"CellIdentifier";
                     [_rankTableViewData addObject:arr];
                 }
                 _currentTableViewData = _rankTableViewData[0];
-                QDLog(@"_rankFirstArr = %@, _rankTableViewData = %@, _currentTableViewData = %@", _rankFirstArr, _rankTableViewData, _currentTableViewData);
                 if (_tableView) {
                     [_tableView reloadData];
                 }else{

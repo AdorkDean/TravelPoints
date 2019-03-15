@@ -17,7 +17,6 @@
 #import <PgySDK/PgyManager.h>
 #import <PgyUpdate/PgyUpdateManager.h>
 #import <OpenShareHeader.h>
-#import "QDTestVC.h"
 @interface AppDelegate ()
 
 @property(nonatomic, strong) UITabBarController *rootTabbarCtr;
@@ -42,13 +41,8 @@
     QDPlayingShellsVC *playShellsVC = [[QDPlayingShellsVC alloc] init];
     UINavigationController *navPlayShell= [[UINavigationController alloc] initWithRootViewController:playShellsVC];
     
-    QDTestVC *tradeShellsVC = [[QDTestVC alloc] init];
-//    QDTradingViewController *tradeShellsVC = [[QDTradingViewController alloc] init];
+    QDTradingViewController *tradeShellsVC = [[QDTradingViewController alloc] init];
     UINavigationController *navTradeShell = [[UINavigationController alloc] initWithRootViewController:tradeShellsVC];
-//
-//    QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
-//    bridgeVC.urlStr = [QD_JSURL stringByAppendingString:@"integral/transaction/home"];
-//    UINavigationController *navTradeShell = [[UINavigationController alloc] initWithRootViewController:bridgeVC];
 
     QDMineInfoViewController *mineVC = [[QDMineInfoViewController alloc] init];
     UINavigationController *navMine = [[UINavigationController alloc] initWithRootViewController:mineVC];
@@ -103,19 +97,16 @@
     [OpenShare connectWeiboWithAppKey:@"402180334"];
     [OpenShare connectWeixinWithAppId:@"wxd930ea5d5a258f4f"];
     
-
     //添加默认地址
     if ([QDUserDefaults getObjectForKey:@"QD_Domain"] == nil || [[QDUserDefaults getObjectForKey:@"QD_Domain"] isEqualToString:@""]) {
 //        [QDUserDefaults setObject:@"http://203.110.179.27:60409" forKey:@"QD_Domain"];
 //        [QDUserDefaults setObject:@"http://47.101.222.172:8080" forKey:@"QD_Domain"];
         [QDUserDefaults setObject:@"http://appuat.wedotting.com" forKey:@"QD_Domain"];
-
     }
     if ([QDUserDefaults getObjectForKey:@"QD_JSURL"] == nil || [[QDUserDefaults getObjectForKey:@"QD_JSURL"] isEqualToString:@""]) {
 //        [QDUserDefaults setObject:@"http://203.110.179.27:60409/app" forKey:@"QD_JSURL"];
 //        [QDUserDefaults setObject:@"http://47.101.222.172:8080/app" forKey:@"QD_JSURL"];
         [QDUserDefaults setObject:@"http://appuat.wedotting.com/app" forKey:@"QD_JSURL"];
-
     }    if ([QDUserDefaults getObjectForKey:@"QD_TESTJSURL"] == nil || [[QDUserDefaults getObjectForKey:@"QD_TESTJSURL"] isEqualToString:@""]) {
 //        [QDUserDefaults setObject:@"http://203.110.179.27:60409/app/#" forKey:@"QD_TESTJSURL"];
 //        [QDUserDefaults setObject:@"http://47.101.222.172:8080/app/#" forKey:@"QD_TESTJSURL"];

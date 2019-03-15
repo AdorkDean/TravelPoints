@@ -266,12 +266,12 @@
         self.price.text= DTO.price;
     }
     //剩余数量
-    if (DTO.surplusVolume == nil) {
+    if (DTO.volume == nil) {
         self.amount.text = @"--";
     }else{
-        self.amount.text= DTO.surplusVolume;
+        self.amount.text= DTO.volume;
     }
-    if (DTO.price == nil || [DTO.price isEqualToString:@""] || DTO.surplusVolume == nil || [DTO.surplusVolume isEqualToString:@""]) {
+    if (DTO.price == nil || [DTO.price isEqualToString:@""] || DTO.volume == nil || [DTO.volume isEqualToString:@""]) {
         self.balance.text = @"--";
     }else{
         self.balance.text = [NSString stringWithFormat:@"%.2lf", [DTO.price doubleValue] * [DTO.surplusVolume doubleValue]];
@@ -303,8 +303,8 @@
             self.withdrawBtn.hidden = YES;
             break;
         case QD_ORDERSTATUS_PARTCANCELED:
-            self.orderStatusLab.text = @"全成部撤";
-            self.withdrawBtn.hidden = NO;
+            self.orderStatusLab.text = @"部分成交部分撤单";
+            self.withdrawBtn.hidden = YES;
             break;
         case QD_ORDERSTATUS_ISCANCELED:
             self.orderStatusLab.text = @"已取消";

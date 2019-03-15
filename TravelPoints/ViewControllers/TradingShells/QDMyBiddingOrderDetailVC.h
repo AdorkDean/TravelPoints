@@ -8,13 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "QDPickUpOrderCell.h"
-#import "QDMyPickOrderModel.h"
 #import "BiddingPostersDTO.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface QDOrderDetailVC : UIViewController
+@interface QDMyBiddingOrderDetailVC : UIViewController
 
-@property (nonatomic, strong) QDMyPickOrderModel *orderModel;
 @property (nonatomic, strong) BiddingPostersDTO *posterDTO;
 @end
 

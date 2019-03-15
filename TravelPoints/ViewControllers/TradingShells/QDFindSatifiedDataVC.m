@@ -9,6 +9,7 @@
 #import "QDFindSatifiedDataVC.h"
 #import "PPNumberButton.h"
 #import "QDShellRecommendVC.h"
+#import "QDRecommendViewController.h"
 #import "CWActionSheet.h"
 #define AddBtnWidth SCREEN_WIDTH*0.075
 @interface QDFindSatifiedDataVC ()<UITableViewDelegate, UITableViewDataSource, PPNumberButtonDelegate>{
@@ -78,10 +79,12 @@
     [self.view addSubview:_tableView];
     
     _operateBtn = [[UIButton alloc] init];
-    [_operateBtn setTitle:@"确认购买" forState:UIControlStateNormal];
-    [_operateBtn setTitleColor:APP_BLUECOLOR forState:UIControlStateNormal];
+    if ([_typeStr isEqualToString:@"1"]) {
+        [_operateBtn setTitle:@"确认购买" forState:UIControlStateNormal];
+    }else{
+        [_operateBtn setTitle:@"确认卖出" forState:UIControlStateNormal];
+    }
     [_operateBtn addTarget:self action:@selector(payAction:) forControlEvents:UIControlEventTouchUpInside];
-    [_operateBtn setTitleColor:APP_WHITECOLOR forState:UIControlStateNormal];
     CAGradientLayer *gradientLayer =  [CAGradientLayer layer];
     gradientLayer.frame = CGRectMake(0, 0, 335, 50);
     gradientLayer.startPoint = CGPointMake(0, 0);
@@ -194,10 +197,13 @@
 }
 
 - (void)payAction:(UIButton *)sender{
-    QDShellRecommendVC *recommendVC = [[QDShellRecommendVC alloc] init];
+    QDRecommendViewController *recommendVC = [[QDRecommendViewController alloc] init];
+    
+//    QDShellRecommendVC *recommendVC = [[QDShellRecommendVC alloc] init];
     recommendVC.price = [NSString stringWithFormat:@"%.2f",self.priceNumBtn.currentNumber];
     recommendVC.volume = [NSString stringWithFormat:@"%.2f",self.amountNumBtn.currentNumber];
     recommendVC.isPartialDeal = _isPartialDeal;
+    recommendVC.postersType = _typeStr;
     [self.navigationController pushViewController:recommendVC animated:YES];
 }
 

@@ -48,7 +48,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"要玩贝";
+    
+    if ([_operateModel.postersType isEqualToString:@"1"]) {
+        self.title = @"要玩贝";
+    }else{
+        self.title = @"转玩贝";
+    }
     self.view.backgroundColor = APP_WHITECOLOR;
     [self setLeftBtnItem];
     [self initTableView];
@@ -66,7 +71,11 @@
     [self.view addSubview:_tableView];
     
     _operateBtn = [[UIButton alloc] init];
-    [_operateBtn setTitle:@"确认购买" forState:UIControlStateNormal];
+    if ([_operateModel.postersType isEqualToString:@"1"]) {
+        [_operateBtn setTitle:@"确认购买" forState:UIControlStateNormal];
+    }else{
+        [_operateBtn setTitle:@"确认卖出" forState:UIControlStateNormal];
+    }
     [_operateBtn setTitleColor:APP_BLUECOLOR forState:UIControlStateNormal];
     [_operateBtn addTarget:self action:@selector(payAction:) forControlEvents:UIControlEventTouchUpInside];
     [_operateBtn setTitleColor:APP_WHITECOLOR forState:UIControlStateNormal];

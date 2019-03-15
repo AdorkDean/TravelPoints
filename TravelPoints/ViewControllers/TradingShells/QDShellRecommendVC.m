@@ -67,7 +67,7 @@
 - (void)saveIntentionPosters{
     NSDictionary * paramsDic = @{@"creditCode":@"10001",
                                  @"price":[NSNumber numberWithDouble:[_price doubleValue]],
-                                 @"postersType":@"0",
+                                 @"postersType":[_postersType isEqualToString:@"0"] ? @"1": @"0",
                                  @"volume":[NSNumber numberWithInt:[_volume intValue]],
                                  @"isPartialDeal": _isPartialDeal
                                  };
@@ -90,7 +90,7 @@
     }];
 }
 
-#pragma mark - 请求挂单编号
+#pragma mark - 请求挂单列表
 - (void)getRecommendList:(NSString *)urlStr{
     if (_recommendList.count) {
         [_recommendList removeAllObjects];
@@ -142,7 +142,11 @@
     }];
     
     _recommendBtn = [[UIButton alloc] init];
-    [_recommendBtn setTitle:@"跳过推荐，直接购买" forState:UIControlStateNormal];
+    if ([_postersType isEqualToString:@"0"]) {
+        [_recommendBtn setTitle:@"跳过推荐，直接购买" forState:UIControlStateNormal];
+    }else{
+        [_recommendBtn setTitle:@"跳过推荐，直接卖出" forState:UIControlStateNormal];
+    }
     [_recommendBtn addTarget:self action:@selector(toBuyVC:) forControlEvents:UIControlEventTouchUpInside];
     [_recommendBtn setTitleColor:APP_WHITECOLOR forState:UIControlStateNormal];
     CAGradientLayer *gradientLayer =  [CAGradientLayer layer];
@@ -197,6 +201,7 @@
     cell.indexPath = indexPath;
     if (_recommendList.count) {
         cell.dataAry = _recommendList;
+//        cell.typeStr = [_postersType isEqualToString:@"0"] ? @"1": @"0";
         [cell.collectionView reloadData];
     }
     return cell;
