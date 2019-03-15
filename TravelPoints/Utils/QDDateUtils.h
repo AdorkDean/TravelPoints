@@ -126,4 +126,6 @@
  时间戳转字符串
  */
 +(NSString *)timeStampConversionNSString:(NSString *)timeStamp;
+
++ (NSString *)getMMSSFromSS:(NSString *)totalTime;
 @end

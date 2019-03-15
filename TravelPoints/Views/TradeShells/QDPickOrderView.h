@@ -30,6 +30,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *lab5;
 @property (nonatomic, strong) UILabel *lab6;
 @property (nonatomic, strong) UILabel *lab7;
+@property (nonatomic, strong) UILabel *lab8;
+@property (nonatomic, strong) UILabel *lab9;
 @property (nonatomic, strong) UIView *bottomLine;
 @property (nonatomic, strong) UILabel *bdNumLab;
 @property (nonatomic, strong) UILabel *bdNum;
@@ -37,9 +39,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *zdNum;
 @property (nonatomic, strong) UILabel *bdTimeLab;
 @property (nonatomic, strong) UILabel *bdTime;
-@property (nonatomic, strong) UILabel *zdTimeLab;
-@property (nonatomic, strong) UILabel *zdTime;
-
 @property (nonatomic, strong) UIButton *payBtn;
 
 @property (nonatomic, strong) UIButton *withdrawBtn;

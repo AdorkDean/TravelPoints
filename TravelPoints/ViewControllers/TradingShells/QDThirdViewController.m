@@ -55,7 +55,7 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) QDFilterTypeOneView *typeOneView;
 @property (nonatomic, strong) QDFilterTypeTwoView *typeTwoView;
 @property (nonatomic, strong) QDFilterTypeThreeView *typeThreeView;
-
+@property (nonatomic, strong) UIView *vv;
 
 
 
@@ -94,6 +94,8 @@ typedef enum : NSUInteger {
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"test" object:nil];
+    [self.navigationController.navigationBar setHidden:YES];
+    [self.navigationController.tabBarController.tabBar setHidden:NO];
 }
 
 - (UIImageView *)emptyView{
@@ -244,18 +246,25 @@ typedef enum : NSUInteger {
         [WXProgressHUD hideHUD];
     }]];
     [alertView addAction:[TYAlertAction actionWithTitle:@"确定" style:TYAlertActionStyleDestructive handler:^(TYAlertAction *action) {
+        BiddingPostersDTO *infoModel = _myOrdersArr[sender.tag];
+        NSDictionary * paramsDic = @{@"postersId":infoModel.postersId};
+        [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_CancelBiddingPosters params:paramsDic successBlock:^(QDResponseObject *responseObject) {
+            if (responseObject.code == 0) {
+                [WXProgressHUD showSuccessWithTittle:@"撤单成功"];
+                [_myOrdersArr removeObjectAtIndex:sender.tag];
+                [_tableView reloadData];
+            }else{
+                [WXProgressHUD showErrorWithTittle:responseObject.message];
+            }
+        } failureBlock:^(NSError *error) {
+            [WXProgressHUD showErrorWithTittle:@"网络异常"];
+        }];
     }]];
     [alertView setButtonTitleColor:APP_BLUECOLOR forActionStyle:TYAlertActionStyleCancel forState:UIControlStateNormal];
     [alertView setButtonTitleColor:APP_BLUECOLOR forActionStyle:TYAlertActionStyleBlod forState:UIControlStateNormal];
     [alertView setButtonTitleColor:APP_BLUECOLOR forActionStyle:TYAlertActionStyleDestructive forState:UIControlStateNormal];
     [alertView show];
 }
-
-#pragma mark - 付款操作
-- (void)payAction:(UIButton *)sender{
-    QDLog(@"payAction");
-}
-
 
 #pragma mark -- tableView delegate
 
@@ -289,6 +298,7 @@ typedef enum : NSUInteger {
                 cell = [[QDMyPurchaseCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
             }
             cell.userInteractionEnabled = YES;
+            cell.withdrawBtn.tag = indexPath.row;
             [cell.withdrawBtn addTarget:self action:@selector(withdrawAction:) forControlEvents:UIControlEventTouchUpInside];
             [cell loadPurchaseDataWithModel:infoModel];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -313,20 +323,24 @@ typedef enum : NSUInteger {
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView *vv = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.06)];
-    vv.backgroundColor = APP_WHITECOLOR;
-    [vv addSubview:self.filterBtn];
+    _vv = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.06)];
+    _vv.backgroundColor = APP_WHITECOLOR;
+    [_vv addSubview:self.filterBtn];
     [self.filterBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.and.height.equalTo(vv);
-        make.left.equalTo(vv.mas_left).offset(20);
+        make.centerY.and.height.equalTo(_vv);
+        make.left.equalTo(_vv.mas_left).offset(20);
         make.width.mas_equalTo(70);
     }];
-    return vv;
+    return _vv;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     QDOrderDetailVC *detailVC = [[QDOrderDetailVC alloc] init];
+    detailVC.typeStr = @"0";
+    QDLog(@"indexPath.row = %ld", (long)indexPath.row);
+    BiddingPostersDTO *posterDTO = _myOrdersArr[indexPath.row];
+    detailVC.posterDTO = posterDTO;
     [self.navigationController pushViewController:detailVC animated:YES];
 }
 
@@ -350,9 +364,9 @@ typedef enum : NSUInteger {
         _typeThreeView.backgroundColor = APP_WHITECOLOR;
     }
     _popups = [SnailQuickMaskPopups popupsWithMaskStyle:MaskStyleBlackTranslucent aView:_typeThreeView];
-    _popups.presentationStyle = PresentationStyleBottom;
+    _popups.presentationStyle = PresentationStyleTop;
     _popups.delegate = self;
-    [_popups presentInView:self.view animated:YES completion:NULL];
+    [_popups presentInView:_vv animated:YES completion:NULL];
 }
 
 #pragma mark - emptyDataSource
@@ -382,6 +396,7 @@ typedef enum : NSUInteger {
         _filterBtn.imagePosition = SPButtonImagePositionRight;
         [_filterBtn setImage:[UIImage imageNamed:@"icon_filter"] forState:UIControlStateNormal];
         _filterBtn.titleLabel.font = QDFont(14);
+        [_filterBtn addTarget:self action:@selector(filterAction:) forControlEvents:UIControlEventTouchUpInside];
         [_filterBtn setTitle:@"筛选" forState:UIControlStateNormal];
         [_filterBtn setTitleColor:APP_GRAYLINECOLOR forState:UIControlStateNormal];
     }

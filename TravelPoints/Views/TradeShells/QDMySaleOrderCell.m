@@ -271,7 +271,7 @@
     
     [_withdrawBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_transferLab);
-        make.top.equalTo(_lineView.mas_bottom).offset(4);
+        make.top.equalTo(_lineView.mas_bottom).offset(6);
         make.width.mas_equalTo(SCREEN_WIDTH*0.17);
         make.height.mas_equalTo(SCREEN_HEIGHT*0.05);
     }];
@@ -310,11 +310,11 @@
             self.withdrawBtn.hidden = YES;
             break;
         case QD_OverTimeCanceled:
-            self.orderStatusLab.text = @"超时取消";
+            self.orderStatusLab.text = @"已取消";
             self.withdrawBtn.hidden = YES;
             break;
         case QD_ManualCanceled:
-            self.orderStatusLab.text = @"手工取消";
+            self.orderStatusLab.text = @"已取消";
             self.withdrawBtn.hidden = YES;
             break;
         default:

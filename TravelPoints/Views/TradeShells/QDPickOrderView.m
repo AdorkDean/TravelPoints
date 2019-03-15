@@ -7,7 +7,8 @@
 //
 
 #import "QDPickOrderView.h"
-
+#import "QDDateUtils.h"
+#import "QDOrderField.h"
 @implementation QDPickOrderView
 
 - (instancetype)initWithFrame:(CGRect)frame{
@@ -46,7 +47,7 @@
         
         _operationType = [[UILabel alloc] init];
         _operationType.text = @"买入";
-        _operationType.font = QDFont(12);
+        _operationType.font = QDBoldFont(14);
         _operationType.textColor = APP_GRAYTEXTCOLOR;
         [_centerView addSubview:_operationType];
         
@@ -62,19 +63,19 @@
         
         _lab2 = [[UILabel alloc] init];
         _lab2.text = @"¥";
-        _lab2.font = QDFont(20);
+        _lab2.font = QDBoldFont(20);
         _lab2.textColor = APP_ORANGETEXTCOLOR;
         [_centerView addSubview:_lab2];
         
         _lab3 = [[UILabel alloc] init];
         _lab3.text = @"20000";
-        _lab3.font = QDFont(24);
+        _lab3.font = QDBoldFont(24);
         _lab3.textColor = APP_ORANGETEXTCOLOR;
         [_centerView addSubview:_lab3];
         
         _lab4 = [[UILabel alloc] init];
         _lab4.text = @"数量";
-        _lab4.font = QDFont(14);
+        _lab4.font = QDFont(13);
         _lab4.textColor = APP_GRAYLINECOLOR;
         [_centerView addSubview:_lab4];
         
@@ -96,12 +97,25 @@
         _lab7.textColor = APP_GRAYTEXTCOLOR;
         [_centerView addSubview:_lab7];
         
+        _lab8 = [[UILabel alloc] init];
+        _lab8.text = @"手续费";
+        _lab8.font = QDFont(13);
+        _lab8.textColor = APP_GRAYLINECOLOR;
+        [_centerView addSubview:_lab8];
+        
+        _lab9 = [[UILabel alloc] init];
+        _lab9.text = @"¥0.00";
+        _lab9.font = QDFont(13);
+        _lab9.textColor = APP_GRAYTEXTCOLOR;
+        [_centerView addSubview:_lab9];
+        
+        
         _bottomLine = [[UIView alloc] init];
         _bottomLine.backgroundColor = APP_LIGHTGRAYCOLOR;
         [_centerView addSubview:_bottomLine];
         
         _bdNumLab = [[UILabel alloc] init];
-        _bdNumLab.text = @"报单编号:";
+        _bdNumLab.text = @"报单单号:";
         _bdNumLab.textColor = APP_GRAYTEXTCOLOR;
         _bdNumLab.font = QDFont(13);
         [_centerView addSubview:_bdNumLab];
@@ -112,19 +126,6 @@
         _bdNum.textColor = APP_GRAYTEXTCOLOR;
         _bdNum.font = QDFont(13);
         [_centerView addSubview:_bdNum];
-        
-        _zdNumLab = [[UILabel alloc] init];
-        _zdNumLab.text = @"摘单编号:";
-        _zdNumLab.textColor = APP_GRAYTEXTCOLOR;
-        _zdNumLab.font = QDFont(13);
-        [_centerView addSubview:_zdNumLab];
-        
-        _zdNum = [[UILabel alloc] init];
-        _zdNum.text = @"123009240NDF0GFFD";
-        _zdNum.textColor = APP_GRAYTEXTCOLOR;
-        _zdNum.textAlignment = NSTextAlignmentRight;
-        _zdNum.font = QDFont(13);
-        [_centerView addSubview:_zdNum];
         
         _bdTimeLab = [[UILabel alloc] init];
         _bdTimeLab.text = @"报单时间:";
@@ -139,18 +140,18 @@
         _bdTime.font = QDFont(13);
         [_centerView addSubview:_bdTime];
         
-        _zdTimeLab = [[UILabel alloc] init];
-        _zdTimeLab.text = @"摘单时间:";
-        _zdTimeLab.textColor = APP_GRAYTEXTCOLOR;
-        _zdTimeLab.font = QDFont(13);
-        [_centerView addSubview:_zdTimeLab];
- 
-        _zdTime = [[UILabel alloc] init];
-        _zdTime.text = @"2018-11-20 11:30:11";
-        _zdTime.textAlignment = NSTextAlignmentRight;
-        _zdTime.textColor = APP_GRAYTEXTCOLOR;
-        _zdTime.font = QDFont(13);
-        [_centerView addSubview:_zdTime];
+        _zdNumLab = [[UILabel alloc] init];
+        _zdNumLab.text = @"摘单单号:";
+        _zdNumLab.textColor = APP_GRAYTEXTCOLOR;
+        _zdNumLab.font = QDFont(13);
+        [_centerView addSubview:_zdNumLab];
+        
+        _zdNum = [[UILabel alloc] init];
+        _zdNum.text = @"123009240NDF0GFFD";
+        _zdNum.textColor = APP_GRAYTEXTCOLOR;
+        _zdNum.textAlignment = NSTextAlignmentRight;
+        _zdNum.font = QDFont(13);
+        [_centerView addSubview:_zdNum];
  
         _payBtn = [[UIButton alloc] initWithFrame:CGRectMake(21, 505, 155, 50)];
         [_payBtn setTitle:@"付款" forState:UIControlStateNormal];
@@ -210,7 +211,7 @@
     [_centerView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.and.width.equalTo(_topView);
         make.top.equalTo(_topView.mas_bottom).offset(20);
-        make.height.mas_equalTo(281);
+        make.height.mas_equalTo(260);
     }];
 
     [_operationType mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -251,13 +252,23 @@
     }];
 
     [_lab6 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(_lab2);
+        make.top.equalTo(_lab4.mas_bottom).offset(5);
         make.left.equalTo(_lab4);
     }];
 
     [_lab7 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_lab6.mas_right);
         make.centerY.equalTo(_lab6);
+    }];
+    
+    [_lab8 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_lab6.mas_bottom).offset(5);
+        make.left.equalTo(_lab4);
+    }];
+    
+    [_lab9 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_lab8.mas_right);
+        make.centerY.equalTo(_lab8);
     }];
     
     [_bottomLine mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -275,19 +286,9 @@
         make.right.equalTo(_bottomLine);
     }];
 
-    [_zdNumLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(_bdNumLab);
-        make.top.equalTo(_bdNumLab.mas_bottom).offset(3);
-    }];
-
-    [_zdNum mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(_zdNumLab);
-        make.right.equalTo(_topLine);
-    }];
-
     [_bdTimeLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_bdNumLab);
-        make.top.equalTo(_zdNumLab.mas_bottom).offset(3);
+        make.top.equalTo(_bdNumLab.mas_bottom).offset(6);
     }];
 
     [_bdTime mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -295,16 +296,16 @@
         make.right.equalTo(_topLine);
     }];
 
-    [_zdTimeLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(_bdNumLab);
-        make.top.equalTo(_bdTimeLab.mas_bottom).offset(3);
+    [_zdNumLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_bdTimeLab);
+        make.top.equalTo(_bdTimeLab.mas_bottom).offset(6);
     }];
-
-    [_zdTime mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(_zdTimeLab);
+    
+    [_zdNum mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_zdNumLab);
         make.right.equalTo(_topLine);
     }];
-
+    
     [_payBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_centerView.mas_bottom).offset(30);
         make.left.equalTo(_centerView);
@@ -320,7 +321,51 @@
     }];
 }
 
+/**
+ QD_WaitForPurchase = 0,    //待付款
+ QD_HavePurchased = 1,      //已付款
+ QD_HaveFinished = 2,       //已完成
+ QD_OverTimeCanceled = 3,   //超时取消
+ QD_ManualCanceled = 4      //手工取消
+ */
 - (void)loadViewWithModel:(QDMyPickOrderModel *)model{
-    if
+    if ([model.state isEqualToString:@"0"]) {   //待付款
+        _statusLab.text = @"待付款";
+        _remain.text = model.remainMinutes;
+        _infoLab.hidden = NO;
+        _remainLab.hidden = NO;
+        _remain.hidden = NO;
+        _payBtn.hidden = NO;
+        _withdrawBtn.hidden = NO;
+    }else{
+        _infoLab.hidden = YES;
+        _remainLab.hidden = YES;
+        _remain.hidden = YES;
+        switch ([model.state integerValue]) {
+            case QD_HavePurchased:
+                self.statusLab.text = @"已付款";
+                break;
+            case QD_HaveFinished:
+                self.statusLab.text = @"已完成";
+                break;
+            case QD_OverTimeCanceled:
+                self.statusLab.text = @"已取消";
+                break;
+            case QD_ManualCanceled:
+                self.statusLab.text = @"已取消";
+                break;
+            default:
+                break;
+        }
+        _lab5.text = model.amount;
+        _lab7.text = [NSString stringWithFormat:@"¥%@", model.price];
+        _lab3.text = [NSString stringWithFormat:@"%.2f", [model.amount doubleValue] * [model.price doubleValue]];
+        _lab9.text = [NSString stringWithFormat:@"%@", model.poundage];
+        _bdNum.text = model.postersId;
+        _bdTime.text = [QDDateUtils timeStampConversionNSString:model.createTime];
+        _zdNum.text = model.orderId;
+        _payBtn.hidden = YES;
+        _withdrawBtn.hidden = YES;
+    }
 }
 @end

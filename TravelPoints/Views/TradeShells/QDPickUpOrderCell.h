@@ -32,6 +32,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIView *centerLine;
 @property (nonatomic, strong) UILabel *statusLab;
 
+@property (nonatomic, strong) UIButton *withdrawBtn;
+@property (nonatomic, strong) UIButton *payBtn;
+
 
 - (void)loadPickOrderWithModel:(QDMyPickOrderModel *)model;
 

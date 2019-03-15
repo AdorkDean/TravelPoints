@@ -6,11 +6,11 @@
 //  Copyright © 2019 Charles Ran. All rights reserved.
 //
 
-#import "QDBaseViewController.h"
+#import <UIKit/UIKit.h>
 #import "BiddingPostersDTO.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface QDBuyOrSellViewController : QDBaseViewController
+@interface QDBuyOrSellViewController : UIViewController
 
 @property (nonatomic, assign) int cellCount;
 @property (nonatomic, strong) BiddingPostersDTO *operateModel;

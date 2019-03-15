@@ -53,6 +53,15 @@ IB_DESIGNABLE
 - (instancetype)initWithFrame:(CGRect)frame;
 + (instancetype)numberButtonWithFrame:(CGRect)frame;
 
+/** 快速加减定时器*/
+@property (nonatomic, strong) NSTimer *timer;
+/** 减按钮*/
+@property (nonatomic, strong) UIButton *decreaseBtn;
+/** 加按钮*/
+@property (nonatomic, strong) UIButton *increaseBtn;
+/** 数量展示/输入框*/
+@property (nonatomic, strong) UITextField *textField;
+
 /** 加减按钮的Block回调*/
 @property (nonatomic, copy) void(^resultBlock)(PPNumberButton *ppBtn,CGFloat number, BOOL increaseStatus/* 是否为加状态*/);
 /** 代理*/

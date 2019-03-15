@@ -14,7 +14,7 @@
 #import "QDFilterTypeOneView.h"
 #import "QDFilterTypeTwoView.h"
 #import "QDFilterTypeThreeView.h"
-#import "QDShellRecommendVC.h"
+#import "QDFindSatifiedDataVC.h"
 #import "QDMySaleOrderCell.h"
 #import "QDPickUpOrderCell.h"
 #import "QDOrderDetailVC.h"
@@ -65,6 +65,12 @@ typedef enum : NSUInteger {
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self.navigationController.navigationBar setHidden:YES];
+    [self.navigationController.tabBarController.tabBar setHidden:NO];
 }
 
 - (void)viewDidLoad {
@@ -379,14 +385,7 @@ typedef enum : NSUInteger {
 
 #pragma mark - 要/转玩贝操作按钮
 - (void)operateAction:(UIButton *)sender{
-    
-    QDShellRecommendVC *recommendVC = [[QDShellRecommendVC alloc] init];
-    if (_shellType == QDPlayShells) {
-        recommendVC.recommendType = 0;
-    }else if (_shellType == QDTradeShells){
-        recommendVC.recommendType = 1;
-    }
-    self.tabBarController.hidesBottomBarWhenPushed = YES;
+    QDFindSatifiedDataVC *recommendVC = [[QDFindSatifiedDataVC alloc] init];
     [self.navigationController pushViewController:recommendVC animated:YES];
 }
 

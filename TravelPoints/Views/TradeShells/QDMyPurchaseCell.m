@@ -138,12 +138,12 @@
         _orderStatusLab.textColor = APP_GRAYLINECOLOR;
         [_backView addSubview:_orderStatusLab];
         
-        _withdrawBtn = [[UIButton alloc] init];
+        _withdrawBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 70, 30)];
         _withdrawBtn.backgroundColor = APP_GRAYBUTTONCOLOR;
         [_withdrawBtn setTitleColor:APP_BLUECOLOR forState:UIControlStateNormal];
         [_withdrawBtn setTitle:@"撤单" forState:UIControlStateNormal];
         _withdrawBtn.titleLabel.font = QDFont(16);
-        _withdrawBtn.layer.cornerRadius = 10;
+        _withdrawBtn.layer.cornerRadius = 15;
         _withdrawBtn.hidden = YES;
         _withdrawBtn.layer.masksToBounds = YES;
         [_backView addSubview:_withdrawBtn];
@@ -245,16 +245,16 @@
         make.width.mas_equalTo(1);
     }];
 
+    [_withdrawBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_balanceLab);
+        make.top.equalTo(_lineView.mas_bottom).offset(8);
+        make.width.mas_equalTo(70);
+        make.height.mas_equalTo(30);
+    }];
+    
     [_orderStatusLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_priceTextLab);
-        make.top.equalTo(_lineView.mas_bottom).offset(6);
-    }];
-
-    [_withdrawBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(_orderStatusLab);
-        make.left.equalTo(_balanceLab);
-        make.width.mas_equalTo(SCREEN_WIDTH*0.2);
-        make.height.mas_equalTo(SCREEN_HEIGHT*0.04);
+        make.centerY.equalTo(_withdrawBtn);
     }];
 }
 
@@ -351,11 +351,11 @@
             self.withdrawBtn.hidden = YES;
             break;
         case QD_OverTimeCanceled:
-            self.orderStatusLab.text = @"超时取消";
+            self.orderStatusLab.text = @"已取消";
             self.withdrawBtn.hidden = YES;
             break;
         case QD_ManualCanceled:
-            self.orderStatusLab.text = @"手工取消";
+            self.orderStatusLab.text = @"已取消";
             self.withdrawBtn.hidden = YES;
             break;
         default:

@@ -248,6 +248,7 @@ typedef enum : NSUInteger {
         [WXProgressHUD hideHUD];
     }]];
     [alertView addAction:[TYAlertAction actionWithTitle:@"确定" style:TYAlertActionStyleDestructive handler:^(TYAlertAction *action) {
+        [self cancelOrderForm];
     }]];
     [alertView setButtonTitleColor:APP_BLUECOLOR forActionStyle:TYAlertActionStyleCancel forState:UIControlStateNormal];
     [alertView setButtonTitleColor:APP_BLUECOLOR forActionStyle:TYAlertActionStyleBlod forState:UIControlStateNormal];
@@ -255,6 +256,8 @@ typedef enum : NSUInteger {
     [alertView show];
 }
 
+- (void)cancelOrderForm{
+}
 #pragma mark - 付款操作
 - (void)payAction:(UIButton *)sender{
     QDLog(@"payAction");

@@ -97,7 +97,7 @@
             }else{
                 [QDUserDefaults setObject:@"0" forKey:@"loginType"];
                 if (!isAppear) {
-                    [WXProgressHUD showInfoWithTittle:@"未登录"];
+                    [WXProgressHUD showErrorWithTittle:@"未登录"];
                 }else{
                     [WXProgressHUD showErrorWithTittle:responseObject.message];
                 }

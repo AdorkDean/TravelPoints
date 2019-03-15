@@ -10,6 +10,7 @@
 #import "RootTableCell.h"
 #import "QDBuyOrSellViewController.h"
 #import <DZNEmptyDataSet/UIScrollView+EmptyDataSet.h>
+#import "QDBridgeViewController.h"
 @interface QDShellRecommendVC ()<UITableViewDelegate, UITableViewDataSource, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource, RootCellDelegate>{
     UITableView *_tableView;
     UIButton *_recommendBtn;
@@ -25,40 +26,52 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [self.navigationController.navigationBar setHidden:NO];
     [self.navigationController.tabBarController.tabBar setHidden:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    [self.navigationController.navigationBar setHidden:YES];
     [self.navigationController.tabBarController.tabBar setHidden:NO];
 }
 
+- (void)setLeftBtnItem{
+    UIImage *backImage = [UIImage imageNamed:@"icon_return"];
+    UIImage *selectedImage = [backImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithImage:selectedImage style:UIBarButtonItemStylePlain target:self action:@selector(leftBtn)];
+    [self.navigationItem setLeftBarButtonItem:backItem animated:YES];
+}
+- (void)leftBtn{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self showBack:YES];
+    [self setLeftBtnItem];
     //生成意向单
     _recommendList = [[NSMutableArray alloc] init];
-    [self saveIntentionPosters:api_SaveIntentionPosters];
-    if (_recommendType == 0) {
-        self.title = @"要玩贝";
-    }else if (_recommendType == 1){
-        self.title = @"转玩贝";
+    if (_recommendModel == nil) {
+        _recommendModel = [[BiddingPostersDTO alloc] init];
+        _recommendModel.creditCode = @"10001";
     }
-    self.view.backgroundColor = APP_WHITECOLOR;
+    _isPartialDeal = @"1";  //默认为允许部分成交
     [self initTableView];
+    [self saveIntentionPosters];
+    self.title = @"行点";
+    self.view.backgroundColor = APP_WHITECOLOR;
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"naviga"] forBarMetrics:UIBarMetricsDefault];
     // Do any additional setup after loading the view.
 }
 
 #pragma mark - 请求挂单编号
-- (void)saveIntentionPosters:(NSString *)urlStr{
-    NSDictionary * paramsDic = @{@"creditCode":_recommendModel.creditCode,
-                                 @"price":[NSNumber numberWithDouble:1],
-                                 @"postersType":@"1",  //_postersType
-                                 @"volume":[NSNumber numberWithInt:40],
-                                 @"isPartialDeal": @"0"
+- (void)saveIntentionPosters{
+    NSDictionary * paramsDic = @{@"creditCode":@"10001",
+                                 @"price":[NSNumber numberWithDouble:[_price doubleValue]],
+                                 @"postersType":@"0",
+                                 @"volume":[NSNumber numberWithInt:[_volume intValue]],
+                                 @"isPartialDeal": _isPartialDeal
                                  };
-    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:urlStr params:paramsDic successBlock:^(QDResponseObject *responseObject) {
+    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_SaveIntentionPosters params:paramsDic successBlock:^(QDResponseObject *responseObject) {
         if (responseObject.code == 0) {
             NSDictionary *dic = responseObject.result;
             if ([[dic allKeys] containsObject:@"postersId"]) {
@@ -72,8 +85,7 @@
         }
     } failureBlock:^(NSError *error) {
         [_tableView reloadData];
-        [_tableView emptyDataSetSource];
-        [_tableView emptyDataSetDelegate];
+        [_tableView reloadEmptyDataSet];
         [WXProgressHUD showErrorWithTittle:@"网络异常"];
     }];
 }
@@ -89,6 +101,7 @@
             NSDictionary *dic = responseObject.result;
             NSArray *arr = [dic objectForKey:@"commentList"];
             if (!arr.count) {
+                [WXProgressHUD showErrorWithTittle:@"无满足条件的挂单数据"];
                 [_tableView reloadData];
                 [_tableView reloadEmptyDataSet];
             }else{
@@ -151,8 +164,10 @@
 }
 
 - (void)toBuyVC:(UIButton *)sender{
-    QDBuyOrSellViewController *buyVC = [[QDBuyOrSellViewController alloc] init];
-    [self.navigationController pushViewController:buyVC animated:YES];
+    QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
+    NSString *balance = [NSString stringWithFormat:@"%.2f", [_volume doubleValue] * [_price doubleValue]];
+    bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?amount=%@&&id=%@", [QDUserDefaults getObjectForKey:@"QD_JSURL"], JS_PAYACTION, balance, _postersId];
+    [self.navigationController pushViewController:bridgeVC animated:YES];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{

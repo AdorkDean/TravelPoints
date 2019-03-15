@@ -50,23 +50,6 @@ static NSString * const api_GetMarketDataById = @"getMarketDataByInstrumentId"; 
 static NSString * const api_ListInstrument = @"listInstrument"; //查询合约列表
 static NSString * const api_FindInstrumentList = @"findInstrumentList";
 
-//K线相关
-static NSString * const api_ListOneMinKline = @"listOneMinKline";           //一分钟
-static NSString * const api_ListThreeMinKline = @"listThreeMinKline";       //三分钟
-static NSString * const api_ListFiveMinKline = @"listFiveMinKline";         //五分钟
-static NSString * const api_ListTenMinKline = @"listTenMinKline";           //十分钟
-static NSString * const api_ListFifteenMinKline = @"listFifteenMinKline";   //十五分钟
-static NSString * const api_ListThirtyMinKline = @"listThirtyMinKline";     //三十分钟
-static NSString * const api_ListOneHourKline = @"listOneHourKline";         //一小时
-static NSString * const api_ListTwoHoursKline = @"listTwoHoursKline";       //两小时
-static NSString * const api_ListFourHoursKline = @"listFourHoursKline";     //四小时
-static NSString * const api_ListSixHoursKline = @"listSixHoursKline";       //六小时
-static NSString * const api_ListTwelveHoursKline = @"listTwelveHoursKline"; //十二小时
-static NSString * const api_ListOneDayKline = @"listOneDayKline";           //日K
-static NSString * const api_ListThreeDaysKline = @"listThreeDaysKline";     //三天K线
-static NSString * const api_ListOneWeekKline = @"listOneWeekKline";         //周K
-static NSString * const api_ListOneMonthKline = @"listOneMonthKline";       //月K
-
 static NSString * const api_QueryOperTradingAccount = @"queryOperTradingAccount";   //查询个人资金数据
 static NSString * const api_QueryBaseInfo = @"queryBaseInfo";   //查询基础枚举数据
 
@@ -131,7 +114,12 @@ static NSString * const api_FindRankTypeToSort = @"/lyjfapp/api/v1/ranklist/find
 static NSString * const api_FindAllMapDict = @"/lyjfapp/api/v1/common/findAllMapDict";   //数据字典
 
 static NSString * const api_IsLogin = @"/lyjfapp/api/v1/user/isLogin";           //检查用户是否登录
+static NSString * const api_CancelOrderForm = @"/lyjfapp/api/v1/ctrade/cancelOrderForm";           //取消订单(摘单)
+static NSString * const api_BuyAndSellBiddingPosters = @"/lyjfapp/api/v1/ctrade/buyAndSellBiddingPosters";           //买卖摘单
 
+static NSString * const api_UserOrderDetail = @"/lyjfapp/api/v1/userorder/detail";           //查看订单详情
+static NSString * const api_GetBiddingPosterByPosterId = @"/lyjfapp/api/v1/ctrade/getBiddingPosterByPosterId";           //查看挂单详情
+static NSString * const api_CancelBiddingPosters = @"/lyjfapp/api/v1/ctrade/cancelBiddingPosters";                       //撤销挂单
 
 /**
  JAVAScriptBridgeWebView
@@ -170,7 +158,9 @@ static NSString * const JS_COLLECTION           = @"/#/my/collection";          
 static NSString * const JS_PAYACTION            = @"/#/pay/orderPay";               //支付
 static NSString * const JS_RECHARGE             = @"/pay/recharge";                 //充值
 static NSString * const JS_WITHDRAW             = @"/pay/withdraw";                 //提现
-static NSString * const JS_OPENACCOUNT          = @"/#/my/openAccount";               //开通资金账户
+static NSString * const JS_OPENACCOUNT          = @"/#/my/openAccount";             //开通资金账户
+
+static NSString * const JS_PREPARETOPAY         = @"/order/pay";                   //预支付
 
 
 #endif /* WXApi_h */

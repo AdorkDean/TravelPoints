@@ -34,7 +34,7 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [self.navigationController.navigationBar setHidden:YES];
-    [self.navigationController.tabBarController.tabBar setHidden:YES];
+    [self.navigationController.tabBarController.tabBar setHidden:NO];
 }
 
 - (UIColor *)progressColor{

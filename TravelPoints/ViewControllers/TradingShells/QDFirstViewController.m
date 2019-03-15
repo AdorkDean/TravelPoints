@@ -14,7 +14,6 @@
 #import "QDFilterTypeOneView.h"
 #import "QDFilterTypeTwoView.h"
 #import "QDFilterTypeThreeView.h"
-#import "QDShellRecommendVC.h"
 #import "QDMySaleOrderCell.h"
 #import "QDPickUpOrderCell.h"
 #import "QDOrderDetailVC.h"
@@ -25,6 +24,8 @@
 #import "QDRefreshFooter.h"
 #import "RootCollectionCell.h"
 #import "WaterLayou.h"
+#import "QDBuyOrSellViewController.h"
+#import "QDFindSatifiedDataVC.h"
 #define K_T_Cell @"t_cell"
 #define K_C_Cell @"c_cell"
 
@@ -153,6 +154,8 @@ typedef enum : NSUInteger {
     } failureBlock:^(NSError *error) {
         [_tableView reloadData];
         [_tableView reloadEmptyDataSet];
+        [self endRefreshing];
+        [_tableView.mj_footer endRefreshingWithNoMoreData];
         [WXProgressHUD showErrorWithTittle:@"网络异常"];
     }];
 }
@@ -199,6 +202,7 @@ typedef enum : NSUInteger {
     } failureBlock:^(NSError *error) {
         [_tableView reloadData];
         [_tableView reloadEmptyDataSet];
+        [self endRefreshing];
         [WXProgressHUD showErrorWithTittle:@"网络异常"];
     }];
 }
@@ -357,15 +361,8 @@ typedef enum : NSUInteger {
 
 #pragma mark - 要/转玩贝操作按钮
 - (void)operateAction:(UIButton *)sender{
-    
-    QDShellRecommendVC *recommendVC = [[QDShellRecommendVC alloc] init];
-    if (_shellType == QDPlayShells) {
-        recommendVC.recommendType = 0;
-    }else if (_shellType == QDTradeShells){
-        recommendVC.recommendType = 1;
-    }
-    self.tabBarController.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:recommendVC animated:YES];
+    QDFindSatifiedDataVC *satifiedVC = [[QDFindSatifiedDataVC alloc] init];
+    [self.navigationController pushViewController:satifiedVC animated:YES];
 }
 
 - (void)filterAction:(UIButton *)sender{
@@ -434,7 +431,9 @@ typedef enum : NSUInteger {
                                  NSForegroundColorAttributeName: [UIColor darkGrayColor]};
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
-
+- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView{
+    return 120;
+}
 #pragma mark - UICollectionViewDelegate
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return _ordersArr.count;
@@ -443,7 +442,9 @@ typedef enum : NSUInteger {
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     RootCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     [cell loadDataWithDataArr:_ordersArr[indexPath.row] andTypeStr:@"0" andTag:1];
-    [cell.sell addTarget:self action:@selector(test:) forControlEvents:UIControlEventTouchUpInside];
+    cell.sell.tag = indexPath.row;
+    QDLog(@"cell.sell.tag = %ld", (long)cell.tag);
+    [cell.sell addTarget:self action:@selector(buyOrSellAction:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }
 
@@ -451,7 +452,10 @@ typedef enum : NSUInteger {
     QDLog(@"%ld", (long)indexPath.row);
 }
 
-- (void)test:(UIButton *)sender{
-    QDLog(@"test");
+- (void)buyOrSellAction:(UIButton *)sender{
+    QDBuyOrSellViewController *vc = [[QDBuyOrSellViewController alloc] init];
+    QDLog(@"cell.sell.tag = %ld", (long)sender.tag);
+    vc.operateModel = _ordersArr[sender.tag];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 @end

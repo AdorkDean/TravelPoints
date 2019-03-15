@@ -8,29 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "QDPickUpOrderCell.h"
-#import "QDOrderDetailView.h"
 #import "QDMyPickOrderModel.h"
+#import "BiddingPostersDTO.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QDOrderDetailVC : UIViewController
 
-@property (nonatomic, strong) UILabel *clockLab;
-@property (nonatomic, strong) UILabel *infoLab;
-
-@property (nonatomic, strong) UIView *orderInfoView;
-@property (nonatomic, strong) UIButton *payBtn;
-@property (nonatomic, strong) QDOrderDetailView *detailView;
-
-@property (nonatomic, strong) UILabel *bdNumLab;
-@property (nonatomic, strong) UILabel *bdNum;
-@property (nonatomic, strong) UILabel *zdNumLab;
-@property (nonatomic, strong) UILabel *zdNum;
-@property (nonatomic, strong) UILabel *bdTimeLab;
-@property (nonatomic, strong) UILabel *bdTime;
-@property (nonatomic, strong) UILabel *zdTimeLab;
-@property (nonatomic, strong) UILabel *zdTime;
-
 @property (nonatomic, strong) QDMyPickOrderModel *orderModel;
+@property (nonatomic, strong) BiddingPostersDTO *posterDTO;
+@property (nonatomic, strong) NSString *typeStr;    //0为我的报单 1为我的摘单
 @end
 
 NS_ASSUME_NONNULL_END

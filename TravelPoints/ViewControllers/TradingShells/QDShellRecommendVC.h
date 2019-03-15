@@ -6,18 +6,18 @@
 //  Copyright © 2019 Charles Ran. All rights reserved.
 //
 
-#import "QDBaseViewController.h"
+#import <UIKit/UIKit.h>
 #import "BiddingPostersDTO.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface QDShellRecommendVC : QDBaseViewController
+@interface QDShellRecommendVC : UIViewController
 
 @property (nonatomic, assign) int recommendType;
 @property (nonatomic, strong) BiddingPostersDTO *recommendModel;
-@property (nonatomic, assign) int volume;    //购买数量
-@property (nonatomic, assign) double price;     //购买价格
+@property (nonatomic, strong) NSString *volume;    //购买数量
+@property (nonatomic, strong) NSString *price;     //购买价格
 @property (nonatomic, strong) NSString *postersType;     //挂单类型
-
+@property (nonatomic, strong) NSString *isPartialDeal;  //是否允许部分成交
 @end
 
 NS_ASSUME_NONNULL_END

@@ -28,7 +28,7 @@
 #import <DZNEmptyDataSet/UIScrollView+EmptyDataSet.h>
 #import "QDBuyOrSellViewController.h"
 #import "QDSettingViewController.h"
-#import "QDDateUtils.h"
+#import "QDBridgeViewController.h"
 
 #define K_T_Cell @"t_cell"
 #define K_C_Cell @"c_cell"
@@ -59,6 +59,8 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) QDFilterTypeTwoView *typeTwoView;
 @property (nonatomic, strong) QDFilterTypeThreeView *typeThreeView;
 
+@property (nonatomic, strong) UIView *vv;
+
 
 
 
@@ -74,6 +76,8 @@ typedef enum : NSUInteger {
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    [self.navigationController.navigationBar setHidden:YES];
+    [self.navigationController.tabBarController.tabBar setHidden:NO];
 }
 
 - (UIImageView *)emptyView{
@@ -103,6 +107,45 @@ typedef enum : NSUInteger {
     }
     return _tipLab;
 }
+
+- (void)requestHeaderTopData{
+    if (_myPickOrdersArr.count) {
+        [_myPickOrdersArr removeAllObjects];
+    }
+    NSDictionary * paramsDic = @{@"postersStatus":@"",
+                                 @"postersType":@"",
+                                 @"pageNum":@1,
+                                 @"pageSize":[NSNumber numberWithInt:_pageSize]
+                                 };
+    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_FindMyOrder params:paramsDic successBlock:^(QDResponseObject *responseObject) {
+        if (responseObject.code == 0) {
+            NSDictionary *dic = responseObject.result;
+            NSArray *hotelArr = [dic objectForKey:@"result"];
+            _totalPage = [[dic objectForKey:@"totalPage"] intValue];
+            if (hotelArr.count) {
+                for (NSDictionary *dic in hotelArr) {
+                    QDMyPickOrderModel *infoModel = [QDMyPickOrderModel yy_modelWithDictionary:dic];
+                    [_myPickOrdersArr addObject:infoModel];
+                }
+                if ([self.tableView.mj_header isRefreshing]) {
+                    [self.tableView.mj_header endRefreshing];
+                }
+                [_tableView reloadData];
+            }else{
+                [_tableView.mj_header endRefreshing];
+            }
+        }else{
+            [_tableView reloadData];
+            [_tableView reloadEmptyDataSet];
+            [WXProgressHUD showErrorWithTittle:responseObject.message];
+        }
+    } failureBlock:^(NSError *error) {
+        [_tableView reloadData];
+        [_tableView reloadEmptyDataSet];
+        [WXProgressHUD showErrorWithTittle:@"网络异常"];
+    }];
+}
+
 
 #pragma mark - 请求我的摘单数据(买入与卖出)
 - (void)requestMyZhaiDanData{
@@ -189,10 +232,7 @@ typedef enum : NSUInteger {
 //    [self.view addSubview:_tableView];
     self.view = _tableView;
     _tableView.mj_header = [QDRefreshHeader headerWithRefreshingBlock:^{
-        [UIView performWithoutAnimation:^{
-            [_tableView reloadSections:[[NSIndexSet alloc]initWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
-        }];            // 结束刷新
-        [_tableView.mj_header endRefreshing];
+        [self requestHeaderTopData];
     }];
     
     _tableView.mj_footer = [QDRefreshFooter footerWithRefreshingBlock:^{
@@ -216,6 +256,19 @@ typedef enum : NSUInteger {
         [WXProgressHUD hideHUD];
     }]];
     [alertView addAction:[TYAlertAction actionWithTitle:@"确定" style:TYAlertActionStyleDestructive handler:^(TYAlertAction *action) {
+        QDMyPickOrderModel *model = _myPickOrdersArr[sender.tag];
+        NSDictionary *dic = @{@"orderId":model.orderId};
+        [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_CancelOrderForm params:dic successBlock:^(QDResponseObject *responseObject) {
+            if (responseObject.code == 0) {
+                [WXProgressHUD showSuccessWithTittle:@"撤单成功"];
+                [_myPickOrdersArr removeObjectAtIndex:sender.tag];
+                [_tableView reloadData];
+            }else{
+                [WXProgressHUD showErrorWithTittle:responseObject.message];
+            }
+        } failureBlock:^(NSError *error) {
+            [WXProgressHUD showErrorWithTittle:@"网络异常"];
+        }];
     }]];
     [alertView setButtonTitleColor:APP_BLUECOLOR forActionStyle:TYAlertActionStyleCancel forState:UIControlStateNormal];
     [alertView setButtonTitleColor:APP_BLUECOLOR forActionStyle:TYAlertActionStyleBlod forState:UIControlStateNormal];
@@ -223,12 +276,35 @@ typedef enum : NSUInteger {
     [alertView show];
 }
 
+
 #pragma mark - 付款操作
 - (void)payAction:(UIButton *)sender{
     QDLog(@"payAction");
+    TYAlertView *alertView = [[TYAlertView alloc] initWithTitle:@"付款" message:@"您确定要对这笔订单进行付款吗?"];
+    [alertView addAction:[TYAlertAction actionWithTitle:@"取消" style:TYAlertActionStyleCancel handler:^(TYAlertAction *action) {
+        QDLog(@"取消付款");
+    }]];
+    [alertView addAction:[TYAlertAction actionWithTitle:@"确定" style:TYAlertActionStyleDestructive handler:^(TYAlertAction *action) {
+        QDMyPickOrderModel *model = _myPickOrdersArr[sender.tag];
+        QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
+        NSString *balance = [NSString stringWithFormat:@"%.2f", [model.amount doubleValue] * [model.price doubleValue]];
+        bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?amount=%@&&id=%@", [QDUserDefaults getObjectForKey:@"QD_JSURL"], JS_PAYACTION,balance, model.orderId];
+
+//        bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?id=%@", [QDUserDefaults getObjectForKey:@"QD_TESTJSURL"], JS_PREPARETOPAY,model.orderId];
+        [self.navigationController pushViewController:bridgeVC animated:YES];
+    }]];
+    [alertView setButtonTitleColor:APP_BLUECOLOR forActionStyle:TYAlertActionStyleCancel forState:UIControlStateNormal];
+    [alertView setButtonTitleColor:APP_BLUECOLOR forActionStyle:TYAlertActionStyleBlod forState:UIControlStateNormal];
+    [alertView setButtonTitleColor:APP_BLUECOLOR forActionStyle:TYAlertActionStyleDestructive forState:UIControlStateNormal];
+    [alertView show];
 }
 
-
+- (void)cancelOrderForm:(NSString *)orderId{
+    
+//    111
+//     NSDictionary *paramsDic = @{@"orderId":_model ],
+//    [QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_CancelOrderForm params:<#(id)#> successBlock:<#^(QDResponseObject *responseObject)successBlock#> failureBlock:<#^(NSError *error)failureBlock#>
+}
 #pragma mark -- tableView delegate
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -258,6 +334,12 @@ typedef enum : NSUInteger {
         if (cell == nil) {
             cell = [[QDPickUpOrderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
         }
+        cell.payBtn.tag = (long)_myPickOrdersArr[indexPath.row];
+        cell.withdrawBtn.tag = (long)_myPickOrdersArr[indexPath.row];
+        [cell.payBtn addTarget:self action:@selector(payAction:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.withdrawBtn addTarget:self action:@selector(withdrawAction:) forControlEvents:UIControlEventTouchUpInside];
+        cell.payBtn.tag = indexPath.row;
+        cell.withdrawBtn.tag = indexPath.row;
         [cell loadPickOrderWithModel:_myPickOrdersArr[indexPath.row]];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.backgroundColor = APP_WHITECOLOR;
@@ -268,25 +350,23 @@ typedef enum : NSUInteger {
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView *vv = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.075)];
-    vv.backgroundColor = APP_WHITECOLOR;
-    [vv addSubview:self.filterBtn];
+    _vv = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.075)];
+    _vv.backgroundColor = APP_WHITECOLOR;
+    [_vv addSubview:self.filterBtn];
     [self.filterBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.and.height.equalTo(vv);
-        make.left.equalTo(vv.mas_left).offset(20);
+        make.centerY.and.height.equalTo(_vv);
+        make.left.equalTo(_vv.mas_left).offset(20);
         make.width.mas_equalTo(70);
     }];
-    return vv;
+    return _vv;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     QDMyPickOrderModel *model = _myPickOrdersArr[indexPath.row];
     QDOrderDetailVC *detailVC = [[QDOrderDetailVC alloc] init];
+    detailVC.typeStr = @"1";
     detailVC.orderModel = model;
-    
-    NSString *ss = [QDDateUtils timeStampConversionNSString:model.createTime];
-
     [self.navigationController pushViewController:detailVC animated:YES];
 }
 
@@ -310,9 +390,10 @@ typedef enum : NSUInteger {
         _typeThreeView.backgroundColor = APP_WHITECOLOR;
     }
     _popups = [SnailQuickMaskPopups popupsWithMaskStyle:MaskStyleBlackTranslucent aView:_typeThreeView];
-    _popups.presentationStyle = PresentationStyleBottom;
+    _popups.presentationStyle = PresentationStyleTop;
+    _popups.maskAlpha = 0.5;
     _popups.delegate = self;
-    [_popups presentInView:self.view animated:YES completion:NULL];
+    [_popups presentInView:_tableView animated:YES completion:NULL];
 }
 
 #pragma mark - emptyDataSource
@@ -334,6 +415,7 @@ typedef enum : NSUInteger {
         _filterBtn.imagePosition = SPButtonImagePositionRight;
         [_filterBtn setImage:[UIImage imageNamed:@"icon_filter"] forState:UIControlStateNormal];
         _filterBtn.titleLabel.font = QDFont(13);
+        [_filterBtn addTarget:self action:@selector(filterAction:) forControlEvents:UIControlEventTouchUpInside];
         [_filterBtn setTitle:@"筛选" forState:UIControlStateNormal];
         [_filterBtn setTitleColor:APP_BLACKCOLOR forState:UIControlStateNormal];
     }

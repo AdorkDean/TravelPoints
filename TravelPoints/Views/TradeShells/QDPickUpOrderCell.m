@@ -27,9 +27,9 @@
         _backView.backgroundColor = [UIColor whiteColor];
         _backView.layer.shadowColor = APP_GRAYLINECOLOR.CGColor;
         // 阴影偏移，默认(0, -3)
-        _backView.layer.shadowOffset = CGSizeMake(2,3);
+        _backView.layer.shadowOffset = CGSizeMake(1,1);
         // 阴影透明度，默认0
-        _backView.layer.shadowOpacity = 3;
+        _backView.layer.shadowOpacity = 1;
         // 阴影半径，默认3
         _backView.layer.shadowRadius = 2;
         [self.contentView addSubview:_backView];
@@ -110,10 +110,28 @@
         [_backView addSubview:_centerLine];
         
         _statusLab = [[UILabel alloc] init];
-        _statusLab.text = @"已取消";
+        _statusLab.text = @"--";
         _statusLab.textColor = APP_GRAYLINECOLOR;
         _statusLab.font = QDFont(14);
         [_backView addSubview:_statusLab];
+        
+        _withdrawBtn = [[UIButton alloc] init];
+        _withdrawBtn.backgroundColor = APP_GRAYBUTTONCOLOR;
+        [_withdrawBtn setTitle:@"撤单" forState:UIControlStateNormal];
+        [_withdrawBtn setTitleColor:APP_BLUECOLOR forState:UIControlStateNormal];
+        _withdrawBtn.layer.cornerRadius = 15;
+        _withdrawBtn.layer.masksToBounds = YES;
+        _withdrawBtn.titleLabel.font = QDFont(16);
+        [_backView addSubview:_withdrawBtn];
+        
+        _payBtn = [[UIButton alloc] init];
+        _payBtn.backgroundColor = APP_BLUECOLOR;
+        [_payBtn setTitle:@"付款" forState:UIControlStateNormal];
+        [_payBtn setTitleColor:APP_WHITECOLOR forState:UIControlStateNormal];
+        _payBtn.layer.cornerRadius = 15;
+        _payBtn.layer.masksToBounds = YES;
+        _payBtn.titleLabel.font = QDFont(16);
+        [_backView addSubview:_payBtn];
     }
     return self;
 }
@@ -196,9 +214,25 @@
         make.width.mas_equalTo(1);
     }];
     
+    [_withdrawBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_lineView.mas_bottom).offset(6);
+        make.left.equalTo(_centerLine);
+        make.width.mas_equalTo(70);
+        make.height.mas_equalTo(30);
+    }];
+    
+    
     [_statusLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_lineView.mas_bottom).offset(5);
+        make.centerY.equalTo(_withdrawBtn);
         make.left.equalTo(_totalPriceTextLab);
+    }];
+    
+   
+    [_payBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_statusLab);
+        make.left.equalTo(_withdrawBtn.mas_right).offset(10);
+        make.width.mas_equalTo(70);
+        make.height.mas_equalTo(30);
     }];
 }
 
@@ -221,25 +255,30 @@
     }
     self.balance.text = model.amount;
     //手续费
-    self.transfer.text = model.poundage;
-    switch ([model.state integerValue]) {
-        case QD_WaitForPurchase:
-            self.statusLab.text = @"待付款";
-            break;
-        case QD_HavePurchased:
-            self.statusLab.text = @"已付款";
-            break;
-        case QD_HaveFinished:
-            self.statusLab.text = @"已完成";
-            break;
-        case QD_OverTimeCanceled:
-            self.statusLab.text = @"超时取消";
-            break;
-        case QD_ManualCanceled:
-            self.statusLab.text = @"手工取消";
-            break;
-        default:
-            break;
+    self.transfer.text = [NSString stringWithFormat:@"¥%@", model.poundage];
+    if ([model.state isEqualToString:@"0"]) {
+        self.statusLab.text = @"待付款";
+        _withdrawBtn.hidden = NO;
+        _payBtn.hidden = NO;
+    }else{
+        _withdrawBtn.hidden = YES;
+        _payBtn.hidden = YES;
+        switch ([model.state integerValue]) {
+            case QD_HavePurchased:
+                self.statusLab.text = @"已付款";
+                break;
+            case QD_HaveFinished:
+                self.statusLab.text = @"已完成";
+                break;
+            case QD_OverTimeCanceled:
+                self.statusLab.text = @"已取消";
+                break;
+            case QD_ManualCanceled:
+                self.statusLab.text = @"已取消";
+                break;
+            default:
+                break;
+        }
     }
 }
 

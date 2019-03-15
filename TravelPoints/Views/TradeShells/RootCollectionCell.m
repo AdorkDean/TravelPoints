@@ -69,7 +69,7 @@
         [_sell setTitle:@"购买" forState:UIControlStateNormal];
         [_sell setTitleColor:APP_BLUECOLOR forState:UIControlStateNormal];
         _sell.titleLabel.font = QDFont(15);
-        _sell.layer.cornerRadius = 5;
+        _sell.layer.cornerRadius = 4;
         _sell.layer.masksToBounds = YES;
         [self.contentView addSubview:_sell];
         

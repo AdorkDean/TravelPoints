@@ -459,7 +459,6 @@ static NSString *cellIdentifier = @"CellIdentifier";
         if (cell == nil) {
             cell = [[QDHomePageViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier2];
         }
-        QDLog(@"index.row = %ld", (long)indexPath.row);
         if (_currentTableViewData.count) {
             [cell loadTableViewCellDataWithModel:_currentTableViewData[indexPath.row]];
         }else{
