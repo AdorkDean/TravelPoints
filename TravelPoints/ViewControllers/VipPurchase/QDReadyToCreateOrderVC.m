@@ -11,6 +11,7 @@
 #import "QDSalesInfo.h"
 #import "CWActionSheet.h"
 #import "QDBridgeViewController.h"
+#import "QDLoginAndRegisterVC.h"
 @interface QDReadyToCreateOrderVC ()<UITableViewDelegate, UITableViewDataSource>{
     UITableView *_tableView;
     NSString *_allowSelect;
@@ -45,38 +46,45 @@
 #pragma mark - 积分充值卡查询
 - (void)readyToCreateOrder:(NSString *)urlStr{
     //判空 如果没有选择卡片 则进来的时候 model为nil
-    NSDictionary *paramsDic = @{@"id":[NSNumber numberWithInteger:_vipModel.id],
-                                 @"vipTypeName":_vipModel.vipTypeName,
-                                 @"vipMoney":[NSNumber numberWithInt:[_vipModel.vipMoney intValue]]
-                                 };
-    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:urlStr params:paramsDic successBlock:^(QDResponseObject *responseObject) {
-        if (responseObject.code == 0) {
-            NSDictionary *dic = responseObject.result;
-            _allowSelect = [dic objectForKey:@"allowSelect"];
-            if ([_allowSelect intValue] == 0) {
-                [WXProgressHUD showErrorWithTittle:@"不允许选择代销商"];
-            }else{
-                //发行计划代码与申购积分数量
-                _planCode = [dic objectForKey:@"planCode"];
-                _subscriptCount = [dic objectForKey:@"subscriptCount"];
-                if (_salesInfoArr.count) {
-                    [_salesInfoArr removeAllObjects];
-                }
-                NSArray *saleInfoArr = [dic objectForKey:@"salesInfo"];
-                if (saleInfoArr.count) {
-                    for (NSDictionary *dic in saleInfoArr) {
-                        QDSalesInfo *infoModel = [QDSalesInfo yy_modelWithDictionary:dic];
-                        [_salesInfoArr addObject:infoModel];
+    NSString *str = [QDUserDefaults getObjectForKey:@"loginType"];
+    if ([str isEqualToString:@"0"] || str == nil) { //未登录
+        QDLoginAndRegisterVC *loginVC = [[QDLoginAndRegisterVC alloc] init];
+        loginVC.pushVCTag = @"0";
+        [self presentViewController:loginVC animated:YES completion:nil];
+    }else{
+        NSDictionary *paramsDic = @{@"id":[NSNumber numberWithInteger:_vipModel.id],
+                                     @"vipTypeName":_vipModel.vipTypeName,
+                                     @"vipMoney":[NSNumber numberWithInt:[_vipModel.vipMoney intValue]]
+                                     };
+        [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:urlStr params:paramsDic successBlock:^(QDResponseObject *responseObject) {
+            if (responseObject.code == 0) {
+                NSDictionary *dic = responseObject.result;
+                _allowSelect = [dic objectForKey:@"allowSelect"];
+                if ([_allowSelect intValue] == 0) {
+                    [WXProgressHUD showErrorWithTittle:@"不允许选择代销商"];
+                }else{
+                    //发行计划代码与申购积分数量
+                    _planCode = [dic objectForKey:@"planCode"];
+                    _subscriptCount = [dic objectForKey:@"subscriptCount"];
+                    if (_salesInfoArr.count) {
+                        [_salesInfoArr removeAllObjects];
+                    }
+                    NSArray *saleInfoArr = [dic objectForKey:@"salesInfo"];
+                    if (saleInfoArr.count) {
+                        for (NSDictionary *dic in saleInfoArr) {
+                            QDSalesInfo *infoModel = [QDSalesInfo yy_modelWithDictionary:dic];
+                            [_salesInfoArr addObject:infoModel];
+                        }
                     }
                 }
+            }else{
+                [WXProgressHUD showErrorWithTittle:responseObject.message];
             }
-        }else{
-            [WXProgressHUD showErrorWithTittle:responseObject.message];
-        }
-    } failureBlock:^(NSError *error) {
-        [_tableView reloadData];
-        [WXProgressHUD showErrorWithTittle:@"网络异常"];
-    }];
+        } failureBlock:^(NSError *error) {
+            [_tableView reloadData];
+            [WXProgressHUD showErrorWithTittle:@"网络异常"];
+        }];
+    }
 }
 
 - (void)viewDidLoad {

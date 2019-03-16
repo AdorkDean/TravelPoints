@@ -44,8 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *orderStatusLab;
 @property (nonatomic, strong) UIButton *withdrawBtn;
 
-- (void)loadSaleOrderDataWithModel:(BiddingPostersDTO *)DTO;
-
+- (void)loadSaleOrderDataWithModel:(BiddingPostersDTO *)DTO withTag:(NSInteger)btnTag;
 - (void)loadMyPickSaleDataWithModel:(QDMyPickOrderModel *)model;
 
 @end

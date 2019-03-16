@@ -133,7 +133,7 @@
         
         
         _bottomLab2 = [[UILabel alloc] init];
-        _bottomLab2.text = @"5000";
+        _bottomLab2.text = @"";
         _bottomLab2.font = QDFont(14);
         _bottomLab2.textColor = APP_GRAYTEXTCOLOR;
         [self addSubview:_bottomLab2];

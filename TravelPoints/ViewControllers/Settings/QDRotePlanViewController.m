@@ -87,17 +87,19 @@ static const NSInteger RoutePlanningPaddingEdge                    = 20;
     self.regions = [[NSMutableArray alloc] init];
     [self setTopView];
     [self initMapView];
-    [self setInfoView];
-    UIButton *phoneBtn = [[UIButton alloc] init];
-    [phoneBtn setImage:[UIImage imageNamed:@"icon_makeCall"] forState:UIControlStateNormal];
-    [self.view addSubview:phoneBtn];
-    [phoneBtn addTarget:self action:@selector(makeCall:) forControlEvents:UIControlEventTouchUpInside];
-    [phoneBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(_headerView.mas_top);
-        make.right.equalTo(self.view.mas_right).offset(-(SCREEN_WIDTH*0.06));
-        make.width.and.height.mas_equalTo(SCREEN_WIDTH*0.2);
-    }];
-    [self loadBottomInfoWithModel:_infoModel];
+    if (_infoModel) {
+        [self setInfoView];
+        UIButton *phoneBtn = [[UIButton alloc] init];
+        [phoneBtn setImage:[UIImage imageNamed:@"icon_makeCall"] forState:UIControlStateNormal];
+        [self.view addSubview:phoneBtn];
+        [phoneBtn addTarget:self action:@selector(makeCall:) forControlEvents:UIControlEventTouchUpInside];
+        [phoneBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(_headerView.mas_top);
+            make.right.equalTo(self.view.mas_right).offset(-(SCREEN_WIDTH*0.06));
+            make.width.and.height.mas_equalTo(SCREEN_WIDTH*0.2);
+        }];
+        [self loadBottomInfoWithModel:_infoModel];
+    }
     [self configLocationManager];
     [self addOneAnnotation];
     self.search = [[AMapSearchAPI alloc] init];
@@ -110,8 +112,8 @@ static const NSInteger RoutePlanningPaddingEdge                    = 20;
     _headerView.info4.text = [NSString stringWithFormat:@"¥%@", infoModel.rmbprice];
     _headerView.info1.text = [NSString stringWithFormat:@"%@", infoModel.price];
     _headerView.addressStr.text = infoModel.address;
-
 }
+
 - (void)getCurrentLocation{
     //终点地名
     NSString *oreillyAddress = [NSString stringWithFormat:@"%@, %@", _cityStr, _addressStr];

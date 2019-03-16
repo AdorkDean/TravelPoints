@@ -242,7 +242,7 @@ static NSString *cellIdentifier = @"CellIdentifier";
 
 - (void)handleDoubleTap:(UITapGestureRecognizer *)sender{
     QDLog(@"doubleTapGesture");
-    LQPopUpView *popUpView = [[LQPopUpView alloc] initWithTitle:@"提示" message:@"在做账号密码登录时，可以选择这种方式"];
+    LQPopUpView *popUpView = [[LQPopUpView alloc] initWithTitle:@"提示" message:@"在此处更新服务器地址"];
     __weak typeof(LQPopUpView) *weakPopUpView = popUpView;
     
     [popUpView addTextFieldWithPlaceholder:@"请输入完整的URL地址(含http)" text:nil secureEntry:NO];
@@ -255,14 +255,12 @@ static NSString *cellIdentifier = @"CellIdentifier";
         // do something...
         UITextField *tf = weakPopUpView.textFieldArray[0];
         NSLog(@"输入框的文字是：%@", tf.text);
-
         [QDUserDefaults setObject:tf.text forKey:@"QD_Domain"];
         NSString *jsurl = [tf.text stringByAppendingString:@"/app"];
         [QDUserDefaults setObject:jsurl forKey:@"QD_JSURL"];
         NSString *testjsurl = [tf.text stringByAppendingString:@"/app/#"];
         [QDUserDefaults setObject:testjsurl forKey:@"QD_TESTJSURL"];
         [WXProgressHUD showSuccessWithTittle:@"地址保存成功"];
-
     }];
     [popUpView showInView:self.view preferredStyle:LQPopUpViewStyleAlert];
 }
@@ -346,39 +344,9 @@ static NSString *cellIdentifier = @"CellIdentifier";
 
 - (void)initTableView{
     [self.view addSubview:self.tableView];
-    
-//    [self configNavigationBar];
-//    [self.view addSubview:self.navigationView];
 }
 
 #pragma mark - UI
-//导航栏
-- (void)configNavigationBar{
-    WS(ws);
-    _shareBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_shareBtn setImage:[UIImage imageNamed:@"ad_share_white"] forState:UIControlStateNormal];
-    [_shareBtn setImage:[UIImage imageNamed:@"ad_share_red"] forState:UIControlStateSelected];
-    [_shareBtn addTarget:self action:@selector(shareBtnAction) forControlEvents:UIControlEventTouchUpInside];
-    _collectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_collectBtn addTarget:self action:@selector(collectButtonAction) forControlEvents:UIControlEventTouchUpInside];
-    [_collectBtn setImage:[UIImage imageNamed:@"ad_collection_white"] forState:UIControlStateNormal];
-    [_collectBtn setImage:[UIImage imageNamed:@"ad_collection_red"] forState:UIControlStateSelected];
-    
-    [self.view addSubview:_shareBtn];
-    [self.view addSubview:_collectBtn];
-    
-    [_shareBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(ws.view).offset(35);
-        make.right.equalTo(ws.view).offset(-73);
-        make.size.mas_offset(CGSizeMake(22, 22));
-    }];
-    
-    [_collectBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.shareBtn);
-        make.right.equalTo(ws.view).offset(-30);
-        make.size.mas_equalTo(CGSizeMake(22, 22));
-    }];
-}
 //透明导航兰
 - (NavigationView *)navigationView{
     if (!_navigationView) {

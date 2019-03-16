@@ -29,6 +29,7 @@
 #import "QDBuyOrSellViewController.h"
 #import "QDSettingViewController.h"
 #import "QDBridgeViewController.h"
+#import "QDLoginAndRegisterVC.h"
 
 #define K_T_Cell @"t_cell"
 #define K_C_Cell @"c_cell"
@@ -149,57 +150,67 @@ typedef enum : NSUInteger {
 
 #pragma mark - 请求我的摘单数据(买入与卖出)
 - (void)requestMyZhaiDanData{
-    if (_totalPage != 0) {
-        if (_pageNum >= _totalPage) {
-            [self.tableView.mj_footer endRefreshingWithNoMoreData];
-            return;
+    NSString *str = [QDUserDefaults getObjectForKey:@"loginType"];
+    if ([str isEqualToString:@"0"] || str == nil) { //未登录
+        QDLoginAndRegisterVC *loginVC = [[QDLoginAndRegisterVC alloc] init];
+        loginVC.pushVCTag = @"0";
+        [self presentViewController:loginVC animated:YES completion:nil];
+    }else{
+        if (_totalPage != 0) {
+            if (_pageNum >= _totalPage) {
+                [self.tableView.mj_footer endRefreshingWithNoMoreData];
+                return;
+            }
         }
-    }
-    NSDictionary * paramsDic = @{@"postersStatus":@"",
-                                 @"postersType":@"",
-                                 @"pageNum":[NSNumber numberWithInt:_pageNum],
-                                 @"pageSize":[NSNumber numberWithInt:_pageSize]
-                                 };
-    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_FindMyOrder params:paramsDic successBlock:^(QDResponseObject *responseObject) {
-        if (responseObject.code == 0) {
-            NSDictionary *dic = responseObject.result;
-            NSArray *hotelArr = [dic objectForKey:@"result"];
-            _totalPage = [[dic objectForKey:@"totalPage"] intValue];
-            if (hotelArr.count) {
-                NSMutableArray *arr = [[NSMutableArray alloc] init];
-                for (NSDictionary *dic in hotelArr) {
-                    QDMyPickOrderModel *infoModel = [QDMyPickOrderModel yy_modelWithDictionary:dic];
-                    [arr addObject:infoModel];
-                }
-                if (arr) {
-                    if (arr.count < _pageSize) {   //不满10个
-                        [_myPickOrdersArr addObjectsFromArray:arr];
-                        [self.tableView reloadData];
-                        if ([self.tableView.mj_footer isRefreshing]) {
-                            [self endRefreshing];
-                            self.tableView.mj_footer.state = MJRefreshStateNoMoreData;
-                        }
-                    }else{
-                        [_myPickOrdersArr addObjectsFromArray:arr];
-                        self.tableView.mj_footer.state = MJRefreshStateIdle;
-                        [self.tableView reloadData];
+        NSDictionary * paramsDic = @{@"postersStatus":@"",
+                                     @"postersType":@"",
+                                     @"pageNum":[NSNumber numberWithInt:_pageNum],
+                                     @"pageSize":[NSNumber numberWithInt:_pageSize]
+                                     };
+        [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_FindMyOrder params:paramsDic successBlock:^(QDResponseObject *responseObject) {
+            if (responseObject.code == 0) {
+                NSDictionary *dic = responseObject.result;
+                NSArray *hotelArr = [dic objectForKey:@"result"];
+                _totalPage = [[dic objectForKey:@"totalPage"] intValue];
+                if (hotelArr.count) {
+                    NSMutableArray *arr = [[NSMutableArray alloc] init];
+                    for (NSDictionary *dic in hotelArr) {
+                        QDMyPickOrderModel *infoModel = [QDMyPickOrderModel yy_modelWithDictionary:dic];
+                        [arr addObject:infoModel];
                     }
+                    if (arr) {
+                        if (arr.count < _pageSize) {   //不满10个
+                            [_myPickOrdersArr addObjectsFromArray:arr];
+                            [self.tableView reloadData];
+                            if ([self.tableView.mj_footer isRefreshing]) {
+                                [self endRefreshing];
+                                self.tableView.mj_footer.state = MJRefreshStateNoMoreData;
+                            }
+                        }else{
+                            [_myPickOrdersArr addObjectsFromArray:arr];
+                            self.tableView.mj_footer.state = MJRefreshStateIdle;
+                            [self.tableView reloadData];
+                        }
+                    }
+                }else{
+                    [_tableView.mj_footer endRefreshing];
+                    [_tableView.mj_footer endRefreshingWithNoMoreData];
+                    
                 }
-            }else{
-                [_tableView.mj_footer endRefreshing];
-                [_tableView.mj_footer endRefreshingWithNoMoreData];
+            }else if (responseObject.code == 2){
                 
             }
-        }else{
+            else{
+                [_tableView reloadData];
+                [_tableView reloadEmptyDataSet];
+                [WXProgressHUD showErrorWithTittle:responseObject.message];
+            }
+        } failureBlock:^(NSError *error) {
             [_tableView reloadData];
             [_tableView reloadEmptyDataSet];
-            [WXProgressHUD showErrorWithTittle:responseObject.message];
-        }
-    } failureBlock:^(NSError *error) {
-        [_tableView reloadData];
-        [_tableView reloadEmptyDataSet];
-        [WXProgressHUD showErrorWithTittle:@"网络异常"];
-    }];
+            [WXProgressHUD showErrorWithTittle:@"网络异常"];
+        }];
+    }
 }
 
 - (void)viewDidLoad {

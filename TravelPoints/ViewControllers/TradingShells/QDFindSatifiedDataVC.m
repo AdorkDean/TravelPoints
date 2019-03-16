@@ -18,8 +18,6 @@
     int maxNumber;
     int minNumber;
     int currentNumber;
-    
-    int finalNum;
 }
 @property (nonatomic, strong) PPNumberButton *amountNumBtn;
 @property (nonatomic, strong) PPNumberButton *priceNumBtn;
@@ -214,9 +212,11 @@
         _priceNumBtn = [[PPNumberButton alloc] initWithFrame:CGRectMake(0, 0, 145, 40)];
 //        _priceNumBtn.inputFieldFont
         _priceNumBtn.shakeAnimation = YES;
+        _priceNumBtn.stepValue = 0.1;
+        _priceNumBtn.decimalNum = YES;
         // 设置最小值
-        _priceNumBtn.minValue = 1;
-        _priceNumBtn.currentNumber = 1;
+        _priceNumBtn.minValue = 0.1;
+        _priceNumBtn.currentNumber = 0.1;
         // 设置最大值
         [_priceNumBtn.textField addTarget:self action:@selector(textfieldDidChange:) forControlEvents:UIControlEventEditingChanged];
         _priceNumBtn.maxValue = 10000;
@@ -240,6 +240,7 @@
     if (!_amountNumBtn) {
         _amountNumBtn = [[PPNumberButton alloc] initWithFrame:CGRectMake(0, 0, 145, 40)];
         _amountNumBtn.shakeAnimation = YES;
+        _amountNumBtn.stepValue = 1;
         // 设置最小值
         _amountNumBtn.minValue = 1;
         _amountNumBtn.currentNumber = 1;
@@ -283,7 +284,6 @@
 {
     NSLog(@"%@",increaseStatus ? @"加运算":@"减运算");
     _priceLab.text = [NSString stringWithFormat:@"%.2lf", _amountNumBtn.currentNumber * _priceNumBtn.currentNumber];
-    finalNum = (int)number;
     if (numberButton == self.amountNumBtn) {
         if (number ==  self.amountNumBtn.minValue ) {
             _amountNumBtn.decreaseImage = [UIImage imageNamed:@"icon_grayDecrease"];

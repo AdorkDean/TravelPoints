@@ -27,7 +27,7 @@
         [self addSubview:_picView];
         
         _userNameLab = [[UILabel alloc] init];
-        _userNameLab.text = @"风式幽助";
+        _userNameLab.text = @"加载中";
         _userNameLab.textColor = APP_BLACKCOLOR;
         _userNameLab.font = QDFont(17);
         [self addSubview:_userNameLab];

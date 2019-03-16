@@ -54,16 +54,16 @@ static char *const btnKey = "btnKey";
 }
 
 - (void)selectClick:(UIButton *)btn{
-    if (btn.tag == 101) {
-        btn.selected = YES;
-        UIButton *button = [self viewWithTag:102];
-        button.selected = NO;
-    }
-    if (btn.tag == 102) {
-        btn.selected = YES;
-        UIButton *button = [self viewWithTag:101];
-        button.selected = NO;
-    }
+//    if (btn.tag == 101) {
+//        btn.selected = YES;
+//        UIButton *button = [self viewWithTag:102];
+//        button.selected = NO;
+//    }
+//    if (btn.tag == 102) {
+//        btn.selected = YES;
+//        UIButton *button = [self viewWithTag:101];
+//        button.selected = NO;
+//    }
 //    if (btn.tag != 103) {//没点击全部分类，则让其他按钮回复默认状态
 //        for (int i = 1; i<3 ;i++) {
 //            UIButton *button = [self viewWithTag:i+100];
@@ -86,10 +86,12 @@ static char *const btnKey = "btnKey";
             [btn setImage:[UIImage imageNamed:@"icon_shellpositive"] forState:UIControlStateNormal];
             objc_setAssociatedObject(btn, btnKey, @"2", OBJC_ASSOCIATION_ASSIGN);
             type = ButtonClickTypeUp;
+            QDLog(@"priceUp");
         }else if ([flag isEqualToString:@"2"]){
             [btn setImage:[UIImage imageNamed:@"icon_shellreverse"] forState:UIControlStateNormal];
             objc_setAssociatedObject(btn, btnKey, @"1", OBJC_ASSOCIATION_ASSIGN);
             type = ButtonClickTypeDown;
+            QDLog(@"priceDown");
         }
     }else if (btn.tag == 102){
         [_amountBtn setImage:[UIImage imageNamed:@"icon_shellDefault"] forState:UIControlStateNormal];
@@ -98,10 +100,13 @@ static char *const btnKey = "btnKey";
             [btn setImage:[UIImage imageNamed:@"icon_shellpositive"] forState:UIControlStateNormal];
             objc_setAssociatedObject(btn, btnKey, @"2", OBJC_ASSOCIATION_ASSIGN);
             type = ButtonClickTypeUp;
+            QDLog(@"amountUp");
+
         }else if ([flag isEqualToString:@"2"]){
             [btn setImage:[UIImage imageNamed:@"icon_shellreverse"] forState:UIControlStateNormal];
             objc_setAssociatedObject(btn, btnKey, @"1", OBJC_ASSOCIATION_ASSIGN);
             type = ButtonClickTypeDown;
+            QDLog(@"amountDown");
         }
     }else{
         //点击全部不复位价格
@@ -135,16 +140,19 @@ static char *const btnKey = "btnKey";
     [_amountBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self);
         make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH*0.05);
+        make.width.and.height.mas_equalTo(60);
     }];
     
     [_priceBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self);
         make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH*0.25);
+        make.width.and.height.mas_equalTo(60);
     }];
     
     [_filterBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self);
         make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH*0.81);
+        make.width.and.height.mas_equalTo(60);
     }];
 }
 

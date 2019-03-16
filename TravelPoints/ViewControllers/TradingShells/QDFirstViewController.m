@@ -328,7 +328,7 @@ typedef enum : NSUInteger {
 {
     _sectionHeaderView = [[QDTradeShellsSectionHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 300)];
     [_sectionHeaderView.filterBtn addTarget:self action:@selector(filterAction:) forControlEvents:UIControlEventTouchUpInside];
-    _sectionHeaderView.backgroundColor = APP_BLUECOLOR;
+    _sectionHeaderView.backgroundColor = APP_WHITECOLOR;
     return _sectionHeaderView;
 }
 

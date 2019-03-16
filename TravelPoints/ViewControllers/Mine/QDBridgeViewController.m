@@ -129,6 +129,18 @@
         }];
     }];
     
+    [_bridge registerHandler:@"getTel" handler:^(id data, WVJBResponseCallback responseCallback) {
+        QDLog(@"getTel");   //拨打电话
+        if (data == nil || [data isEqualToString:@""]) {
+            [WXProgressHUD showErrorWithTittle:@"未找到酒店电话"];
+        }else{
+            NSString * telStr = [NSString stringWithFormat:@"tel:%@",data];
+            UIWebView * webV = [[UIWebView alloc]init];
+            [webV loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:telStr]]];
+            [self.view addSubview:webV];
+        }
+    }];
+    
     [_bridge registerHandler:@"goBack" handler:^(id data, WVJBResponseCallback responseCallback) {
         QDLog(@"goBack");   //返回按钮的点击事件里面的代码
         [self.navigationController popViewControllerAnimated:YES];
@@ -262,7 +274,9 @@
             QDRotePlanViewController *roteVC = [[QDRotePlanViewController alloc] init];
             roteVC.cityStr = [dic objectForKey:@"city"];
             roteVC.addressStr = [dic objectForKey:@"address"];
-            roteVC.infoModel = _infoModel;
+            if (_infoModel) {
+                roteVC.infoModel = _infoModel;
+            }
             [self.navigationController pushViewController:roteVC animated:YES];
         }else if ([URL.path isEqualToString:@"/Login"]){
             [WXProgressHUD showErrorWithTittle:@"未登录"];

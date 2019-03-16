@@ -48,6 +48,7 @@ typedef enum : NSUInteger {
 }
 @property (nonatomic, strong) UIImageView *emptyView;
 @property (nonatomic, strong) UILabel *tipLab;
+@property (nonatomic, getter=isLoading) BOOL loading;
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableDictionary *dicH;
@@ -69,28 +70,13 @@ typedef enum : NSUInteger {
     [self.navigationController.tabBarController.tabBar setHidden:NO];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(test:) name:@"test" object:nil];
-    
-    //判断用户是否登录
-//    [self judgeIsLogin];
 }
 
-- (void)judgeIsLogin{
-    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_IsLogin params:nil successBlock:^(QDResponseObject *responseObject) {
-        if (responseObject.code == 0) {
-            //是登录的
-//            [self requestMyOrdersData];
-        }else{
-            
-        }
-        QDLog(@"qqqq");
-    } failureBlock:^(NSError *error) {
-        QDLog(@"123");
-    }];
-}
 - (void)test:(NSNotification *)noti{
     QDLog(@"=========================");
     [self requestMyOrdersData];
 }
+
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"test" object:nil];
@@ -125,6 +111,16 @@ typedef enum : NSUInteger {
     }
     return _tipLab;
 }
+
+- (void)setLoading:(BOOL)loading
+{
+    if (self.isLoading == loading) {
+        return;
+    }
+    _loading = loading;
+    [self.tableView reloadEmptyDataSet];
+}
+
 
 #pragma mark - 上拉重新加载数据
 - (void)requestHeaderTopData{
@@ -285,6 +281,8 @@ typedef enum : NSUInteger {
 
 #pragma mark - 撤单操作
 - (void)withdrawAction:(UIButton *)sender{
+    [WXProgressHUD showHUD];
+    QDLog(@"sender.tag = %ld", (long)sender.tag);
     TYAlertView *alertView = [[TYAlertView alloc] initWithTitle:@"撤销订单" message:@"您确定要撤销这笔订单吗?"];
     [alertView addAction:[TYAlertAction actionWithTitle:@"取消" style:TYAlertActionStyleCancel handler:^(TYAlertAction *action) {
         [WXProgressHUD hideHUD];
@@ -294,6 +292,7 @@ typedef enum : NSUInteger {
         NSDictionary * paramsDic = @{@"postersId":infoModel.postersId};
         [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_CancelBiddingPosters params:paramsDic successBlock:^(QDResponseObject *responseObject) {
             if (responseObject.code == 0) {
+                [WXProgressHUD hideHUD];
                 [WXProgressHUD showSuccessWithTittle:@"撤单成功"];
                 [_myOrdersArr removeObjectAtIndex:sender.tag];
                 [_tableView reloadData];
@@ -342,9 +341,9 @@ typedef enum : NSUInteger {
                 cell = [[QDMyPurchaseCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
             }
             cell.userInteractionEnabled = YES;
-            cell.withdrawBtn.tag = indexPath.row;
+//            QDLog(@"btn.tag = %ld, indexPath.row = %ld", cell.withdrawBtn.tag, indexPath.row);
             [cell.withdrawBtn addTarget:self action:@selector(withdrawAction:) forControlEvents:UIControlEventTouchUpInside];
-            [cell loadPurchaseDataWithModel:infoModel];
+            [cell loadPurchaseDataWithModel:_myOrdersArr[indexPath.row] withTag:indexPath.row];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.backgroundColor = APP_WHITECOLOR;
             return cell;
@@ -355,8 +354,10 @@ typedef enum : NSUInteger {
                 cell = [[QDMySaleOrderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
             }
             cell.userInteractionEnabled = YES;
+//            QDLog(@"btn.tag = %ld, indexPath.row = %ld", cell.withdrawBtn.tag, indexPath.row);
+//            cell.withdrawBtn.tag = indexPath.row;
             [cell.withdrawBtn addTarget:self action:@selector(withdrawAction:) forControlEvents:UIControlEventTouchUpInside];
-            [cell loadSaleOrderDataWithModel:infoModel];
+            [cell loadSaleOrderDataWithModel:_myOrdersArr[indexPath.row] withTag:indexPath.row];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.backgroundColor = APP_WHITECOLOR;
             return cell;
@@ -380,8 +381,8 @@ typedef enum : NSUInteger {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    QDMyBiddingOrderDetailVC *detailVC = [[QDMyBiddingOrderDetailVC alloc] init];
     QDLog(@"indexPath.row = %ld", (long)indexPath.row);
+    QDMyBiddingOrderDetailVC *detailVC = [[QDMyBiddingOrderDetailVC alloc] init];
     BiddingPostersDTO *posterDTO = _myOrdersArr[indexPath.row];
     detailVC.posterDTO = posterDTO;
     [self.navigationController pushViewController:detailVC animated:YES];
@@ -413,24 +414,40 @@ typedef enum : NSUInteger {
 }
 
 #pragma mark - emptyDataSource
-//- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView{
-//    return [UIImage imageNamed:@"emptySource"];
-//}
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView{
-    return [UIImage imageNamed:@"emptySource"];
+    if (self.isLoading) {
+        return [UIImage imageNamed:@"loading_imgBlue" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
+    }
+    else {
+        return [UIImage imageNamed:@"emptySource"];
+    }
+    return nil;
 }
 
+- (CAAnimation *)imageAnimationForEmptyDataSet:(UIScrollView *)scrollView
+{
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform"];
+    animation.fromValue = [NSValue valueWithCATransform3D:CATransform3DIdentity];
+    animation.toValue = [NSValue valueWithCATransform3D: CATransform3DMakeRotation(M_PI_2, 0.0, 0.0, 1.0) ];
+    animation.duration = 0.25;
+    animation.cumulative = YES;
+    animation.repeatCount = MAXFLOAT;
+    
+    return animation;
+}
+
+
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView{
-    NSString *text = @"暂无数据";
+    NSString *text = @"暂无数据,点击重试";
     
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:16.0f],
-                                 NSForegroundColorAttributeName: [UIColor darkGrayColor]};
+                                 NSForegroundColorAttributeName: APP_BLUECOLOR};
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
 
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapView:(UIView *)view{
-    QDLog(@"123");
+    [self requestHeaderTopData];
 }
 
 - (SPButton *)filterBtn{

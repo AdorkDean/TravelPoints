@@ -61,6 +61,9 @@
                 _pickOrderView.remain.text = [QDDateUtils getMMSSFromSS:ss];
                 _currentEditStatusTime = [[orderDetail objectForKey:@"countDownSec"] integerValue];
 //                _currentEditStatusTime = 8;
+//                if (condition) {
+//                    <#statements#>
+//                }
                 __weak __typeof(self)weakSelf = self;
                 [self.timer startTimerWithSpace:1 block:^(BOOL result) {
                     if (result) {
@@ -151,7 +154,7 @@
     _pickOrderView.backgroundColor = APP_GRAYBACKGROUNDCOLOR;
     [_pickOrderView.payBtn addTarget:self action:@selector(payAction:) forControlEvents:UIControlEventTouchUpInside];
     [_pickOrderView.withdrawBtn addTarget:self action:@selector(withdrawAction:) forControlEvents:UIControlEventTouchUpInside];
-//    [_pickOrderView loadViewWithModel:_orderModel];
+    [_pickOrderView loadViewWithModel:_orderModel];
     [self.view addSubview:_pickOrderView];
 }
 

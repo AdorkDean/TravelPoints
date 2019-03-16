@@ -324,7 +324,7 @@
 }
 
 //我的报单 卖出
-- (void)loadSaleOrderDataWithModel:(BiddingPostersDTO *)DTO{
+- (void)loadSaleOrderDataWithModel:(BiddingPostersDTO *)DTO withTag:(NSInteger)btnTag{
     if (DTO.price == nil) {
         self.price.text = @"--";
     }else{
@@ -350,16 +350,24 @@
         self.status.text = @"可部分成交";
         self.status.textColor = APP_BLUECOLOR;
     }
-    
+    self.withdrawBtn.tag = btnTag;
     //未成交
     switch ([DTO.postersStatus integerValue]) {
         case QD_ORDERSTATUS_NOTTRADED:
             self.orderStatusLab.text = @"未成交";
-            self.withdrawBtn.hidden = NO;
+            if ([DTO.frozenVolume isEqualToString:@"0"] || DTO.frozenVolume == nil) {
+                self.withdrawBtn.hidden = NO;
+            }else{
+                self.withdrawBtn.hidden = YES;
+            }
             break;
         case QD_ORDERSTATUS_PARTTRADED:
             self.orderStatusLab.text = @"部分成交";
-            self.withdrawBtn.hidden = NO;
+            if ([DTO.frozenVolume isEqualToString:@"0"] || DTO.frozenVolume == nil) {
+                self.withdrawBtn.hidden = NO;
+            }else{
+                self.withdrawBtn.hidden = YES;
+            }
             break;
         case QD_ORDERSTATUS_ALLTRADED:
             self.orderStatusLab.text = @"全部成交";

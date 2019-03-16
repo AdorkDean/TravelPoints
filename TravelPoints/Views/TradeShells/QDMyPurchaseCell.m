@@ -258,7 +258,7 @@
     }];
 }
 
-- (void)loadPurchaseDataWithModel:(BiddingPostersDTO *)DTO{
+- (void)loadPurchaseDataWithModel:(BiddingPostersDTO *)DTO withTag:(NSInteger)btnTag{
     //单价
     if (DTO.price == nil) {
         self.price.text = @"--";
@@ -283,16 +283,25 @@
         self.status.text = @"可部分成交";
         self.status.textColor = APP_BLUECOLOR;
     }
-    
+    self.withdrawBtn.tag = btnTag;
+    QDLog(@"btnTag = %ld", (long)btnTag);
     //未成交与部分成交的时候 并且
     switch ([DTO.postersStatus integerValue]) {
         case QD_ORDERSTATUS_NOTTRADED:
             self.orderStatusLab.text = @"未成交";
-            self.withdrawBtn.hidden = NO;
+            if ([DTO.frozenVolume isEqualToString:@"0"] || DTO.frozenVolume == nil) {
+                self.withdrawBtn.hidden = NO;
+            }else{
+                self.withdrawBtn.hidden = YES;
+            }
             break;
         case QD_ORDERSTATUS_PARTTRADED:
             self.orderStatusLab.text = @"部分成交";
-            self.withdrawBtn.hidden = NO;
+            if ([DTO.frozenVolume isEqualToString:@"0"] || DTO.frozenVolume == nil) {
+                self.withdrawBtn.hidden = NO;
+            }else{
+                self.withdrawBtn.hidden = YES;
+            }
             break;
         case QD_ORDERSTATUS_ALLTRADED:
             self.orderStatusLab.text = @"全部成交";
@@ -335,8 +344,7 @@
         self.amount.text= model.number;
     }
     self.balance.text = model.amount;
-    self.transfer.text = model.poundage;
-    
+    self.transfer.text = [NSString stringWithFormat:@"%.2lf", [model.poundage doubleValue]];
     switch ([model.state integerValue]) {
         case QD_WaitForPurchase:
             self.orderStatusLab.text = @"待付款";

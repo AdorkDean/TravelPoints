@@ -50,7 +50,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _cellTitleArr = [[NSArray alloc] initWithObjects:@"邀请好友",@"攻略",@"收藏",@"我的银行卡",@"房券",@"地址",@"安全中心", nil];
+    _cellTitleArr = [[NSArray alloc] initWithObjects:@"邀请好友",@"收藏",@"我的银行卡",@"地址",@"安全中心", nil];
     self.view.backgroundColor = [UIColor whiteColor];
     [self initTableView];
     _tableView.mj_header = [QDRefreshHeader headerWithRefreshingBlock:^{
@@ -266,29 +266,34 @@
         case 0: //邀请好友
             [self inviteFriends];
             break;
-        case 1: //攻略
-            [self pushBridgeVCWithStr:[[QDUserDefaults getObjectForKey:@"QD_JSURL"] stringByAppendingString:JS_STRATEGY]];
+        case 1: //收藏
+            [self gotoLoginWithAction:JS_COLLECTION];
             break;
-        case 2: //收藏
-            [self pushBridgeVCWithStr:[[QDUserDefaults getObjectForKey:@"QD_JSURL"] stringByAppendingString:JS_COLLECTION]];
+        case 2: //我的银行卡
+            [self gotoLoginWithAction:JS_BANKCARD];
             break;
-        case 3: //我的银行卡
-            [self pushBridgeVCWithStr:[[QDUserDefaults getObjectForKey:@"QD_JSURL"] stringByAppendingString:JS_BANKCARD]];
+        case 3: //地址
+            [self gotoLoginWithAction:JS_ADDRESS];
             break;
-        case 4: //房券
-            [self pushBridgeVCWithStr:[[QDUserDefaults getObjectForKey:@"QD_JSURL"] stringByAppendingString:JS_STRATEGY]];
-            break;
-        case 5: //地址
-            [self pushBridgeVCWithStr:[[QDUserDefaults getObjectForKey:@"QD_JSURL"] stringByAppendingString:JS_ADDRESS]];
-            break;
-        case 6: //安全中心
-            [self pushBridgeVCWithStr:[[QDUserDefaults getObjectForKey:@"QD_JSURL"] stringByAppendingString:JS_SECURITYCENTER]];
+        case 4: //安全中心
+            [self gotoLoginWithAction:JS_SECURITYCENTER];
             break;
         default:
             break;
     }
 }
 
+- (void)gotoLoginWithAction:(NSString *)jsStr{
+    NSString *str = [QDUserDefaults getObjectForKey:@"loginType"];
+    if ([str isEqualToString:@"0"] || str == nil) { //未登录
+        QDLoginAndRegisterVC *loginVC = [[QDLoginAndRegisterVC alloc] init];
+        loginVC.pushVCTag = @"0";
+        [self presentViewController:loginVC animated:YES completion:nil];
+    }else{
+        [self pushBridgeVCWithStr:[[QDUserDefaults getObjectForKey:@"QD_JSURL"] stringByAppendingString:jsStr]];
+    }
+}
+    
 #pragma mark - 邀请好友
 - (void)inviteFriends{
     

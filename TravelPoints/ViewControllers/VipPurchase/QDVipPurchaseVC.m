@@ -88,6 +88,7 @@
     _cardArr = [[NSMutableArray alloc] init];
     [self.view addSubview:self.scrollView];
     _vipPurchaseView = [[QDVipPurchaseView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    [self queryOrderPay:api_FindPurchaseInfos];
     [_vipPurchaseView.returnBtn addTarget:self action:@selector(popVC:) forControlEvents:UIControlEventTouchUpInside];
     [_vipPurchaseView.confirmBtn addTarget:self action:@selector(confirmToBuy:) forControlEvents:UIControlEventTouchUpInside];
     AppDelegate *appD = (AppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -104,7 +105,6 @@
     }
     [self setupCardUI];
     [self initBottomBtn];
-    [self queryOrderPay:api_FindPurchaseInfos];
     // Do any additional setup after loading the view.
 }
 
@@ -151,11 +151,21 @@
                 }
                 [self.pageFlowView reloadData];
                 //默认数据
-                [_vipPurchaseView layoutSubviews];
                 if (_cardArr.count) {
                     VipCardDTO *model = _cardArr.firstObject;
-                    _vipPurchaseView.bottomLab2.text = model.vipMoney;
+                    
+//                    _vipPurchaseView.price.hidden = NO;
+//                    _vipPurchaseView.price.text = _currentModel.vipMoney;
+                    //折合玩贝
+                    NSString *ss = [model.vipMoney stringByDividingBy:model.basePrice withRoundingMode:NSRoundPlain scale:0];
+                    _vipPurchaseView.bottomLab2.text = ss;
+                    _vipPurchaseView.price.text = model.vipMoney;
+                    _vipPurchaseView.priceTF.hidden = YES;
+
+//                    _vipPurchaseView.bottomLab2.text = model.vipMoney;
                 }
+                [_vipPurchaseView layoutSubviews];
+                
             }else{
                 [WXProgressHUD showErrorWithTittle:@"暂无VIP售卡信息"];
             }
