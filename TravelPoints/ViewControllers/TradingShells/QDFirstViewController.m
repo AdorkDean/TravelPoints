@@ -76,10 +76,10 @@ typedef enum : NSUInteger {
     _totalPage = 0; //总页数默认为1
     _ordersArr = [[NSMutableArray alloc] init];
     [self initTableView];
-    _optionBtn = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*0.31, SCREEN_HEIGHT*0.72, SCREEN_WIDTH*0.37, SCREEN_HEIGHT*0.06)];
+    _optionBtn = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*0.31, SCREEN_HEIGHT*0.72, 140, 44)];
     [_optionBtn addTarget:self action:@selector(operateAction:) forControlEvents:UIControlEventTouchUpInside];
     CAGradientLayer *gradientLayer =  [CAGradientLayer layer];
-    gradientLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH*0.37, SCREEN_HEIGHT*0.06);
+    gradientLayer.frame = CGRectMake(0, 0, 140, 44);
     gradientLayer.startPoint = CGPointMake(0, 0);
     gradientLayer.endPoint = CGPointMake(1, 0);
     gradientLayer.locations = @[@(0.5),@(1.0)];//渐变点
@@ -326,10 +326,9 @@ typedef enum : NSUInteger {
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    
     _sectionHeaderView = [[QDTradeShellsSectionHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 300)];
     [_sectionHeaderView.filterBtn addTarget:self action:@selector(filterAction:) forControlEvents:UIControlEventTouchUpInside];
-    _sectionHeaderView.backgroundColor = APP_WHITECOLOR;
+    _sectionHeaderView.backgroundColor = APP_BLUECOLOR;
     return _sectionHeaderView;
 }
 
@@ -443,7 +442,8 @@ typedef enum : NSUInteger {
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     RootCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
-    [cell loadDataWithDataArr:_ordersArr[indexPath.row] andTypeStr:@"0" andTag:1];
+    BiddingPostersDTO *dto = _ordersArr[indexPath.row];
+    [cell loadDataWithDataArr:dto andTypeStr:dto.postersType];
     cell.sell.tag = indexPath.row;
     QDLog(@"cell.sell.tag = %ld", (long)cell.tag);
     [cell.sell addTarget:self action:@selector(buyOrSellAction:) forControlEvents:UIControlEventTouchUpInside];

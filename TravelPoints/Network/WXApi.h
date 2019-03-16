@@ -118,8 +118,9 @@ static NSString * const api_CancelOrderForm = @"/lyjfapp/api/v1/ctrade/cancelOrd
 static NSString * const api_BuyAndSellBiddingPosters = @"/lyjfapp/api/v1/ctrade/buyAndSellBiddingPosters";           //买卖摘单
 
 static NSString * const api_UserOrderDetail = @"/lyjfapp/api/v1/userorder/detail";           //查看订单详情
-static NSString * const api_GetBiddingPosterByPosterId = @"/lyjfapp/api/v1/ctrade/getBiddingPosterByPosterId";           //查看挂单详情
-static NSString * const api_CancelBiddingPosters = @"/lyjfapp/api/v1/ctrade/cancelBiddingPosters";                       //撤销挂单
+static NSString * const api_GetBiddingPosterByPosterId = @"/lyjfapp/api/v1/ctrade/getBiddingPosterByPosterId";         //查看挂单详情
+static NSString * const api_CancelBiddingPosters = @"/lyjfapp/api/v1/ctrade/cancelBiddingPosters";                     //撤销挂单
+static NSString * const api_saveBiddingPosters = @"/lyjfapp/api/v1/ctrade/saveBiddingPosters";                       //挂单申请
 
 /**
  JAVAScriptBridgeWebView

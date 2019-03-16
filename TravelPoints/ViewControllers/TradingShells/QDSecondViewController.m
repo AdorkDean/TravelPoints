@@ -163,34 +163,6 @@ typedef enum : NSUInteger {
     }
 }
 
--(void)leftClick
-{
-    //下落动画 时间短一些
-    [UIView beginAnimations:@"text" context:nil];
-    [UIView setAnimationDelay:0];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationDuration:0.3];
-    _backView.frame=CGRectMake(0,40, self.view.bounds.size.width, self.view.bounds.size.height);
-    [UIView commitAnimations];
-    
-    //恢复动画 时间长一些
-    [UIView beginAnimations:@"text" context:nil];
-    [UIView setAnimationDelay:0];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
-    [UIView setAnimationDuration:0.5];
-    _backView.frame=CGRectMake(0,0, self.view.bounds.size.width, self.view.bounds.size.height);
-    [UIView commitAnimations];
-    
-}
--(void)tapclick
-{
-    [UIView beginAnimations:@"text" context:nil];
-    [UIView setAnimationDelay:0];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-    [UIView setAnimationDuration:0.3];
-    _backView.frame=CGRectMake(0, -self.view.bounds.size.height, self.view.bounds.size.width, self.view.bounds.size.height);
-    [UIView commitAnimations];
-}
 - (void)setTopView{
     UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.17)];
     topView.backgroundColor = APP_WHITECOLOR;
@@ -464,7 +436,8 @@ typedef enum : NSUInteger {
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     RootCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
-    [cell loadDataWithDataArr:_ordersArr[indexPath.row] andTypeStr:@"1" andTag:1];
+    BiddingPostersDTO *dto = _ordersArr[indexPath.row];
+    [cell loadDataWithDataArr:dto andTypeStr:dto.postersType];
     cell.sell.tag = indexPath.row;
     QDLog(@"cell.sell.tag = %ld", (long)cell.tag);
     [cell.sell addTarget:self action:@selector(buyOrSellAction:) forControlEvents:UIControlEventTouchUpInside];

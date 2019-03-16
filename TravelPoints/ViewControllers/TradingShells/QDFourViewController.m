@@ -287,7 +287,7 @@ typedef enum : NSUInteger {
     [alertView addAction:[TYAlertAction actionWithTitle:@"确定" style:TYAlertActionStyleDestructive handler:^(TYAlertAction *action) {
         QDMyPickOrderModel *model = _myPickOrdersArr[sender.tag];
         QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
-        NSString *balance = [NSString stringWithFormat:@"%.2f", [model.amount doubleValue] * [model.price doubleValue]];
+        NSString *balance = model.amount;
         bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?amount=%@&&id=%@", [QDUserDefaults getObjectForKey:@"QD_JSURL"], JS_PAYACTION,balance, model.orderId];
 
 //        bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?id=%@", [QDUserDefaults getObjectForKey:@"QD_TESTJSURL"], JS_PREPARETOPAY,model.orderId];

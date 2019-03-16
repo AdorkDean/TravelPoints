@@ -44,6 +44,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = APP_WHITECOLOR;
     [self setLeftBtnItem];
     _recommendList = [[NSMutableArray alloc] init];
     if (_recommendModel == nil) {
@@ -54,8 +55,8 @@
     //创建瀑布流布局
     self.title = @"行点";
     WaterLayou *layou = [[WaterLayou alloc] init];
-    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT- SCREEN_HEIGHT*0.08) collectionViewLayout:layou];
-    self.collectionView.backgroundColor = [UIColor whiteColor];
+    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT- SCREEN_HEIGHT*0.06-50) collectionViewLayout:layou];
+    self.collectionView.backgroundColor = APP_WHITECOLOR;
     [self.collectionView registerClass:[RootCollectionCell class] forCellWithReuseIdentifier:@"cell"];
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
@@ -67,35 +68,65 @@
     _recommendBtn = [[UIButton alloc] init];
     if ([_postersType isEqualToString:@"1"]) {
         [_recommendBtn setTitle:@"跳过推荐，直接购买" forState:UIControlStateNormal];
+        [_recommendBtn addTarget:self action:@selector(buyOrderAction:) forControlEvents:UIControlEventTouchUpInside];
     }else{
         [_recommendBtn setTitle:@"跳过推荐，直接卖出" forState:UIControlStateNormal];
+        [_recommendBtn addTarget:self action:@selector(sellOrderAction:) forControlEvents:UIControlEventTouchUpInside];
     }
-    [_recommendBtn addTarget:self action:@selector(toBuyVC:) forControlEvents:UIControlEventTouchUpInside];
     [_recommendBtn setTitleColor:APP_WHITECOLOR forState:UIControlStateNormal];
     CAGradientLayer *gradientLayer =  [CAGradientLayer layer];
-    gradientLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH*0.89, SCREEN_HEIGHT*0.08);
+    gradientLayer.frame = CGRectMake(0, 0, 335, 50);
     gradientLayer.startPoint = CGPointMake(0, 0);
     gradientLayer.endPoint = CGPointMake(1, 0);
     gradientLayer.locations = @[@(0.5),@(1.0)];//渐变点
     [gradientLayer setColors:@[(id)[[UIColor colorWithHexString:@"#159095"] CGColor],(id)[[UIColor colorWithHexString:@"#3CC8B1"] CGColor]]];//渐变数组
     [_recommendBtn.layer addSublayer:gradientLayer];
     _recommendBtn.titleLabel.font = QDFont(19);
+    _recommendBtn.layer.cornerRadius = 4;
+    _recommendBtn.layer.masksToBounds = YES;
     [self.view addSubview:_recommendBtn];
     [_recommendBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view);
-        make.bottom.equalTo(self.view.mas_bottom).offset(-(SCREEN_HEIGHT*0.03));
+        make.bottom.equalTo(self.view.mas_bottom).offset(SCREEN_HEIGHT*0.03);
         make.width.mas_equalTo(335);
         make.height.mas_equalTo(50);
     }];
 }
 
-- (void)toBuyVC:(UIButton *)sender{
-    QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
-    NSString *balance = [NSString stringWithFormat:@"%.2f", [_volume doubleValue] * [_price doubleValue]];
-    bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?amount=%@&&id=%@", [QDUserDefaults getObjectForKey:@"QD_JSURL"], JS_PAYACTION, balance, _postersId];
-    [self.navigationController pushViewController:bridgeVC animated:YES];
+#pragma mark - 跳过推荐 直接购买
+- (void)buyOrderAction:(UIButton *)sender{
+    //直接购买
+    NSDictionary *paramsDic = @{@"postersId":_postersId};
+    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_saveBiddingPosters params:paramsDic successBlock:^(QDResponseObject *responseObject) {
+        if (responseObject.code == 0) {
+            [WXProgressHUD showSuccessWithTittle:@"挂单生成成功"];
+            QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
+            NSString *balance = [NSString stringWithFormat:@"%.2f", [_volume doubleValue] * [_price doubleValue]];
+            bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?amount=%@&&id=%@", [QDUserDefaults getObjectForKey:@"QD_JSURL"], JS_PAYACTION, balance, _postersId];
+            [self.navigationController pushViewController:bridgeVC animated:YES];
+        }else{
+            [WXProgressHUD showErrorWithTittle:responseObject.message];
+        }
+    } failureBlock:^(NSError *error) {
+        [WXProgressHUD showErrorWithTittle:@"网络请求失败"];
+    }];
 }
 
+#pragma mark - 跳过推荐 直接卖出 生成卖单
+- (void)sellOrderAction:(UIButton *)sender{
+    //直接卖出
+    NSDictionary *paramsDic = @{@"postersId":_postersId};
+    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_saveBiddingPosters params:paramsDic successBlock:^(QDResponseObject *responseObject) {
+        if (responseObject.code == 0) {
+            [WXProgressHUD showSuccessWithTittle:@"挂单生成成功"];
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }else{
+            [WXProgressHUD showErrorWithTittle:responseObject.message];
+        }
+    } failureBlock:^(NSError *error) {
+        [WXProgressHUD showErrorWithTittle:@"网络请求失败"];
+    }];
+}
 
 #pragma mark - 请求挂单编号
 - (void)saveIntentionPosters{
@@ -162,8 +193,8 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     RootCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
-    NSString *ss = [_postersType isEqualToString:@"0"] ? @"1": @"0";
-    [cell loadDataWithDataArr:_recommendList[indexPath.row] andTypeStr:ss andTag:1];
+    
+    [cell loadDataWithDataArr:_recommendList[indexPath.row] andTypeStr:_postersType];
     cell.sell.tag = indexPath.row;
     QDLog(@"cell.sell.tag = %ld", (long)cell.tag);
     [cell.sell addTarget:self action:@selector(buyOrSellAction:) forControlEvents:UIControlEventTouchUpInside];

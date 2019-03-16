@@ -14,7 +14,6 @@ static char *const btnKey = "btnKey";
 {
     BOOL show;
 }
-@property (nonatomic, strong) UIView *collect2;
 
 @end
 
@@ -30,7 +29,8 @@ static char *const btnKey = "btnKey";
         _amountBtn.tag = 101;
         [_amountBtn addTarget:self action:@selector(selectClick:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_amountBtn];
-        
+        objc_setAssociatedObject(_amountBtn, btnKey, @"1", OBJC_ASSOCIATION_ASSIGN);
+
         _priceBtn = [[SPButton alloc] initWithImagePosition:SPButtonImagePositionRight];
         [_priceBtn setImage:[UIImage imageNamed:@"icon_shellDefault"] forState:UIControlStateNormal];
         [_priceBtn setTitle:@"价格" forState:UIControlStateNormal];
@@ -39,8 +39,7 @@ static char *const btnKey = "btnKey";
         _priceBtn.tag = 102;
         [_priceBtn addTarget:self action:@selector(selectClick:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_priceBtn];
-        
-        objc_setAssociatedObject(_priceBtn, btnKey, @"1", OBJC_ASSOCIATION_ASSIGN);
+        objc_setAssociatedObject(_priceBtn, btnKey, @"2", OBJC_ASSOCIATION_ASSIGN);
         
         _filterBtn = [[SPButton alloc] initWithImagePosition:SPButtonImagePositionRight];
         [_filterBtn setImage:[UIImage imageNamed:@"icon_filter"] forState:UIControlStateNormal];
@@ -50,25 +49,21 @@ static char *const btnKey = "btnKey";
         [_filterBtn setTitle:@"筛选" forState:UIControlStateNormal];
         [_filterBtn setTitleColor:APP_BLACKCOLOR forState:UIControlStateNormal];
         [self addSubview:_filterBtn];
-        objc_setAssociatedObject(_filterBtn, btnKey, @"1", OBJC_ASSOCIATION_ASSIGN);
-        _collect2 = [[UIView alloc] initWithFrame:CGRectMake(0,-ceil(_selectItmeArr.count/2.0)*35, SCREEN_WIDTH, ceil(_selectItmeArr.count/2.0)*35)];
-        _collect2.backgroundColor = [UIColor redColor];
-        [self addSubview:self.collect2];
     }
     return self;
 }
 
 - (void)selectClick:(UIButton *)btn{
-//    if (btn.tag == 101) {
-//        btn.selected = YES;
-//        UIButton *button = [self viewWithTag:102];
-//        button.selected = NO;
-//    }
-//    if (btn.tag == 102) {
-//        btn.selected = YES;
-//        UIButton *button = [self viewWithTag:101];
-//        button.selected = NO;
-//    }
+    if (btn.tag == 101) {
+        btn.selected = YES;
+        UIButton *button = [self viewWithTag:102];
+        button.selected = NO;
+    }
+    if (btn.tag == 102) {
+        btn.selected = YES;
+        UIButton *button = [self viewWithTag:101];
+        button.selected = NO;
+    }
 //    if (btn.tag != 103) {//没点击全部分类，则让其他按钮回复默认状态
 //        for (int i = 1; i<3 ;i++) {
 //            UIButton *button = [self viewWithTag:i+100];
@@ -85,8 +80,9 @@ static char *const btnKey = "btnKey";
     ButtonClickType type = ButtonClickTypeNormal;
     
     if (btn.tag == 101) {
+        [_priceBtn setImage:[UIImage imageNamed:@"icon_shellDefault"] forState:UIControlStateNormal];
         NSString *flag = objc_getAssociatedObject(btn, btnKey);
-        if ([flag isEqualToString:@"1"]) {
+        if ([flag isEqualToString:@"1"]) {  //是数量按钮
             [btn setImage:[UIImage imageNamed:@"icon_shellpositive"] forState:UIControlStateNormal];
             objc_setAssociatedObject(btn, btnKey, @"2", OBJC_ASSOCIATION_ASSIGN);
             type = ButtonClickTypeUp;
@@ -96,6 +92,7 @@ static char *const btnKey = "btnKey";
             type = ButtonClickTypeDown;
         }
     }else if (btn.tag == 102){
+        [_amountBtn setImage:[UIImage imageNamed:@"icon_shellDefault"] forState:UIControlStateNormal];
         NSString *flag = objc_getAssociatedObject(btn, btnKey);
         if ([flag isEqualToString:@"1"]) {
             [btn setImage:[UIImage imageNamed:@"icon_shellpositive"] forState:UIControlStateNormal];

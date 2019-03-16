@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface BiddingPostersDTO : NSObject
 
-@property (nonatomic, assign) NSInteger id;                         //酒店代码
+@property (nonatomic, assign) NSInteger id;                         //
 @property (nonatomic, strong) NSString *userId;                     //用户ID
 @property (nonatomic, strong) NSString *creditCode;                 //积分代码
 @property (nonatomic, strong) NSString *limitVolume;                //最小交易数量

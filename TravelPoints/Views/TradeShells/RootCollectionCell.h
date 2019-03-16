@@ -25,5 +25,5 @@
 @property (nonatomic, strong) UILabel *statusLab;
 @property (nonatomic, strong) UIButton *sell;
 
-- (void)loadDataWithDataArr:(BiddingPostersDTO *)infoModel andTypeStr:(NSString *)str andTag:(NSUInteger)btnTag;
+- (void)loadDataWithDataArr:(BiddingPostersDTO *)infoModel andTypeStr:(NSString *)str;
 @end

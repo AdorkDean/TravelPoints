@@ -43,25 +43,25 @@
 
         _nameLab = [[UILabel alloc] init];
         _nameLab.text = @"四叶草8766";
-        _nameLab.font = QDFont(12);
+        _nameLab.font = QDFont(13);
         [self.contentView addSubview:_nameLab];
         
         _amountLab = [[UILabel alloc] init];
         _amountLab.text = @"数量";
-        _amountLab.font = QDFont(12);
+        _amountLab.font = QDFont(13);
         _amountLab.textColor = APP_GRAYLINECOLOR;
         [self.contentView addSubview:_amountLab];
         
         _amount = [[UILabel alloc] init];
         _amount.text = @"1000";
-        _amount.font = QDFont(12);
+        _amount.font = QDFont(13);
         _amount.textColor = APP_BLUECOLOR;
         [self.contentView addSubview:_amount];
         
         _statusLab = [[UILabel alloc] init];
         _statusLab.text = @"可部分成交";
         _statusLab.textColor = APP_BLUECOLOR;
-        _statusLab.font = QDFont(12);
+        _statusLab.font = QDFont(13);
         [self.contentView addSubview:_statusLab];
         
         _sell = [[UIButton alloc] init];
@@ -140,12 +140,11 @@
     }];
 }
 
-- (void)loadDataWithDataArr:(BiddingPostersDTO *)infoModel andTypeStr:(NSString *)str andTag:(NSUInteger)btnTag{
-    self.sell.tag = btnTag;
+- (void)loadDataWithDataArr:(BiddingPostersDTO *)infoModel andTypeStr:(NSString *)str{
     self.nameLab.text = infoModel.userId;
     self.price.text = infoModel.price;
     self.amount.text = infoModel.surplusVolume;
-    if ([str isEqualToString:@"0"]) {
+    if ([str isEqualToString:@"1"]) {
         [self.sell setTitle:@"买入" forState:UIControlStateNormal];
     }else{
         [self.sell setTitle:@"卖出" forState:UIControlStateNormal];

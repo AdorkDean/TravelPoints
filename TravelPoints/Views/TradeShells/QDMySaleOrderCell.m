@@ -225,6 +225,7 @@
         make.left.equalTo(_statusImg.mas_right).offset(6);
     }];
 
+    //数量 金额 手续费
     [_amountLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_priceTextLab);
         make.left.equalTo(_backView.mas_left).offset(SCREEN_WIDTH*0.53);

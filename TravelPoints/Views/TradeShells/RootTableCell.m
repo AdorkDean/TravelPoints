@@ -42,7 +42,7 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     RootCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:K_Cell forIndexPath:indexPath];
-    [cell loadDataWithDataArr:_dataAry[indexPath.row] andTypeStr:_typeStr andTag:indexPath.row];
+    [cell loadDataWithDataArr:_dataAry[indexPath.row] andTypeStr:_typeStr];
     [cell.sell addTarget:self action:@selector(operateAction:) forControlEvents:UIControlEventTouchUpInside];
     [self updateCollectionViewHeight:self.collectionView.collectionViewLayout.collectionViewContentSize.height];
     return cell;

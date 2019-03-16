@@ -73,11 +73,12 @@
     _operateBtn = [[UIButton alloc] init];
     if ([_operateModel.postersType isEqualToString:@"1"]) {
         [_operateBtn setTitle:@"确认购买" forState:UIControlStateNormal];
+        [_operateBtn addTarget:self action:@selector(payAction:) forControlEvents:UIControlEventTouchUpInside];
     }else{
         [_operateBtn setTitle:@"确认卖出" forState:UIControlStateNormal];
+        [_operateBtn addTarget:self action:@selector(sellAction:) forControlEvents:UIControlEventTouchUpInside];
     }
     [_operateBtn setTitleColor:APP_BLUECOLOR forState:UIControlStateNormal];
-    [_operateBtn addTarget:self action:@selector(payAction:) forControlEvents:UIControlEventTouchUpInside];
     [_operateBtn setTitleColor:APP_WHITECOLOR forState:UIControlStateNormal];
     CAGradientLayer *gradientLayer =  [CAGradientLayer layer];
     gradientLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH*0.89, SCREEN_HEIGHT*0.08);
@@ -171,7 +172,6 @@
 - (void)payAction:(UIButton *)sender{
     //直接购买
     [WXProgressHUD showHUD];
-    QDLog(@"text = %@", self.balanceLab.text);
     NSDictionary *paramsDic = @{
                                 @"userId":_operateModel.userId,
                                 @"creditCode":_operateModel.creditCode,
@@ -184,6 +184,9 @@
                                 };
     [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_BuyAndSellBiddingPosters params:paramsDic successBlock:^(QDResponseObject *responseObject) {
         if (responseObject.code == 0) {
+            [WXProgressHUD showSuccessWithTittle:@"订单生成"];
+            //摘单生成的订单号
+            NSString *str = responseObject.result;
             //是否确认付款
             [WXProgressHUD hideHUD];
             TYAlertView *alertView = [[TYAlertView alloc] initWithTitle:@"确认付款" message:@"您确定要对这笔订单进行付款操作吗?"];
@@ -191,10 +194,9 @@
                 [WXProgressHUD hideHUD];
             }]];
             [alertView addAction:[TYAlertAction actionWithTitle:@"确定" style:TYAlertActionStyleDestructive handler:^(TYAlertAction *action) {
-                //
                 QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
                 NSString *balance = [NSString stringWithFormat:@"%.2f", [_balanceLab.text doubleValue]];
-                bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?amount=%@&&id=%@", [QDUserDefaults getObjectForKey:@"QD_JSURL"], JS_PAYACTION, balance, _operateModel.postersId];
+                bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?amount=%@&id=%@", [QDUserDefaults getObjectForKey:@"QD_JSURL"], JS_PAYACTION, balance, str];
                 [self.navigationController pushViewController:bridgeVC animated:YES];
             }]];
             [alertView setButtonTitleColor:APP_BLUECOLOR forActionStyle:TYAlertActionStyleCancel forState:UIControlStateNormal];
@@ -208,14 +210,33 @@
     } failureBlock:^(NSError *error) {
         [WXProgressHUD showErrorWithTittle:@"网络请求失败"];
     }];
-//    QDShellRecommendVC *recommendVC = [[QDShellRecommendVC alloc] init];
-//    recommendVC.recommendModel = _operateModel;
-//    recommendVC.postersType = _postersType;
-//    recommendVC.price = [_priceLab.text doubleValue];
-//    recommendVC.volume = finalNum;
-//    [self.navigationController pushViewController:recommendVC animated:YES];
 }
 
+- (void)sellAction:(UIButton *)sender{
+    //直接卖出
+    [WXProgressHUD showHUD];
+    NSDictionary *paramsDic = @{
+                                @"userId":_operateModel.userId,
+                                @"creditCode":_operateModel.creditCode,
+                                @"price":[NSNumber numberWithDouble:[_operateModel.price doubleValue]],
+                                @"buyVolume":[NSNumber numberWithFloat:_numberButton.currentNumber],
+                                @"balance":self.balanceLab.text,
+                                @"postersId":_operateModel.postersId,
+                                @"postersType":_operateModel.postersType,
+                                @"isPartialDeal":_operateModel.isPartialDeal    //是否允许部分成交
+                                };
+    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_BuyAndSellBiddingPosters params:paramsDic successBlock:^(QDResponseObject *responseObject) {
+        if (responseObject.code == 0) {
+            [WXProgressHUD showSuccessWithTittle:@"卖出成功"];
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }else{
+            [WXProgressHUD hideHUD];
+            [WXProgressHUD showErrorWithTittle:responseObject.message];
+        }
+    } failureBlock:^(NSError *error) {
+        [WXProgressHUD showErrorWithTittle:@"网络请求失败"];
+    }];
+}
 #pragma mark - lazy
 - (PPNumberButton *)numberButton
 {
@@ -225,7 +246,7 @@
         _numberButton.shakeAnimation = YES;
         // 设置最小值
         if (_operateModel != nil) {
-//            _numberButton.minValue = minNumber;
+            _numberButton.minValue = 1;
             _numberButton.currentNumber = 1;
             // 设置最大值
             _numberButton.maxValue = [_operateModel.surplusVolume floatValue];;

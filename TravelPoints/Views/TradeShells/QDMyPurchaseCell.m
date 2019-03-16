@@ -172,7 +172,7 @@
     
     [_dealLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_operationTypeLab);
-        make.left.equalTo(_shadowView.mas_left).offset(SCREEN_WIDTH*0.44);
+        make.left.equalTo(_shadowView.mas_left).offset(SCREEN_WIDTH*0.53);
     }];
     
     [_deal mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -207,7 +207,7 @@
     
     [_amountLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_priceTextLab);
-        make.left.equalTo(_backView.mas_left).offset(180);
+        make.left.equalTo(_backView.mas_left).offset(SCREEN_WIDTH*0.53);
     }];
     
     [_amount mas_makeConstraints:^(MASConstraintMaker *make) {
