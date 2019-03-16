@@ -187,16 +187,6 @@
 		3BD9519221EC5A4A00CD0627 /* QDHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD9519121EC5A4A00CD0627 /* QDHomeViewController.m */; };
 		3BD9519521EC604500CD0627 /* QDRestaurantViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD9519421EC604500CD0627 /* QDRestaurantViewController.m */; };
 		3BD9519B21EC605A00CD0627 /* QDMallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD9519A21EC605A00CD0627 /* QDMallViewController.m */; };
-		3BD951C421EC6E6700CD0627 /* icon_tabbar_misc@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BD951BA21EC6E6600CD0627 /* icon_tabbar_misc@2x.png */; };
-		3BD951C521EC6E6800CD0627 /* icon_tabbar_mine_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BD951BB21EC6E6600CD0627 /* icon_tabbar_mine_selected@2x.png */; };
-		3BD951C621EC6E6800CD0627 /* icon_tabbar_merchant_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BD951BC21EC6E6600CD0627 /* icon_tabbar_merchant_selected@2x.png */; };
-		3BD951C721EC6E6800CD0627 /* icon_tabbar_mine@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BD951BD21EC6E6600CD0627 /* icon_tabbar_mine@2x.png */; };
-		3BD951C821EC6E6800CD0627 /* icon_tabbar_merchant_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BD951BE21EC6E6700CD0627 /* icon_tabbar_merchant_normal@2x.png */; };
-		3BD951C921EC6E6800CD0627 /* icon_tabbar_homepage_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BD951BF21EC6E6700CD0627 /* icon_tabbar_homepage_selected@2x.png */; };
-		3BD951CA21EC6E6800CD0627 /* icon_tabbar_misc_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BD951C021EC6E6700CD0627 /* icon_tabbar_misc_selected@2x.png */; };
-		3BD951CB21EC6E6800CD0627 /* icon_tabbar_onsite_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BD951C121EC6E6700CD0627 /* icon_tabbar_onsite_selected@2x.png */; };
-		3BD951CC21EC6E6800CD0627 /* icon_tabbar_homepage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BD951C221EC6E6700CD0627 /* icon_tabbar_homepage@2x.png */; };
-		3BD951CD21EC6E6800CD0627 /* icon_tabbar_onsite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BD951C321EC6E6700CD0627 /* icon_tabbar_onsite@2x.png */; };
 		3BEA2C2F21EF3883001C52C4 /* WebViewJavascriptBridgeBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BEA2C2D21EF3882001C52C4 /* WebViewJavascriptBridgeBase.m */; };
 		3BEA2C3221EF39AC001C52C4 /* WebViewJavascriptBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BEA2C3021EF39AC001C52C4 /* WebViewJavascriptBridge.m */; };
 		3BEA2C3521EF4511001C52C4 /* WKWebViewJavascriptBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BEA2C3321EF4511001C52C4 /* WKWebViewJavascriptBridge.m */; };
@@ -212,9 +202,6 @@
 		3BF92D772216B04F0019B941 /* QDFilterTypeOneView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF92D762216B04F0019B941 /* QDFilterTypeOneView.m */; };
 		3BF92D7B2216BEFB0019B941 /* SnailQuickMaskPopups.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF92D792216BEFB0019B941 /* SnailQuickMaskPopups.m */; };
 		3BF92D7D2216D8BE0019B941 /* shellBanner@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BF92D7C2216D8BD0019B941 /* shellBanner@2x.png */; };
-		3BF92D832216DCE80019B941 /* icon_shellDefault@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BF92D802216DCE70019B941 /* icon_shellDefault@2x.png */; };
-		3BF92D842216DCE80019B941 /* icon_shellpositive@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BF92D812216DCE80019B941 /* icon_shellpositive@2x.png */; };
-		3BF92D852216DCE80019B941 /* icon_shellreverse@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BF92D822216DCE80019B941 /* icon_shellreverse@2x.png */; };
 		93261118222388C000E3D0BA /* QDMyPurchaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93261117222388C000E3D0BA /* QDMyPurchaseCell.m */; };
 		9326111B222388E900E3D0BA /* QDMySaleOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9326111A222388E900E3D0BA /* QDMySaleOrderCell.m */; };
 		9326111E2223B6E800E3D0BA /* QDOrderField.m in Sources */ = {isa = PBXBuildFile; fileRef = 9326111D2223B6E800E3D0BA /* QDOrderField.m */; };
@@ -229,6 +216,10 @@
 		93744F54223B7744000708A3 /* QDMyBiddingOrderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93744F53223B7744000708A3 /* QDMyBiddingOrderView.m */; };
 		93744F57223B7AF8000708A3 /* QDMyBiddingOrderDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93744F56223B7AF8000708A3 /* QDMyBiddingOrderDetailVC.m */; };
 		93744F5A223B953E000708A3 /* QDRecommendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93744F59223B953E000708A3 /* QDRecommendViewController.m */; };
+		93744F5D223BB179000708A3 /* LaunchImageTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 93744F5C223BB179000708A3 /* LaunchImageTransition.m */; };
+		93744F5F223BB22A000708A3 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 93744F5E223BB22A000708A3 /* Default@2x.png */; };
+		93744F61223BBDFF000708A3 /* icon_backview@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 93744F60223BBDFF000708A3 /* icon_backview@2x.png */; };
+		93744F6A223BCC17000708A3 /* UIButton+ImageTitleStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 93744F69223BCC17000708A3 /* UIButton+ImageTitleStyle.m */; };
 		93BB7AAF2220F97F0061FB9C /* QDHomeTopCancelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BB7AAE2220F97F0061FB9C /* QDHomeTopCancelView.m */; };
 		93BB7AB222212D710061FB9C /* WaterLayou.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BB7AB022212D700061FB9C /* WaterLayou.m */; };
 		93BB7ABA2221466A0061FB9C /* BiddingPostersDTO.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BB7AB92221466A0061FB9C /* BiddingPostersDTO.m */; };
@@ -621,16 +612,6 @@
 		3BD9519421EC604500CD0627 /* QDRestaurantViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDRestaurantViewController.m; sourceTree = "<group>"; };
 		3BD9519921EC605A00CD0627 /* QDMallViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDMallViewController.h; sourceTree = "<group>"; };
 		3BD9519A21EC605A00CD0627 /* QDMallViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDMallViewController.m; sourceTree = "<group>"; };
-		3BD951BA21EC6E6600CD0627 /* icon_tabbar_misc@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_tabbar_misc@2x.png"; sourceTree = "<group>"; };
-		3BD951BB21EC6E6600CD0627 /* icon_tabbar_mine_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_tabbar_mine_selected@2x.png"; sourceTree = "<group>"; };
-		3BD951BC21EC6E6600CD0627 /* icon_tabbar_merchant_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_tabbar_merchant_selected@2x.png"; sourceTree = "<group>"; };
-		3BD951BD21EC6E6600CD0627 /* icon_tabbar_mine@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_tabbar_mine@2x.png"; sourceTree = "<group>"; };
-		3BD951BE21EC6E6700CD0627 /* icon_tabbar_merchant_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_tabbar_merchant_normal@2x.png"; sourceTree = "<group>"; };
-		3BD951BF21EC6E6700CD0627 /* icon_tabbar_homepage_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_tabbar_homepage_selected@2x.png"; sourceTree = "<group>"; };
-		3BD951C021EC6E6700CD0627 /* icon_tabbar_misc_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_tabbar_misc_selected@2x.png"; sourceTree = "<group>"; };
-		3BD951C121EC6E6700CD0627 /* icon_tabbar_onsite_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_tabbar_onsite_selected@2x.png"; sourceTree = "<group>"; };
-		3BD951C221EC6E6700CD0627 /* icon_tabbar_homepage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_tabbar_homepage@2x.png"; sourceTree = "<group>"; };
-		3BD951C321EC6E6700CD0627 /* icon_tabbar_onsite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_tabbar_onsite@2x.png"; sourceTree = "<group>"; };
 		3BD951ED21EC75C700CD0627 /* QDTravelPoints.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDTravelPoints.pch; sourceTree = "<group>"; };
 		3BEA2C2D21EF3882001C52C4 /* WebViewJavascriptBridgeBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewJavascriptBridgeBase.m; sourceTree = "<group>"; };
 		3BEA2C2E21EF3883001C52C4 /* WebViewJavascriptBridgeBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewJavascriptBridgeBase.h; sourceTree = "<group>"; };
@@ -660,9 +641,6 @@
 		3BF92D792216BEFB0019B941 /* SnailQuickMaskPopups.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SnailQuickMaskPopups.m; sourceTree = "<group>"; };
 		3BF92D7A2216BEFB0019B941 /* SnailQuickMaskPopups.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SnailQuickMaskPopups.h; sourceTree = "<group>"; };
 		3BF92D7C2216D8BD0019B941 /* shellBanner@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shellBanner@2x.png"; sourceTree = "<group>"; };
-		3BF92D802216DCE70019B941 /* icon_shellDefault@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_shellDefault@2x.png"; sourceTree = "<group>"; };
-		3BF92D812216DCE80019B941 /* icon_shellpositive@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_shellpositive@2x.png"; sourceTree = "<group>"; };
-		3BF92D822216DCE80019B941 /* icon_shellreverse@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_shellreverse@2x.png"; sourceTree = "<group>"; };
 		511DB104CDCE097693D079A1 /* Pods-TravelPoints.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TravelPoints.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TravelPoints/Pods-TravelPoints.debug.xcconfig"; sourceTree = "<group>"; };
 		93261116222388C000E3D0BA /* QDMyPurchaseCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDMyPurchaseCell.h; sourceTree = "<group>"; };
 		93261117222388C000E3D0BA /* QDMyPurchaseCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDMyPurchaseCell.m; sourceTree = "<group>"; };
@@ -692,6 +670,12 @@
 		93744F56223B7AF8000708A3 /* QDMyBiddingOrderDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDMyBiddingOrderDetailVC.m; sourceTree = "<group>"; };
 		93744F58223B953E000708A3 /* QDRecommendViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDRecommendViewController.h; sourceTree = "<group>"; };
 		93744F59223B953E000708A3 /* QDRecommendViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDRecommendViewController.m; sourceTree = "<group>"; };
+		93744F5B223BB179000708A3 /* LaunchImageTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchImageTransition.h; sourceTree = "<group>"; };
+		93744F5C223BB179000708A3 /* LaunchImageTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchImageTransition.m; sourceTree = "<group>"; };
+		93744F5E223BB22A000708A3 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		93744F60223BBDFF000708A3 /* icon_backview@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_backview@2x.png"; sourceTree = "<group>"; };
+		93744F68223BCC17000708A3 /* UIButton+ImageTitleStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+ImageTitleStyle.h"; sourceTree = "<group>"; };
+		93744F69223BCC17000708A3 /* UIButton+ImageTitleStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+ImageTitleStyle.m"; sourceTree = "<group>"; };
 		93BB7AAD2220F97F0061FB9C /* QDHomeTopCancelView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDHomeTopCancelView.h; sourceTree = "<group>"; };
 		93BB7AAE2220F97F0061FB9C /* QDHomeTopCancelView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDHomeTopCancelView.m; sourceTree = "<group>"; };
 		93BB7AB022212D700061FB9C /* WaterLayou.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaterLayou.m; sourceTree = "<group>"; };
@@ -1265,6 +1249,8 @@
 		3BCE3C2E21EC89F9005D518F /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				93744F68223BCC17000708A3 /* UIButton+ImageTitleStyle.h */,
+				93744F69223BCC17000708A3 /* UIButton+ImageTitleStyle.m */,
 				93E30ED42226B310003CA771 /* DIYCalendarCell.h */,
 				93E30ED52226B310003CA771 /* DIYCalendarCell.m */,
 				93E30ECE22268DAF003CA771 /* UIImage+Image.h */,
@@ -1303,6 +1289,8 @@
 		3BD9516621EC2A1800CD0627 /* TravelPoints */ = {
 			isa = PBXGroup;
 			children = (
+				93744F5B223BB179000708A3 /* LaunchImageTransition.h */,
+				93744F5C223BB179000708A3 /* LaunchImageTransition.m */,
 				3B0CD6DD21F05E7D0020824A /* Config */,
 				3BEA2C2C21EF3866001C52C4 /* WebViewJavascriptBridge */,
 				3B40EB7321EC952800656C1F /* Utils */,
@@ -1576,37 +1564,18 @@
 		3BD951B821EC6E5300CD0627 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				93744F5E223BB22A000708A3 /* Default@2x.png */,
+				93744F60223BBDFF000708A3 /* icon_backview@2x.png */,
 				93D2D62F222E59D100CCC61D /* emptySource@2x.png */,
 				3B8984B6221BE32B001A9970 /* naviga@2x.png */,
-				3BF92D802216DCE70019B941 /* icon_shellDefault@2x.png */,
-				3BF92D812216DCE80019B941 /* icon_shellpositive@2x.png */,
-				3BF92D822216DCE80019B941 /* icon_shellreverse@2x.png */,
 				3BF92D7C2216D8BD0019B941 /* shellBanner@2x.png */,
 				3B0DC04F220033150056C318 /* placeHolder@2x.png */,
 				3B2ADD1521FEA68B00F62D63 /* seach_01@2x.png */,
 				3B1BC00F21FAFAE20005C415 /* gpsStat1@2x.png */,
 				3B1BC00D21FAFAE10005C415 /* decrease@2x.png */,
 				3B1BC00E21FAFAE10005C415 /* increase@2x.png */,
-				3BD951B921EC6E5300CD0627 /* tabbar */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		3BD951B921EC6E5300CD0627 /* tabbar */ = {
-			isa = PBXGroup;
-			children = (
-				3BD951BF21EC6E6700CD0627 /* icon_tabbar_homepage_selected@2x.png */,
-				3BD951C221EC6E6700CD0627 /* icon_tabbar_homepage@2x.png */,
-				3BD951BE21EC6E6700CD0627 /* icon_tabbar_merchant_normal@2x.png */,
-				3BD951BC21EC6E6600CD0627 /* icon_tabbar_merchant_selected@2x.png */,
-				3BD951BB21EC6E6600CD0627 /* icon_tabbar_mine_selected@2x.png */,
-				3BD951BD21EC6E6600CD0627 /* icon_tabbar_mine@2x.png */,
-				3BD951C021EC6E6700CD0627 /* icon_tabbar_misc_selected@2x.png */,
-				3BD951BA21EC6E6600CD0627 /* icon_tabbar_misc@2x.png */,
-				3BD951C121EC6E6700CD0627 /* icon_tabbar_onsite_selected@2x.png */,
-				3BD951C321EC6E6700CD0627 /* icon_tabbar_onsite@2x.png */,
-			);
-			path = tabbar;
 			sourceTree = "<group>";
 		};
 		3BEA2C2C21EF3866001C52C4 /* WebViewJavascriptBridge */ = {
@@ -1944,32 +1913,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				3BD9517421EC2A1C00CD0627 /* LaunchScreen.storyboard in Resources */,
-				3BD951C721EC6E6800CD0627 /* icon_tabbar_mine@2x.png in Resources */,
 				3B0CD73721F1868C0020824A /* AMap.bundle in Resources */,
 				3BD9517121EC2A1C00CD0627 /* Assets.xcassets in Resources */,
 				3B0CD74221F1DE380020824A /* SYCity.bundle in Resources */,
 				3B0DC050220033150056C318 /* placeHolder@2x.png in Resources */,
-				3BF92D832216DCE80019B941 /* icon_shellDefault@2x.png in Resources */,
-				3BD951C921EC6E6800CD0627 /* icon_tabbar_homepage_selected@2x.png in Resources */,
-				3BD951CA21EC6E6800CD0627 /* icon_tabbar_misc_selected@2x.png in Resources */,
-				3BF92D842216DCE80019B941 /* icon_shellpositive@2x.png in Resources */,
-				3BD951CC21EC6E6800CD0627 /* icon_tabbar_homepage@2x.png in Resources */,
 				93D2D630222E59D100CCC61D /* emptySource@2x.png in Resources */,
-				3BD951C621EC6E6800CD0627 /* icon_tabbar_merchant_selected@2x.png in Resources */,
-				3BD951C821EC6E6800CD0627 /* icon_tabbar_merchant_normal@2x.png in Resources */,
-				3BD951CB21EC6E6800CD0627 /* icon_tabbar_onsite_selected@2x.png in Resources */,
 				3BD9516F21EC2A1800CD0627 /* Main.storyboard in Resources */,
 				3B1BC01221FAFAE20005C415 /* gpsStat1@2x.png in Resources */,
-				3BD951C521EC6E6800CD0627 /* icon_tabbar_mine_selected@2x.png in Resources */,
-				3BD951C421EC6E6700CD0627 /* icon_tabbar_misc@2x.png in Resources */,
 				3B2ADD1621FEA68B00F62D63 /* seach_01@2x.png in Resources */,
 				3B8984B7221BE32C001A9970 /* naviga@2x.png in Resources */,
-				3BD951CD21EC6E6800CD0627 /* icon_tabbar_onsite@2x.png in Resources */,
 				3B1BC01021FAFAE20005C415 /* decrease@2x.png in Resources */,
+				93744F61223BBDFF000708A3 /* icon_backview@2x.png in Resources */,
 				3BF92D7D2216D8BE0019B941 /* shellBanner@2x.png in Resources */,
 				3B1BC00321FAA1590005C415 /* MBProgressHUD.bundle in Resources */,
 				3B1BC01121FAFAE20005C415 /* increase@2x.png in Resources */,
-				3BF92D852216DCE80019B941 /* icon_shellreverse@2x.png in Resources */,
+				93744F5F223BB22A000708A3 /* Default@2x.png in Resources */,
 				3BEA2C3D21EF4C15001C52C4 /* ExampleApp.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2147,6 +2105,7 @@
 				93744F5A223B953E000708A3 /* QDRecommendViewController.m in Sources */,
 				3BD9519B21EC605A00CD0627 /* QDMallViewController.m in Sources */,
 				937344E4223137850054D753 /* LQPopUpView.m in Sources */,
+				93744F5D223BB179000708A3 /* LaunchImageTransition.m in Sources */,
 				3B40EBBB21EC953E00656C1F /* NSAttributedString+YYText.m in Sources */,
 				93744F51223B46B6000708A3 /* YUTimer.m in Sources */,
 				3B40EBAD21EC953E00656C1F /* YYTextInput.m in Sources */,
@@ -2183,6 +2142,7 @@
 				3B76367D2217E9F800F77007 /* QDOrderDetailVC.m in Sources */,
 				93E30E9A2224D158003CA771 /* PPNumberButton.m in Sources */,
 				3B40EBEA21ED925F00656C1F /* VertificationCodeInputLabel.m in Sources */,
+				93744F6A223BCC17000708A3 /* UIButton+ImageTitleStyle.m in Sources */,
 				3B1DFE1321F305E2007D4B12 /* QDSegmentControl.m in Sources */,
 				3B2ADD1921FECFBA00F62D63 /* QDStrategyDTO.m in Sources */,
 				3B1DFE1021F2F3C0007D4B12 /* SYHotCityHeaderView.m in Sources */,

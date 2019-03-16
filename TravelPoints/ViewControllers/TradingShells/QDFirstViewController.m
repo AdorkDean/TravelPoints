@@ -326,6 +326,7 @@ typedef enum : NSUInteger {
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
+    
     _sectionHeaderView = [[QDTradeShellsSectionHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 300)];
     [_sectionHeaderView.filterBtn addTarget:self action:@selector(filterAction:) forControlEvents:UIControlEventTouchUpInside];
     _sectionHeaderView.backgroundColor = APP_WHITECOLOR;
@@ -376,10 +377,10 @@ typedef enum : NSUInteger {
             _typeOneView.backgroundColor = APP_WHITECOLOR;
         }
         _popups = [SnailQuickMaskPopups popupsWithMaskStyle:MaskStyleBlackTranslucent aView:_typeOneView];
-        _popups.presentationStyle = PresentationStyleCentered;
+        _popups.presentationStyle = PresentationStyleTop;
         
         _popups.delegate = self;
-        [_popups presentInView:self.view animated:YES completion:NULL];
+        [_popups presentInView:self.tableView animated:YES completion:NULL];
     }else if(_shellType == QDMyOrders){
         if (!_typeTwoView) {
             _typeTwoView = [[QDFilterTypeTwoView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.57)];

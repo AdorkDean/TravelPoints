@@ -17,6 +17,8 @@
 #import <PgySDK/PgyManager.h>
 #import <PgyUpdate/PgyUpdateManager.h>
 #import <OpenShareHeader.h>
+#import "LaunchImageTransition.h"
+
 @interface AppDelegate ()
 
 @property(nonatomic, strong) UITabBarController *rootTabbarCtr;
@@ -55,6 +57,7 @@
     self.rootTabbarCtr = [[UITabBarController alloc] init];
     [self.rootTabbarCtr setViewControllers:viewCtrs animated:YES];
     self.window.rootViewController = self.rootTabbarCtr;
+
     
     UITabBar *tabbar = self.rootTabbarCtr.tabBar;
     [[UITabBar appearance] setBarTintColor:[UIColor whiteColor]];
@@ -78,9 +81,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    // 在window上放一个imageView
+    
+   
     [self initRootVC];
     [self configureAPIKey];
     [self.window makeKeyAndVisible];
+
     self.window.backgroundColor = APP_WHITECOLOR;
     _hotelLevel = [[NSMutableArray alloc] init];    //酒店等级
     _hotelTypeId = [[NSMutableArray alloc] init];   //酒店类型
@@ -181,6 +188,7 @@
 
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
+    
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }

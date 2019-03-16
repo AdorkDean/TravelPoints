@@ -7,6 +7,16 @@
 //
 
 #import "QDTradeShellsSectionHeaderView.h"
+#import "UIButton+ImageTitleStyle.h"
+static char *const btnKey = "btnKey";
+
+@interface QDTradeShellsSectionHeaderView()
+{
+    BOOL show;
+}
+@property (nonatomic, strong) UIView *collect2;
+
+@end
 
 @implementation QDTradeShellsSectionHeaderView
 
@@ -17,6 +27,8 @@
         [_amountBtn setTitle:@"数量" forState:UIControlStateNormal];
         [_amountBtn setTitleColor:APP_BLACKCOLOR forState:UIControlStateNormal];
         _amountBtn.titleLabel.font = QDFont(13);
+        _amountBtn.tag = 101;
+        [_amountBtn addTarget:self action:@selector(selectClick:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_amountBtn];
         
         _priceBtn = [[SPButton alloc] initWithImagePosition:SPButtonImagePositionRight];
@@ -24,18 +36,103 @@
         [_priceBtn setTitle:@"价格" forState:UIControlStateNormal];
         [_priceBtn setTitleColor:APP_BLACKCOLOR forState:UIControlStateNormal];
         _priceBtn.titleLabel.font = QDFont(13);
+        _priceBtn.tag = 102;
+        [_priceBtn addTarget:self action:@selector(selectClick:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_priceBtn];
+        
+        objc_setAssociatedObject(_priceBtn, btnKey, @"1", OBJC_ASSOCIATION_ASSIGN);
         
         _filterBtn = [[SPButton alloc] initWithImagePosition:SPButtonImagePositionRight];
         [_filterBtn setImage:[UIImage imageNamed:@"icon_filter"] forState:UIControlStateNormal];
         _filterBtn.titleLabel.font = QDFont(13);
+        _filterBtn.tag = 103;
+        [_filterBtn addTarget:self action:@selector(selectClick:) forControlEvents:UIControlEventTouchUpInside];
         [_filterBtn setTitle:@"筛选" forState:UIControlStateNormal];
         [_filterBtn setTitleColor:APP_BLACKCOLOR forState:UIControlStateNormal];
         [self addSubview:_filterBtn];
+        objc_setAssociatedObject(_filterBtn, btnKey, @"1", OBJC_ASSOCIATION_ASSIGN);
+        _collect2 = [[UIView alloc] initWithFrame:CGRectMake(0,-ceil(_selectItmeArr.count/2.0)*35, SCREEN_WIDTH, ceil(_selectItmeArr.count/2.0)*35)];
+        _collect2.backgroundColor = [UIColor redColor];
+        [self addSubview:self.collect2];
     }
     return self;
 }
 
+- (void)selectClick:(UIButton *)btn{
+//    if (btn.tag == 101) {
+//        btn.selected = YES;
+//        UIButton *button = [self viewWithTag:102];
+//        button.selected = NO;
+//    }
+//    if (btn.tag == 102) {
+//        btn.selected = YES;
+//        UIButton *button = [self viewWithTag:101];
+//        button.selected = NO;
+//    }
+//    if (btn.tag != 103) {//没点击全部分类，则让其他按钮回复默认状态
+//        for (int i = 1; i<3 ;i++) {
+//            UIButton *button = [self viewWithTag:i+100];
+//            button.selected = NO;
+//        }
+//        btn.selected = YES;
+//        [self toggleViewWith:nil];
+//    }else{//当点击全部分类按钮，则
+//
+//        [self toggleViewWith:btn];
+//    }
+    
+    
+    ButtonClickType type = ButtonClickTypeNormal;
+    
+    if (btn.tag == 101) {
+        NSString *flag = objc_getAssociatedObject(btn, btnKey);
+        if ([flag isEqualToString:@"1"]) {
+            [btn setImage:[UIImage imageNamed:@"icon_shellpositive"] forState:UIControlStateNormal];
+            objc_setAssociatedObject(btn, btnKey, @"2", OBJC_ASSOCIATION_ASSIGN);
+            type = ButtonClickTypeUp;
+        }else if ([flag isEqualToString:@"2"]){
+            [btn setImage:[UIImage imageNamed:@"icon_shellreverse"] forState:UIControlStateNormal];
+            objc_setAssociatedObject(btn, btnKey, @"1", OBJC_ASSOCIATION_ASSIGN);
+            type = ButtonClickTypeDown;
+        }
+    }else if (btn.tag == 102){
+        NSString *flag = objc_getAssociatedObject(btn, btnKey);
+        if ([flag isEqualToString:@"1"]) {
+            [btn setImage:[UIImage imageNamed:@"icon_shellpositive"] forState:UIControlStateNormal];
+            objc_setAssociatedObject(btn, btnKey, @"2", OBJC_ASSOCIATION_ASSIGN);
+            type = ButtonClickTypeUp;
+        }else if ([flag isEqualToString:@"2"]){
+            [btn setImage:[UIImage imageNamed:@"icon_shellreverse"] forState:UIControlStateNormal];
+            objc_setAssociatedObject(btn, btnKey, @"1", OBJC_ASSOCIATION_ASSIGN);
+            type = ButtonClickTypeDown;
+        }
+    }else{
+        //点击全部不复位价格
+        if (btn.tag != 103) {
+            UIButton *button = [self viewWithTag:102];
+            [button setImage:[UIImage imageNamed:@"icon_shellDefault"] forState:UIControlStateNormal];
+            objc_setAssociatedObject(button, btnKey, @"1", OBJC_ASSOCIATION_ASSIGN);
+            type = ButtonClickTypeNormal;
+        }
+    }
+    
+    
+    if ([self.delegate respondsToSelector:@selector(selectTopButton:withIndex:withButtonType:)]) {
+        [self.delegate selectTopButton:self withIndex:btn.tag withButtonType:type];
+    }
+}
+- (void)toggleViewWith:(UIButton *)btn{
+    
+    if (!btn) {
+        btn = [self viewWithTag:103];
+        if (show) {
+            show = NO;
+        }else{
+            return;
+        }
+    }
+    
+}
 - (void)layoutSubviews{
     [super layoutSubviews];
     [_amountBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -53,12 +150,8 @@
         make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH*0.81);
     }];
 }
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
 
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [self toggleViewWith:nil];
+}
 @end
