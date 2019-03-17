@@ -55,6 +55,7 @@
     [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_IsLogin params:nil successBlock:^(QDResponseObject *responseObject) {
         NSString *cookie = [NSString stringWithFormat:@"%@", [QDUserDefaults getCookies]];
         if ([responseObject.result intValue] == 0) {
+            [QDUserDefaults setObject:@"0" forKey:@"loginType"];
             QDLog(@"未登录, cookie = %@", cookie);
             [QDUserDefaults removeCookies]; //未登录的时候移除cookie
             [self showTableHeadView];
