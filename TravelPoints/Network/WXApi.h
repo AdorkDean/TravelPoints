@@ -44,6 +44,11 @@ static NSString * const WS_TOPIC_Account = @"public_part_account_"; //资金订�
 
 static NSString * const Notification_LoginSucceeded = @"loginSucceeded"; //行情订阅（后加交易所id_合约id：public_instrument_exchangeID_instrumentID）
 
+static NSString * const Notification_PriceUp = @"priceUp";
+static NSString * const Notification_PriceDown = @"priceDown";
+static NSString * const Notification_AmountUp = @"amountUp";
+static NSString * const Notification_AmountDown = @"amountDown";
+
 
 /***************** API **************************/
 static NSString * const api_Login = @"login";            //登录

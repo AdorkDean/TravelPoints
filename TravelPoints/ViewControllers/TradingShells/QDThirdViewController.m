@@ -57,6 +57,8 @@ typedef enum : NSUInteger {
 
 
 @property (nonatomic, strong) UIView *vv;
+@property (nonatomic, strong) NSString *businessType;   //订单类型：0买入，1卖出
+@property (nonatomic, strong) NSString *state;
 
 
 
@@ -152,8 +154,8 @@ typedef enum : NSUInteger {
         if (_myOrdersArr.count) {
             [_myOrdersArr removeAllObjects];
         }
-        NSDictionary * paramsDic = @{@"postersStatus":@"",
-                                     @"postersType":@"",
+        NSDictionary * paramsDic = @{@"postersStatus":_state,
+                                     @"postersType":_businessType,
                                      @"pageNum":@1,
                                      @"pageSize":[NSNumber numberWithInt:_pageSize]
                                      };
@@ -203,8 +205,8 @@ typedef enum : NSUInteger {
                 return;
             }
         }
-        NSDictionary * paramsDic = @{@"postersStatus":@"",
-                                     @"postersType":@"",
+        NSDictionary * paramsDic = @{@"postersStatus":_state,
+                                     @"postersType":_businessType,
                                      @"pageNum":[NSNumber numberWithInt:_pageNum],
                                      @"pageSize":[NSNumber numberWithInt:_pageSize]
                                      };
@@ -257,6 +259,8 @@ typedef enum : NSUInteger {
     [super viewDidLoad];
     _myOrdersArr = [[NSMutableArray alloc] init];
     _pageSize = 10;
+    _businessType = @"";
+    _state = @"";
     _pageNum = 1;
     _totalPage = 0; //总页数默认
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
@@ -406,16 +410,33 @@ typedef enum : NSUInteger {
     [self.navigationController pushViewController:detailVC animated:YES];
 }
 
+#pragma mark - 筛选确认按钮
 - (void)confirmOptions:(UIButton *)sender{
     [_popups dismissAnimated:YES completion:nil];
+    [self requestHeaderTopData];
 }
 
+#pragma mark - 筛选重置按钮
+- (void)resetOptions:(UIButton *)sender{
+    _businessType = @"";
+    _state = @"";
+}
 - (void)filterAction:(UIButton *)sender{
     [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
     if (!_typeTwoView) {
         _typeTwoView = [[QDFilterTypeTwoView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.57)];
         [_typeTwoView.confirmBtn addTarget:self action:@selector(confirmOptions:) forControlEvents:UIControlEventTouchUpInside];
+        [_typeTwoView.resetbtn addTarget:self action:@selector(resetOptions:) forControlEvents:UIControlEventTouchUpInside];
+
         _typeTwoView.backgroundColor = APP_WHITECOLOR;
+        //状态
+        _typeTwoView.sdStatusStatusBlock = ^(NSString * _Nonnull statusID) {
+            _state = statusID;
+        };
+        _typeTwoView.sdDirectionBlock = ^(NSString * _Nonnull directionID) {
+            QDLog(@"directionID = %@", directionID);
+            _businessType = directionID;
+        };
     }
     _popups = [SnailQuickMaskPopups popupsWithMaskStyle:MaskStyleBlackTranslucent aView:_typeTwoView];
     _popups.presentationStyle = PresentationStyleTop;
@@ -468,7 +489,7 @@ typedef enum : NSUInteger {
         _filterBtn.titleLabel.font = QDFont(14);
         [_filterBtn addTarget:self action:@selector(filterAction:) forControlEvents:UIControlEventTouchUpInside];
         [_filterBtn setTitle:@"筛选" forState:UIControlStateNormal];
-        [_filterBtn setTitleColor:APP_GRAYLINECOLOR forState:UIControlStateNormal];
+        [_filterBtn setTitleColor:APP_BLACKCOLOR forState:UIControlStateNormal];
     }
     return _filterBtn;
 }

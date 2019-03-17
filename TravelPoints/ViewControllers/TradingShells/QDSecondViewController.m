@@ -27,17 +27,8 @@
 #define K_T_Cell @"t_cell"
 #define K_C_Cell @"c_cell"
 
-// 要玩贝  转玩贝  我的报单  我的摘单
-typedef enum : NSUInteger {
-    QDPlayShells = 0,
-    QDTradeShells = 1,
-    QDMyOrders = 2,
-    QDPickUpOrders = 3
-} QDShellType;
-
 @interface QDSecondViewController ()<UITableViewDelegate, UITableViewDataSource, SnailQuickMaskPopupsDelegate, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource, UICollectionViewDelegate, UICollectionViewDataSource>{
     QDTradeShellsSectionHeaderView *_sectionHeaderView;
-    QDShellType _shellType;
     UIView *_backView;
     UIButton *_optionBtn;    //要玩贝操作按钮
     NSMutableArray *_ordersArr;
@@ -53,22 +44,89 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) SnailQuickMaskPopups *popups;
 @property (nonatomic, strong) QDFilterTypeOneView *typeOneView;
 
+@property (nonatomic, strong) NSString *postersType;
+@property (nonatomic, strong) NSString *minVolume;      //最低量
+@property (nonatomic, strong) NSString *maxVolume;      //最高量
+@property (nonatomic, strong) NSString *minPrice;       //最低价
+@property (nonatomic, strong) NSString *maxPrice;       //最高价
+@property (nonatomic, strong) NSString *sortColumn;     //数量排序：volume，价格排序：price
+@property (nonatomic, strong) NSString *sortType;       //排序方式：desc降序，asc升序
+@property (nonatomic, strong) NSString *isPartialDeal;  //是否部分成交0:允许 1:不允许
+
 @end
 
 @implementation QDSecondViewController
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(priceUp) name:Notification_PriceUp object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(priceDown) name:Notification_PriceDown object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(amuntUp) name:Notification_AmountUp object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(amountDown) name:Notification_AmountDown object:nil];
+
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [self.navigationController.navigationBar setHidden:YES];
     [self.navigationController.tabBarController.tabBar setHidden:NO];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:Notification_PriceUp object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:Notification_PriceDown object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:Notification_AmountUp object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:Notification_AmountDown object:nil];
+}
+
+- (void)priceUp{
+    QDLog(@"priceUp");
+    _sortColumn = @"price";
+    _sortType = @"asc";
+    [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
+    [self requestZWBHeaderTopData];
+    [_sectionHeaderView.priceBtn setImage:[UIImage imageNamed:@"icon_shellpositive"] forState:UIControlStateNormal];
+    [_sectionHeaderView.amountBtn setImage:[UIImage imageNamed:@"icon_shellDefault"] forState:UIControlStateNormal];
+    
+}
+- (void)priceDown{
+    QDLog(@"priceDown");
+    _sortColumn = @"price";
+    _sortType = @"desc";
+    [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
+    [self requestZWBHeaderTopData];
+    //    [_tableView reloadData];
+    [_sectionHeaderView.priceBtn setImage:[UIImage imageNamed:@"icon_shellreverse"] forState:UIControlStateNormal];
+    [_sectionHeaderView.amountBtn setImage:[UIImage imageNamed:@"icon_shellDefault"] forState:UIControlStateNormal];
+
+}
+- (void)amuntUp{
+    _sortColumn = @"volume";
+    _sortType = @"asc";
+    [self requestZWBHeaderTopData];
+    [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
+    //    [_tableView reloadData];
+    [_sectionHeaderView.amountBtn setImage:[UIImage imageNamed:@"icon_shellpositive"] forState:UIControlStateNormal];
+    [_sectionHeaderView.priceBtn setImage:[UIImage imageNamed:@"icon_shellDefault"] forState:UIControlStateNormal];
+
+}
+- (void)amountDown{
+    [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
+    _sortColumn = @"volume";
+    _sortType = @"desc";
+    [self requestZWBHeaderTopData];
+    [_sectionHeaderView.amountBtn setImage:[UIImage imageNamed:@"icon_shellreverse"] forState:UIControlStateNormal];
+    [_sectionHeaderView.priceBtn setImage:[UIImage imageNamed:@"icon_shellDefault"] forState:UIControlStateNormal];
+
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _postersType = @"0";
+    _isPartialDeal = @"";
+    _minPrice = @"";
+    _maxPrice = @"";
+    _minVolume = @"";
+    _maxVolume = @"";
+    _sortColumn = @"";
+    _sortType = @"";
     _pageNum = 1;
     _pageSize = 10;
     _totalPage = 0; //总页数默认为1
@@ -92,20 +150,32 @@ typedef enum : NSUInteger {
     _optionBtn.layer.masksToBounds = YES;
     _optionBtn.titleLabel.font = QDFont(17);
     [self.view addSubview:_optionBtn];
-    [self requestYWBData];
+    [self requestZWBData];
 }
 
-- (void)requestYWBData{
+- (void)requestZWBData{
     if (_totalPage != 0) {
         if (_pageNum >= _totalPage) {
             [self.tableView.mj_footer endRefreshingWithNoMoreData];
             return;
         }
     }
+//    NSDictionary * dic1 = @{@"postersStatus":@"",   //挂单状态  默认全部
+//                            @"postersType":@"0",    //挂单类型，0买入挂单，1-卖出挂单
+//                            @"pageNum":[NSNumber numberWithInt:_pageNum],
+//                            @"pageSize":[NSNumber numberWithInt:_pageSize],
+//                            };
     NSDictionary * dic1 = @{@"postersStatus":@"",
-                            @"postersType":@"0",
-                            @"pageNum":[NSNumber numberWithInt:_pageNum],
+                            @"postersType":_postersType,
+                            @"pageNum":@1,
                             @"pageSize":[NSNumber numberWithInt:_pageSize],
+                            @"minVolume":_minVolume,
+                            @"maxVolume":_maxVolume,
+                            @"minPrice":_minPrice,
+                            @"maxPrice":_maxPrice,
+                            @"sortColumn":_sortColumn,
+                            @"sortType":_sortType,
+                            @"isPartialDeal":_isPartialDeal
                             };
     [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_FindCanTrade params:dic1 successBlock:^(QDResponseObject *responseObject) {
         if (responseObject.code == 0) {
@@ -130,13 +200,13 @@ typedef enum : NSUInteger {
                         [_ordersArr addObjectsFromArray:arr];
                         [self.tableView reloadData];
                         self.tableView.mj_footer.state = MJRefreshStateIdle;
+                        [self endRefreshing];
                         QDLog(@"count = %ld", (long)_ordersArr.count);
                     }
                 }
             }else{
-                [_tableView.mj_footer endRefreshing];
+                [self endRefreshing];
                 [_tableView.mj_footer endRefreshingWithNoMoreData];
-                
             }
         }else{
             [WXProgressHUD showErrorWithTittle:responseObject.message];
@@ -177,7 +247,7 @@ typedef enum : NSUInteger {
     _tableView.dataSource = self;
     _tableView.emptyDataSetSource = self;
     _tableView.emptyDataSetDelegate = self;
-//    _tableView.estimatedRowHeight = 0;
+    _tableView.estimatedRowHeight = 0;
 //    _tableView.estimatedSectionFooterHeight = 0;
 //    _tableView.estimatedSectionHeaderHeight = 0;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -206,7 +276,7 @@ typedef enum : NSUInteger {
     _tableView.mj_footer = [QDRefreshFooter footerWithRefreshingBlock:^{
         QDLog(@"上拉刷新");
         _pageNum++;
-        [self requestYWBData];
+        [self requestZWBData];
     }];
 }
 
@@ -215,10 +285,18 @@ typedef enum : NSUInteger {
     if (_ordersArr.count) {
         [_ordersArr removeAllObjects];
     }
+    
     NSDictionary * dic1 = @{@"postersStatus":@"",
-                            @"postersType":@"0",
+                            @"postersType":_postersType,
                             @"pageNum":@1,
                             @"pageSize":[NSNumber numberWithInt:_pageSize],
+                            @"minVolume":_minVolume,
+                            @"maxVolume":_maxVolume,
+                            @"minPrice":_minPrice,
+                            @"maxPrice":_maxPrice,
+                            @"sortColumn":_sortColumn,
+                            @"sortType":_sortType,
+                            @"isPartialDeal":_isPartialDeal
                             };
     [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_FindCanTrade params:dic1 successBlock:^(QDResponseObject *responseObject) {
         if (responseObject.code == 0) {
@@ -313,20 +391,21 @@ typedef enum : NSUInteger {
     return cell;
 }
 
+- (QDTradeShellsSectionHeaderView *)sectionHeaderView{
+    if (!_sectionHeaderView) {
+        _sectionHeaderView = [[QDTradeShellsSectionHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 300)];
+        [_sectionHeaderView.filterBtn addTarget:self action:@selector(filterAction:) forControlEvents:UIControlEventTouchUpInside];
+        _sectionHeaderView.backgroundColor = APP_WHITECOLOR;
+    }
+    return _sectionHeaderView;
+}
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    _sectionHeaderView = [[QDTradeShellsSectionHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 300)];
-    [_sectionHeaderView.filterBtn addTarget:self action:@selector(filterAction:) forControlEvents:UIControlEventTouchUpInside];
-    _sectionHeaderView.backgroundColor = APP_WHITECOLOR;
-    return _sectionHeaderView;
+    return self.sectionHeaderView;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (_shellType == QDMyOrders) {
-        QDOrderDetailVC *detailVC = [[QDOrderDetailVC alloc] init];
-        [self.navigationController pushViewController:detailVC animated:YES];
-    }
 }
 
 //点击UICollectionViewCell的代理方法
@@ -336,6 +415,11 @@ typedef enum : NSUInteger {
 }
 
 - (void)confirmOptions:(UIButton *)sender{
+    _minPrice = _typeOneView.lowPrice.text;
+    _maxPrice = _typeOneView.hightPrice.text;
+    _minVolume = _typeOneView.lowAmount.text;
+    _maxVolume = _typeOneView.hightAmount.text;
+    [self requestZWBHeaderTopData];
     [_popups dismissAnimated:YES completion:nil];
 }
 
@@ -346,7 +430,18 @@ typedef enum : NSUInteger {
     satifiedVC.typeStr = @"0";  //请求市场上的买单数据
     [self.navigationController pushViewController:satifiedVC animated:YES];
 }
+#pragma mark - 筛选重置按钮
+- (void)resetOptions:(UIButton *)sender{
+    _postersType = @"";
+    _sortType = @"";
+    _isPartialDeal = @"";
+    _sortColumn = @"";
+    _minVolume = @"";
+    _maxVolume = @"";
+    _minPrice = @"";
+    _maxPrice = @"";
 
+}
 - (void)filterAction:(UIButton *)sender{
     QDLog(@"filter");
     [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
@@ -354,6 +449,11 @@ typedef enum : NSUInteger {
         _typeOneView = [[QDFilterTypeOneView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.57)];
         [_typeOneView.confirmBtn addTarget:self action:@selector(confirmOptions:) forControlEvents:UIControlEventTouchUpInside];
         _typeOneView.backgroundColor = APP_WHITECOLOR;
+        [_typeOneView.resetbtn addTarget:self action:@selector(resetOptions:) forControlEvents:UIControlEventTouchUpInside];
+        //数量价格
+        _typeOneView.sdIsPartialBlock = ^(NSString * _Nonnull directionID) {
+            _isPartialDeal = directionID;
+        };
     }
     _popups = [SnailQuickMaskPopups popupsWithMaskStyle:MaskStyleBlackTranslucent aView:_typeOneView];
     _popups.presentationStyle = PresentationStyleTop;
@@ -402,7 +502,6 @@ typedef enum : NSUInteger {
     BiddingPostersDTO *dto = _ordersArr[indexPath.row];
     [cell loadDataWithDataArr:dto andTypeStr:dto.postersType];
     cell.sell.tag = indexPath.row;
-    QDLog(@"cell.sell.tag = %ld", (long)cell.tag);
     [cell.sell addTarget:self action:@selector(buyOrSellAction:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }
@@ -413,7 +512,6 @@ typedef enum : NSUInteger {
 
 - (void)buyOrSellAction:(UIButton *)sender{
     QDBuyOrSellViewController *vc = [[QDBuyOrSellViewController alloc] init];
-    QDLog(@"cell.sell.tag = %ld", (long)sender.tag);
     vc.operateModel = _ordersArr[sender.tag];
     [self.navigationController pushViewController:vc animated:YES];
 }

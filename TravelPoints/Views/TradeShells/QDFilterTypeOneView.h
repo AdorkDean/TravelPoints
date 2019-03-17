@@ -28,6 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIView *bottomLine;
 @property (nonatomic, strong) UIButton *resetbtn;
 @property (nonatomic, strong) UIButton *confirmBtn;
+@property (nonatomic, copy) void (^sdIsPartialBlock) (NSString *directionID);
 
 @end
 

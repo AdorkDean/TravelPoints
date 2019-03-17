@@ -28,6 +28,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIButton *resetbtn;
 @property (nonatomic, strong) UIButton *confirmBtn;
 
+@property (nonatomic, copy) void (^sdDirectionBlock) (NSString *directionID);
+
+@property (nonatomic, copy) void (^sdStatusStatusBlock) (NSString *statusID);
+
 @end
 
 NS_ASSUME_NONNULL_END

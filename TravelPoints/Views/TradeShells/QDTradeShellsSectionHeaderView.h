@@ -18,10 +18,6 @@ typedef NS_ENUM(NSInteger,ButtonClickType){
 };
 @protocol NY_SelectViewDelegate <NSObject>
 @optional
-//选中最上方的按钮的点击事件
-- (void)selectTopButton:(QDTradeShellsSectionHeaderView *)selectView withIndex:(NSInteger)index withButtonType:(ButtonClickType )type;
-//选中分类中按钮的点击事件
-- (void)selectItme:(QDTradeShellsSectionHeaderView *)selectView withIndex:(NSInteger)index;
 
 @end
 
@@ -38,6 +34,7 @@ typedef NS_ENUM(NSInteger,ButtonClickType){
 @property (nonatomic, assign) int defaultSelectItmeIndex;
 //设置可选项数组
 @property (nonatomic, copy) NSArray *selectItmeArr;
+
 @end
 
 NS_ASSUME_NONNULL_END

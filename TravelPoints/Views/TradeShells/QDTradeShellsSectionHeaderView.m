@@ -45,7 +45,7 @@ static char *const btnKey = "btnKey";
         [_filterBtn setImage:[UIImage imageNamed:@"icon_filter"] forState:UIControlStateNormal];
         _filterBtn.titleLabel.font = QDFont(13);
         _filterBtn.tag = 103;
-//        [_filterBtn addTarget:self action:@selector(selectClick:) forControlEvents:UIControlEventTouchUpInside];
+        [_filterBtn addTarget:self action:@selector(selectClick:) forControlEvents:UIControlEventTouchUpInside];
         [_filterBtn setTitle:@"筛选" forState:UIControlStateNormal];
         [_filterBtn setTitleColor:APP_BLACKCOLOR forState:UIControlStateNormal];
         [self addSubview:_filterBtn];
@@ -54,31 +54,8 @@ static char *const btnKey = "btnKey";
 }
 
 - (void)selectClick:(UIButton *)btn{
-//    if (btn.tag == 101) {
-//        btn.selected = YES;
-//        UIButton *button = [self viewWithTag:102];
-//        button.selected = NO;
-//    }
-//    if (btn.tag == 102) {
-//        btn.selected = YES;
-//        UIButton *button = [self viewWithTag:101];
-//        button.selected = NO;
-//    }
-//    if (btn.tag != 103) {//没点击全部分类，则让其他按钮回复默认状态
-//        for (int i = 1; i<3 ;i++) {
-//            UIButton *button = [self viewWithTag:i+100];
-//            button.selected = NO;
-//        }
-//        btn.selected = YES;
-//        [self toggleViewWith:nil];
-//    }else{//当点击全部分类按钮，则
-//
-//        [self toggleViewWith:btn];
-//    }
-    
-    
+    NSString *str;
     ButtonClickType type = ButtonClickTypeNormal;
-    
     if (btn.tag == 101) {
         [_priceBtn setImage:[UIImage imageNamed:@"icon_shellDefault"] forState:UIControlStateNormal];
         NSString *flag = objc_getAssociatedObject(btn, btnKey);
@@ -86,12 +63,17 @@ static char *const btnKey = "btnKey";
             [btn setImage:[UIImage imageNamed:@"icon_shellpositive"] forState:UIControlStateNormal];
             objc_setAssociatedObject(btn, btnKey, @"2", OBJC_ASSOCIATION_ASSIGN);
             type = ButtonClickTypeUp;
-            QDLog(@"priceUp");
+            QDLog(@"amountUp");
+            str = @"amountUp";
+            [[NSNotificationCenter defaultCenter] postNotificationName:Notification_AmountUp object:nil];
         }else if ([flag isEqualToString:@"2"]){
             [btn setImage:[UIImage imageNamed:@"icon_shellreverse"] forState:UIControlStateNormal];
             objc_setAssociatedObject(btn, btnKey, @"1", OBJC_ASSOCIATION_ASSIGN);
             type = ButtonClickTypeDown;
-            QDLog(@"priceDown");
+            QDLog(@"amountDown");
+            str = @"amountDown";
+            [[NSNotificationCenter defaultCenter] postNotificationName:Notification_AmountDown object:nil];
+
         }
     }else if (btn.tag == 102){
         [_amountBtn setImage:[UIImage imageNamed:@"icon_shellDefault"] forState:UIControlStateNormal];
@@ -100,13 +82,16 @@ static char *const btnKey = "btnKey";
             [btn setImage:[UIImage imageNamed:@"icon_shellpositive"] forState:UIControlStateNormal];
             objc_setAssociatedObject(btn, btnKey, @"2", OBJC_ASSOCIATION_ASSIGN);
             type = ButtonClickTypeUp;
-            QDLog(@"amountUp");
-
+            QDLog(@"priceUp");
+            str = @"priceUp";
+            [[NSNotificationCenter defaultCenter] postNotificationName:Notification_PriceUp object:nil];
         }else if ([flag isEqualToString:@"2"]){
             [btn setImage:[UIImage imageNamed:@"icon_shellreverse"] forState:UIControlStateNormal];
             objc_setAssociatedObject(btn, btnKey, @"1", OBJC_ASSOCIATION_ASSIGN);
             type = ButtonClickTypeDown;
-            QDLog(@"amountDown");
+            QDLog(@"priceDown");
+            str = @"priceDown";
+            [[NSNotificationCenter defaultCenter] postNotificationName:Notification_PriceDown object:nil];
         }
     }else{
         //点击全部不复位价格
@@ -117,24 +102,8 @@ static char *const btnKey = "btnKey";
             type = ButtonClickTypeNormal;
         }
     }
-    
-    
-    if ([self.delegate respondsToSelector:@selector(selectTopButton:withIndex:withButtonType:)]) {
-        [self.delegate selectTopButton:self withIndex:btn.tag withButtonType:type];
-    }
 }
-- (void)toggleViewWith:(UIButton *)btn{
-    
-    if (!btn) {
-        btn = [self viewWithTag:103];
-        if (show) {
-            show = NO;
-        }else{
-            return;
-        }
-    }
-    
-}
+
 - (void)layoutSubviews{
     [super layoutSubviews];
     [_amountBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -156,7 +125,4 @@ static char *const btnKey = "btnKey";
     }];
 }
 
--(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    [self toggleViewWith:nil];
-}
 @end

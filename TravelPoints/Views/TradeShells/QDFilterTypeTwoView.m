@@ -20,16 +20,20 @@
         _buyBtn = [[UIButton alloc] init];
         _buyBtn.backgroundColor = [UIColor whiteColor];
         [_buyBtn setTitle:@"买" forState:UIControlStateNormal];
+        [_buyBtn addTarget:self action:@selector(directionAction:) forControlEvents:UIControlEventTouchUpInside];
+        _buyBtn.tag = 207;
         _buyBtn.titleLabel.font = QDFont(13);
-        [_buyBtn setTitleColor:APP_BLUECOLOR forState:UIControlStateNormal];
+        [_buyBtn setTitleColor:APP_GRAYBUTTONTEXTCOLOR forState:UIControlStateNormal];
         _buyBtn.layer.borderWidth = 1;
-        _buyBtn.layer.borderColor = APP_BLUECOLOR.CGColor;
+        _buyBtn.layer.borderColor = APP_GRAYLAYERCOLOR.CGColor;
         [self addSubview:_buyBtn];
         
         
         _sellBtn = [[UIButton alloc] init];
         _sellBtn.backgroundColor = [UIColor whiteColor];
         [_sellBtn setTitle:@"卖" forState:UIControlStateNormal];
+        [_sellBtn addTarget:self action:@selector(directionAction:) forControlEvents:UIControlEventTouchUpInside];
+        _sellBtn.tag = 208;
         _sellBtn.titleLabel.font = QDFont(13);
         [_sellBtn setTitleColor:APP_GRAYBUTTONTEXTCOLOR forState:UIControlStateNormal];
         _sellBtn.layer.borderWidth = 1;
@@ -44,15 +48,19 @@
         _wcjBtn = [[UIButton alloc] init];
         _wcjBtn.backgroundColor = [UIColor whiteColor];
         [_wcjBtn setTitle:@"未成交" forState:UIControlStateNormal];
+        _wcjBtn.tag = 201;
+        [_wcjBtn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
         _wcjBtn.titleLabel.font = QDFont(13);
-        [_wcjBtn setTitleColor:APP_BLUECOLOR forState:UIControlStateNormal];
+        [_wcjBtn setTitleColor:APP_GRAYBUTTONTEXTCOLOR forState:UIControlStateNormal];
         _wcjBtn.layer.borderWidth = 1;
-        _wcjBtn.layer.borderColor = APP_BLUECOLOR.CGColor;
+        _wcjBtn.layer.borderColor = APP_GRAYLAYERCOLOR.CGColor;
         [self addSubview:_wcjBtn];
         
         _bfcjBtn = [[UIButton alloc] init];
         _bfcjBtn.backgroundColor = [UIColor whiteColor];
         [_bfcjBtn setTitle:@"部分成交" forState:UIControlStateNormal];
+        _bfcjBtn.tag = 202;
+        [_bfcjBtn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
         _bfcjBtn.titleLabel.font = QDFont(13);
         [_bfcjBtn setTitleColor:APP_GRAYBUTTONTEXTCOLOR forState:UIControlStateNormal];
         _bfcjBtn.layer.borderWidth = 1;
@@ -63,6 +71,8 @@
         _qbcjBtn.backgroundColor = [UIColor whiteColor];
         [_qbcjBtn setTitle:@"全部成交" forState:UIControlStateNormal];
         _qbcjBtn.titleLabel.font = QDFont(13);
+        [_qbcjBtn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
+        _qbcjBtn.tag = 203;
         [_qbcjBtn setTitleColor:APP_GRAYBUTTONTEXTCOLOR forState:UIControlStateNormal];
         _qbcjBtn.layer.borderWidth = 1;
         _qbcjBtn.layer.borderColor = APP_GRAYLAYERCOLOR.CGColor;
@@ -71,6 +81,8 @@
         _yqxBtn = [[UIButton alloc] init];
         _yqxBtn.backgroundColor = [UIColor whiteColor];
         [_yqxBtn setTitle:@"已取消" forState:UIControlStateNormal];
+        _yqxBtn.tag = 204;
+        [_yqxBtn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
         _yqxBtn.titleLabel.font = QDFont(13);
         [_yqxBtn setTitleColor:APP_GRAYBUTTONTEXTCOLOR forState:UIControlStateNormal];
         _yqxBtn.layer.borderWidth = 1;
@@ -79,7 +91,9 @@
         
         _qbcxBtn = [[UIButton alloc] init];
         _qbcxBtn.backgroundColor = [UIColor whiteColor];
-        [_qbcxBtn setTitle:@"全部撤销" forState:UIControlStateNormal];
+        [_qbcxBtn setTitle:@"全部撤单" forState:UIControlStateNormal];
+        _qbcxBtn.tag = 205;
+        [_qbcxBtn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
         _qbcxBtn.titleLabel.font = QDFont(13);
         [_qbcxBtn setTitleColor:APP_GRAYBUTTONTEXTCOLOR forState:UIControlStateNormal];
         _qbcxBtn.layer.borderWidth = 1;
@@ -88,7 +102,9 @@
         
         _bcbcBtn = [[UIButton alloc] init];
         _bcbcBtn.backgroundColor = [UIColor whiteColor];
-        [_bcbcBtn setTitle:@"部分成交部分撤销" forState:UIControlStateNormal];
+        [_bcbcBtn setTitle:@"部分成交部分撤单" forState:UIControlStateNormal];
+        _bcbcBtn.tag = 206;
+        [_bcbcBtn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
         _bcbcBtn.titleLabel.font = QDFont(13);
         [_bcbcBtn setTitleColor:APP_GRAYBUTTONTEXTCOLOR forState:UIControlStateNormal];
         _bcbcBtn.layer.borderWidth = 1;
@@ -102,6 +118,7 @@
         
         _resetbtn = [[UIButton alloc] init];
         _resetbtn.backgroundColor = APP_WHITECOLOR;
+        [_resetbtn addTarget:self action:@selector(resetAction:) forControlEvents:UIControlEventTouchUpInside];
         [_resetbtn setTitle:@"重置" forState:UIControlStateNormal];
         [_resetbtn setTitleColor:APP_BLACKCOLOR forState:UIControlStateNormal];
         _resetbtn.titleLabel.font = QDFont(19);
@@ -133,13 +150,14 @@
     [_buyBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_direction);
         make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH*0.26);
-        make.width.mas_equalTo(SCREEN_WIDTH*0.16);
-        make.height.mas_equalTo(SCREEN_HEIGHT*0.05);
+        make.width.mas_equalTo(60);
+        make.height.mas_equalTo(32);
     }];
     
     [_sellBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.width.and.height.equalTo(_direction);
         make.left.equalTo(_buyBtn.mas_right).offset(SCREEN_WIDTH*0.08);
+        make.width.and.height.equalTo(_buyBtn);
     }];
     
     [_orderStatusLab mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -211,6 +229,99 @@
     textField.layer.borderColor = APP_BLUECOLOR.CGColor;
     [textField setValue:QDFont(13) forKeyPath:@"_placeholderLabel.font"];
     textField.backgroundColor = [UIColor colorWithHexString:@"#F5F5F5"];
+}
+
+#pragma mark - 重置
+- (void)resetAction:(UIButton *)sender{
+    for (int i = 201; i <= 208; i++) {
+        UIButton *btn = [self viewWithTag:i];
+        btn.layer.borderWidth = 1;
+        btn.layer.borderColor = APP_GRAYLAYERCOLOR.CGColor;
+        [btn setTitleColor:APP_GRAYBUTTONTEXTCOLOR forState:UIControlStateNormal];
+        btn.selected = NO;
+    }
+}
+
+#pragma mark - 按钮点击
+- (void)btnClick:(UIButton *)sender{
+    for (int i = 201; i <= 206; i++) {
+        UIButton *btn = [self viewWithTag:i];
+        if (btn.tag != sender.tag) {
+            btn.layer.borderWidth = 1;
+            btn.layer.borderColor = APP_GRAYLAYERCOLOR.CGColor;
+            [btn setTitleColor:APP_GRAYBUTTONTEXTCOLOR forState:UIControlStateNormal];
+            btn.selected=NO;
+        }else{
+            btn.layer.borderWidth = 1;
+            btn.layer.borderColor = APP_BLUECOLOR.CGColor;
+            [btn setTitleColor:APP_BLUECOLOR forState:UIControlStateNormal];
+            btn.selected = YES;
+        }
+    }
+    if (self.sdStatusStatusBlock) {
+        NSString *statusStr;
+        QDLog(@"text = %@", sender.titleLabel.text);
+        /**
+         NO_TRADED(0,"未成交"), // 未成交
+         PART_TRADED(1,"部分成交"), // 部分成交
+         ALL_TRADED(2,"全部成交"), // 全部成交
+         ALL_CANCELED(3,"全部撤单"), // 全部撤单
+         PART_CANCELED(4,"部分成交部分撤单"), // 部分成交部分撤单
+         IS_CANCELED(5,"已取消"), // 已取消
+         INTENTION(6,"意向单") ; // 意向单
+         */
+        switch (sender.tag) {
+            case 201:
+                statusStr = @"0";
+                break;
+            case 202:
+                statusStr = @"1";
+                break;
+            case 203:
+                statusStr = @"2";
+                break;
+            case 204:
+                statusStr = @"5";
+                break;
+            case 205:
+                statusStr = @"3";
+                break;
+            case 206:
+                statusStr = @"4";
+                break;
+            default:
+                break;
+        }
+        self.sdStatusStatusBlock(statusStr);
+    }
+}
+
+#pragma mark - 选择方向
+- (void)directionAction:(UIButton *)sender{
+    for (int i = 207; i <= 208; i++) {
+        UIButton *btn = [self viewWithTag:i];
+        if (btn.tag != sender.tag) {
+            btn.layer.borderWidth = 1;
+            btn.layer.borderColor = APP_GRAYLAYERCOLOR.CGColor;
+            [btn setTitleColor:APP_GRAYBUTTONTEXTCOLOR forState:UIControlStateNormal];
+            btn.selected=NO;
+        }else{
+            btn.layer.borderWidth = 1;
+            btn.layer.borderColor = APP_BLUECOLOR.CGColor;
+            [btn setTitleColor:APP_BLUECOLOR forState:UIControlStateNormal];
+            btn.selected = YES;
+        }
+    }
+    if (self.sdDirectionBlock) {
+        NSString *directionStr;
+        QDLog(@"text = %@", sender.titleLabel.text);
+        if ([sender.titleLabel.text isEqualToString:@"买"]) {
+            directionStr = @"0";
+        }else if ([sender.titleLabel.text isEqualToString:@"卖"]){
+            directionStr = @"1";
+        }
+        self.sdDirectionBlock(directionStr);
+    }
 }
 
 @end

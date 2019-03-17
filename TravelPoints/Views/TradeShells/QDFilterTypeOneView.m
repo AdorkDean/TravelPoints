@@ -54,10 +54,12 @@
         _yesBtn = [[UIButton alloc] init];
         _yesBtn.backgroundColor = [UIColor whiteColor];
         [_yesBtn setTitle:@"是" forState:UIControlStateNormal];
+        [_yesBtn addTarget:self action:@selector(isAllDealed:) forControlEvents:UIControlEventTouchUpInside];
+        _yesBtn.tag = 201;
         _yesBtn.titleLabel.font = QDFont(13);
-        [_yesBtn setTitleColor:APP_BLUECOLOR forState:UIControlStateNormal];
+        [_yesBtn setTitleColor:APP_BLACKCOLOR forState:UIControlStateNormal];
         _yesBtn.layer.borderWidth = 1;
-        _yesBtn.layer.borderColor = APP_BLUECOLOR.CGColor;
+        _yesBtn.layer.borderColor = APP_GRAYCOLOR.CGColor;
         [self addSubview:_yesBtn];
         
         _noBtn = [[UIButton alloc] init];
@@ -67,6 +69,8 @@
         [_noBtn setTitleColor:APP_BLACKCOLOR forState:UIControlStateNormal];
         _noBtn.layer.borderWidth = 1;
         _noBtn.layer.borderColor = APP_GRAYCOLOR.CGColor;
+        [_noBtn addTarget:self action:@selector(isAllDealed:) forControlEvents:UIControlEventTouchUpInside];
+        _noBtn.tag = 202;
         [self addSubview:_noBtn];
         
         _bottomLine = [[UIView alloc] init];
@@ -76,6 +80,7 @@
         _resetbtn = [[UIButton alloc] init];
         _resetbtn.backgroundColor = APP_WHITECOLOR;
         [_resetbtn setTitle:@"重置" forState:UIControlStateNormal];
+        [_resetbtn addTarget:self action:@selector(resetAction:) forControlEvents:UIControlEventTouchUpInside];
         [_resetbtn setTitleColor:APP_BLACKCOLOR forState:UIControlStateNormal];
         _resetbtn.titleLabel.font = QDFont(19);
         [self addSubview:_resetbtn];
@@ -194,9 +199,53 @@
     style.alignment = NSTextAlignmentCenter;
     NSAttributedString *attri = [[NSAttributedString alloc] initWithString:holderStr attributes:@{NSForegroundColorAttributeName:APP_GRAYCOLOR,NSFontAttributeName:QDFont(14), NSParagraphStyleAttributeName:style}];
     textField.attributedPlaceholder = attri;
+    [textField setValue:[NSNumber numberWithInt:20] forKey:@"paddingLeft"];
+
     textField.layer.borderColor = APP_BLUECOLOR.CGColor;
     [textField setValue:QDFont(13) forKeyPath:@"_placeholderLabel.font"];
     textField.backgroundColor = [UIColor colorWithHexString:@"#F5F5F5"];
+}
+#pragma mark - 选择方向
+- (void)isAllDealed:(UIButton *)sender{
+    for (int i = 201; i <= 202; i++) {
+        UIButton *btn = [self viewWithTag:i];
+        if (btn.tag != sender.tag) {
+            btn.layer.borderWidth = 1;
+            btn.layer.borderColor = APP_GRAYLAYERCOLOR.CGColor;
+            [btn setTitleColor:APP_GRAYBUTTONTEXTCOLOR forState:UIControlStateNormal];
+            btn.selected=NO;
+        }else{
+            btn.layer.borderWidth = 1;
+            btn.layer.borderColor = APP_BLUECOLOR.CGColor;
+            [btn setTitleColor:APP_BLUECOLOR forState:UIControlStateNormal];
+            btn.selected = YES;
+        }
+    }
+    if (self.sdIsPartialBlock) {
+        NSString *directionStr;
+        QDLog(@"text = %@", sender.titleLabel.text);
+        if (sender.tag == 201) {
+            directionStr = @"1";
+        }else if (sender.tag == 202){
+            directionStr = @"0";
+        }
+        self.sdIsPartialBlock(directionStr);
+    }
+}
+
+#pragma mark - 重置
+- (void)resetAction:(UIButton *)sender{
+    for (int i = 201; i <= 202; i++) {
+        UIButton *btn = [self viewWithTag:i];
+        btn.layer.borderWidth = 1;
+        btn.layer.borderColor = APP_GRAYLAYERCOLOR.CGColor;
+        [btn setTitleColor:APP_GRAYBUTTONTEXTCOLOR forState:UIControlStateNormal];
+        btn.selected = NO;
+    }
+    self.lowPrice.text = @"";
+    self.hightPrice.text = @"";
+    self.lowAmount.text = @"";
+    self.hightAmount.text = @"";
 }
 
 @end

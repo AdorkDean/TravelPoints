@@ -116,8 +116,13 @@ QD_ManualCanceled = 4      //手工取消
     if (_myPickOrdersArr.count) {
         [_myPickOrdersArr removeAllObjects];
     }
-    NSDictionary * paramsDic = @{@"postersStatus":_state,       //订单状态
-                                 @"postersType":_businessType,  //订单类型
+//    NSDictionary * paramsDic = @{@"postersStatus":_state,       //订单状态
+//                                 @"postersType":_businessType,  //订单类型
+//                                 @"pageNum":@1,
+//                                 @"pageSize":[NSNumber numberWithInt:_pageSize]
+//                                 };
+    NSDictionary * paramsDic = @{@"state":_state,       //订单状态
+                                 @"businessType":_businessType,  //订单类型
                                  @"pageNum":@1,
                                  @"pageSize":[NSNumber numberWithInt:_pageSize]
                                  };
@@ -137,6 +142,7 @@ QD_ManualCanceled = 4      //手工取消
                 [_tableView reloadData];
             }else{
                 [_tableView.mj_header endRefreshing];
+                [_tableView reloadData];
             }
         }else{
             [_tableView reloadData];
@@ -165,8 +171,8 @@ QD_ManualCanceled = 4      //手工取消
                 return;
             }
         }
-        NSDictionary * paramsDic = @{@"postersStatus":@"",
-                                     @"postersType":@"",
+        NSDictionary * paramsDic = @{@"postersStatus":_state,
+                                     @"postersType":_businessType,
                                      @"pageNum":[NSNumber numberWithInt:_pageNum],
                                      @"pageSize":[NSNumber numberWithInt:_pageSize]
                                      };
@@ -219,6 +225,8 @@ QD_ManualCanceled = 4      //手工取消
 - (void)viewDidLoad {
     [super viewDidLoad];
     _myPickOrdersArr = [[NSMutableArray alloc] init];
+    _state = @"";
+    _businessType = @"";
     _pageSize = 10;
     _pageNum = 1;
     _totalPage = 0; //总页数默认
@@ -394,11 +402,17 @@ QD_ManualCanceled = 4      //手工取消
     [self requestHeaderTopData];
 }
 
+- (void)resetOptions:(UIButton *)sender{
+    _businessType = @"";
+    _state = @"";
+}
 - (void)filterAction:(UIButton *)sender{
     [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
     if (!_typeThreeView) {
         _typeThreeView = [[QDFilterTypeThreeView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.57)];
         [_typeThreeView.confirmBtn addTarget:self action:@selector(confirmOptions:) forControlEvents:UIControlEventTouchUpInside];
+        [_typeThreeView.resetbtn addTarget:self action:@selector(resetOptions:) forControlEvents:UIControlEventTouchUpInside];
+
         //状态
         _typeThreeView.sdStatusStatusBlock = ^(NSString * _Nonnull statusID) {
             _state = statusID;
