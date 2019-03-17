@@ -12,9 +12,7 @@
 #import "MyTableCell.h"
 #import "TFDropDownMenu.h"
 #import "SnailQuickMaskPopups.h"
-#import "QDFilterTypeOneView.h"
 #import "QDFilterTypeTwoView.h"
-#import "QDFilterTypeThreeView.h"
 #import "QDShellRecommendVC.h"
 #import "QDMySaleOrderCell.h"
 #import "QDMyPurchaseCell.h"
@@ -28,6 +26,7 @@
 #import <DZNEmptyDataSet/UIScrollView+EmptyDataSet.h>
 #import "QDBuyOrSellViewController.h"
 #import "QDLoginAndRegisterVC.h"
+#import "QDTradeShellsSectionHeaderView.h"
 #define K_T_Cell @"t_cell"
 #define K_C_Cell @"c_cell"
 
@@ -45,6 +44,7 @@ typedef enum : NSUInteger {
     int _pageSize;
     int _pageNum;
     int _totalPage;
+    QDTradeShellsSectionHeaderView *_sectionHeaderView;
 }
 @property (nonatomic, strong) UIImageView *emptyView;
 @property (nonatomic, strong) UILabel *tipLab;
@@ -53,9 +53,9 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableDictionary *dicH;
 @property (nonatomic, strong) SnailQuickMaskPopups *popups;
-@property (nonatomic, strong) QDFilterTypeOneView *typeOneView;
 @property (nonatomic, strong) QDFilterTypeTwoView *typeTwoView;
-@property (nonatomic, strong) QDFilterTypeThreeView *typeThreeView;
+
+
 @property (nonatomic, strong) UIView *vv;
 
 
@@ -69,11 +69,29 @@ typedef enum : NSUInteger {
     [self.navigationController.navigationBar setHidden:YES];
     [self.navigationController.tabBarController.tabBar setHidden:NO];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(test:) name:@"test" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSucceeded:) name:Notification_LoginSucceeded object:nil];
 }
 
-- (void)test:(NSNotification *)noti{
-    QDLog(@"=========================");
+- (void)isLogin{
+    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_IsLogin params:nil successBlock:^(QDResponseObject *responseObject) {
+        NSString *cookie = [NSString stringWithFormat:@"%@", [QDUserDefaults getCookies]];
+        if ([responseObject.result intValue] == 0) {
+            QDLog(@"未登录, cookie = %@", cookie);
+            QDLoginAndRegisterVC *loginVC = [[QDLoginAndRegisterVC alloc] init];
+            loginVC.pushVCTag = @"0";
+            [self presentViewController:loginVC animated:YES completion:nil];
+            [QDUserDefaults removeCookies]; //未登录的时候移除cookie
+        }else if ([responseObject.result intValue] == 1){
+            QDLog(@"已登录,cookie = %@", cookie);
+            [self requestMyOrdersData];
+        }
+    } failureBlock:^(NSError *error) {
+        [WXProgressHUD showErrorWithTittle:@"网络异常"];
+    }];
+}
+
+- (void)loginSucceeded:(NSNotification *)noti{
+    QDLog(@"登录成功");
     [self requestMyOrdersData];
 }
 
@@ -126,6 +144,7 @@ typedef enum : NSUInteger {
 - (void)requestHeaderTopData{
     NSString *str = [QDUserDefaults getObjectForKey:@"loginType"];
     if ([str isEqualToString:@"0"] || str == nil) { //未登录
+        [self endRefreshing];
         QDLoginAndRegisterVC *loginVC = [[QDLoginAndRegisterVC alloc] init];
         loginVC.pushVCTag = @"0";
         [self presentViewController:loginVC animated:YES completion:nil];
@@ -242,7 +261,7 @@ typedef enum : NSUInteger {
     _totalPage = 0; //总页数默认
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
     [self initTableView];
-    [self requestMyOrdersData];
+    [self isLogin];
 }
 
 - (void)initTableView{
@@ -254,12 +273,15 @@ typedef enum : NSUInteger {
     _tableView.emptyDataSetDelegate = self;
     _tableView.estimatedRowHeight = 0;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     _tableView.showsVerticalScrollIndicator = NO;
-//    self.tableview.contentInset = UIEdgeInsetsMake(0, 0, 67, 0);
-
-//    [self.view addSubview:_tableView];
-    self.view = _tableView;
+    _tableView.contentInset = UIEdgeInsetsMake(0, 0, 110, 0);
+    if (@available(iOS 11.0, *)) {
+        _tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    } else {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
+    [self.view addSubview:_tableView];
+//    self.view = _tableView;
     _tableView.mj_header = [QDRefreshHeader headerWithRefreshingBlock:^{
         [self requestHeaderTopData];
     }];
@@ -341,7 +363,6 @@ typedef enum : NSUInteger {
                 cell = [[QDMyPurchaseCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
             }
             cell.userInteractionEnabled = YES;
-//            QDLog(@"btn.tag = %ld, indexPath.row = %ld", cell.withdrawBtn.tag, indexPath.row);
             [cell.withdrawBtn addTarget:self action:@selector(withdrawAction:) forControlEvents:UIControlEventTouchUpInside];
             [cell loadPurchaseDataWithModel:_myOrdersArr[indexPath.row] withTag:indexPath.row];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -354,8 +375,6 @@ typedef enum : NSUInteger {
                 cell = [[QDMySaleOrderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
             }
             cell.userInteractionEnabled = YES;
-//            QDLog(@"btn.tag = %ld, indexPath.row = %ld", cell.withdrawBtn.tag, indexPath.row);
-//            cell.withdrawBtn.tag = indexPath.row;
             [cell.withdrawBtn addTarget:self action:@selector(withdrawAction:) forControlEvents:UIControlEventTouchUpInside];
             [cell loadSaleOrderDataWithModel:_myOrdersArr[indexPath.row] withTag:indexPath.row];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -369,12 +388,11 @@ typedef enum : NSUInteger {
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     _vv = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.06)];
-    _vv.backgroundColor = APP_WHITECOLOR;
+    _vv.backgroundColor = APP_GRAYBACKGROUNDCOLOR;
     [_vv addSubview:self.filterBtn];
     [self.filterBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.and.height.equalTo(_vv);
         make.left.equalTo(_vv.mas_left).offset(20);
-        make.width.mas_equalTo(70);
     }];
     return _vv;
 }
@@ -388,29 +406,21 @@ typedef enum : NSUInteger {
     [self.navigationController pushViewController:detailVC animated:YES];
 }
 
-- (QDFilterTypeOneView *)typeOneView{
-    if (_typeOneView) {
-        _typeOneView = [[QDFilterTypeOneView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.57)];
-        _typeOneView.backgroundColor = APP_WHITECOLOR;
-    }
-    return _typeOneView;
-}
-
 - (void)confirmOptions:(UIButton *)sender{
     [_popups dismissAnimated:YES completion:nil];
 }
 
-
 - (void)filterAction:(UIButton *)sender{
-    if (!_typeThreeView) {
-        _typeThreeView = [[QDFilterTypeThreeView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.57)];
-        [_typeThreeView.confirmBtn addTarget:self action:@selector(confirmOptions:) forControlEvents:UIControlEventTouchUpInside];
-        _typeThreeView.backgroundColor = APP_WHITECOLOR;
+    [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
+    if (!_typeTwoView) {
+        _typeTwoView = [[QDFilterTypeTwoView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.57)];
+        [_typeTwoView.confirmBtn addTarget:self action:@selector(confirmOptions:) forControlEvents:UIControlEventTouchUpInside];
+        _typeTwoView.backgroundColor = APP_WHITECOLOR;
     }
-    _popups = [SnailQuickMaskPopups popupsWithMaskStyle:MaskStyleBlackTranslucent aView:_typeThreeView];
+    _popups = [SnailQuickMaskPopups popupsWithMaskStyle:MaskStyleBlackTranslucent aView:_typeTwoView];
     _popups.presentationStyle = PresentationStyleTop;
     _popups.delegate = self;
-    [_popups presentInView:_vv animated:YES completion:NULL];
+    [_popups presentInView:self.tableView animated:YES completion:NULL];
 }
 
 #pragma mark - emptyDataSource

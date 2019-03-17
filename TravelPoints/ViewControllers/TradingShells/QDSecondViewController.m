@@ -12,8 +12,6 @@
 #import "TFDropDownMenu.h"
 #import "SnailQuickMaskPopups.h"
 #import "QDFilterTypeOneView.h"
-#import "QDFilterTypeTwoView.h"
-#import "QDFilterTypeThreeView.h"
 #import "QDFindSatifiedDataVC.h"
 #import "QDMySaleOrderCell.h"
 #import "QDPickUpOrderCell.h"
@@ -54,11 +52,6 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) NSArray *dataAry;
 @property (nonatomic, strong) SnailQuickMaskPopups *popups;
 @property (nonatomic, strong) QDFilterTypeOneView *typeOneView;
-@property (nonatomic, strong) QDFilterTypeTwoView *typeTwoView;
-@property (nonatomic, strong) QDFilterTypeThreeView *typeThreeView;
-
-
-
 
 @end
 
@@ -342,14 +335,6 @@ typedef enum : NSUInteger {
     [alertView show];
 }
 
-- (QDFilterTypeOneView *)typeOneView{
-    if (_typeOneView) {
-        _typeOneView = [[QDFilterTypeOneView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.57)];
-        _typeOneView.backgroundColor = APP_WHITECOLOR;
-    }
-    return _typeOneView;
-}
-
 - (void)confirmOptions:(UIButton *)sender{
     [_popups dismissAnimated:YES completion:nil];
 }
@@ -364,39 +349,17 @@ typedef enum : NSUInteger {
 
 - (void)filterAction:(UIButton *)sender{
     QDLog(@"filter");
-    if (_shellType == QDPlayShells || _shellType == QDTradeShells) {
-        if (!_typeOneView) {
-            //            [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
-            _typeOneView = [[QDFilterTypeOneView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.57)];
-            [_typeOneView.confirmBtn addTarget:self action:@selector(confirmOptions:) forControlEvents:UIControlEventTouchUpInside];
-            _typeOneView.backgroundColor = APP_WHITECOLOR;
-        }
-        _popups = [SnailQuickMaskPopups popupsWithMaskStyle:MaskStyleBlackTranslucent aView:_typeOneView];
-        _popups.presentationStyle = PresentationStyleCentered;
-        
-        _popups.delegate = self;
-        [_popups presentInView:self.view animated:YES completion:NULL];
-    }else if(_shellType == QDMyOrders){
-        if (!_typeTwoView) {
-            _typeTwoView = [[QDFilterTypeTwoView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.57)];
-            [_typeTwoView.confirmBtn addTarget:self action:@selector(confirmOptions:) forControlEvents:UIControlEventTouchUpInside];
-            _typeTwoView.backgroundColor = APP_WHITECOLOR;
-        }
-        _popups = [SnailQuickMaskPopups popupsWithMaskStyle:MaskStyleBlackTranslucent aView:_typeTwoView];
-        _popups.presentationStyle = PresentationStyleBottom;
-        _popups.delegate = self;
-        [_popups presentInView:self.tableView animated:YES completion:NULL];
-    }else{
-        if (!_typeThreeView) {
-            _typeThreeView = [[QDFilterTypeThreeView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.57)];
-            [_typeThreeView.confirmBtn addTarget:self action:@selector(confirmOptions:) forControlEvents:UIControlEventTouchUpInside];
-            _typeThreeView.backgroundColor = APP_WHITECOLOR;
-        }
-        _popups = [SnailQuickMaskPopups popupsWithMaskStyle:MaskStyleBlackTranslucent aView:_typeThreeView];
-        _popups.presentationStyle = PresentationStyleBottom;
-        _popups.delegate = self;
-        [_popups presentInView:self.view animated:YES completion:NULL];
+    [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
+    if (!_typeOneView) {
+        _typeOneView = [[QDFilterTypeOneView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.57)];
+        [_typeOneView.confirmBtn addTarget:self action:@selector(confirmOptions:) forControlEvents:UIControlEventTouchUpInside];
+        _typeOneView.backgroundColor = APP_WHITECOLOR;
     }
+    _popups = [SnailQuickMaskPopups popupsWithMaskStyle:MaskStyleBlackTranslucent aView:_typeOneView];
+    _popups.presentationStyle = PresentationStyleTop;
+    
+    _popups.delegate = self;
+    [_popups presentInView:self.tableView animated:YES completion:NULL];
 }
 
 - (void)snailQuickMaskPopupsWillPresent:(SnailQuickMaskPopups *)popups{

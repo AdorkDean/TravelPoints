@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIView *userNameLine;
 @property (nonatomic, strong) UITextField *userNameTF;
 @property (nonatomic, strong) UIButton *forgetPWD;
-@property (nonatomic, strong) QDButton *gotologinBtn;
+@property (nonatomic, strong) UIButton *gotologinBtn;
 
 @end
 

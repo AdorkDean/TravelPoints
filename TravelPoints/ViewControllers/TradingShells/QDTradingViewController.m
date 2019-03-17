@@ -123,4 +123,15 @@
     return CGRectMake(0, originY, self.view.frame.size.width, self.view.frame.size.height - originY);
 }
 
+- (void)pageController:(WMPageController *)pageController didEnterViewController:(__kindof UIViewController *)viewController withInfo:(NSDictionary *)info{
+    QDLog(@"didEnterViewController");
+}
+
+-(void)pageController:(WMPageController *)pageController willEnterViewController:(__kindof UIViewController *)viewController withInfo:(NSDictionary *)info{
+    QDLog(@"willEnterViewController");
+}
+
+- (void)pageController:(WMPageController *)pageController willCachedViewController:(__kindof UIViewController *)viewController withInfo:(NSDictionary *)info{
+    QDLog(@"willEnterViewController");
+}
 @end

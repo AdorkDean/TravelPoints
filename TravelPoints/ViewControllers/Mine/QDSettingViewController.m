@@ -125,6 +125,7 @@
             //移除cookie
             [WXProgressHUD showSuccessWithTittle:@"退出登录成功"];
             [QDUserDefaults setObject:@"0" forKey:@"loginType"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadLoginView" object:nil];
             [QDUserDefaults removeCookies];
             [self.navigationController popViewControllerAnimated:YES];
         }else{

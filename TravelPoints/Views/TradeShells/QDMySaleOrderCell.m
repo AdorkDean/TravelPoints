@@ -342,7 +342,7 @@
     }else{
         self.balance.text = [NSString stringWithFormat:@"¥%.2lf", [DTO.price doubleValue] * [DTO.volume doubleValue]];
     }
-    self.transfer.text = [NSString stringWithFormat:@"¥%@", DTO.askFee];
+    self.transfer.text = [NSString stringWithFormat:@"¥%.2lf", [DTO.askFee doubleValue]];
     if ([DTO.isPartialDeal isEqualToString:@"0"]) {
         self.status.text = @"不可部分成交";
         self.status.textColor = APP_GRAYLINECOLOR;

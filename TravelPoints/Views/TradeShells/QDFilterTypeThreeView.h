@@ -16,13 +16,18 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIButton *sellBtn;
 
 @property (nonatomic, strong) UILabel *orderStatusLab;
-@property (nonatomic, strong) UIButton *wcjBtn;
+@property (nonatomic, strong) UIButton *dfkBtn;
 @property (nonatomic, strong) UIButton *ycjBtn;
 @property (nonatomic, strong) UIButton *yqxBtn;
 
 @property (nonatomic, strong) UIView *bottomLine;
 @property (nonatomic, strong) UIButton *resetbtn;
 @property (nonatomic, strong) UIButton *confirmBtn;
+
+@property (nonatomic, copy) void (^sdDirectionBlock) (NSString *directionID);
+
+@property (nonatomic, copy) void (^sdStatusStatusBlock) (NSString *statusID);
+
 @end
 
 NS_ASSUME_NONNULL_END

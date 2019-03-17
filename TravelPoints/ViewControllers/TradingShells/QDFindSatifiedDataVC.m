@@ -176,7 +176,7 @@
 //            _situationLab.text = titleArr[indexPath];
             _situationLab.text = titleArr[indexPath.row];
             QDLog(@"123");
-            if (indexPath == 0) {
+            if (indexPath.row == 0) {
                 _isPartialDeal = @"1";
             }else{
                 _isPartialDeal = @"0";

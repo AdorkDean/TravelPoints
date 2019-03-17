@@ -131,8 +131,8 @@
 #pragma mark - 请求挂单编号
 - (void)saveIntentionPosters{
     NSDictionary * paramsDic = @{@"creditCode":@"10001",
-                                 @"price":[NSNumber numberWithDouble:[_price doubleValue]],
-                                 @"postersType":[_postersType isEqualToString:@"0"] ? @"1": @"0",
+                                 @"price":_price,
+                                 @"postersType":[_postersType isEqualToString:@"1"] ? @"0": @"1",
                                  @"volume":[NSNumber numberWithInt:[_volume intValue]],
                                  @"isPartialDeal": _isPartialDeal
                                  };

@@ -12,8 +12,6 @@
 #import "MyTableCell.h"
 #import "TFDropDownMenu.h"
 #import "SnailQuickMaskPopups.h"
-#import "QDFilterTypeOneView.h"
-#import "QDFilterTypeTwoView.h"
 #import "QDFilterTypeThreeView.h"
 #import "QDShellRecommendVC.h"
 #import "QDMySaleOrderCell.h"
@@ -56,14 +54,19 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableDictionary *dicH;
 @property (nonatomic, strong) SnailQuickMaskPopups *popups;
-@property (nonatomic, strong) QDFilterTypeOneView *typeOneView;
-@property (nonatomic, strong) QDFilterTypeTwoView *typeTwoView;
 @property (nonatomic, strong) QDFilterTypeThreeView *typeThreeView;
 
 @property (nonatomic, strong) UIView *vv;
+@property (nonatomic, getter=isLoading) BOOL loading;
 
-
-
+@property (nonatomic, strong) NSString *businessType;   //订单类型：0买入，1卖出
+/**QD_WaitForPurchase = 0,    //待付款
+QD_HavePurchased = 1,      //已付款
+QD_HaveFinished = 2,       //已完成
+QD_OverTimeCanceled = 3,   //超时取消
+QD_ManualCanceled = 4      //手工取消
+ */
+@property (nonatomic, strong) NSString *state;
 
 @end
 
@@ -113,8 +116,8 @@ typedef enum : NSUInteger {
     if (_myPickOrdersArr.count) {
         [_myPickOrdersArr removeAllObjects];
     }
-    NSDictionary * paramsDic = @{@"postersStatus":@"",
-                                 @"postersType":@"",
+    NSDictionary * paramsDic = @{@"postersStatus":_state,       //订单状态
+                                 @"postersType":_businessType,  //订单类型
                                  @"pageNum":@1,
                                  @"pageSize":[NSNumber numberWithInt:_pageSize]
                                  };
@@ -143,10 +146,10 @@ typedef enum : NSUInteger {
     } failureBlock:^(NSError *error) {
         [_tableView reloadData];
         [_tableView reloadEmptyDataSet];
+        [self endRefreshing];
         [WXProgressHUD showErrorWithTittle:@"网络异常"];
     }];
 }
-
 
 #pragma mark - 请求我的摘单数据(买入与卖出)
 - (void)requestMyZhaiDanData{
@@ -199,8 +202,7 @@ typedef enum : NSUInteger {
                 }
             }else if (responseObject.code == 2){
                 
-            }
-            else{
+            }else{
                 [_tableView reloadData];
                 [_tableView reloadEmptyDataSet];
                 [WXProgressHUD showErrorWithTittle:responseObject.message];
@@ -208,6 +210,7 @@ typedef enum : NSUInteger {
         } failureBlock:^(NSError *error) {
             [_tableView reloadData];
             [_tableView reloadEmptyDataSet];
+            [self endRefreshing];
             [WXProgressHUD showErrorWithTittle:@"网络异常"];
         }];
     }
@@ -228,7 +231,6 @@ typedef enum : NSUInteger {
     UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 65)];
     topView.backgroundColor = APP_WHITECOLOR;
     [self.view addSubview:topView];
-    
 }
 
 - (void)initTableView{
@@ -238,10 +240,17 @@ typedef enum : NSUInteger {
     _tableView.dataSource = self;
     _tableView.emptyDataSetSource = self;
     _tableView.emptyDataSetDelegate = self;
+    _tableView.estimatedRowHeight = 0;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-//    [self.view addSubview:_tableView];
-    self.view = _tableView;
+    _tableView.showsVerticalScrollIndicator = NO;
+    _tableView.contentInset = UIEdgeInsetsMake(0, 0, 110, 0);
+    if (@available(iOS 11.0, *)) {
+        _tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    } else {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
+    [self.view addSubview:_tableView];
+//    self.view = _tableView;
     _tableView.mj_header = [QDRefreshHeader headerWithRefreshingBlock:^{
         [self requestHeaderTopData];
     }];
@@ -278,6 +287,7 @@ typedef enum : NSUInteger {
                 [WXProgressHUD showErrorWithTittle:responseObject.message];
             }
         } failureBlock:^(NSError *error) {
+            [self endRefreshing];
             [WXProgressHUD showErrorWithTittle:@"网络异常"];
         }];
     }]];
@@ -361,13 +371,12 @@ typedef enum : NSUInteger {
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    _vv = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.075)];
-    _vv.backgroundColor = APP_WHITECOLOR;
+    _vv = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.06)];
+    _vv.backgroundColor = APP_GRAYBACKGROUNDCOLOR;
     [_vv addSubview:self.filterBtn];
     [self.filterBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.and.height.equalTo(_vv);
         make.left.equalTo(_vv.mas_left).offset(20);
-        make.width.mas_equalTo(70);
     }];
     return _vv;
 }
@@ -380,51 +389,75 @@ typedef enum : NSUInteger {
     [self.navigationController pushViewController:detailVC animated:YES];
 }
 
-- (QDFilterTypeOneView *)typeOneView{
-    if (_typeOneView) {
-        _typeOneView = [[QDFilterTypeOneView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.57)];
-        _typeOneView.backgroundColor = APP_WHITECOLOR;
-    }
-    return _typeOneView;
-}
-
 - (void)confirmOptions:(UIButton *)sender{
     [_popups dismissAnimated:YES completion:nil];
+    [self requestHeaderTopData];
 }
 
-
 - (void)filterAction:(UIButton *)sender{
+    [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
     if (!_typeThreeView) {
         _typeThreeView = [[QDFilterTypeThreeView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.57)];
         [_typeThreeView.confirmBtn addTarget:self action:@selector(confirmOptions:) forControlEvents:UIControlEventTouchUpInside];
+        //状态
+        _typeThreeView.sdStatusStatusBlock = ^(NSString * _Nonnull statusID) {
+            _state = statusID;
+        };
+        _typeThreeView.sdDirectionBlock = ^(NSString * _Nonnull directionID) {
+            QDLog(@"directionID = %@", directionID);
+            _businessType = directionID;
+        };
         _typeThreeView.backgroundColor = APP_WHITECOLOR;
     }
     _popups = [SnailQuickMaskPopups popupsWithMaskStyle:MaskStyleBlackTranslucent aView:_typeThreeView];
     _popups.presentationStyle = PresentationStyleTop;
     _popups.maskAlpha = 0.5;
     _popups.delegate = self;
-    [_popups presentInView:_tableView animated:YES completion:NULL];
+    [_popups presentInView:self.tableView animated:YES completion:NULL];
 }
 
 #pragma mark - emptyDataSource
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView{
-    return [UIImage imageNamed:@"emptySource"];
+    if (self.isLoading) {
+        return [UIImage imageNamed:@"loading_imgBlue" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
+    }
+    else {
+        return [UIImage imageNamed:@"emptySource"];
+    }
+    return nil;
 }
 
+- (CAAnimation *)imageAnimationForEmptyDataSet:(UIScrollView *)scrollView
+{
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform"];
+    animation.fromValue = [NSValue valueWithCATransform3D:CATransform3DIdentity];
+    animation.toValue = [NSValue valueWithCATransform3D: CATransform3DMakeRotation(M_PI_2, 0.0, 0.0, 1.0) ];
+    animation.duration = 0.25;
+    animation.cumulative = YES;
+    animation.repeatCount = MAXFLOAT;
+    
+    return animation;
+}
+
+
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView{
-    NSString *text = @"暂无数据";
+    NSString *text = @"暂无数据,点击重试";
     
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:16.0f],
-                                 NSForegroundColorAttributeName: [UIColor darkGrayColor]};
+                                 NSForegroundColorAttributeName: APP_BLUECOLOR};
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+- (void)emptyDataSet:(UIScrollView *)scrollView didTapView:(UIView *)view{
+    [self requestHeaderTopData];
 }
 
 - (SPButton *)filterBtn{
     if (!_filterBtn) {
-        _filterBtn = [[SPButton alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
+        _filterBtn = [[SPButton alloc] initWithFrame:CGRectMake(0, 0, 70, 70)];
         _filterBtn.imagePosition = SPButtonImagePositionRight;
         [_filterBtn setImage:[UIImage imageNamed:@"icon_filter"] forState:UIControlStateNormal];
-        _filterBtn.titleLabel.font = QDFont(13);
+        _filterBtn.titleLabel.font = QDFont(14);
         [_filterBtn addTarget:self action:@selector(filterAction:) forControlEvents:UIControlEventTouchUpInside];
         [_filterBtn setTitle:@"筛选" forState:UIControlStateNormal];
         [_filterBtn setTitleColor:APP_BLACKCOLOR forState:UIControlStateNormal];

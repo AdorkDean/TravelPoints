@@ -328,7 +328,7 @@ typedef enum : NSUInteger {
 {
     _sectionHeaderView = [[QDTradeShellsSectionHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 300)];
     [_sectionHeaderView.filterBtn addTarget:self action:@selector(filterAction:) forControlEvents:UIControlEventTouchUpInside];
-    _sectionHeaderView.backgroundColor = APP_WHITECOLOR;
+    _sectionHeaderView.backgroundColor = APP_BLUECOLOR;
     return _sectionHeaderView;
 }
 
@@ -358,7 +358,6 @@ typedef enum : NSUInteger {
     [_popups dismissAnimated:YES completion:nil];
 }
 
-
 #pragma mark - 要/转玩贝操作按钮
 - (void)operateAction:(UIButton *)sender{
     QDFindSatifiedDataVC *satifiedVC = [[QDFindSatifiedDataVC alloc] init];
@@ -368,39 +367,17 @@ typedef enum : NSUInteger {
 
 - (void)filterAction:(UIButton *)sender{
     QDLog(@"filter");
-    if (_shellType == QDPlayShells || _shellType == QDTradeShells) {
-        if (!_typeOneView) {
-            //            [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
-            _typeOneView = [[QDFilterTypeOneView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.57)];
-            [_typeOneView.confirmBtn addTarget:self action:@selector(confirmOptions:) forControlEvents:UIControlEventTouchUpInside];
-            _typeOneView.backgroundColor = APP_WHITECOLOR;
-        }
-        _popups = [SnailQuickMaskPopups popupsWithMaskStyle:MaskStyleBlackTranslucent aView:_typeOneView];
-        _popups.presentationStyle = PresentationStyleTop;
-        
-        _popups.delegate = self;
-        [_popups presentInView:self.tableView animated:YES completion:NULL];
-    }else if(_shellType == QDMyOrders){
-        if (!_typeTwoView) {
-            _typeTwoView = [[QDFilterTypeTwoView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.57)];
-            [_typeTwoView.confirmBtn addTarget:self action:@selector(confirmOptions:) forControlEvents:UIControlEventTouchUpInside];
-            _typeTwoView.backgroundColor = APP_WHITECOLOR;
-        }
-        _popups = [SnailQuickMaskPopups popupsWithMaskStyle:MaskStyleBlackTranslucent aView:_typeTwoView];
-        _popups.presentationStyle = PresentationStyleBottom;
-        _popups.delegate = self;
-        [_popups presentInView:self.tableView animated:YES completion:NULL];
-    }else{
-        if (!_typeThreeView) {
-            _typeThreeView = [[QDFilterTypeThreeView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.57)];
-            [_typeThreeView.confirmBtn addTarget:self action:@selector(confirmOptions:) forControlEvents:UIControlEventTouchUpInside];
-            _typeThreeView.backgroundColor = APP_WHITECOLOR;
-        }
-        _popups = [SnailQuickMaskPopups popupsWithMaskStyle:MaskStyleBlackTranslucent aView:_typeThreeView];
-        _popups.presentationStyle = PresentationStyleBottom;
-        _popups.delegate = self;
-        [_popups presentInView:self.view animated:YES completion:NULL];
+    [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
+    if (!_typeOneView) {
+        _typeOneView = [[QDFilterTypeOneView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.57)];
+        [_typeOneView.confirmBtn addTarget:self action:@selector(confirmOptions:) forControlEvents:UIControlEventTouchUpInside];
+        _typeOneView.backgroundColor = APP_WHITECOLOR;
     }
+    _popups = [SnailQuickMaskPopups popupsWithMaskStyle:MaskStyleBlackTranslucent aView:_typeOneView];
+    _popups.presentationStyle = PresentationStyleTop;
+    
+    _popups.delegate = self;
+    [_popups presentInView:self.tableView animated:YES completion:NULL];
 }
 
 - (void)snailQuickMaskPopupsWillPresent:(SnailQuickMaskPopups *)popups{

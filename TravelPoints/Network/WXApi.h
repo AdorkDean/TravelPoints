@@ -42,6 +42,9 @@ static NSString * const WS_TOPIC_Order_Insert = @"public_order_insert_return_"; 
 
 static NSString * const WS_TOPIC_Account = @"public_part_account_"; //资金订阅（接userID）
 
+static NSString * const Notification_LoginSucceeded = @"loginSucceeded"; //行情订阅（后加交易所id_合约id：public_instrument_exchangeID_instrumentID）
+
+
 /***************** API **************************/
 static NSString * const api_Login = @"login";            //登录
 static NSString * const api_GetVerifyCode = @"captcha?d=";      //获取验证码

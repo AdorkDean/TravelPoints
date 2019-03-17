@@ -232,9 +232,10 @@
 
 #pragma mark - 用户登录
 - (void)userLogin:(UIButton *)sender{
-//    13207166278
+    [WXProgressHUD showHUD];
     [[QDServiceClient shareClient] loginWithUserName:_loginView.phoneTF.text password:_loginView.userNameTF.text userType:@"member" successBlock:^(QDResponseObject *responseObject) {
         if (responseObject.code == 0) {
+            [WXProgressHUD hideHUD];
             [QDUserDefaults setObject:responseObject.result forKey:@"Token"];
             QDLog(@"Token = %@", responseObject.result);
             [WXProgressHUD showSuccessWithTittle:@"登录成功"];
@@ -242,11 +243,6 @@
             [QDUserDefaults setObject:_loginView.userNameTF.text forKey:@"userPwd"];
             if ([_pushVCTag isEqualToString:@"0"]) {
                 [self findMyUserCreditWithUrlStr:api_GetUserDetail];
-
-//                [self dismissViewControllerAnimated:YES completion:^{
-//                    //登录成功
-//                    [[NSNotificationCenter defaultCenter] postNotificationName:@"test" object:nil];
-//                }];
             }else{
                 [self findMyUserCreditWithUrlStr:api_GetUserDetail];
             }
@@ -270,14 +266,13 @@
                 self.qdMemberTDO = [QDMemberDTO yy_modelWithDictionary:responseObject.result];
                 if ([self.qdMemberTDO.isYepay isEqualToString:@"0"] || self.qdMemberTDO.isYepay == nil) {
                     //未开通资金帐户
-                    
                     [QDUserDefaults setObject:@"1" forKey:@"loginType"];
                 }else{
                     //已开通资金帐户
                     [QDUserDefaults setObject:@"2" forKey:@"loginType"];
                 }
                 [self dismissViewControllerAnimated:YES completion:^{
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"test" object:nil];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:Notification_LoginSucceeded object:nil];
                 }];
             }
         }else{

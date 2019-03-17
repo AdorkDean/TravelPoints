@@ -38,13 +38,37 @@
     [super viewWillAppear:animated];
     [self.navigationController.navigationBar setHidden:YES];
     [self.navigationController.tabBarController.tabBar setHidden:NO];
-    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
-    [self queryUserStatus:api_GetUserDetail isViewWillAppear:NO];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadLoginView) name:@"reloadLoginView" object:nil];
+    [self isLogin];
+    
+//    NSString *str = [QDUserDefaults getObjectForKey:@"loginType"];
+//    if (![str isEqualToString:@"0"] && str != nil) { //未登录
+//        [self queryUserStatus:api_GetUserDetail isViewWillAppear:NO];
+//    }
 }
 
+- (void)reloadLoginView{
+    QDLog(@"退出登录成功返回");
+    [self queryUserStatus:api_GetUserDetail];
+}
+- (void)isLogin{
+    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_IsLogin params:nil successBlock:^(QDResponseObject *responseObject) {
+        NSString *cookie = [NSString stringWithFormat:@"%@", [QDUserDefaults getCookies]];
+        if ([responseObject.result intValue] == 0) {
+            QDLog(@"未登录, cookie = %@", cookie);
+            [QDUserDefaults removeCookies]; //未登录的时候移除cookie
+            [self showTableHeadView];
+        }else if ([responseObject.result intValue] == 1){
+            QDLog(@"已登录,cookie = %@", cookie);
+            [self requestUserStatus];
+        }
+    } failureBlock:^(NSError *error) {
+        [WXProgressHUD showErrorWithTittle:@"网络异常"];
+    }];
+}
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-//    [self.navigationController.navigationBar setHidden:NO];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"reloadLoginView" object:nil];
     
 }
 
@@ -65,7 +89,7 @@
     [_tableView.mj_header endRefreshing];
 }
 
-#pragma mark - 个人积分账户详  情
+#pragma mark - 个人积分账户详情
 - (void)queryUserStatus:(NSString *)urlStr isViewWillAppear:(BOOL)isAppear{
     NSString *cookie = [NSString stringWithFormat:@"%@", [QDUserDefaults getCookies]];
     QDLog(@"cookie = %@", cookie);
@@ -110,6 +134,46 @@
     }
 }
 
+#pragma mark - 个人积分账户详  情
+- (void)queryUserStatus:(NSString *)urlStr{
+    NSString *cookie = [NSString stringWithFormat:@"%@", [QDUserDefaults getCookies]];
+    QDLog(@"cookie = %@", cookie);
+    if (!cookie || [cookie isEqualToString:@"(null)"] || [cookie isEqualToString:@""]) {
+        [QDUserDefaults setObject:@"0" forKey:@"loginType"];
+        [self showTableHeadView];
+        [self endRefreshing];
+    }else{
+        [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:urlStr params:nil successBlock:^(QDResponseObject *responseObject) {
+            [self endRefreshing];
+            QDLog(@"responseObject = %@", responseObject);
+            //ieYePay 0否 1是
+            if (responseObject.code == 0) {
+                if (responseObject.result != nil) {
+                    _currentQDMemberTDO = [QDMemberDTO yy_modelWithDictionary:responseObject.result];
+                    UserMoneyDTO *moneyDTO = _currentQDMemberTDO.userMoneyDTO;
+                    UserCreditDTO *creditDTO = _currentQDMemberTDO.userCreditDTO;
+                    if ([_currentQDMemberTDO.isYepay isEqualToString:@"0"] || _currentQDMemberTDO.isYepay == nil) {
+                        //未开通资金帐户
+                        [QDUserDefaults setObject:@"1" forKey:@"loginType"];
+                        _noFinancialView.info9Lab.text = [creditDTO.available stringValue];
+                        _noFinancialView.balance.text = [NSString stringWithFormat:@"%.2f", [moneyDTO.available doubleValue]];
+                    }else{
+                        [QDUserDefaults setObject:@"2" forKey:@"loginType"];
+                        _haveFinancialView.info9Lab.text = [creditDTO.available stringValue];
+                        _haveFinancialView.balance.text = [NSString stringWithFormat:@"%.2f",[moneyDTO.available doubleValue]];
+                    }
+                }
+            }else{
+                [QDUserDefaults setObject:@"0" forKey:@"loginType"];
+
+            }
+            [self showTableHeadView];
+        } failureBlock:^(NSError *error) {
+            [WXProgressHUD showErrorWithTittle:@"网络异常"];
+            [self showTableHeadView];
+        }];
+    }
+}
 - (void)showTableHeadView{
     NSString *str = [QDUserDefaults getObjectForKey:@"loginType"];
     if ([str isEqualToString:@"0"] || str == nil) {

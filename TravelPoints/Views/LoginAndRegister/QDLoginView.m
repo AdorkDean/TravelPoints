@@ -61,13 +61,25 @@
         [self addSubview:_forgetPWD];
         
         
-        _gotologinBtn = [[QDButton alloc] init];
-        [_gotologinBtn setBackgroundColor:APP_LIGHTGRAYCOLOR forState:UIControlStateNormal];
-        [_gotologinBtn setBackgroundColor:APP_BLUECOLOR forState:UIControlStateSelected];
-        [_gotologinBtn setBackgroundColor:APP_BLUECOLOR forState:UIControlStateHighlighted];
-        [_gotologinBtn setBackgroundColor:APP_BLUECOLOR forState:UIControlStateDisabled];
-
+        _gotologinBtn = [[UIButton alloc] init];
+        CAGradientLayer *gradientLayer =  [CAGradientLayer layer];
+        gradientLayer.frame = CGRectMake(0, 0, 335, 50);
+        gradientLayer.startPoint = CGPointMake(0, 0);
+        gradientLayer.endPoint = CGPointMake(1, 0);
+        gradientLayer.locations = @[@(0.5),@(1.0)];//渐变点
+        [gradientLayer setColors:@[(id)[[UIColor colorWithHexString:@"#159095"] CGColor],(id)[[UIColor colorWithHexString:@"#3CC8B1"] CGColor]]];//渐变数组
+        [_gotologinBtn.layer addSublayer:gradientLayer];
         [_gotologinBtn setTitle:@"登录" forState:UIControlStateNormal];
+        _gotologinBtn.backgroundColor = [UIColor redColor];
+        _gotologinBtn.layer.cornerRadius = 4;
+        _gotologinBtn.layer.masksToBounds = YES;
+        _gotologinBtn.titleLabel.font = QDFont(17);
+        [self addSubview:_gotologinBtn];
+//        [_gotologinBtn setBackgroundColor:APP_LIGHTGRAYCOLOR forState:UIControlStateNormal];
+//        [_gotologinBtn setBackgroundColor:APP_BLUECOLOR forState:UIControlStateSelected];
+//        [_gotologinBtn setBackgroundColor:APP_BLUECOLOR forState:UIControlStateHighlighted];
+//        [_gotologinBtn setBackgroundColor:APP_BLUECOLOR forState:UIControlStateDisabled];
+
         _gotologinBtn.titleLabel.font = QDFont(21);
         [self addSubview:_gotologinBtn];
         
@@ -125,8 +137,9 @@
     }];
     
     [_gotologinBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.and.right.equalTo(self.userNameLine);
-        make.height.mas_equalTo(SCREEN_HEIGHT*0.075);
+        make.centerX.equalTo(self);
+        make.width.mas_equalTo(335);
+        make.height.mas_equalTo(50);
         make.top.equalTo(self.userNameLine.mas_bottom).offset(SCREEN_HEIGHT*0.067);
     }];
 }

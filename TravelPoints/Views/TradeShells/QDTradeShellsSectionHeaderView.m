@@ -45,7 +45,7 @@ static char *const btnKey = "btnKey";
         [_filterBtn setImage:[UIImage imageNamed:@"icon_filter"] forState:UIControlStateNormal];
         _filterBtn.titleLabel.font = QDFont(13);
         _filterBtn.tag = 103;
-        [_filterBtn addTarget:self action:@selector(selectClick:) forControlEvents:UIControlEventTouchUpInside];
+//        [_filterBtn addTarget:self action:@selector(selectClick:) forControlEvents:UIControlEventTouchUpInside];
         [_filterBtn setTitle:@"筛选" forState:UIControlStateNormal];
         [_filterBtn setTitleColor:APP_BLACKCOLOR forState:UIControlStateNormal];
         [self addSubview:_filterBtn];
