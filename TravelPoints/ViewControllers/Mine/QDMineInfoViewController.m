@@ -75,7 +75,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _cellTitleArr = [[NSArray alloc] initWithObjects:@"邀请好友",@"收藏",@"我的银行卡",@"地址",@"安全中心", nil];
+    _cellTitleArr = [[NSArray alloc] initWithObjects:@"邀请好友",@"收藏",@"我的银行卡",@"房券", @"地址",@"安全中心", nil];
     self.view.backgroundColor = [UIColor whiteColor];
     [self initTableView];
     _tableView.mj_header = [QDRefreshHeader headerWithRefreshingBlock:^{
@@ -130,6 +130,7 @@
             [self showTableHeadView];
         } failureBlock:^(NSError *error) {
             [WXProgressHUD showErrorWithTittle:@"网络异常"];
+            [self endRefreshing];
             [self showTableHeadView];
         }];
     }
@@ -267,7 +268,6 @@
     [self presentViewController:loginVC animated:YES completion:nil];
 }
 
-
 #pragma mark - 设置页面
 - (void)userSettings:(UIButton *)sender{
     QDSettingViewController *settingVC = [[QDSettingViewController alloc] init];
@@ -338,10 +338,13 @@
         case 2: //我的银行卡
             [self gotoLoginWithAction:JS_BANKCARD];
             break;
-        case 3: //地址
+        case 3: //房券
+            [self gotoLoginWithAction:JS_MYHOURSE];
+            break;
+        case 4: //地址
             [self gotoLoginWithAction:JS_ADDRESS];
             break;
-        case 4: //安全中心
+        case 5: //安全中心
             [self gotoLoginWithAction:JS_SECURITYCENTER];
             break;
         default:

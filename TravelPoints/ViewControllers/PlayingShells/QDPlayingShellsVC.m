@@ -223,6 +223,7 @@
             [_tableView reloadData];
             _mallHeaderView = [[QDMallTableHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.08)];
             _mallHeaderView.backgroundColor = APP_WHITECOLOR;
+            [_mallHeaderView.carBtn addTarget:self action:@selector(addToCar:) forControlEvents:UIControlEventTouchUpInside];
             _tableView.tableHeaderView = _mallHeaderView;
             [self requestMallList:api_GetMallList];
         }
@@ -230,6 +231,13 @@
         default:
             break;
     }
+}
+
+- (void)addToCar:(UIButton *)sender{
+    QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
+    bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@", [QDUserDefaults getObjectForKey:@"QD_JSURL"], JS_SHOPCART];
+    QDLog(@"urlStr = %@", bridgeVC.urlStr);
+    [self.navigationController pushViewController:bridgeVC animated:YES];
 }
 
 #pragma mark - 请求定制游列表信息

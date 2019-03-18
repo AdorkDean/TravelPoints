@@ -51,7 +51,9 @@
         _recommendModel = [[BiddingPostersDTO alloc] init];
         _recommendModel.creditCode = @"10001";
     }
-    _isPartialDeal = @"1";  //默认为允许部分成交
+    if (_isPartialDeal == nil) {
+        _isPartialDeal = @"1";  //如果为空,默认选择不允许全部成交
+    }
     //创建瀑布流布局
     self.title = @"行点";
     WaterLayou *layou = [[WaterLayou alloc] init];

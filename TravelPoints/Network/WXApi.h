@@ -93,6 +93,10 @@ static NSString * const api_TryToRegister = @"/lyjfapp/api/v1/user/tryToRegister
 //验证用户是否注册
 static NSString * const api_VerificationRegister = @"/lyjfapp/api/v1/user/verificationRegister";
 
+//设置密码时候校验手机号是否已登录
+static NSString * const api_VerificationIsRegister = @"/lyjfapp/api/v1/user/verificationIsRegister";
+
+
 static NSString * const api_ChangePwd = @"/lyjfapp/api/v1/user/changePwd";
 
 
@@ -159,7 +163,8 @@ static NSString * const JS_ADDRESS              = @"/#/my/address";             
 static NSString * const JS_SECURITYCENTER       = @"/#/securityCenter/home";        //安全中心
 static NSString * const JS_STRATEGY             = @"/#/my/strategy";                //攻略
 static NSString * const JS_BANKCARD             = @"/#/my/bankCard";                //我的银行卡
-
+static NSString * const JS_MYHOURSE             = @"/#/my/house";                   //房券
+static NSString * const JS_SHOPCART             = @"/#/shopping/shopp-cart";        //购物车
 static NSString * const JS_SHOPPING             = @"/#/shopping/details";           //商城
 static NSString * const JS_SETTING              = @"/#/my/setting";                 //设置
 static NSString * const JS_NOTICE               = @"/#/my/notice";                  //系统消息
@@ -169,8 +174,7 @@ static NSString * const JS_RECHARGE             = @"/pay/recharge";             
 static NSString * const JS_WITHDRAW             = @"/pay/withdraw";                 //提现
 static NSString * const JS_OPENACCOUNT          = @"/#/my/openAccount";             //开通资金账户
 
-static NSString * const JS_PREPARETOPAY         = @"/order/pay";                   //预支付
-
-
+static NSString * const JS_PREPARETOPAY         = @"/order/pay";                    //预支付
+static NSString * const JS_RANKLIST             = @"/list/detail";                  //榜单详情
 #endif /* WXApi_h */
 

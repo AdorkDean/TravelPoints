@@ -22,11 +22,11 @@
     self.view.backgroundColor = APP_WHITECOLOR;
     self.progressViewIsNaughty = YES;
     self.progressWidth = 10;
+//    self.selectIndex = 1;
 }
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
     [self.navigationController.navigationBar setHidden:YES];
     [self.navigationController.tabBarController.tabBar setHidden:NO];
 }

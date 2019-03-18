@@ -58,6 +58,7 @@
     [super viewDidLoad];
     minNumber = 0;
     maxNumber = 5;
+    _isPartialDeal = @"1";
     self.title = @"行点";
     self.view.backgroundColor = APP_WHITECOLOR;
     [self setLeftBtnItem];
@@ -176,6 +177,7 @@
 //            _situationLab.text = titleArr[indexPath];
             _situationLab.text = titleArr[indexPath.row];
             QDLog(@"123");
+            //该笔挂单是否部分成交0-不允许 1-允许
             if (indexPath.row == 0) {
                 _isPartialDeal = @"1";
             }else{

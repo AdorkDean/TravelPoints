@@ -38,8 +38,6 @@
         QDLog(@"123 = %@", [QDUserDefaults getObjectForKey:@"userID"]);
         _loginView.phoneTF.text = [QDUserDefaults getObjectForKey:@"userID"];
     }
-//    _loginView.userNameTF.text = @"1";
-//    _loginView.phoneTF.text = @"13207166278";
     [_loginView.forgetPWD addTarget:self action:@selector(forgetPWD:) forControlEvents:UIControlEventTouchUpInside];
 
     [self.view addSubview:_loginView];
@@ -362,6 +360,7 @@
 }
 #pragma mark - 忘记密码页面的下一步按钮
 - (void)resetPwdNextStep:(UIButton *)sender{
+
     _isResetPwdNextStep = YES;
     QDLog(@"%@", self.presentedViewController.view.class);
     //当前为验证身份inputView
@@ -374,13 +373,23 @@
     [_identifyView setHidden:NO];
     _userPhoneNum = _forgetPwdView.phoneTF.text;
     QDLog(@"_userPhoneNum = %@", _userPhoneNum);
+    
 //    NSDictionary * dic = @{@"legalPhone":_registerView.phoneTF.text,
-//                           @"userName":@"",
-//                           @"verificationType":@"0"
 //                           };
-//    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_VerificationRegister params:dic successBlock:^(QDResponseObject *responseObject) {
+//    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_VerificationIsRegister params:dic successBlock:^(QDResponseObject *responseObject) {
 //        if (responseObject.code == 0) {
-//
+//            _isResetPwdNextStep = YES;
+//            QDLog(@"%@", self.presentedViewController.view.class);
+//            //当前为验证身份inputView
+//            [_registerBtn setHidden:YES];
+//            [_loginBtn setHidden:NO];
+//            [_forgetPwdView setHidden:YES];
+//            _currentInputView = _identifyInputView;
+//            [_identifyInputView becomeFirstResponder];
+//            [_identifyInputView setHidden:NO];
+//            [_identifyView setHidden:NO];
+//            _userPhoneNum = _forgetPwdView.phoneTF.text;
+//            QDLog(@"_userPhoneNum = %@", _userPhoneNum);
 //        }else{
 //            [WXProgressHUD showErrorWithTittle:responseObject.message];
 //        }

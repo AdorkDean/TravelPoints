@@ -25,6 +25,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import "AppDelegate.h"
 #import "LQPopUpView.h"
+#import "QDTradingViewController.h"
 
 
 static NSString *cellIdentifier = @"CellIdentifier";
@@ -50,6 +51,7 @@ static NSString *cellIdentifier = @"CellIdentifier";
 @property (nonatomic, assign) CGFloat alpha;
 @property (nonatomic, strong) UIButton *shareBtn;
 @property (nonatomic, strong) UIButton *collectBtn;
+@property (nonatomic, getter=isLoading) BOOL loading;
 
 @property (nonatomic, strong) NSString *cityStr;
 
@@ -282,8 +284,6 @@ static NSString *cellIdentifier = @"CellIdentifier";
         _homePageTopView.backgroundColor = APP_WHITECOLOR;
         [_homePageTopView.addressBtn addTarget:self action:@selector(getMyLocation:) forControlEvents:UIControlEventTouchUpInside];
         [_homePageTopView.hysgBtn addTarget:self action:@selector(hysgAction:) forControlEvents:UIControlEventTouchUpInside];
-//        [_homePageTopView.glBtn addTarget:self action:@selector(hysgAction:) forControlEvents:UIControlEventTouchUpInside];
-        [_homePageTopView.dzyBtn addTarget:self action:@selector(hysgAction:) forControlEvents:UIControlEventTouchUpInside];
         [_homePageTopView.scBtn addTarget:self action:@selector(hysgAction:) forControlEvents:UIControlEventTouchUpInside];
         [_homePageTopView.searchBtn addTarget:self action:@selector(customerTourSearchAction:) forControlEvents:UIControlEventTouchUpInside];
         
@@ -295,9 +295,9 @@ static NSString *cellIdentifier = @"CellIdentifier";
         [_homePageTopView.iconBtn addTarget:self action:@selector(homeMapPage:) forControlEvents:UIControlEventTouchUpInside];
         _tableView.tableHeaderView = _homePageTopView;
         
-        UITapGestureRecognizer *doubleTapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleDoubleTap:)];
-        doubleTapGesture.numberOfTapsRequired =2;
-        [_homePageTopView addGestureRecognizer:doubleTapGesture];
+//        UITapGestureRecognizer *doubleTapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleDoubleTap:)];
+//        doubleTapGesture.numberOfTapsRequired =2;
+//        [_homePageTopView addGestureRecognizer:doubleTapGesture];
         
         [self.view addSubview:_tableView];
         _tableView.mj_header = [QDRefreshHeader headerWithRefreshingBlock:^{
@@ -391,6 +391,13 @@ static NSString *cellIdentifier = @"CellIdentifier";
     if (!_collectionView) {
         _collectionView = [ZLCollectionView collectionViewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.72) itemCount:_rankTypeArr.count];
         _collectionView.rankFirstArr = _rankFirstArr;
+        _collectionView.selectedItems = ^(NSIndexPath *indexPath) {
+            RanklistDTO *dto = _rankFirstArr[indexPath.row];
+            QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
+            bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?ranklistId=%ld", [QDUserDefaults getObjectForKey:@"QD_TESTJSURL"], JS_RANKLIST, (long)dto.id];
+            [self.navigationController pushViewController:bridgeVC animated:YES];
+            QDLog(@"indexpath.row = %ld", (long)indexPath.row);
+        };
     }
     return _collectionView;
 }
@@ -413,12 +420,11 @@ static NSString *cellIdentifier = @"CellIdentifier";
         if (_collectionView) {
             [_collectionView.mainCollectionView reloadData];
         }else{
-            [cell.contentView addSubview:self.collectionView];
+            QDLog(@"%@, %@, %@", _rankTypeArr, _rankFirstArr, _rankTotalArr);
+            if (_rankTotalArr.count) {
+                [cell.contentView addSubview:self.collectionView];
+            }
         }
-
-//        if () {
-//            <#statements#>
-//        }
         return cell;
     }else{
         static NSString *identifier2 = @"QDHomePageViewCell";
@@ -440,11 +446,10 @@ static NSString *cellIdentifier = @"CellIdentifier";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-    [WXProgressHUD showErrorWithTittle:@"榜单详情暂未开放"];
-//    QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
-//    bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?id=%@", QD_JSURL, JS_PAYACTION, 2];
-//    QDLog(@"urlStr = %@", bridgeVC.urlStr);
-//    [self.navigationController pushViewController:bridgeVC animated:YES];
+    RanklistDTO *dto = _currentTableViewData[indexPath.row];
+    QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
+    bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?ranklistId=%ld", [QDUserDefaults getObjectForKey:@"QD_TESTJSURL"], JS_RANKLIST, (long)dto.id];
+    [self.navigationController pushViewController:bridgeVC animated:YES];
 }
 
 #pragma mark - ScrollViewDelegate
@@ -494,22 +499,49 @@ static NSString *cellIdentifier = @"CellIdentifier";
 - (void)NavigationViewGoCollect{
     
 }
+- (void)setLoading:(BOOL)loading
+{
+    if (self.isLoading == loading) {
+        return;
+    }
+    _loading = loading;
+    [self.tableView reloadEmptyDataSet];
+}
 
 #pragma mark - emptyDataSource
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView{
-    return [UIImage imageNamed:@"emptySource"];
+    if (self.isLoading) {
+        return [UIImage imageNamed:@"loading_imgBlue" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
+    }
+    else {
+        return [UIImage imageNamed:@"emptySource"];
+    }
+    return nil;
 }
 
+- (CAAnimation *)imageAnimationForEmptyDataSet:(UIScrollView *)scrollView
+{
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform"];
+    animation.fromValue = [NSValue valueWithCATransform3D:CATransform3DIdentity];
+    animation.toValue = [NSValue valueWithCATransform3D: CATransform3DMakeRotation(M_PI_2, 0.0, 0.0, 1.0) ];
+    animation.duration = 0.25;
+    animation.cumulative = YES;
+    animation.repeatCount = MAXFLOAT;
+    
+    return animation;
+}
+
+
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView{
-    NSString *text = @"暂无数据";
+    NSString *text = @"暂无数据,点击重试";
     
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:16.0f],
-                                 NSForegroundColorAttributeName: [UIColor darkGrayColor]};
+                                 NSForegroundColorAttributeName: APP_BLUECOLOR};
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
 
-- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView{
-    return SCREEN_HEIGHT*0.42;
+- (void)emptyDataSet:(UIScrollView *)scrollView didTapView:(UIView *)view{
+//    [self requestHeaderTopData];
 }
 
 #pragma mark - CLLocationManagerDelegate
@@ -539,8 +571,7 @@ static NSString *cellIdentifier = @"CellIdentifier";
             
             NSLog(@"%@", [address objectForKey:@"City"]);
             _cityStr = [address objectForKey:@"City"];
-//            [_homePageTopView.addressBtn setTitle:[address objectForKey:@"City"] forState:UIControlStateNormal];
-            //发送通知
+            [_homePageTopView.addressBtn setTitle:[address objectForKey:@"City"] forState:UIControlStateNormal];
         }
     }];
 }
@@ -567,8 +598,11 @@ static NSString *cellIdentifier = @"CellIdentifier";
 - (void)dzyAction:(UIButton *)sender{
     AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     UITabBarController *tabVC = (UITabBarController *)delegate.window.rootViewController;
-    [tabVC setSelectedIndex:1];
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"switchSegmented" object:nil];
-    [QDUserDefaults setObject:@"0" forKey:@"switchSegmented"];
+    [tabVC setSelectedIndex:2];
+    
+    UINavigationController *nav = (UINavigationController *)tabVC.viewControllers[2];
+    QDTradingViewController *tradeVC = [[QDTradingViewController alloc] init];
+    tradeVC.selectIndex = 1;
+    [nav pushViewController:tradeVC animated:YES];
 }
 @end
