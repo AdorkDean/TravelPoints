@@ -93,12 +93,12 @@
     _hotelTypeId = [[NSMutableArray alloc] init];   //酒店类型
     _level = [[NSMutableArray alloc] init];         //会员等级
     //启动Pgyer基本SDK
-//    [[PgyManager sharedPgyManager] startManagerWithAppId:@"5b299d00b8ccffac5b2ea7908a03d716"];
-//
-//    //启动更新检查SDK
-//    [[PgyUpdateManager sharedPgyManager] startManagerWithAppId:@"5b299d00b8ccffac5b2ea7908a03d716"];
-//    
-//    [[PgyUpdateManager sharedPgyManager] checkUpdate];
+    [[PgyManager sharedPgyManager] startManagerWithAppId:@"34a23c5629162782e4466e0b8462cee5"];
+
+    //启动更新检查SDK
+    [[PgyUpdateManager sharedPgyManager] startManagerWithAppId:@"34a23c5629162782e4466e0b8462cee5"];
+    
+    [[PgyUpdateManager sharedPgyManager] checkUpdate];
     
     [OpenShare connectQQWithAppId:@"1103194207"];
     [OpenShare connectWeiboWithAppKey:@"402180334"];

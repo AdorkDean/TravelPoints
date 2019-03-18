@@ -295,9 +295,9 @@ static NSString *cellIdentifier = @"CellIdentifier";
         [_homePageTopView.iconBtn addTarget:self action:@selector(homeMapPage:) forControlEvents:UIControlEventTouchUpInside];
         _tableView.tableHeaderView = _homePageTopView;
         
-//        UITapGestureRecognizer *doubleTapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleDoubleTap:)];
-//        doubleTapGesture.numberOfTapsRequired =2;
-//        [_homePageTopView addGestureRecognizer:doubleTapGesture];
+        UITapGestureRecognizer *doubleTapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleDoubleTap:)];
+        doubleTapGesture.numberOfTapsRequired =2;
+        [_homePageTopView addGestureRecognizer:doubleTapGesture];
         
         [self.view addSubview:_tableView];
         _tableView.mj_header = [QDRefreshHeader headerWithRefreshingBlock:^{
