@@ -342,8 +342,11 @@
         _lab3.text = [NSString stringWithFormat:@"%.2f", [model.volume doubleValue] * [model.price doubleValue]];
         if ([model.postersType isEqualToString:@"0"]) {
             //分买入与卖出挂单手续费
-            _lab9.text = [NSString stringWithFormat:@"%@", model.bidFee];
+            _lab8.hidden = YES;
+            _lab9.hidden = YES;
         }else{
+            _lab8.hidden = NO;
+            _lab9.hidden = NO;
             _lab9.text = [NSString stringWithFormat:@"%@", model.askFee];
         }
         _bdNum.text = model.postersId;

@@ -31,6 +31,7 @@
     WebViewJavascriptBridge *_bridge;
     CAReplicatorLayer *_containerLayer;
     NSData *_weiboImgUrl;
+    NSString *_weiboDownUrl;
     NSString *_weiboTitle;
 }
 @property (nonatomic, strong) QDShareView *shareView;
@@ -150,6 +151,7 @@
         QDLog(@"getShare");
         [self.view addSubview:self.shareView];
         _weiboTitle = [data objectForKey:@"title"];
+        _weiboDownUrl = [data objectForKey:@"url"];
         _weiboImgUrl = [NSData dataWithContentsOfURL:[NSURL URLWithString:[data objectForKey:@"imgeUrl"]]];
         _popups = [SnailQuickMaskPopups popupsWithMaskStyle:MaskStyleBlackTranslucent aView:_shareView];
         _popups.presentationStyle = PresentationStyleBottom;
@@ -327,9 +329,7 @@
         _shareView.userInteractionEnabled = YES;
         [_shareView.weiboBtn addTarget:self action:@selector(btnViewHandler:) forControlEvents:UIControlEventTouchUpInside];
         [_shareView.pyqBtn addTarget:self action:@selector(btnViewHandler:) forControlEvents:UIControlEventTouchUpInside];
-
         [_shareView.weixinBtn addTarget:self action:@selector(btnViewHandler:) forControlEvents:UIControlEventTouchUpInside];
-
         [_shareView.qqQBtn addTarget:self action:@selector(btnViewHandler:) forControlEvents:UIControlEventTouchUpInside];
 
         [_shareView.qqBtn addTarget:self action:@selector(btnViewHandler:) forControlEvents:UIControlEventTouchUpInside];
@@ -370,6 +370,7 @@
         OSMessage *msg=[[OSMessage alloc]init];
         msg.desc = _weiboTitle;
         msg.title = _weiboTitle;
+        msg.link = _weiboDownUrl;
         msg.image = _weiboImgUrl;
         [OpenShare shareToWeixinSession:msg Success:^(OSMessage *message) {
             QDLog(@"微信分享到会话成功：\n%@",message);

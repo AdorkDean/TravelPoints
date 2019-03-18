@@ -6,23 +6,21 @@
 //  Copyright © 2017年 Mark. All rights reserved.
 //
 
-#import "QDTradingViewController.h"
-#import "QDFirstViewController.h"
-#import "QDSecondViewController.h"
-#import "QDThirdViewController.h"
-#import "QDFourViewController.h"
+#import "QDPlayingViewController.h"
+#import "QDHotelReserveVC.h"
+#import "QDDZYViewController.h"
+#import "QDMallViewController.h"
 
-@interface QDTradingViewController ()
+@interface QDPlayingViewController ()
 @end
 
-@implementation QDTradingViewController
+@implementation QDPlayingViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = APP_WHITECOLOR;
     self.progressViewIsNaughty = YES;
     self.progressWidth = 10;
-//    self.selectIndex = 1;
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -67,29 +65,23 @@
 }
 
 - (NSInteger)numbersOfChildControllersInPageController:(WMPageController *)pageController {
-    return 4;
+    return 3;
 }
 
 - (NSString *)pageController:(WMPageController *)pageController titleAtIndex:(NSInteger)index {
     switch (index) {
-        case 0: return @"用玩贝";
-        case 1: return @"转玩贝";
-        case 2: return @"我的报单";
-        case 3: return @"我的摘单";
+        case 0: return @"预定酒店";
+        case 1: return @"定制游";
+        case 2: return @"商城";
     }
     return @"NONE";
 }
 
-//- (UIColor *)titleColorNormal{
-//    return APP_BLUECOLOR;
-//}
-
 - (UIViewController *)pageController:(WMPageController *)pageController viewControllerAtIndex:(NSInteger)index {
     switch (index) {
-        case 0: return [[QDFirstViewController alloc] init];
-        case 1: return [[QDSecondViewController alloc] init];
-        case 2: return [[QDThirdViewController alloc] init];
-        case 3: return [[QDFourViewController alloc] init];
+        case 0: return [[QDHotelReserveVC alloc] init];
+        case 1: return [[QDDZYViewController alloc] init];
+        case 2: return [[QDMallViewController alloc] init];
     }
     return [[UIViewController alloc] init];
 }
@@ -108,21 +100,7 @@
 
 - (CGRect)pageController:(WMPageController *)pageController preferredFrameForContentView:(WMScrollView *)contentView {
     CGFloat originY = CGRectGetMaxY([self pageController:pageController preferredFrameForMenuView:self.menuView]);
-    //    if (self.menuViewStyle == WMMenuViewStyleTriangle) {
-    //        originY += self.redView.frame.size.height;
-    //    }
     return CGRectMake(0, originY, self.view.frame.size.width, self.view.frame.size.height - originY);
 }
 
-- (void)pageController:(WMPageController *)pageController didEnterViewController:(__kindof UIViewController *)viewController withInfo:(NSDictionary *)info{
-    QDLog(@"didEnterViewController");
-}
-
--(void)pageController:(WMPageController *)pageController willEnterViewController:(__kindof UIViewController *)viewController withInfo:(NSDictionary *)info{
-    QDLog(@"willEnterViewController");
-}
-
-- (void)pageController:(WMPageController *)pageController willCachedViewController:(__kindof UIViewController *)viewController withInfo:(NSDictionary *)info{
-    QDLog(@"willEnterViewController");
-}
 @end

@@ -7,21 +7,15 @@
 //
 
 #import "QDBaseViewController.h"
-#import "QDSegmentControl.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface QDPlayingShellsVC : QDBaseViewController
+@interface QDHotelReserveVC : QDBaseViewController
 
 @property (nonatomic, strong) NSString *dateInStr;
 @property (nonatomic, strong) NSString *dateOutStr;
 
 @property (nonatomic, strong) NSString *dateInPassedVal;
 @property (nonatomic, strong) NSString *dateOutPassedVal;
-
-@property (nonatomic, assign) NSInteger selectedIndex;
-
-@property (nonatomic, strong) QDSegmentControl *segmentControl;
-
 @end
 
 NS_ASSUME_NONNULL_END

@@ -25,7 +25,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import "AppDelegate.h"
 #import "LQPopUpView.h"
-#import "QDTradingViewController.h"
+#import "QDPlayingViewController.h"
 
 
 static NSString *cellIdentifier = @"CellIdentifier";
@@ -452,37 +452,6 @@ static NSString *cellIdentifier = @"CellIdentifier";
     [self.navigationController pushViewController:bridgeVC animated:YES];
 }
 
-#pragma mark - ScrollViewDelegate
-//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-//    // 计算当前偏移位置
-//    CGFloat threholdHeight = (SCREEN_WIDTH * 9 / 16) - 64;
-//    if (scrollView.contentOffset.y >= 0 &&
-//        scrollView.contentOffset.y <= threholdHeight) {
-//        self.alpha = scrollView.contentOffset.y / threholdHeight;
-//        self.navigationView.alpha = self.alpha;
-//    }
-//    else if (scrollView.contentOffset.y < 0){
-//        scrollView.contentOffset = CGPointMake(0, 0);
-//    }
-//    else{
-//        self.navigationView.alpha = 1.0;
-//        self.shareBtn.alpha = 0.0f;
-//        self.collectBtn.alpha = 0.0f;
-//    }
-//
-//    if (self.alpha == 0) {
-//        self.shareBtn.alpha = 1.0;
-//        self.collectBtn.alpha = 1.0;
-//    }
-//
-//    if (scrollView.contentOffset.y > threholdHeight &&
-//        self.navigationView.alpha == 1.0) {
-//        [self.navigationView navigationAnimation];
-//        _tableView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
-//    }else{
-//        [self.navigationView resetFrame];
-//    }
-//}
 #pragma mark - NavigationViewDelegate
 - (void)NavigationViewWithScrollerButton:(UIButton *)btn{
     
@@ -598,10 +567,9 @@ static NSString *cellIdentifier = @"CellIdentifier";
 - (void)dzyAction:(UIButton *)sender{
     AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     UITabBarController *tabVC = (UITabBarController *)delegate.window.rootViewController;
-    [tabVC setSelectedIndex:2];
-    
-    UINavigationController *nav = (UINavigationController *)tabVC.viewControllers[2];
-    QDTradingViewController *tradeVC = [[QDTradingViewController alloc] init];
+    [tabVC setSelectedIndex:1];
+    UINavigationController *nav = (UINavigationController *)tabVC.viewControllers[1];
+    QDPlayingViewController *tradeVC = [[QDPlayingViewController alloc] init];
     tradeVC.selectIndex = 1;
     [nav pushViewController:tradeVC animated:YES];
 }

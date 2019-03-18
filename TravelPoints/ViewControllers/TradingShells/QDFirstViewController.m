@@ -26,6 +26,7 @@
 #import "WaterLayou.h"
 #import "QDBuyOrSellViewController.h"
 #import "QDFindSatifiedDataVC.h"
+#import "QDLoginAndRegisterVC.h"
 #define K_T_Cell @"t_cell"
 #define K_C_Cell @"c_cell"
 
@@ -452,9 +453,16 @@ typedef enum : NSUInteger {
 
 #pragma mark - 要/转玩贝操作按钮
 - (void)operateAction:(UIButton *)sender{
-    QDFindSatifiedDataVC *satifiedVC = [[QDFindSatifiedDataVC alloc] init];
-    satifiedVC.typeStr = @"1";  //请求市场上的卖单数据
-    [self.navigationController pushViewController:satifiedVC animated:YES];
+    NSString *str = [QDUserDefaults getObjectForKey:@"loginType"];
+    if ([str isEqualToString:@"0"] || str == nil) { //未登录
+        QDLoginAndRegisterVC *loginVC = [[QDLoginAndRegisterVC alloc] init];
+        loginVC.pushVCTag = @"0";
+        [self presentViewController:loginVC animated:YES completion:nil];
+    }else{
+        QDFindSatifiedDataVC *satifiedVC = [[QDFindSatifiedDataVC alloc] init];
+        satifiedVC.typeStr = @"1";  //请求市场上的卖单数据
+        [self.navigationController pushViewController:satifiedVC animated:YES];
+    }
 }
 
 - (void)filterAction:(UIButton *)sender{
@@ -526,9 +534,16 @@ typedef enum : NSUInteger {
 }
 
 - (void)buyOrSellAction:(UIButton *)sender{
-    QDBuyOrSellViewController *vc = [[QDBuyOrSellViewController alloc] init];
-    QDLog(@"cell.sell.tag = %ld", (long)sender.tag);
-    vc.operateModel = _ordersArr[sender.tag];
-    [self.navigationController pushViewController:vc animated:YES];
+    NSString *str = [QDUserDefaults getObjectForKey:@"loginType"];
+    if ([str isEqualToString:@"0"] || str == nil) { //未登录
+        QDLoginAndRegisterVC *loginVC = [[QDLoginAndRegisterVC alloc] init];
+        loginVC.pushVCTag = @"0";
+        [self presentViewController:loginVC animated:YES completion:nil];
+    }else{
+        QDBuyOrSellViewController *vc = [[QDBuyOrSellViewController alloc] init];
+        QDLog(@"cell.sell.tag = %ld", (long)sender.tag);
+        vc.operateModel = _ordersArr[sender.tag];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 @end

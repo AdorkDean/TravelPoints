@@ -468,7 +468,6 @@ typedef enum : NSUInteger {
     return animation;
 }
 
-
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView{
     NSString *text = @"暂无数据,点击重试";
     

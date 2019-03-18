@@ -29,7 +29,6 @@
 //预定酒店 定制游 商城
 @interface QDPlayingShellsVC ()<UITableViewDelegate, UITableViewDataSource, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource, CLLocationManagerDelegate, SendDateStrDelegate, UITextFieldDelegate, getChoosedAreaDelegate>{
     QDPlayShellType _playShellType;
-    QDSegmentControl *_segmentControl;
     UITableView *_tableView;
     QDHotelReserveTableHeaderView *_headerView;
     QDMallTableHeaderView *_mallHeaderView;

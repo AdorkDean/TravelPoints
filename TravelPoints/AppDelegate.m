@@ -8,8 +8,7 @@
 
 #import "AppDelegate.h"
 #import "QDHomgePageVC.h"
-#import "QDPlayingShellsVC.h"
-#import "QDTradingShellsVC.h"
+#import "QDPlayingViewController.h"
 #import "QDTradingViewController.h"
 #import "QDMineInfoViewController.h"
 #import "QDBridgeViewController.h"
@@ -18,7 +17,7 @@
 #import <PgyUpdate/PgyUpdateManager.h>
 #import <OpenShareHeader.h>
 #import "LaunchImageTransition.h"
-
+#import "LaunchAnimationTool.h"
 @interface AppDelegate ()
 
 @property(nonatomic, strong) UITabBarController *rootTabbarCtr;
@@ -40,7 +39,7 @@
     QDHomgePageVC *homeVC = [[QDHomgePageVC alloc] init];
     UINavigationController *navHome = [[UINavigationController alloc] initWithRootViewController:homeVC];
     
-    QDPlayingShellsVC *playShellsVC = [[QDPlayingShellsVC alloc] init];
+    QDPlayingViewController *playShellsVC = [[QDPlayingViewController alloc] init];
     UINavigationController *navPlayShell= [[UINavigationController alloc] initWithRootViewController:playShellsVC];
     
     QDTradingViewController *tradeShellsVC = [[QDTradingViewController alloc] init];
@@ -85,6 +84,7 @@
     
    
     [self initRootVC];
+    [LaunchAnimationTool showLaunchAnimationViewToWindow];
     [self configureAPIKey];
     [self.window makeKeyAndVisible];
 
@@ -118,7 +118,6 @@
         [QDUserDefaults setObject:@"http://203.110.179.27:60409/app/#" forKey:@"QD_TESTJSURL"];
 //        [QDUserDefaults setObject:@"http://47.101.222.172:8080/app/#" forKey:@"QD_TESTJSURL"];
 //        [QDUserDefaults setObject:@"http://appuat.wedotting.com/app/#" forKey:@"QD_TESTJSURL"];
-
     }
     [QDServiceClient startMonitoringNetworking];
     //获取基准价
@@ -207,6 +206,5 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
-
 
 @end

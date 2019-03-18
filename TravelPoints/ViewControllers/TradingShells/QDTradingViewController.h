@@ -7,11 +7,5 @@
 //
 
 #import "WMPageController.h"
-typedef NS_ENUM(NSUInteger, WMMenuViewPosition) {
-    WMMenuViewPositionDefault,
-    WMMenuViewPositionBottom,
-};
-
 @interface QDTradingViewController : WMPageController
-@property (nonatomic, assign) WMMenuViewPosition menuViewPosition;
 @end
