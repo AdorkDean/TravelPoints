@@ -28,11 +28,10 @@
         [_imgView setImage:[UIImage imageNamed:@"icon_search"]];
         [_topBackView addSubview:_imgView];
         
-        
         _inputTF = [[UITextField alloc] init];
         _inputTF.placeholder = @"搜索关键字";
-        [_inputTF setValue:APP_GRAYLINECOLOR forKeyPath:@"_placeholderLabel.textColor"];
-        [_inputTF setValue:QDFont(14) forKeyPath:@"_placeholderLabel.font"];
+        [_inputTF setValue:APP_GRAYTEXTCOLOR forKeyPath:@"_placeholderLabel.textColor"];
+        [_inputTF setValue:QDFont(15) forKeyPath:@"_placeholderLabel.font"];
         _inputTF.clearButtonMode = UITextFieldViewModeWhileEditing;
         [_topBackView addSubview:_inputTF];
         

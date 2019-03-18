@@ -237,6 +237,15 @@
 - (void)getChoosedAreaName:(NSString *)areaStr{
     _headerView.locationLab.text = areaStr;
 }
+
+- (void)setLoading:(BOOL)loading
+{
+    if (self.isLoading == loading) {
+        return;
+    }
+    _loading = loading;
+    [_tableView reloadEmptyDataSet];
+}
 #pragma mark -- tableView delegate
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return _hotelListInfoArr.count;
@@ -305,6 +314,10 @@
         return [UIImage imageNamed:@"icon_noConnect"];
     }
     return nil;
+}
+
+- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView{
+    return 140;
 }
 
 - (CAAnimation *)imageAnimationForEmptyDataSet:(UIScrollView *)scrollView

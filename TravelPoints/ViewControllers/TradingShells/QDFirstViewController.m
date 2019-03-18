@@ -483,44 +483,15 @@ typedef enum : NSUInteger {
     [_popups presentInView:self.tableView animated:YES completion:NULL];
 }
 
-- (void)snailQuickMaskPopupsWillPresent:(SnailQuickMaskPopups *)popups{
-    QDLog(@"snailQuickMaskPopupsWillPresent");
-}
-
-- (void)snailQuickMaskPopupsWillDismiss:(SnailQuickMaskPopups *)popups{
-    QDLog(@"snailQuickMaskPopupsWillDismiss");
-}
-
-- (void)snailQuickMaskPopupsDidPresent:(SnailQuickMaskPopups *)popups{
-    QDLog(@"snailQuickMaskPopupsDidPresent");
-}
-
-- (void)snailQuickMaskPopupsDidDismiss:(SnailQuickMaskPopups *)popups{
-    QDLog(@"snailQuickMaskPopupsDidDismiss");
-}
-
-#pragma mark - DZNEmtpyDataSet Delegate
-
-- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView{
-    return [UIImage imageNamed:@"emptySource"];
-}
-
-- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView{
-    NSString *text = @"未找到相关数据,请重试";
-    
-    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:16.0f],
-                                 NSForegroundColorAttributeName: [UIColor darkGrayColor]};
-    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
-}
-- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView{
-    return 120;
-}
 #pragma mark - UICollectionViewDelegate
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return _ordersArr.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == 0) {
+        
+    }
     RootCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     BiddingPostersDTO *dto = _ordersArr[indexPath.row];
     [cell loadDataWithDataArr:dto andTypeStr:dto.postersType];

@@ -49,6 +49,12 @@ typedef enum : NSUInteger {
     QDNearByRestaurant = 1,
     QDNearSpot = 2
 } QDRouteType;
+
+//无数据 网络异常
+typedef enum : NSUInteger {
+    QDNODataError = 0,
+    QDNetworkError = 1
+} QDEmptyType;
 @interface QDOrderField : NSObject
 
 @end
