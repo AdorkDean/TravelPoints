@@ -81,9 +81,9 @@ static const UIEdgeInsets edge = {10,10,10,10};
     CGFloat w = (collectViewW - edge.left - edge.right - columnmagin * (count - 1)) / count;
     CGFloat h;
     if (indexPath.row == 0) {
-        h = SCREEN_HEIGHT*0.28;
+        h = 190;
     }else{
-        h = SCREEN_HEIGHT*0.33;
+        h = 220;
     }
     
     // 假如最短的那列为第0列

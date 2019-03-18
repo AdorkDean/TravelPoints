@@ -76,10 +76,18 @@ QD_ManualCanceled = 4      //手工取消
     [super viewWillAppear:animated];
     [self.navigationController.navigationBar setHidden:YES];
     [self.navigationController.tabBarController.tabBar setHidden:NO];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSucceeded:) name:Notification_LoginSucceeded object:nil];
+}
+
+
+- (void)loginSucceeded:(NSNotification *)noti{
+    QDLog(@"登录成功");
+    [self requestMyZhaiDanData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:Notification_LoginSucceeded object:nil];
     [self.navigationController.navigationBar setHidden:YES];
     [self.navigationController.tabBarController.tabBar setHidden:NO];
 }

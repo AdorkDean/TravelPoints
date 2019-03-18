@@ -321,7 +321,8 @@
         cell = [[QDMineInfoTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     cell.textLabel.text = _cellTitleArr[indexPath.row];
-    cell.textLabel.font = QDFont(15);
+    cell.textLabel.textColor = APP_BLACKCOLOR;
+    cell.textLabel.font = QDFont(16);
     return cell;
 }
 

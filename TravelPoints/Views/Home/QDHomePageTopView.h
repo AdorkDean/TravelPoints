@@ -21,12 +21,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 //会员申购 攻略 定制游 商城
 @property(nonatomic, strong) UIButton *hysgBtn;
-@property(nonatomic, strong) UIButton *glBtn;
+//@property(nonatomic, strong) UIButton *glBtn;
 @property(nonatomic, strong) UIButton *dzyBtn;
 @property(nonatomic, strong) UIButton *scBtn;
 
 @property(nonatomic, strong) UILabel *hysgLab;
-@property(nonatomic, strong) UILabel *glLab;
+//@property(nonatomic, strong) UILabel *glLab;
 @property(nonatomic, strong) UILabel *dzyLab;
 @property(nonatomic, strong) UILabel *scLab;
 

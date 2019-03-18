@@ -63,7 +63,7 @@
         
         _info1Lab = [[UILabel alloc] init];
         _info1Lab.text = @"升级还需";
-        _info1Lab.textColor = APP_GRAYLINECOLOR;
+        _info1Lab.textColor = APP_GRAYTEXTCOLOR;
         _info1Lab.font = QDFont(13);
         [_financialPic addSubview:_info1Lab];
         
@@ -75,7 +75,7 @@
         
         _info3Lab = [[UILabel alloc] init];
         _info3Lab.text = @"成长值";
-        _info3Lab.textColor = APP_GRAYLINECOLOR;
+        _info3Lab.textColor = APP_GRAYTEXTCOLOR;
         _info3Lab.font = QDFont(13);
         [_financialPic addSubview:_info3Lab];
         

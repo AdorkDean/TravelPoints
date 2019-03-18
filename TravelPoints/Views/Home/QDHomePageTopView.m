@@ -43,26 +43,23 @@
         
         _hysgBtn = [[UIButton alloc] init];
         _hysgBtn.tag = 1001;
-        [_hysgBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [_hysgBtn setImage:[UIImage imageNamed:@"icon_vip"] forState:UIControlStateNormal];
         [self addSubview:_hysgBtn];
         
-        
-        _glBtn = [[UIButton alloc] init];
-        _glBtn.tag = 1002;
-        [_glBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [_glBtn setImage:[UIImage imageNamed:@"icon_strategy"] forState:UIControlStateNormal];
-        [self addSubview:_glBtn];
+//
+//        _glBtn = [[UIButton alloc] init];
+//        _glBtn.tag = 1002;
+//        [_glBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+//        [_glBtn setImage:[UIImage imageNamed:@"icon_strategy"] forState:UIControlStateNormal];
+//        [self addSubview:_glBtn];
         
         _dzyBtn = [[UIButton alloc] init];
         _dzyBtn.tag = 1003;
-        [_dzyBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [_dzyBtn setImage:[UIImage imageNamed:@"icon_customTour"] forState:UIControlStateNormal];
         [self addSubview:_dzyBtn];
         
         _scBtn = [[UIButton alloc] init];
         _scBtn.tag = 1004;
-        [_scBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [_scBtn setImage:[UIImage imageNamed:@"icon_market"] forState:UIControlStateNormal];
         [self addSubview:_scBtn];
         
@@ -71,12 +68,12 @@
         _hysgLab.textColor = APP_BLACKCOLOR;
         _hysgLab.font = QDFont(13);
         [self addSubview:_hysgLab];
-        
-        _glLab = [[UILabel alloc] init];
-        _glLab.text = @"目的地攻略";
-        _glLab.textColor = APP_BLACKCOLOR;
-        _glLab.font = QDFont(13);
-        [self addSubview:_glLab];
+//
+//        _glLab = [[UILabel alloc] init];
+//        _glLab.text = @"目的地攻略";
+//        _glLab.textColor = APP_BLACKCOLOR;
+//        _glLab.font = QDFont(13);
+//        [self addSubview:_glLab];
         
         _dzyLab = [[UILabel alloc] init];
         _dzyLab.text = @"定制游";
@@ -123,40 +120,42 @@
         make.width.mas_equalTo(SCREEN_WIDTH*0.75);
     }];
     
-    [_hysgBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH*0.06);
+//    [_glBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerY.width.and.height.equalTo(_hysgBtn);
+//        make.left.equalTo(_hysgBtn.mas_right).offset(SCREEN_WIDTH*0.1);
+//    }];
+//
+//    [_glLab mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerX.equalTo(_glBtn);
+//        make.top.equalTo(_glBtn.mas_bottom);
+//    }];
+    [_dzyBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(_topBackView);
         make.top.equalTo(self.topBackView.mas_bottom).offset(SCREEN_HEIGHT*0.02);
-        make.width.and.height.mas_equalTo(SCREEN_WIDTH*0.15);
+        make.width.and.height.mas_equalTo(55);
+
     }];
     
+    [_dzyLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(_dzyBtn);
+        make.top.equalTo(_dzyBtn.mas_bottom);
+    }];
+    
+    [_hysgBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.width.and.height.equalTo(_dzyBtn);
+        make.right.equalTo(_dzyBtn.mas_left).offset(-60);
+    }];
+
     [_hysgLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(_hysgBtn);
         make.top.equalTo(_hysgBtn.mas_bottom);
     }];
     
-    [_glBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.width.and.height.equalTo(_hysgBtn);
-        make.left.equalTo(_hysgBtn.mas_right).offset(SCREEN_WIDTH*0.1);
-    }];
-    
-    [_glLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(_glBtn);
-        make.top.equalTo(_glBtn.mas_bottom);
-    }];
-    [_dzyBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.width.and.height.equalTo(_hysgBtn);
-        make.left.equalTo(_glBtn.mas_right).offset(SCREEN_WIDTH*0.1);
-
-    }];
-    [_dzyLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(_dzyBtn);
-        make.top.equalTo(_dzyBtn.mas_bottom);
-    }];
     [_scBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.width.and.height.equalTo(_hysgBtn);
-        make.left.equalTo(_dzyBtn.mas_right).offset(SCREEN_WIDTH*0.1);
+        make.centerY.width.and.height.equalTo(_dzyBtn);
+        make.left.equalTo(_dzyBtn.mas_right).offset(60);
     }];
-    
+
     [_scLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(_scBtn);
         make.top.equalTo(_scBtn.mas_bottom);

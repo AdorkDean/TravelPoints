@@ -352,6 +352,14 @@
         
     }];
 }
+
+/**
+ 忘记密码的时候看手机是否注册
+ verificationType: 0验证是否注册 1表示发送验证码
+ */
+- (void)checkForgetPwdIsRegister{
+ 
+}
 #pragma mark - 忘记密码页面的下一步按钮
 - (void)resetPwdNextStep:(UIButton *)sender{
     _isResetPwdNextStep = YES;
@@ -366,6 +374,19 @@
     [_identifyView setHidden:NO];
     _userPhoneNum = _forgetPwdView.phoneTF.text;
     QDLog(@"_userPhoneNum = %@", _userPhoneNum);
+//    NSDictionary * dic = @{@"legalPhone":_registerView.phoneTF.text,
+//                           @"userName":@"",
+//                           @"verificationType":@"0"
+//                           };
+//    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_VerificationRegister params:dic successBlock:^(QDResponseObject *responseObject) {
+//        if (responseObject.code == 0) {
+//
+//        }else{
+//            [WXProgressHUD showErrorWithTittle:responseObject.message];
+//        }
+//    } failureBlock:^(NSError *error) {
+//
+//    }];
 }
 
 #pragma mark --------- 获取验证码

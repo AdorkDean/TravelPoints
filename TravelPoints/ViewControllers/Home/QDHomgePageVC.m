@@ -51,6 +51,7 @@ static NSString *cellIdentifier = @"CellIdentifier";
 @property (nonatomic, strong) UIButton *shareBtn;
 @property (nonatomic, strong) UIButton *collectBtn;
 
+@property (nonatomic, strong) NSString *cityStr;
 
 @end
 
@@ -281,11 +282,12 @@ static NSString *cellIdentifier = @"CellIdentifier";
         _homePageTopView.backgroundColor = APP_WHITECOLOR;
         [_homePageTopView.addressBtn addTarget:self action:@selector(getMyLocation:) forControlEvents:UIControlEventTouchUpInside];
         [_homePageTopView.hysgBtn addTarget:self action:@selector(hysgAction:) forControlEvents:UIControlEventTouchUpInside];
-        [_homePageTopView.glBtn addTarget:self action:@selector(hysgAction:) forControlEvents:UIControlEventTouchUpInside];
+//        [_homePageTopView.glBtn addTarget:self action:@selector(hysgAction:) forControlEvents:UIControlEventTouchUpInside];
         [_homePageTopView.dzyBtn addTarget:self action:@selector(hysgAction:) forControlEvents:UIControlEventTouchUpInside];
         [_homePageTopView.scBtn addTarget:self action:@selector(hysgAction:) forControlEvents:UIControlEventTouchUpInside];
         [_homePageTopView.searchBtn addTarget:self action:@selector(customerTourSearchAction:) forControlEvents:UIControlEventTouchUpInside];
         
+        [_homePageTopView.addressBtn setTitle:_cityStr forState:UIControlStateNormal];
         [_homePageTopView.dzyBtn addTarget:self action:@selector(dzyAction:) forControlEvents:UIControlEventTouchUpInside];
         _homePageTopView.iconBtn.layer.cornerRadius = SCREEN_WIDTH*0.11/2;
         _homePageTopView.iconBtn.layer.masksToBounds = YES;
@@ -536,7 +538,8 @@ static NSString *cellIdentifier = @"CellIdentifier";
             NSLog(@"%@", [address objectForKey:@"State"]);
             
             NSLog(@"%@", [address objectForKey:@"City"]);
-            [_homePageTopView.addressBtn setTitle:[address objectForKey:@"City"] forState:UIControlStateNormal];
+            _cityStr = [address objectForKey:@"City"];
+//            [_homePageTopView.addressBtn setTitle:[address objectForKey:@"City"] forState:UIControlStateNormal];
             //发送通知
         }
     }];
