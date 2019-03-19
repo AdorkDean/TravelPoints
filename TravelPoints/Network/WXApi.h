@@ -133,6 +133,7 @@ static NSString * const api_UserOrderDetail = @"/lyjfapp/api/v1/userorder/detail
 static NSString * const api_GetBiddingPosterByPosterId = @"/lyjfapp/api/v1/ctrade/getBiddingPosterByPosterId";         //查看挂单详情
 static NSString * const api_CancelBiddingPosters = @"/lyjfapp/api/v1/ctrade/cancelBiddingPosters";                     //撤销挂单
 static NSString * const api_saveBiddingPosters = @"/lyjfapp/api/v1/ctrade/saveBiddingPosters";                       //挂单申请
+static NSString * const api_findCategory       = @"/lyjfapp/api/v1/goods/findCategory";                  //获取商品分类列表
 
 /**
  JAVAScriptBridgeWebView
@@ -176,5 +177,8 @@ static NSString * const JS_OPENACCOUNT          = @"/#/my/openAccount";         
 
 static NSString * const JS_PREPARETOPAY         = @"/order/pay";                    //预支付
 static NSString * const JS_RANKLIST             = @"/list/detail";                  //榜单详情
+static NSString * const JS_INVITEFRIENDS        = @"/invitefriends";                  //邀请好友
+
+
 #endif /* WXApi_h */
 

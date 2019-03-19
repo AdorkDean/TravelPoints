@@ -365,7 +365,11 @@
     
 #pragma mark - 邀请好友
 - (void)inviteFriends{
-    
+    if ([[QDUserDefaults getObjectForKey:@"loginType"] isEqualToString:@"0"]) {
+        [WXProgressHUD showErrorWithTittle:@"未登录"];
+    }else{
+        [self pushBridgeVCWithStr:[[QDUserDefaults getObjectForKey:@"QD_TESTJSURL"] stringByAppendingString:JS_INVITEFRIENDS]];
+    }
 }
 #pragma mark - 全部订单
 - (void)ordersAction:(UIButton *)sender{

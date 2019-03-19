@@ -19,6 +19,11 @@
 #import "QDSearchViewController.h"
 #import <IQKeyboardManager/IQKeyboardManager.h>
 #import "QDOrderField.h"
+#import "TABAnimated.h"
+#import "TABViewAnimated.h"
+#import "UITableView+Animated.h"
+#import "UIView+TABControlAnimation.h"
+
 //预定酒店 定制游 商城
 @interface QDDZYViewController ()<UITableViewDelegate, UITableViewDataSource, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource, UITextFieldDelegate>{
     UITableView *_tableView;
@@ -56,6 +61,7 @@
 
 #pragma mark - 请求定制游列表信息
 - (void)requestDZYList:(NSString *)urlStr{
+    self.loading = NO;
     if (_dzyListInfoArr.count) {
         [_dzyListInfoArr removeAllObjects];
         [_dzyImgArr removeAllObjects];
@@ -82,12 +88,14 @@
             [_tableView reloadData];
             [_tableView reloadEmptyDataSet];
         }
+        [_tableView tab_endAnimation];
         [self endRefreshing];
     } failureBlock:^(NSError *error) {
         [self endRefreshing];
         [_tableView reloadData];
         [_tableView reloadEmptyDataSet];
         [WXProgressHUD showErrorWithTittle:@"网络异常"];
+        [_tableView tab_endAnimation];
     }];
 }
 
@@ -98,6 +106,7 @@
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    [_tableView tab_startAnimation];
     _tableView.showsVerticalScrollIndicator = NO;
 //    _tableView.contentInset = UIEdgeInsetsMake(0, 0, SafeAreaTopHeight, 0);
     _tableView.emptyDataSetDelegate = self;
@@ -275,19 +284,14 @@
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapView:(UIView *)view
 {
     self.loading = YES;
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        self.loading = NO;
-    });
+    [self requestDZYList:api_GetDZYList];
 }
 
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button
 {
     self.loading = YES;
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        self.loading = NO;
-    });
+    [self requestDZYList:api_GetDZYList];
+
 }
 
 - (void)customerTourSearchAction:(UIButton *)sender{

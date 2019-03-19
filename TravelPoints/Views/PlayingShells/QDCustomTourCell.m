@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "SDWebImageManager.h"
 #import "UIImageView+WebCache.h"
+#import "UIView+Animated.h"
 
 @implementation QDCustomTourCell
 
@@ -30,6 +31,7 @@
         _thePic.image = [UIImage imageNamed:@"placeHolder"];
         _thePic.layer.cornerRadius = 5;
         _thePic.layer.masksToBounds = YES;
+        _thePic.loadStyle = TABViewLoadAnimationWithOnlySkeleton;
         [self.contentView addSubview:_thePic];
         
         _thePic.layer.shadowColor = APP_GRAYCOLOR.CGColor;
@@ -41,50 +43,43 @@
         _thePic.layer.shadowRadius = 6;
         
         _titleLab = [[UILabel alloc] init];
-        _titleLab.text = @"--";
-        _titleLab.font = QDBoldFont(17);
+        _titleLab.font = QDBoldFont(16);
         _titleLab.numberOfLines = 0;
+        _titleLab.loadStyle = TABViewLoadAnimationWithOnlySkeleton;
         [self.contentView addSubview:_titleLab];
         
         _wanbei = [[UILabel alloc] init];
-        _wanbei.text = @"--";
-        _wanbei.font = QDFont(19);
+        _wanbei.font = QDBoldFont(20);
         _wanbei.textColor = APP_ORANGETEXTCOLOR;
         [self.contentView addSubview:_wanbei];
         
         _wanbeiLab = [[UILabel alloc] init];
-        _wanbeiLab.text = @"玩贝";
-        _wanbeiLab.font = QDFont(15);
+        _wanbeiLab.font = QDBoldFont(16);
         _wanbeiLab.textColor = APP_ORANGETEXTCOLOR;
         [self.contentView addSubview:_wanbeiLab];
         
-        
         _yueLab = [[UILabel alloc] init];
-        _yueLab.text = @"约";
         _yueLab.font = QDFont(14);
         _yueLab.textColor = APP_GRAYLINECOLOR;
+        _yueLab.loadStyle = TABViewLoadAnimationWithOnlySkeleton;
         [self.contentView addSubview:_yueLab];
         
         _rmbLab = [[UILabel alloc] init];
-        _rmbLab .text = @"¥400.02";
         _rmbLab.font = QDFont(15);
         _rmbLab.textColor = APP_GRAYTEXTCOLOR;
         [self.contentView addSubview:_rmbLab];
         
         _info1Lab = [[UILabel alloc] init];
-        _info1Lab.text = @"提前";
         _info1Lab.font = QDFont(13);
         _info1Lab.textColor = APP_GRAYTEXTCOLOR;
         [self.contentView addSubview:_info1Lab];
         
         _info2Lab = [[UILabel alloc] init];
-        _info2Lab.text = @"2";
         _info2Lab.font = QDFont(13);
         _info2Lab.textColor = APP_BLUECOLOR;
         [self.contentView addSubview:_info2Lab];
         
         _info3Lab = [[UILabel alloc] init];
-        _info3Lab.text = @"天预定";
         _info3Lab.font = QDFont(13);
         _info3Lab.textColor = APP_GRAYTEXTCOLOR;
         [self.contentView addSubview:_info3Lab];
@@ -142,6 +137,10 @@
 }
 
 -(void)fillCustomTour:(CustomTravelDTO *)infoModel andImgURL:(NSString *)imgURL{
+    self.wanbeiLab.text = @"玩贝";
+    self.yueLab.text = @"约";
+    self.info1Lab.text = @"提前";
+    self.info3Lab.text = @"天预定";
     self.titleLab.text = infoModel.travelName;
     self.wanbei.text = [NSString stringWithFormat:@"%@", infoModel.creditPirce];
     self.rmbLab.text = [NSString stringWithFormat:@"¥%@",infoModel.singleCost];

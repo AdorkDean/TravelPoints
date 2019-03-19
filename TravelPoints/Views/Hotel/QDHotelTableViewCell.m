@@ -11,7 +11,6 @@
 #import "UIImageView+WebCache.h"
 #import "UITableViewCell+TABLayoutSubviews.h"
 #import "UIView+Animated.h"
-#import <TABKit/TABKit.h>
 @implementation QDHotelTableViewCell
 
 - (void)awakeFromNib {
@@ -35,52 +34,51 @@
         [self.contentView addSubview:_hotelImg];
         
         _hotelName = [[UILabel alloc] init];
-        _hotelName.text = @"--";
+        _hotelName.text = @"";
         _hotelName.numberOfLines = 0;
-        _hotelName.font = QDBoldFont(15);
+        _hotelName.font = QDBoldFont(16);
+        _hotelName.loadStyle = TABViewLoadAnimationWithOnlySkeleton;
         [self.contentView addSubview:_hotelName];
         
         _wanbei = [[UILabel alloc] init];
-        _wanbei.text = @"410";
-        _wanbei.font = QDFont(17);
+        _wanbei.text = @"";
+        _wanbei.font = QDBoldFont(18);
         _wanbei.textColor = APP_ORANGETEXTCOLOR;
         [self.contentView addSubview:_wanbei];
         
         _wanbeiLab = [[UILabel alloc] init];
-        _wanbeiLab.text = @"玩贝";
-        _wanbeiLab.font = QDFont(12);
+        _wanbeiLab.font = QDBoldFont(13);
         _wanbeiLab.textColor = APP_ORANGETEXTCOLOR;
         [self.contentView addSubview:_wanbeiLab];
         
         _yueLab = [[UILabel alloc] init];
-        _yueLab.text = @"约";
-        _yueLab.font = QDFont(12);
+        _yueLab.font = QDFont(13);
         _yueLab.textColor = APP_GRAYCOLOR;
         [self.contentView addSubview:_yueLab];
         
         _priceLab = [[UILabel alloc] init];
-        _priceLab.text = @"¥400.02";
-        _priceLab.font = QDBoldFont(13);
+        _priceLab.text = @"";
+        _priceLab.font = QDBoldFont(14);
         _priceLab.textColor = APP_GRAYTEXTCOLOR;
         [self.contentView addSubview:_priceLab];
         
         _starLab = [[UILabel alloc] init];
-        _starLab.text = @"收藏";
         _starLab.font = QDFont(12);
         _starLab.textColor = APP_GRAYCOLOR;
         [self.contentView addSubview:_starLab];
         
         _totalStars = [[UILabel alloc] init];
-        _totalStars.text = @"¥23";
-        _totalStars.font = QDFont(13);
+        _totalStars.text = @"";
+        _totalStars.font = QDFont(12);
         _totalStars.textColor = APP_BLUECOLOR;
         [self.contentView addSubview:_totalStars];
         
         _locationLab = [[UILabel alloc] init];
-        _locationLab.text = @"陆家嘴 | 浦东新区";
+        _locationLab.text = @"";
         _locationLab.numberOfLines = 0;
-        _locationLab.font = QDBoldFont(14);
+        _locationLab.font = QDBoldFont(12);
         _locationLab.textColor = APP_GRAYCOLOR;
+        _locationLab.loadStyle = TABViewLoadAnimationWithOnlySkeleton;
         [self.contentView addSubview:_locationLab];
     }
     return self;
@@ -140,6 +138,9 @@
 }
 
 -(void)fillContentWithModel:(QDHotelListInfoModel *)infoModel andImgURLStr:(NSString *)imgURL{
+    self.wanbeiLab.text = @"玩贝";
+    self.yueLab.text = @"约";
+    self.starLab.text = @"收藏";
     self.hotelName.text = infoModel.hotelName;
     self.totalStars.text = [NSString stringWithFormat:@"%@",infoModel.collectCount];
     self.priceLab.text = [NSString stringWithFormat:@"¥%@", infoModel.rmbprice];

@@ -12,7 +12,6 @@
 
 - (instancetype)initWithFrame:(CGRect)frame{
     if ([super initWithFrame:frame]) {
-        
         _topLineView = [[UIView alloc] init];
         _topLineView.backgroundColor = APP_GRAYLINECOLOR;
         _topLineView.alpha = 0.5;
@@ -38,7 +37,7 @@
         _carBtn = [[UIButton alloc] init];
         [_carBtn setImage:[UIImage imageNamed:@"icon_shopCar"] forState:UIControlStateNormal];
         _carBtn.backgroundColor = [UIColor colorWithHexString:@"#EFEFF4"];
-        _carBtn.layer.cornerRadius = 4;
+        _carBtn.layer.cornerRadius = 18;
         _carBtn.layer.masksToBounds = YES;
         [self addSubview:_carBtn];
     }
@@ -55,8 +54,8 @@
     [_topBackView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self);
         make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH*0.05);
-        make.width.mas_equalTo(SCREEN_WIDTH*0.73);
-        make.height.mas_equalTo(SCREEN_HEIGHT*0.05);
+        make.width.mas_equalTo(275);
+        make.height.mas_equalTo(36);
     }];
     
     [_imgView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -73,6 +72,8 @@
     [_carBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self);
         make.right.equalTo(self.mas_right).offset(-(SCREEN_WIDTH*0.05));
+        make.width.mas_equalTo(50);
+        make.height.mas_equalTo(36);
     }];
 }
 

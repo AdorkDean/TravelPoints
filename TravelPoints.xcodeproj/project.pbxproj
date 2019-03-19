@@ -216,7 +216,7 @@
 		930F325B22408F75003741E1 /* TABBaseCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 930F324722408F75003741E1 /* TABBaseCollectionViewCell.m */; };
 		930F325C22408F75003741E1 /* UIView+TABLayoutSubviews.m in Sources */ = {isa = PBXBuildFile; fileRef = 930F324D22408F75003741E1 /* UIView+TABLayoutSubviews.m */; };
 		930F325D22408F75003741E1 /* TABBaseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 930F324E22408F75003741E1 /* TABBaseTableViewCell.m */; };
-		930F325F22408F79003741E1 /* TABKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 930F325E22408F79003741E1 /* TABKit.framework */; };
+		930F32732240CDEF003741E1 /* QDMallTableSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 930F32722240CDEF003741E1 /* QDMallTableSectionHeaderView.m */; };
 		93261118222388C000E3D0BA /* QDMyPurchaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93261117222388C000E3D0BA /* QDMyPurchaseCell.m */; };
 		9326111B222388E900E3D0BA /* QDMySaleOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9326111A222388E900E3D0BA /* QDMySaleOrderCell.m */; };
 		9326111E2223B6E800E3D0BA /* QDOrderField.m in Sources */ = {isa = PBXBuildFile; fileRef = 9326111D2223B6E800E3D0BA /* QDOrderField.m */; };
@@ -691,7 +691,21 @@
 		930F324D22408F75003741E1 /* UIView+TABLayoutSubviews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+TABLayoutSubviews.m"; sourceTree = "<group>"; };
 		930F324E22408F75003741E1 /* TABBaseTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TABBaseTableViewCell.m; sourceTree = "<group>"; };
 		930F324F22408F75003741E1 /* UICollectionView+Animated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UICollectionView+Animated.h"; sourceTree = "<group>"; };
-		930F325E22408F79003741E1 /* TABKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TABKit.framework; sourceTree = "<group>"; };
+		930F32612240B8F3003741E1 /* UIImage+TABCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+TABCategory.h"; sourceTree = "<group>"; };
+		930F32622240B8F3003741E1 /* UIView+TABFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+TABFrame.h"; sourceTree = "<group>"; };
+		930F32632240B8F3003741E1 /* TABSafe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TABSafe.h; sourceTree = "<group>"; };
+		930F32642240B8F3003741E1 /* TABLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TABLabel.h; sourceTree = "<group>"; };
+		930F32652240B8F3003741E1 /* TABKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TABKit.h; sourceTree = "<group>"; };
+		930F32662240B8F3003741E1 /* UITableView+TABEndEdit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+TABEndEdit.h"; sourceTree = "<group>"; };
+		930F32672240B8F3003741E1 /* TABTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TABTextView.h; sourceTree = "<group>"; };
+		930F32682240B8F3003741E1 /* NSString+TABCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+TABCategory.h"; sourceTree = "<group>"; };
+		930F32692240B8F3003741E1 /* UIScrollView+TABCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+TABCategory.h"; sourceTree = "<group>"; };
+		930F326A2240B8F3003741E1 /* TABDocumentMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TABDocumentMethod.h; sourceTree = "<group>"; };
+		930F326B2240B8F3003741E1 /* TABCommonMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TABCommonMethod.h; sourceTree = "<group>"; };
+		930F326C2240B8F3003741E1 /* UICollectionView+TABEndEdit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UICollectionView+TABEndEdit.h"; sourceTree = "<group>"; };
+		930F326D2240B8F3003741E1 /* TABDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TABDefine.h; sourceTree = "<group>"; };
+		930F32712240CDEF003741E1 /* QDMallTableSectionHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDMallTableSectionHeaderView.h; sourceTree = "<group>"; };
+		930F32722240CDEF003741E1 /* QDMallTableSectionHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDMallTableSectionHeaderView.m; sourceTree = "<group>"; };
 		93261116222388C000E3D0BA /* QDMyPurchaseCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDMyPurchaseCell.h; sourceTree = "<group>"; };
 		93261117222388C000E3D0BA /* QDMyPurchaseCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDMyPurchaseCell.m; sourceTree = "<group>"; };
 		93261119222388E900E3D0BA /* QDMySaleOrderCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDMySaleOrderCell.h; sourceTree = "<group>"; };
@@ -826,7 +840,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3B0CD73421F1736C0020824A /* libPods-TravelPoints.a in Frameworks */,
-				930F325F22408F79003741E1 /* TABKit.framework in Frameworks */,
 				3B0CD73121F16F6B0020824A /* SystemConfiguration.framework in Frameworks */,
 				3B0CD72F21F16F650020824A /* Security.framework in Frameworks */,
 				3B0CD72D21F16F5A0020824A /* QuartzCore.framework in Frameworks */,
@@ -1313,6 +1326,7 @@
 		3BCE3C2E21EC89F9005D518F /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				930F32602240B8F3003741E1 /* TABAnimation */,
 				93744F68223BCC17000708A3 /* UIButton+ImageTitleStyle.h */,
 				93744F69223BCC17000708A3 /* UIButton+ImageTitleStyle.m */,
 				93E30ED42226B310003CA771 /* DIYCalendarCell.h */,
@@ -1332,7 +1346,6 @@
 		3BD9515B21EC2A1700CD0627 = {
 			isa = PBXGroup;
 			children = (
-				930F325E22408F79003741E1 /* TABKit.framework */,
 				3B1BC00221FAA1590005C415 /* MBProgressHUD.bundle */,
 				3B0CD74121F1DE380020824A /* SYCity.bundle */,
 				3B0CD73621F1868B0020824A /* AMap.bundle */,
@@ -1753,6 +1766,8 @@
 				93744F462239DC37000708A3 /* QDPickOrderView.m */,
 				93744F52223B7744000708A3 /* QDMyBiddingOrderView.h */,
 				93744F53223B7744000708A3 /* QDMyBiddingOrderView.m */,
+				930F32712240CDEF003741E1 /* QDMallTableSectionHeaderView.h */,
+				930F32722240CDEF003741E1 /* QDMallTableSectionHeaderView.m */,
 			);
 			path = TradeShells;
 			sourceTree = "<group>";
@@ -1800,6 +1815,26 @@
 				930F324F22408F75003741E1 /* UICollectionView+Animated.h */,
 			);
 			path = TABAnimated;
+			sourceTree = "<group>";
+		};
+		930F32602240B8F3003741E1 /* TABAnimation */ = {
+			isa = PBXGroup;
+			children = (
+				930F32612240B8F3003741E1 /* UIImage+TABCategory.h */,
+				930F32622240B8F3003741E1 /* UIView+TABFrame.h */,
+				930F32632240B8F3003741E1 /* TABSafe.h */,
+				930F32642240B8F3003741E1 /* TABLabel.h */,
+				930F32652240B8F3003741E1 /* TABKit.h */,
+				930F32662240B8F3003741E1 /* UITableView+TABEndEdit.h */,
+				930F32672240B8F3003741E1 /* TABTextView.h */,
+				930F32682240B8F3003741E1 /* NSString+TABCategory.h */,
+				930F32692240B8F3003741E1 /* UIScrollView+TABCategory.h */,
+				930F326A2240B8F3003741E1 /* TABDocumentMethod.h */,
+				930F326B2240B8F3003741E1 /* TABCommonMethod.h */,
+				930F326C2240B8F3003741E1 /* UICollectionView+TABEndEdit.h */,
+				930F326D2240B8F3003741E1 /* TABDefine.h */,
+			);
+			path = TABAnimation;
 			sourceTree = "<group>";
 		};
 		93744F4E223B46B0000708A3 /* QDGCDTimer */ = {
@@ -2128,6 +2163,7 @@
 				3B2C1F8B21F72A3400DD94CD /* QDLogonWithNoFinancialAccountView.m in Sources */,
 				93D2D67A222F540F00CCC61D /* QDShareView.m in Sources */,
 				3B1DFDFB21F2CDDF007D4B12 /* SYHeaderView.m in Sources */,
+				930F32732240CDEF003741E1 /* QDMallTableSectionHeaderView.m in Sources */,
 				93E30EE32228CA8E003CA771 /* ErrorInfoUtility.m in Sources */,
 				3B40EBBE21EC953E00656C1F /* UIView+YYText.m in Sources */,
 				3B0DC07F220034B30056C318 /* NSData+ImageContentType.m in Sources */,
@@ -2491,7 +2527,7 @@
 				);
 				GCC_INPUT_FILETYPE = automatic;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "/Users/yl-yin/Documents/TravelPoints/TravelPoints/QDTravelPoints.pch";
+				GCC_PREFIX_HEADER = "/Users/yl-yin/TravelPoints/TravelPoints/QDTravelPoints.pch";
 				INFOPLIST_FILE = TravelPoints/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2521,7 +2557,7 @@
 				);
 				GCC_INPUT_FILETYPE = automatic;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "/Users/yl-yin/Documents/TravelPoints/TravelPoints/QDTravelPoints.pch";
+				GCC_PREFIX_HEADER = "/Users/yl-yin/TravelPoints/TravelPoints/QDTravelPoints.pch";
 				INFOPLIST_FILE = TravelPoints/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (

@@ -20,8 +20,8 @@
         _addressBtn.titleLabel.font = QDBoldFont(20);
         [self addSubview:_addressBtn];
         
-        _iconBtn = [[UIButton alloc] init];
-        [_iconBtn setImage:[UIImage imageNamed:@"icon_map"] forState:UIControlStateNormal];
+        _iconBtn = [[UIImageView alloc] init];
+        _iconBtn.image = [UIImage imageNamed:@"icon_map"];
         [self addSubview:_iconBtn];
         
         _topBackView = [[UIView alloc] init];

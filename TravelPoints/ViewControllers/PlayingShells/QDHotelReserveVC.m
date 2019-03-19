@@ -66,6 +66,7 @@
     [self requestHotelInfoWithURL:api_GetHotelCondition andIsPushVC:NO];
     [self locate];
 }
+
 #pragma mark - locate
 - (void)locate{
     if ([CLLocationManager locationServicesEnabled]) {
@@ -88,6 +89,7 @@
 
 #pragma mark - 请求酒店信息
 - (void)requestHotelInfoWithURL:(NSString *)urlStr andIsPushVC:(BOOL)pushVC{
+    self.loading = NO;
     if (_hotelListInfoArr.count) {
         [_hotelListInfoArr removeAllObjects];
         [_hotelImgArr removeAllObjects];
@@ -137,6 +139,8 @@
         }
     } failureBlock:^(NSError *error) {
         [WXProgressHUD showErrorWithTittle:@"网络异常"];
+        [_tableView tab_endAnimation];
+        [self endRefreshing];
         [_tableView reloadData];
         [_tableView reloadEmptyDataSet];
     }];
@@ -322,7 +326,7 @@
 }
 
 - (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView{
-    return 140;
+    return 155;
 }
 
 - (CAAnimation *)imageAnimationForEmptyDataSet:(UIScrollView *)scrollView
@@ -346,11 +350,12 @@
 
 - (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView
 {
+//    return nil;
     NSString *text = @"请检查您的手机网络后点击重试";
     NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
     paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
     paragraphStyle.alignment = NSTextAlignmentCenter;
-    
+
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:14],
                                  NSForegroundColorAttributeName: APP_GRAYLINECOLOR,
                                  NSParagraphStyleAttributeName: paragraphStyle};
@@ -381,19 +386,20 @@
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapView:(UIView *)view
 {
     self.loading = YES;
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        self.loading = NO;
-    });
+    [self requestHotelInfoWithURL:api_GetHotelCondition andIsPushVC:NO];
+
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        self.loading = NO;
+//    });
 }
 
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button
 {
     self.loading = YES;
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        self.loading = NO;
-    });
+    [self requestHotelInfoWithURL:api_GetHotelCondition andIsPushVC:NO];
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        self.loading = NO;
+//    });
 }
 
 

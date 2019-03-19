@@ -216,7 +216,7 @@ static NSString *cellIdentifier = @"CellIdentifier";
 //会员申购
 - (void)hysgAction:(UIButton *)sender{
     switch (sender.tag) {
-        case 1001:
+        case 1001:  //会员申购
         {
             QDVipPurchaseVC *purchaseVC = [[QDVipPurchaseVC alloc] init];
             self.navigationController.hidesBottomBarWhenPushed = YES;
@@ -228,14 +228,26 @@ static NSString *cellIdentifier = @"CellIdentifier";
             
         }
             break;
-        case 1003:
+        case 1003:  //定制游
         {
-            
+            AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+            UITabBarController *tabVC = (UITabBarController *)delegate.window.rootViewController;
+            [tabVC setSelectedIndex:1];
+            UINavigationController *nav = (UINavigationController *)tabVC.viewControllers[1];
+            QDPlayingViewController *tradeVC = [[QDPlayingViewController alloc] init];
+            tradeVC.selectIndex = 1;
+            [nav pushViewController:tradeVC animated:YES];
         }
             break;
-        case 1004:
+        case 1004:  //商城
         {
-            
+            AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+            UITabBarController *tabVC = (UITabBarController *)delegate.window.rootViewController;
+            [tabVC setSelectedIndex:1];
+            UINavigationController *nav = (UINavigationController *)tabVC.viewControllers[1];
+            QDPlayingViewController *tradeVC = [[QDPlayingViewController alloc] init];
+            tradeVC.selectIndex = 2;
+            [nav pushViewController:tradeVC animated:YES];
         }
             break;
         default:
@@ -288,11 +300,11 @@ static NSString *cellIdentifier = @"CellIdentifier";
         [_homePageTopView.searchBtn addTarget:self action:@selector(customerTourSearchAction:) forControlEvents:UIControlEventTouchUpInside];
         
         [_homePageTopView.addressBtn setTitle:_cityStr forState:UIControlStateNormal];
-        [_homePageTopView.dzyBtn addTarget:self action:@selector(dzyAction:) forControlEvents:UIControlEventTouchUpInside];
+        [_homePageTopView.dzyBtn addTarget:self action:@selector(hysgAction:) forControlEvents:UIControlEventTouchUpInside];
+        
         _homePageTopView.iconBtn.layer.cornerRadius = SCREEN_WIDTH*0.11/2;
         _homePageTopView.iconBtn.layer.masksToBounds = YES;
-        _homePageTopView.iconBtn.clipsToBounds = YES;
-        [_homePageTopView.iconBtn addTarget:self action:@selector(homeMapPage:) forControlEvents:UIControlEventTouchUpInside];
+//        [_homePageTopView.iconBtn addTarget:self action:@selector(homeMapPage:) forControlEvents:UIControlEventTouchUpInside];
         _tableView.tableHeaderView = _homePageTopView;
         
         UITapGestureRecognizer *doubleTapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleDoubleTap:)];
@@ -561,15 +573,5 @@ static NSString *cellIdentifier = @"CellIdentifier";
 
 - (void)getChoosedAreaName:(NSString *)areaStr{
     [_homePageTopView.addressBtn setTitle:areaStr forState:UIControlStateNormal];
-}
-
-- (void)dzyAction:(UIButton *)sender{
-    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    UITabBarController *tabVC = (UITabBarController *)delegate.window.rootViewController;
-    [tabVC setSelectedIndex:1];
-    UINavigationController *nav = (UINavigationController *)tabVC.viewControllers[1];
-    QDPlayingViewController *tradeVC = [[QDPlayingViewController alloc] init];
-    tradeVC.selectIndex = 1;
-    [nav pushViewController:tradeVC animated:YES];
 }
 @end

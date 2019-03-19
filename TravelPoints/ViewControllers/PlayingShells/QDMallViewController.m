@@ -17,15 +17,17 @@
 #import "QDKeyWordsSearchVC.h"
 #import "QDSearchViewController.h"
 #import <IQKeyboardManager/IQKeyboardManager.h>
+#import "QDMallTableSectionHeaderView.h"
 //预定酒店 定制游 商城
 @interface QDMallViewController ()<UITableViewDelegate, UITableViewDataSource, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource>{
     QDPlayShellType _playShellType;
     UITableView *_tableView;
     QDMallTableHeaderView *_mallHeaderView;
     NSMutableArray *_mallInfoArr;
+    QDMallTableSectionHeaderView *_sectionHeaderView;
 }
 @property (nonatomic, getter=isLoading) BOOL loading;
-
+@property (nonatomic, strong) NSMutableArray *categoryArr;
 @end
 
 @implementation QDMallViewController
@@ -36,21 +38,37 @@
     [self.navigationController.tabBarController.tabBar setHidden:NO];
 }
 
-- (void)switchSegmented:(NSNotification *)noti{
-    QDLog(@"===================");
-}
-
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    _categoryArr = [[NSMutableArray alloc] init];
     self.view.backgroundColor = APP_WHITECOLOR;
     _mallInfoArr = [[NSMutableArray alloc] init];
     [self initTableView];
     [self requestMallList:api_GetMallList];
+    //请求商品列表
+    [self finGoodsCategory];
+}
+
+#pragma mark - 查询商品分类
+- (void)finGoodsCategory{
+    if (_categoryArr.count) {
+        [_categoryArr removeAllObjects];
+    }
+    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_findCategory params:nil successBlock:^(QDResponseObject *responseObject) {
+        if (responseObject.code == 0) {
+            NSArray *arr = responseObject.result;
+            for (NSDictionary *dic in arr) {
+                [_categoryArr addObject:[dic objectForKey:@"catName"]];
+            }
+            QDLog(@"_categoryArr = %@", _categoryArr);
+        }
+    } failureBlock:^(NSError *error) {
+        [WXProgressHUD showErrorWithTittle:@"网络异常"];
+    }];
 }
 
 - (void)addToCar:(UIButton *)sender{
@@ -93,7 +111,7 @@
     }];
 }
 - (void)initTableView{
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) style:UITableViewStyleGrouped];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) style:UITableViewStylePlain];
     _tableView.backgroundColor = APP_WHITECOLOR;
     _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -106,11 +124,11 @@
     _mallHeaderView = [[QDMallTableHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.08)];
     _mallHeaderView.backgroundColor = APP_WHITECOLOR;
     [_mallHeaderView.carBtn addTarget:self action:@selector(addToCar:) forControlEvents:UIControlEventTouchUpInside];
-    _tableView.tableHeaderView = _mallHeaderView;
+//    _tableView.tableHeaderView = _mallHeaderView;
     self.view = _tableView;
-    _tableView.mj_footer = [QDRefreshFooter footerWithRefreshingBlock:^{
+//    [self.view addSubview:_tableView];
+    _tableView.mj_header = [QDRefreshHeader headerWithRefreshingBlock:^{
         [self endRefreshing];
-        [_tableView.mj_footer endRefreshingWithNoMoreData];
     }];
     //手动刷新请求最新数据
     _tableView.mj_footer = [QDRefreshFooter footerWithRefreshingBlock:^{
@@ -152,8 +170,27 @@
     return 0.1;
 }
 
+- (void)allAction:(UIButton *)sender{
+    [_tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
+    
+}
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    _sectionHeaderView = [[QDMallTableSectionHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 120)];
+    _sectionHeaderView.backgroundColor = APP_GRAYBACKGROUNDCOLOR;
+    [_sectionHeaderView.allBtn addTarget:self action:@selector(allAction:) forControlEvents:UIControlEventTouchUpInside];
+    [_sectionHeaderView.baoyouBtn addTarget:self action:@selector(baoyouAction:) forControlEvents:UIControlEventTouchUpInside];
+    return _sectionHeaderView;
+}
+
+- (void)baoyouAction:(UIButton *)sender{
+    if (sender.selected) {
+        QDLog(@"选择包邮");
+    }else{
+        QDLog(@"不包邮");
+    }
+}
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 0.1;
+    return 40;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
