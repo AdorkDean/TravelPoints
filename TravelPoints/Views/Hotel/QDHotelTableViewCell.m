@@ -9,6 +9,9 @@
 #import "QDHotelTableViewCell.h"
 #import "SDWebImageManager.h"
 #import "UIImageView+WebCache.h"
+#import "UITableViewCell+TABLayoutSubviews.h"
+#import "UIView+Animated.h"
+#import <TABKit/TABKit.h>
 @implementation QDHotelTableViewCell
 
 - (void)awakeFromNib {
@@ -28,6 +31,7 @@
         _hotelImg.image = [UIImage imageNamed:@"hotel"];
         _hotelImg.layer.cornerRadius = 5;
         _hotelImg.layer.masksToBounds = YES;
+        _hotelImg.loadStyle = TABViewLoadAnimationWithOnlySkeleton;
         [self.contentView addSubview:_hotelImg];
         
         _hotelName = [[UILabel alloc] init];

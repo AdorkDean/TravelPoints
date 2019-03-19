@@ -21,6 +21,10 @@
 #import "QDKeyWordsSearchVC.h"
 #import "QDSearchViewController.h"
 #import <IQKeyboardManager/IQKeyboardManager.h>
+#import "TABAnimated.h"
+#import "TABViewAnimated.h"
+#import "UITableView+Animated.h"
+#import "UIView+TABControlAnimation.h"
 //预定酒店 定制游 商城
 @interface QDHotelReserveVC ()<UITableViewDelegate, UITableViewDataSource, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource, CLLocationManagerDelegate, SendDateStrDelegate, UITextFieldDelegate, getChoosedAreaDelegate>{
     UITableView *_tableView;
@@ -62,7 +66,6 @@
     [self requestHotelInfoWithURL:api_GetHotelCondition andIsPushVC:NO];
     [self locate];
 }
-
 #pragma mark - locate
 - (void)locate{
     if ([CLLocationManager locationServicesEnabled]) {
@@ -130,6 +133,7 @@
             }else{
                 [WXProgressHUD showErrorWithTittle:@"无数据返回,请重试"];
             }
+            [_tableView tab_endAnimation];
         }
     } failureBlock:^(NSError *error) {
         [WXProgressHUD showErrorWithTittle:@"网络异常"];
@@ -145,6 +149,7 @@
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    [_tableView tab_startAnimation];
     _tableView.showsVerticalScrollIndicator = NO;
 //    _tableView.contentInset = UIEdgeInsetsMake(0, 0, SafeAreaTopHeight, 0);
     _tableView.emptyDataSetDelegate = self;

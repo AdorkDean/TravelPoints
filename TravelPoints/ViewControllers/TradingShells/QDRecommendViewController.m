@@ -8,6 +8,7 @@
 #import "QDRecommendViewController.h"
 #import "WaterLayou.h"
 #import "RootCollectionCell.h"
+#import "RootFirstCollectionCell.h"
 #import "QDBuyOrSellViewController.h"
 #import "BiddingPostersDTO.h"
 #import "QDBridgeViewController.h"
@@ -60,6 +61,7 @@
     self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT- SCREEN_HEIGHT*0.06-50) collectionViewLayout:layou];
     self.collectionView.backgroundColor = APP_WHITECOLOR;
     [self.collectionView registerClass:[RootCollectionCell class] forCellWithReuseIdentifier:@"cell"];
+    [self.collectionView registerClass:[RootFirstCollectionCell class] forCellWithReuseIdentifier:@"RootFirstCollectionCell"];
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     self.collectionView.emptyDataSetSource = self;
@@ -99,12 +101,15 @@
 - (void)buyOrderAction:(UIButton *)sender{
     //直接购买
     NSDictionary *paramsDic = @{@"postersId":_postersId};
+    [WXProgressHUD showHUD];
     [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_saveBiddingPosters params:paramsDic successBlock:^(QDResponseObject *responseObject) {
         if (responseObject.code == 0) {
+            [WXProgressHUD hideHUD];
             [WXProgressHUD showSuccessWithTittle:@"挂单生成成功"];
+            NSString *str = responseObject.result;
             QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
             NSString *balance = [NSString stringWithFormat:@"%.2f", [_volume doubleValue] * [_price doubleValue]];
-            bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?amount=%@&&id=%@", [QDUserDefaults getObjectForKey:@"QD_JSURL"], JS_PAYACTION, balance, _postersId];
+            bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?amount=%@&&postersId=%@", [QDUserDefaults getObjectForKey:@"QD_JSURL"], JS_PAYACTION, balance, str];
             [self.navigationController pushViewController:bridgeVC animated:YES];
         }else{
             [WXProgressHUD showErrorWithTittle:responseObject.message];
@@ -194,13 +199,21 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    RootCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
-    
-    [cell loadDataWithDataArr:_recommendList[indexPath.row] andTypeStr:_postersType];
-    cell.sell.tag = indexPath.row;
-    QDLog(@"cell.sell.tag = %ld", (long)cell.tag);
-    [cell.sell addTarget:self action:@selector(buyOrSellAction:) forControlEvents:UIControlEventTouchUpInside];
-    return cell;
+    if (indexPath.row == 0) {
+        RootFirstCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"RootFirstCollectionCell" forIndexPath:indexPath];
+        [cell loadDataWithDataArr:_recommendList[0] andTypeStr:_postersType];
+        cell.sell.tag = indexPath.row;
+        QDLog(@"cell.sell.tag = %ld", (long)cell.tag);
+        [cell.sell addTarget:self action:@selector(buyOrSellAction:) forControlEvents:UIControlEventTouchUpInside];
+        return cell;
+    }else{
+        RootCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+        [cell loadDataWithDataArr:_recommendList[indexPath.row] andTypeStr:_postersType];
+        cell.sell.tag = indexPath.row;
+        QDLog(@"cell.sell.tag = %ld", (long)cell.tag);
+        [cell.sell addTarget:self action:@selector(buyOrSellAction:) forControlEvents:UIControlEventTouchUpInside];
+        return cell;
+    }
 }
 
 - (void)buyOrSellAction:(UIButton *)sender{

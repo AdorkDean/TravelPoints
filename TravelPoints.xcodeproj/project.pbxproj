@@ -202,6 +202,21 @@
 		3BF92D7B2216BEFB0019B941 /* SnailQuickMaskPopups.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF92D792216BEFB0019B941 /* SnailQuickMaskPopups.m */; };
 		3BF92D7D2216D8BE0019B941 /* shellBanner@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BF92D7C2216D8BD0019B941 /* shellBanner@2x.png */; };
 		930F323122408258003741E1 /* RootFirstCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 930F323022408258003741E1 /* RootFirstCollectionCell.m */; };
+		930F325022408F75003741E1 /* UIView+TABControlAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 930F323322408F75003741E1 /* UIView+TABControlAnimation.m */; };
+		930F325122408F75003741E1 /* TABAnimationMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = 930F323422408F75003741E1 /* TABAnimationMethod.m */; };
+		930F325222408F75003741E1 /* UITableView+Animated.m in Sources */ = {isa = PBXBuildFile; fileRef = 930F323622408F75003741E1 /* UITableView+Animated.m */; };
+		930F325322408F75003741E1 /* UICollectionViewCell+TABLayoutSubviews.m in Sources */ = {isa = PBXBuildFile; fileRef = 930F323722408F75003741E1 /* UICollectionViewCell+TABLayoutSubviews.m */; };
+		930F325422408F75003741E1 /* TABAnimatedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 930F323822408F75003741E1 /* TABAnimatedObject.m */; };
+		930F325522408F75003741E1 /* TABViewAnimated.m in Sources */ = {isa = PBXBuildFile; fileRef = 930F323922408F75003741E1 /* TABViewAnimated.m */; };
+		930F325622408F75003741E1 /* UITableViewCell+TABLayoutSubviews.m in Sources */ = {isa = PBXBuildFile; fileRef = 930F323A22408F75003741E1 /* UITableViewCell+TABLayoutSubviews.m */; };
+		930F325722408F75003741E1 /* TABManagerMethod+ManagerCALayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 930F323C22408F75003741E1 /* TABManagerMethod+ManagerCALayer.m */; };
+		930F325822408F75003741E1 /* UIView+Animated.m in Sources */ = {isa = PBXBuildFile; fileRef = 930F323D22408F75003741E1 /* UIView+Animated.m */; };
+		930F325922408F75003741E1 /* UICollectionView+Animated.m in Sources */ = {isa = PBXBuildFile; fileRef = 930F323F22408F75003741E1 /* UICollectionView+Animated.m */; };
+		930F325A22408F75003741E1 /* TABManagerMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = 930F324122408F75003741E1 /* TABManagerMethod.m */; };
+		930F325B22408F75003741E1 /* TABBaseCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 930F324722408F75003741E1 /* TABBaseCollectionViewCell.m */; };
+		930F325C22408F75003741E1 /* UIView+TABLayoutSubviews.m in Sources */ = {isa = PBXBuildFile; fileRef = 930F324D22408F75003741E1 /* UIView+TABLayoutSubviews.m */; };
+		930F325D22408F75003741E1 /* TABBaseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 930F324E22408F75003741E1 /* TABBaseTableViewCell.m */; };
+		930F325F22408F79003741E1 /* TABKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 930F325E22408F79003741E1 /* TABKit.framework */; };
 		93261118222388C000E3D0BA /* QDMyPurchaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93261117222388C000E3D0BA /* QDMyPurchaseCell.m */; };
 		9326111B222388E900E3D0BA /* QDMySaleOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9326111A222388E900E3D0BA /* QDMySaleOrderCell.m */; };
 		9326111E2223B6E800E3D0BA /* QDOrderField.m in Sources */ = {isa = PBXBuildFile; fileRef = 9326111D2223B6E800E3D0BA /* QDOrderField.m */; };
@@ -647,6 +662,36 @@
 		511DB104CDCE097693D079A1 /* Pods-TravelPoints.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TravelPoints.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TravelPoints/Pods-TravelPoints.debug.xcconfig"; sourceTree = "<group>"; };
 		930F322F22408258003741E1 /* RootFirstCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RootFirstCollectionCell.h; sourceTree = "<group>"; };
 		930F323022408258003741E1 /* RootFirstCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RootFirstCollectionCell.m; sourceTree = "<group>"; };
+		930F323322408F75003741E1 /* UIView+TABControlAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+TABControlAnimation.m"; sourceTree = "<group>"; };
+		930F323422408F75003741E1 /* TABAnimationMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TABAnimationMethod.m; sourceTree = "<group>"; };
+		930F323522408F75003741E1 /* TABManagerMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TABManagerMethod.h; sourceTree = "<group>"; };
+		930F323622408F75003741E1 /* UITableView+Animated.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+Animated.m"; sourceTree = "<group>"; };
+		930F323722408F75003741E1 /* UICollectionViewCell+TABLayoutSubviews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UICollectionViewCell+TABLayoutSubviews.m"; sourceTree = "<group>"; };
+		930F323822408F75003741E1 /* TABAnimatedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TABAnimatedObject.m; sourceTree = "<group>"; };
+		930F323922408F75003741E1 /* TABViewAnimated.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TABViewAnimated.m; sourceTree = "<group>"; };
+		930F323A22408F75003741E1 /* UITableViewCell+TABLayoutSubviews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewCell+TABLayoutSubviews.m"; sourceTree = "<group>"; };
+		930F323B22408F75003741E1 /* UIView+TABLayoutSubviews.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+TABLayoutSubviews.h"; sourceTree = "<group>"; };
+		930F323C22408F75003741E1 /* TABManagerMethod+ManagerCALayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TABManagerMethod+ManagerCALayer.m"; sourceTree = "<group>"; };
+		930F323D22408F75003741E1 /* UIView+Animated.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Animated.m"; sourceTree = "<group>"; };
+		930F323E22408F75003741E1 /* TABBaseCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TABBaseCollectionViewCell.h; sourceTree = "<group>"; };
+		930F323F22408F75003741E1 /* UICollectionView+Animated.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UICollectionView+Animated.m"; sourceTree = "<group>"; };
+		930F324022408F75003741E1 /* TABBaseTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TABBaseTableViewCell.h; sourceTree = "<group>"; };
+		930F324122408F75003741E1 /* TABManagerMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TABManagerMethod.m; sourceTree = "<group>"; };
+		930F324222408F75003741E1 /* TABAnimationMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TABAnimationMethod.h; sourceTree = "<group>"; };
+		930F324322408F75003741E1 /* UIView+TABControlAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+TABControlAnimation.h"; sourceTree = "<group>"; };
+		930F324422408F75003741E1 /* TABAnimatedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TABAnimatedObject.h; sourceTree = "<group>"; };
+		930F324522408F75003741E1 /* UICollectionViewCell+TABLayoutSubviews.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UICollectionViewCell+TABLayoutSubviews.h"; sourceTree = "<group>"; };
+		930F324622408F75003741E1 /* UITableView+Animated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+Animated.h"; sourceTree = "<group>"; };
+		930F324722408F75003741E1 /* TABBaseCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TABBaseCollectionViewCell.m; sourceTree = "<group>"; };
+		930F324822408F75003741E1 /* TABAnimated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TABAnimated.h; sourceTree = "<group>"; };
+		930F324922408F75003741E1 /* UIView+Animated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Animated.h"; sourceTree = "<group>"; };
+		930F324A22408F75003741E1 /* TABManagerMethod+ManagerCALayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TABManagerMethod+ManagerCALayer.h"; sourceTree = "<group>"; };
+		930F324B22408F75003741E1 /* TABViewAnimated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TABViewAnimated.h; sourceTree = "<group>"; };
+		930F324C22408F75003741E1 /* UITableViewCell+TABLayoutSubviews.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewCell+TABLayoutSubviews.h"; sourceTree = "<group>"; };
+		930F324D22408F75003741E1 /* UIView+TABLayoutSubviews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+TABLayoutSubviews.m"; sourceTree = "<group>"; };
+		930F324E22408F75003741E1 /* TABBaseTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TABBaseTableViewCell.m; sourceTree = "<group>"; };
+		930F324F22408F75003741E1 /* UICollectionView+Animated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UICollectionView+Animated.h"; sourceTree = "<group>"; };
+		930F325E22408F79003741E1 /* TABKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TABKit.framework; sourceTree = "<group>"; };
 		93261116222388C000E3D0BA /* QDMyPurchaseCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDMyPurchaseCell.h; sourceTree = "<group>"; };
 		93261117222388C000E3D0BA /* QDMyPurchaseCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDMyPurchaseCell.m; sourceTree = "<group>"; };
 		93261119222388E900E3D0BA /* QDMySaleOrderCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDMySaleOrderCell.h; sourceTree = "<group>"; };
@@ -781,6 +826,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3B0CD73421F1736C0020824A /* libPods-TravelPoints.a in Frameworks */,
+				930F325F22408F79003741E1 /* TABKit.framework in Frameworks */,
 				3B0CD73121F16F6B0020824A /* SystemConfiguration.framework in Frameworks */,
 				3B0CD72F21F16F650020824A /* Security.framework in Frameworks */,
 				3B0CD72D21F16F5A0020824A /* QuartzCore.framework in Frameworks */,
@@ -1007,6 +1053,7 @@
 		3B40EB7321EC952800656C1F /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				930F323222408F75003741E1 /* TABAnimated */,
 				935D5598223F721800E97FC9 /* LaunchAnimationTool.h */,
 				935D5599223F721800E97FC9 /* LaunchAnimationTool.m */,
 				93744F4E223B46B0000708A3 /* QDGCDTimer */,
@@ -1285,6 +1332,7 @@
 		3BD9515B21EC2A1700CD0627 = {
 			isa = PBXGroup;
 			children = (
+				930F325E22408F79003741E1 /* TABKit.framework */,
 				3B1BC00221FAA1590005C415 /* MBProgressHUD.bundle */,
 				3B0CD74121F1DE380020824A /* SYCity.bundle */,
 				3B0CD73621F1868B0020824A /* AMap.bundle */,
@@ -1718,6 +1766,42 @@
 			path = SnailQuickMaskPopups;
 			sourceTree = "<group>";
 		};
+		930F323222408F75003741E1 /* TABAnimated */ = {
+			isa = PBXGroup;
+			children = (
+				930F323322408F75003741E1 /* UIView+TABControlAnimation.m */,
+				930F323422408F75003741E1 /* TABAnimationMethod.m */,
+				930F323522408F75003741E1 /* TABManagerMethod.h */,
+				930F323622408F75003741E1 /* UITableView+Animated.m */,
+				930F323722408F75003741E1 /* UICollectionViewCell+TABLayoutSubviews.m */,
+				930F323822408F75003741E1 /* TABAnimatedObject.m */,
+				930F323922408F75003741E1 /* TABViewAnimated.m */,
+				930F323A22408F75003741E1 /* UITableViewCell+TABLayoutSubviews.m */,
+				930F323B22408F75003741E1 /* UIView+TABLayoutSubviews.h */,
+				930F323C22408F75003741E1 /* TABManagerMethod+ManagerCALayer.m */,
+				930F323D22408F75003741E1 /* UIView+Animated.m */,
+				930F323E22408F75003741E1 /* TABBaseCollectionViewCell.h */,
+				930F323F22408F75003741E1 /* UICollectionView+Animated.m */,
+				930F324022408F75003741E1 /* TABBaseTableViewCell.h */,
+				930F324122408F75003741E1 /* TABManagerMethod.m */,
+				930F324222408F75003741E1 /* TABAnimationMethod.h */,
+				930F324322408F75003741E1 /* UIView+TABControlAnimation.h */,
+				930F324422408F75003741E1 /* TABAnimatedObject.h */,
+				930F324522408F75003741E1 /* UICollectionViewCell+TABLayoutSubviews.h */,
+				930F324622408F75003741E1 /* UITableView+Animated.h */,
+				930F324722408F75003741E1 /* TABBaseCollectionViewCell.m */,
+				930F324822408F75003741E1 /* TABAnimated.h */,
+				930F324922408F75003741E1 /* UIView+Animated.h */,
+				930F324A22408F75003741E1 /* TABManagerMethod+ManagerCALayer.h */,
+				930F324B22408F75003741E1 /* TABViewAnimated.h */,
+				930F324C22408F75003741E1 /* UITableViewCell+TABLayoutSubviews.h */,
+				930F324D22408F75003741E1 /* UIView+TABLayoutSubviews.m */,
+				930F324E22408F75003741E1 /* TABBaseTableViewCell.m */,
+				930F324F22408F75003741E1 /* UICollectionView+Animated.h */,
+			);
+			path = TABAnimated;
+			sourceTree = "<group>";
+		};
 		93744F4E223B46B0000708A3 /* QDGCDTimer */ = {
 			isa = PBXGroup;
 			children = (
@@ -2066,6 +2150,7 @@
 				3B0DC04B21FFDB4E0056C318 /* PooCodeView.m in Sources */,
 				3BD9516C21EC2A1800CD0627 /* ViewController.m in Sources */,
 				93744F472239DC37000708A3 /* QDPickOrderView.m in Sources */,
+				930F325522408F75003741E1 /* TABViewAnimated.m in Sources */,
 				3B40EBB121EC953E00656C1F /* YYTextKeyboardManager.m in Sources */,
 				3BD9517721EC2A1C00CD0627 /* main.m in Sources */,
 				3B40EBB821EC953E00656C1F /* YYTextRubyAnnotation.m in Sources */,
@@ -2081,6 +2166,7 @@
 				3B0DC083220034B30056C318 /* UIView+WebCacheOperation.m in Sources */,
 				3B1DFE1F21F32D1F007D4B12 /* QDRestaurantViewCell.m in Sources */,
 				93E30EBE22256002003CA771 /* RanklistDTO.m in Sources */,
+				930F325822408F75003741E1 /* UIView+Animated.m in Sources */,
 				3B40EBE921ED925F00656C1F /* VertificationCodeInputView.m in Sources */,
 				3BCE3C3121EC8A08005D518F /* UIColor+QDColor.m in Sources */,
 				93E30EAB22251947003CA771 /* VipCardDTO.m in Sources */,
@@ -2107,6 +2193,7 @@
 				3B04DF4221F8037E001909CD /* UserMoneyDTO.m in Sources */,
 				3B0DC075220034B30056C318 /* SDWebImageManager.m in Sources */,
 				3B7636712217A6A300F77007 /* QDShellRecommendVC.m in Sources */,
+				930F325C22408F75003741E1 /* UIView+TABLayoutSubviews.m in Sources */,
 				3B04DF5921F85001001909CD /* QDRefreshFooter.m in Sources */,
 				93E30EC12225630D003CA771 /* ImageDTO.m in Sources */,
 				3B40EBBC21EC953E00656C1F /* UIPasteboard+YYText.m in Sources */,
@@ -2127,6 +2214,7 @@
 				3B40EBAD21EC953E00656C1F /* YYTextInput.m in Sources */,
 				3B1DFE2421F33C08007D4B12 /* QDMallTopView.m in Sources */,
 				93E30EBB22254CB3003CA771 /* QDSalesInfo.m in Sources */,
+				930F325222408F75003741E1 /* UITableView+Animated.m in Sources */,
 				935D559A223F721800E97FC9 /* LaunchAnimationTool.m in Sources */,
 				3B40EBF721EDC4C300656C1F /* QDForgetPwdView.m in Sources */,
 				935D55A3223F7BF000E97FC9 /* QDDZYViewController.m in Sources */,
@@ -2140,6 +2228,7 @@
 				3B40EBF421EDBB2800656C1F /* QDSetLoginPwdView.m in Sources */,
 				3B1DFE1C21F3226E007D4B12 /* QDRestaurantTopView.m in Sources */,
 				93E30EAE22252A55003CA771 /* QDReadyToCreateOrderVC.m in Sources */,
+				930F325022408F75003741E1 /* UIView+TABControlAnimation.m in Sources */,
 				936CB21B22367C5300D67896 /* QDThirdViewController.m in Sources */,
 				3B7636952218E8B200F77007 /* QDHomePageTopView.m in Sources */,
 				3B40EBB921EC953E00656C1F /* YYTextUtilities.m in Sources */,
@@ -2151,8 +2240,11 @@
 				3BCA5826221AAD1600DCEEF7 /* QDHotelReserveTableHeaderView.m in Sources */,
 				93E30EE72228CB3F003CA771 /* CommonUtility.m in Sources */,
 				935D55A0223F7BBD00E97FC9 /* QDHotelReserveVC.m in Sources */,
+				930F325722408F75003741E1 /* TABManagerMethod+ManagerCALayer.m in Sources */,
 				936CB21822367C3800D67896 /* QDSecondViewController.m in Sources */,
 				3B40EBB621EC953E00656C1F /* YYTextAttribute.m in Sources */,
+				930F325D22408F75003741E1 /* TABBaseTableViewCell.m in Sources */,
+				930F325922408F75003741E1 /* UICollectionView+Animated.m in Sources */,
 				3B0CD73C21F1A4940020824A /* QDHomeTopView.m in Sources */,
 				3B2C1F9121F7383200DD94CD /* QDMineInfoTableViewCell.m in Sources */,
 				3B04DF4521F80391001909CD /* UserCreditDTO.m in Sources */,
@@ -2177,6 +2269,7 @@
 				935D559D223F7AFC00E97FC9 /* QDPlayingViewController.m in Sources */,
 				93D2D636222E82F900CCC61D /* QDKeyWordsHomePageVC.m in Sources */,
 				3B04DF5321F83E6F001909CD /* QDRoomTypeDTO.m in Sources */,
+				930F325A22408F75003741E1 /* TABManagerMethod.m in Sources */,
 				93DC043022374B5400485100 /* QDFourViewController.m in Sources */,
 				936CB21522367C2200D67896 /* QDFirstViewController.m in Sources */,
 				3B1DFE0721F2D005007D4B12 /* SYCitysCell.m in Sources */,
@@ -2198,16 +2291,21 @@
 				3B40EBAF21EC953E00656C1F /* YYTextLine.m in Sources */,
 				93E30EB82225463B003CA771 /* CWActionSheetTableViewCell.m in Sources */,
 				3BEA2C3221EF39AC001C52C4 /* WebViewJavascriptBridge.m in Sources */,
+				930F325122408F75003741E1 /* TABAnimationMethod.m in Sources */,
 				93E30ED022268DB0003CA771 /* UIImage+Image.m in Sources */,
 				3B40EBBD21EC953E00656C1F /* YYTextTransaction.m in Sources */,
 				93E30EA72224EF85003CA771 /* QDVipPurchaseTableHeader.m in Sources */,
 				3BCA58152219593C00DCEEF7 /* QDVipPurchaseVC.m in Sources */,
 				3B40EBB321EC953E00656C1F /* YYLabel.m in Sources */,
 				3B0DC085220034B30056C318 /* UIButton+WebCache.m in Sources */,
+				930F325B22408F75003741E1 /* TABBaseCollectionViewCell.m in Sources */,
 				3BF92D7422168E300019B941 /* RootCollectionCell.m in Sources */,
+				930F325422408F75003741E1 /* TABAnimatedObject.m in Sources */,
+				930F325322408F75003741E1 /* UICollectionViewCell+TABLayoutSubviews.m in Sources */,
 				3B40EBAE21EC953E00656C1F /* YYTextLayout.m in Sources */,
 				3B40EC1521EE0C6200656C1F /* QDMineHeaderWithdrawView.m in Sources */,
 				93E30EF22228CBA5003CA771 /* LineDashPolyline.m in Sources */,
+				930F325622408F75003741E1 /* UITableViewCell+TABLayoutSubviews.m in Sources */,
 				3B1DFDEF21F2BFAD007D4B12 /* QDCurrentLocationView.m in Sources */,
 				3B0DC084220034B30056C318 /* UIView+WebCache.m in Sources */,
 				3B40EC0F21EE0C2200656C1F /* QDMineHeaderNotLoginView.m in Sources */,
@@ -2387,6 +2485,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4DVSB2T6TD;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_INPUT_FILETYPE = automatic;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "/Users/yl-yin/Documents/TravelPoints/TravelPoints/QDTravelPoints.pch";
@@ -2413,6 +2515,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4DVSB2T6TD;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_INPUT_FILETYPE = automatic;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "/Users/yl-yin/Documents/TravelPoints/TravelPoints/QDTravelPoints.pch";

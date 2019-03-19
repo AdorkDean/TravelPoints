@@ -526,4 +526,20 @@ typedef enum : NSUInteger {
         [self.navigationController pushViewController:vc animated:YES];
     }
 }
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+    [UIView animateWithDuration:0.3 animations:^{
+        _optionBtn.alpha = 0;
+    } completion:^(BOOL finished) {
+        [_optionBtn setHidden:YES];
+    }];
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+    [UIView animateWithDuration:0.3 animations:^{
+        _optionBtn.alpha = 1;
+    } completion:^(BOOL finished) {
+        [_optionBtn setHidden:NO];
+    }];
+}
 @end
