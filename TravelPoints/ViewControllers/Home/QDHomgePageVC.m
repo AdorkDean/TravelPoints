@@ -546,7 +546,6 @@ static NSString *cellIdentifier = @"CellIdentifier";
 }
 
 -(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
-    
     if ([error code] == kCLErrorDenied){
         //访问被拒绝
         [WXProgressHUD showErrorWithTittle:@"访问被拒绝"];

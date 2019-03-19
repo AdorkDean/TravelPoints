@@ -6,15 +6,15 @@
 //  Copyright © 2017年 DuKaiShun. All rights reserved.
 //
 
-#import "RootCollectionCell.h"
+#import "RootFirstCollectionCell.h"
 
-@interface RootCollectionCell ()
+@interface RootFirstCollectionCell ()
 
 @property (nonatomic, strong) UILabel *label;
 
 @end
 
-@implementation RootCollectionCell
+@implementation RootFirstCollectionCell
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
@@ -23,7 +23,7 @@
         _priceLab.font = QDBoldFont(18);
         _priceLab.textColor = APP_ORANGETEXTCOLOR;
         [self.contentView addSubview:_priceLab];
-
+        
         _price = [[UILabel alloc] init];
         _price.text = @"34.00";
         _price.font = QDBoldFont(24);
@@ -40,7 +40,7 @@
         _headPic.layer.cornerRadius = SCREEN_WIDTH*0.03;
         _headPic.layer.masksToBounds = YES;
         [self.contentView addSubview:_headPic];
-
+        
         _nameLab = [[UILabel alloc] init];
         _nameLab.text = @"四叶草8766";
         _nameLab.font = QDFont(12);
@@ -120,7 +120,7 @@
                      controlPoint:leftMiddle];
         //设置阴影路径
         self.layer.shadowPath = path.CGPath;
-
+        
     }
     return self;
 }
@@ -129,7 +129,7 @@
 - (void)layoutSubviews{
     [super layoutSubviews];
     [_headPic mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.contentView.mas_top).offset(20);
+        make.top.equalTo(self.contentView.mas_top).offset(15);
         make.left.equalTo(self.contentView.mas_left).offset(15);
         make.width.and.height.mas_equalTo(18);
     }];
@@ -148,7 +148,7 @@
     
     [_priceLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.contentView.mas_left).offset(15);
-        make.top.equalTo(self.contentView.mas_top).offset(75);
+        make.top.equalTo(self.contentView.mas_top).offset(63);
     }];
     
     [_price mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -158,7 +158,7 @@
     
     [_amountLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.contentView.mas_left).offset(15);
-        make.top.equalTo(self.contentView.mas_top).offset(111);
+        make.top.equalTo(self.contentView.mas_top).offset(91);
     }];
     
     [_amount mas_makeConstraints:^(MASConstraintMaker *make) {

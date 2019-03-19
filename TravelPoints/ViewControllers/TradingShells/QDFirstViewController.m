@@ -23,6 +23,7 @@
 #import "QDRefreshHeader.h"
 #import "QDRefreshFooter.h"
 #import "RootCollectionCell.h"
+#import "RootFirstCollectionCell.h"
 #import "WaterLayou.h"
 #import "QDBuyOrSellViewController.h"
 #import "QDFindSatifiedDataVC.h"
@@ -375,6 +376,8 @@ typedef enum : NSUInteger {
         self.collectionView.scrollEnabled = NO;
         //注册单元格
         [_collectionView registerClass:[RootCollectionCell class] forCellWithReuseIdentifier:@"cell"];
+        [_collectionView registerClass:[RootFirstCollectionCell class] forCellWithReuseIdentifier:@"RootFirstCollectionCell"];
+
         self.collectionView.dataSource = self;
         self.collectionView.delegate = self;
     }
@@ -490,14 +493,20 @@ typedef enum : NSUInteger {
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
-        
+        RootFirstCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"RootFirstCollectionCell" forIndexPath:indexPath];
+        BiddingPostersDTO *dto = _ordersArr[0];
+        [cell loadDataWithDataArr:dto andTypeStr:dto.postersType];
+        cell.sell.tag = indexPath.row;
+        [cell.sell addTarget:self action:@selector(buyOrSellAction:) forControlEvents:UIControlEventTouchUpInside];
+        return cell;
+    }else{
+        RootCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+        BiddingPostersDTO *dto = _ordersArr[indexPath.row];
+        [cell loadDataWithDataArr:dto andTypeStr:dto.postersType];
+        cell.sell.tag = indexPath.row;
+        [cell.sell addTarget:self action:@selector(buyOrSellAction:) forControlEvents:UIControlEventTouchUpInside];
+        return cell;
     }
-    RootCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
-    BiddingPostersDTO *dto = _ordersArr[indexPath.row];
-    [cell loadDataWithDataArr:dto andTypeStr:dto.postersType];
-    cell.sell.tag = indexPath.row;
-    [cell.sell addTarget:self action:@selector(buyOrSellAction:) forControlEvents:UIControlEventTouchUpInside];
-    return cell;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{

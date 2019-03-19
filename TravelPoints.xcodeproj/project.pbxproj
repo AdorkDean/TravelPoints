@@ -201,6 +201,7 @@
 		3BF92D772216B04F0019B941 /* QDFilterTypeOneView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF92D762216B04F0019B941 /* QDFilterTypeOneView.m */; };
 		3BF92D7B2216BEFB0019B941 /* SnailQuickMaskPopups.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF92D792216BEFB0019B941 /* SnailQuickMaskPopups.m */; };
 		3BF92D7D2216D8BE0019B941 /* shellBanner@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BF92D7C2216D8BD0019B941 /* shellBanner@2x.png */; };
+		930F323122408258003741E1 /* RootFirstCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 930F323022408258003741E1 /* RootFirstCollectionCell.m */; };
 		93261118222388C000E3D0BA /* QDMyPurchaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93261117222388C000E3D0BA /* QDMyPurchaseCell.m */; };
 		9326111B222388E900E3D0BA /* QDMySaleOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9326111A222388E900E3D0BA /* QDMySaleOrderCell.m */; };
 		9326111E2223B6E800E3D0BA /* QDOrderField.m in Sources */ = {isa = PBXBuildFile; fileRef = 9326111D2223B6E800E3D0BA /* QDOrderField.m */; };
@@ -644,6 +645,8 @@
 		3BF92D7A2216BEFB0019B941 /* SnailQuickMaskPopups.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SnailQuickMaskPopups.h; sourceTree = "<group>"; };
 		3BF92D7C2216D8BD0019B941 /* shellBanner@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shellBanner@2x.png"; sourceTree = "<group>"; };
 		511DB104CDCE097693D079A1 /* Pods-TravelPoints.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TravelPoints.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TravelPoints/Pods-TravelPoints.debug.xcconfig"; sourceTree = "<group>"; };
+		930F322F22408258003741E1 /* RootFirstCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RootFirstCollectionCell.h; sourceTree = "<group>"; };
+		930F323022408258003741E1 /* RootFirstCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RootFirstCollectionCell.m; sourceTree = "<group>"; };
 		93261116222388C000E3D0BA /* QDMyPurchaseCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDMyPurchaseCell.h; sourceTree = "<group>"; };
 		93261117222388C000E3D0BA /* QDMyPurchaseCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDMyPurchaseCell.m; sourceTree = "<group>"; };
 		93261119222388E900E3D0BA /* QDMySaleOrderCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDMySaleOrderCell.h; sourceTree = "<group>"; };
@@ -1678,6 +1681,8 @@
 				3BF92D6F22168E2F0019B941 /* RootTableCell.m */,
 				3BF92D6E22168E2E0019B941 /* RootCollectionCell.h */,
 				3BF92D7022168E2F0019B941 /* RootCollectionCell.m */,
+				930F322F22408258003741E1 /* RootFirstCollectionCell.h */,
+				930F323022408258003741E1 /* RootFirstCollectionCell.m */,
 				3BF92D7122168E300019B941 /* MyTableCell.h */,
 				3BF92D6C22168E2D0019B941 /* MyTableCell.m */,
 				3BF92D66221688C20019B941 /* QDTradeShellsSectionHeaderView.h */,
@@ -2165,6 +2170,7 @@
 				3B7636772217DF2700F77007 /* QDFilterTypeTwoView.m in Sources */,
 				935D55A6223F7BFE00E97FC9 /* QDMallViewController.m in Sources */,
 				3B40EBB521EC953E00656C1F /* YYTextParser.m in Sources */,
+				930F323122408258003741E1 /* RootFirstCollectionCell.m in Sources */,
 				3B0DC07E220034B30056C318 /* SDWebImageDownloaderOperation.m in Sources */,
 				3B40EBAC21EC953E00656C1F /* YYTextEffectWindow.m in Sources */,
 				3BF92D7322168E300019B941 /* RootTableCell.m in Sources */,
