@@ -19,17 +19,30 @@
 #import <IQKeyboardManager/IQKeyboardManager.h>
 #import "QDMallTableSectionHeaderView.h"
 #import "QDPopMenu.h"
+#import "TABAnimated.h"
+#import "TABViewAnimated.h"
+#import "UITableView+Animated.h"
+#import "UIView+TABControlAnimation.h"
 //预定酒店 定制游 商城
-@interface QDMallViewController ()<UITableViewDelegate, UITableViewDataSource, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource>{
+@interface QDMallViewController ()<UITableViewDelegate, UITableViewDataSource, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource, QDPopMenuDelegate>{
     QDPlayShellType _playShellType;
     UITableView *_tableView;
     QDMallTableHeaderView *_mallHeaderView;
     NSMutableArray *_mallInfoArr;
     QDMallTableSectionHeaderView *_sectionHeaderView;
-    UIView *_backView;
 }
 @property (nonatomic, getter=isLoading) BOOL loading;
 @property (nonatomic, strong) NSMutableArray *categoryArr;
+@property (nonatomic, strong) NSMutableArray *categoryIDArr;
+
+@property (nonatomic, assign) NSInteger menuSelectIndex;   //选中的一栏
+
+@property (nonatomic, strong) NSString *catId;  //商品分类
+
+@property (nonatomic, strong) NSString *sortColumn;     //销量排序：volume，价格排序：price
+@property (nonatomic, strong) NSString *sortType;       //排序方式：desc降序，asc升序
+
+@property (nonatomic, strong) NSString *baoyou; //是否包邮
 @end
 
 @implementation QDMallViewController
@@ -38,19 +51,73 @@
     [super viewWillAppear:animated];
     [self.navigationController.navigationBar setHidden:YES];
     [self.navigationController.tabBarController.tabBar setHidden:NO];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(priceUp) name:Notification_PriceUp object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(priceDown) name:Notification_PriceDown object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(amuntUp) name:Notification_AmountUp object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(amountDown) name:Notification_AmountDown object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:Notification_PriceUp object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:Notification_PriceDown object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:Notification_AmountUp object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:Notification_AmountDown object:nil];
 }
+
+- (void)priceUp{
+    QDLog(@"priceUp");
+    _sortColumn = @"price";
+    _sortType = @"asc";
+    [_tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
+    [self requestMallList];
+    [_sectionHeaderView.priceBtn setImage:[UIImage imageNamed:@"icon_shellpositive"] forState:UIControlStateNormal];
+    [_sectionHeaderView.amountBtn setImage:[UIImage imageNamed:@"icon_shellDefault"] forState:UIControlStateNormal];
+}
+
+- (void)priceDown{
+    QDLog(@"priceDown");
+    _sortColumn = @"price";
+    _sortType = @"desc";
+    [_tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
+    [self requestMallList];
+    [_sectionHeaderView.priceBtn setImage:[UIImage imageNamed:@"icon_shellreverse"] forState:UIControlStateNormal];
+    [_sectionHeaderView.amountBtn setImage:[UIImage imageNamed:@"icon_shellDefault"] forState:UIControlStateNormal];
+}
+
+- (void)amuntUp{
+    _sortColumn = @"volume";
+    _sortType = @"asc";
+    [self requestMallList];
+    [_tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
+    [_sectionHeaderView.amountBtn setImage:[UIImage imageNamed:@"icon_shellpositive"] forState:UIControlStateNormal];
+    [_sectionHeaderView.priceBtn setImage:[UIImage imageNamed:@"icon_shellDefault"] forState:UIControlStateNormal];
+}
+
+- (void)amountDown{
+    [_tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
+    _sortColumn = @"volume";
+    _sortType = @"desc";
+    [self requestMallList];
+    [_sectionHeaderView.amountBtn setImage:[UIImage imageNamed:@"icon_shellreverse"] forState:UIControlStateNormal];
+    [_sectionHeaderView.priceBtn setImage:[UIImage imageNamed:@"icon_shellDefault"] forState:UIControlStateNormal];
+    
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _menuSelectIndex = -1;
+    _catId = @"";
+    _sortColumn = @"";
+    _sortType = @"";
+    _baoyou = @"";
     _categoryArr = [[NSMutableArray alloc] init];
+    _categoryIDArr = [[NSMutableArray alloc] init];
     self.view.backgroundColor = APP_WHITECOLOR;
     _mallInfoArr = [[NSMutableArray alloc] init];
     [self initTableView];
-    [self requestMallList:api_GetMallList];
+    [self requestMallList];
     //请求商品列表
     [self finGoodsCategory];
 }
@@ -59,14 +126,18 @@
 - (void)finGoodsCategory{
     if (_categoryArr.count) {
         [_categoryArr removeAllObjects];
+        [_categoryIDArr removeAllObjects];
     }
     [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_findCategory params:nil successBlock:^(QDResponseObject *responseObject) {
         if (responseObject.code == 0) {
             NSArray *arr = responseObject.result;
             for (NSDictionary *dic in arr) {
                 [_categoryArr addObject:[dic objectForKey:@"catName"]];
+                NSString *str =  [NSString stringWithFormat:@"%d", [[dic objectForKey:@"id"] intValue]];
+                [_categoryIDArr addObject:str];
             }
-            QDLog(@"_categoryArr = %@", _categoryArr);
+            [_categoryArr insertObject:@"全部" atIndex:0];
+            [_categoryIDArr insertObject:@"0" atIndex:0];
         }
     } failureBlock:^(NSError *error) {
         [WXProgressHUD showErrorWithTittle:@"网络异常"];
@@ -81,16 +152,19 @@
 }
 
 #pragma mark - 查询商城列表信息
-- (void)requestMallList:(NSString *)urlStr{
+- (void)requestMallList{
     if (_mallInfoArr.count) {
         [_mallInfoArr removeAllObjects];
     }
-    NSDictionary * dic1 = @{@"sortColumn":@"",
-                            @"sortType":@"desc",
+    NSDictionary * dic1 = @{
                             @"pageNum":@1,
-                            @"pageSize":@10
+                            @"pageSize":@10,
+                            @"catId":_catId,
+                            @"sortColumn":_sortColumn,
+                            @"sortType":_sortType,
+                            @"isShipping":_baoyou
                             };
-    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:urlStr params:dic1 successBlock:^(QDResponseObject *responseObject) {
+    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_GetMallList params:dic1 successBlock:^(QDResponseObject *responseObject) {
         if (responseObject.code == 0) {
             NSDictionary *dic = responseObject.result;
             NSArray *mallArr = [dic objectForKey:@"result"];
@@ -105,10 +179,12 @@
         }else{
             [WXProgressHUD showErrorWithTittle:responseObject.message];
         }
+        [_tableView tab_endAnimation];
         [self endRefreshing];
     } failureBlock:^(NSError *error) {
         [_tableView reloadData];
         [_tableView reloadEmptyDataSet];
+        [_tableView tab_endAnimation];
         [WXProgressHUD showErrorWithTittle:@"网络异常"];
     }];
 }
@@ -123,6 +199,7 @@
 //    _tableView.contentInset = UIEdgeInsetsMake(0, 0, SafeAreaTopHeight, 0);
     _tableView.emptyDataSetDelegate = self;
     _tableView.emptyDataSetSource = self;
+    [_tableView tab_startAnimation];
     _mallHeaderView = [[QDMallTableHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.08)];
     _mallHeaderView.backgroundColor = APP_WHITECOLOR;
     [_mallHeaderView.carBtn addTarget:self action:@selector(addToCar:) forControlEvents:UIControlEventTouchUpInside];
@@ -132,9 +209,12 @@
     _tableView.mj_header = [QDRefreshHeader headerWithRefreshingBlock:^{
         [self endRefreshing];
     }];
+    
     //手动刷新请求最新数据
     _tableView.mj_footer = [QDRefreshFooter footerWithRefreshingBlock:^{
-        [self requestMallList:api_GetMallList];
+        [self requestMallList];
+        [self endRefreshing];
+        [_tableView.mj_footer setState:MJRefreshStateNoMoreData];
     }];
 }
 
@@ -192,36 +272,32 @@
 }
 
 - (void)chooseCategory:(UIButton *)sender{
-//    QDPopMenu *menu = [[QDPopMenu alloc] init];
-    sender.selected = !sender.selected;
-    if (sender.selected) {
-        [self.view addSubview:self.backView];
-        [self.backView bringSubviewToFront:self.view];
-        [sender setTitleColor:APP_BLUECOLOR forState:UIControlStateNormal];
-        [sender setImage:[UIImage imageNamed:@"icon_blueArrorDown"] forState:UIControlStateNormal];
+    if (_categoryArr.count == 0 || _categoryArr == nil) {
+        [WXProgressHUD showErrorWithTittle:@"未获取到商品种类"];
     }else{
-        [self.backView removeFromSuperview];
-        [sender setTitleColor:APP_BLACKCOLOR forState:UIControlStateNormal];
-        [sender setImage:[UIImage imageNamed:@"icon_arrowDown"] forState:UIControlStateNormal];
+        QDPopMenu *menu = [[QDPopMenu alloc] init];
+        menu.delegate = self;
+        menu.defaultIndex = _menuSelectIndex;
+        menu.identityName = @"test";
+        menu.menuArray = _categoryArr;
+        menu.menuContentSize = CGSizeMake(SCREEN_WIDTH, _categoryArr.count * 38);
+        [menu showMenuFromSourceView:sender sourceReact:sender.bounds viewController:self animated:YES];
     }
-}
-- (UIView *)backView{
-    if (!_backView) {
-        _backView = [[UIView alloc] initWithFrame:CGRectMake(0, 40, SCREEN_WIDTH, SCREEN_HEIGHT)];
-        _backView.backgroundColor = APP_BLACKCOLOR;
-        _backView.alpha = 0.3;
-    }
-    return _backView;
 }
 
 - (void)baoyouAction:(UIButton *)sender{
+    sender.selected = !sender.selected;
     if (sender.selected) {
         QDLog(@"选择包邮");
+        _baoyou = @"1";
+        [_sectionHeaderView.baoyouBtn setImage:[UIImage imageNamed:@"icon_baoyouSelected"] forState:UIControlStateNormal];
     }else{
         QDLog(@"不包邮");
+        [_sectionHeaderView.baoyouBtn setImage:[UIImage imageNamed:@"icon_baoyouNormal"] forState:UIControlStateNormal];
+        _baoyou = @"";
     }
+    [self requestMallList];
 }
-
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 40;
@@ -361,6 +437,7 @@
         self.loading = NO;
     });
 }
+
 - (void)setLoading:(BOOL)loading
 {
     if (self.isLoading == loading) {
@@ -370,4 +447,20 @@
     [_tableView reloadEmptyDataSet];
 }
 
+- (void)popMenu:(QDPopMenu *)popMenu didSelectedMenu:(id)menu atIndex:(NSInteger)index{
+    QDLog(@"index = %ld", (long)index);
+    _menuSelectIndex = index;
+    if (index == 0) {
+        _catId = @"";
+        [self requestMallList];
+    }else{
+        _catId = _categoryIDArr[index];
+        [self requestMallList];
+    }
+    [_sectionHeaderView.allBtn setTitle:_categoryArr[index] forState:UIControlStateNormal];
+}
+
+- (void)dismissPopMenu:(QDPopMenu *)popMenu{
+    QDLog(@"dismissPopMenu");
+}
 @end

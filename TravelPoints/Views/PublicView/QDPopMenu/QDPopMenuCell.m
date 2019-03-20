@@ -1,9 +1,9 @@
 //
 //  QDPopMenuCell.m
-//  QDINFI
+//  TravelPoints
 //
-//  Created by ZengTark on 2017/12/8.
-//  Copyright © 2017年 quantdo. All rights reserved.
+//  Created by Charles Ran on 2019/02/20.
+//  Copyright © 2019年 quantdo. All rights reserved.
 //
 
 #import "QDPopMenuCell.h"
@@ -14,19 +14,24 @@
 {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         _menuTitleLabel = [[UILabel alloc] init];
-        _menuTitleLabel.font = QDFont(15);
-        _menuTitleLabel.textColor = [UIColor whiteColor];
-        _menuTitleLabel.numberOfLines = 0;
-        _menuTitleLabel.textAlignment = NSTextAlignmentCenter;
+        _menuTitleLabel.font = QDFont(16);
+        _menuTitleLabel.textColor = APP_BLACKCOLOR;
+        _menuTitleLabel.textAlignment = NSTextAlignmentLeft;
         [self addSubview:_menuTitleLabel];
         
         [_menuTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.center.equalTo(self);
+            make.centerY.equalTo(self);
+            make.left.equalTo(self.mas_left).offset(20);
         }];
         
-        UIView *bgView = [[UIView alloc] init];
-        bgView.backgroundColor = APP_WHITECOLOR;
-        self.selectedBackgroundView = bgView;
+        _selectImg = [[UIImageView alloc] init];
+        _selectImg.image = [UIImage imageNamed:@"icon_checkSelected"];
+        [self addSubview:_selectImg];
+        
+        [_selectImg mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(self);
+            make.right.equalTo(self.mas_right).offset(-31);
+        }];
     }
     return self;
 }

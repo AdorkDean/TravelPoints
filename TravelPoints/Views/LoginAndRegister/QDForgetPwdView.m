@@ -32,6 +32,7 @@
         
         _phoneTF = [[UITextField alloc] init];
         _phoneTF.placeholder = @"请输入手机号";
+        _phoneTF.keyboardType = UIKeyboardTypeNumberPad;
         [_phoneTF addTarget:self action:@selector(textValueChanged) forControlEvents:UIControlEventEditingChanged];
         _phoneTF.clearButtonMode = UITextFieldViewModeWhileEditing;
         [_phoneTF setValue:APP_GRAYLAYERCOLOR forKeyPath:@"placeholderLabel.textColor"];

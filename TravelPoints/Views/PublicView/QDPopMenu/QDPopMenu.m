@@ -1,9 +1,9 @@
 //
 //  QDPopMenu.m
-//  QDINFI
+//  TravelPoints
 //
-//  Created by ZengTark on 2017/12/8.
-//  Copyright © 2017年 quantdo. All rights reserved.
+//  Created by Charles Ran on 2019/02/20.
+//  Copyright © 2019年 quantdo. All rights reserved.
 //
 
 #import "QDPopMenu.h"
@@ -40,7 +40,7 @@
     _menuTableView.dataSource = self;
     _menuTableView.showsVerticalScrollIndicator = NO;
 
-    _menuTableView.separatorColor = APP_GRAYLINECOLOR;
+    _menuTableView.separatorColor = [UIColor clearColor];
     _menuTableView.separatorInset = UIEdgeInsetsMake(0, 15, 0, 15);
     _menuTableView.backgroundColor = APP_WHITECOLOR;
     [self.view addSubview:_menuTableView];
@@ -138,10 +138,12 @@
         cell.menuTitleLabel.text = [_menuArray objectAtIndex:indexPath.row];
     }
     if (indexPath.row == self.defaultIndex) {
-        cell.backgroundColor = APP_BLUECOLOR;
+        cell.textLabel.textColor = APP_BLACKCOLOR;
+        cell.selectImg.hidden = NO;
     }
     else {
-        cell.backgroundColor = APP_WHITECOLOR;
+        cell.textLabel.textColor = APP_GRAYTEXTCOLOR;
+        cell.selectImg.hidden = YES;
     }
     return cell;
 }
@@ -149,7 +151,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     QDPopMenuCell *selectedCell = (QDPopMenuCell *)[_menuTableView cellForRowAtIndexPath:indexPath];
-    selectedCell.backgroundColor = APP_BLUECOLOR;
+    _defaultIndex = indexPath.row;
+    selectedCell.backgroundColor = APP_GRAYBACKGROUNDCOLOR;
+    [selectedCell.selectImg setHidden:NO];
     if ([_delegate respondsToSelector:@selector(popMenu:didSelectedMenu:atIndex:)]) {
         [_delegate popMenu:self didSelectedMenu:[_menuArray objectAtIndex:indexPath.row] atIndex:indexPath.row];
     }

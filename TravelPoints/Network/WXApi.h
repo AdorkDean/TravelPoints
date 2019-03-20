@@ -93,9 +93,8 @@ static NSString * const api_TryToRegister = @"/lyjfapp/api/v1/user/tryToRegister
 //验证用户是否注册
 static NSString * const api_VerificationRegister = @"/lyjfapp/api/v1/user/verificationRegister";
 
-//设置密码时候校验手机号是否已登录
+//设置密码时候校验手机号是否注册
 static NSString * const api_VerificationIsRegister = @"/lyjfapp/api/v1/user/verificationIsRegister";
-
 
 static NSString * const api_ChangePwd = @"/lyjfapp/api/v1/user/changePwd";
 

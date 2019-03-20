@@ -68,7 +68,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 0) {
-        return 2;
+        return 1;
     }else{
         return 1;
     }
@@ -89,20 +89,20 @@
     backgroundViews.backgroundColor = [UIColor whiteColor];
     if (indexPath.section == 0) {
         cell.textLabel.font = QDFont(15);
-        if (indexPath.row == 0) {
-            cell.textLabel.text = @"升级检查";
-            _versionLab = [[UILabel alloc] init];
-            _versionLab.text = @"当前版本1.0.3";
-            _versionLab.font = QDFont(13);
-            [cell.contentView addSubview:_versionLab];
-            [_versionLab mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.centerY.equalTo(cell.contentView);
-                make.right.equalTo(cell.contentView.mas_right).offset(-(SCREEN_WIDTH*0.054));
-            }];
-        }else{
+//        if (indexPath.row == 0) {
+//            cell.textLabel.text = @"检查";
+//            _versionLab = [[UILabel alloc] init];
+//            _versionLab.text = @"当前版本1.0.3";
+//            _versionLab.font = QDFont(13);
+//            [cell.contentView addSubview:_versionLab];
+//            [_versionLab mas_makeConstraints:^(MASConstraintMaker *make) {
+//                make.centerY.equalTo(cell.contentView);
+//                make.right.equalTo(cell.contentView.mas_right).offset(-(SCREEN_WIDTH*0.054));
+//            }];
+//        }else{
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator; //显示最右边的箭头
             cell.textLabel.text = @"关于我们";
-        }
+//        }
     }else{
         cell.accessoryType = UITableViewCellAccessoryNone;
         _exitCurrent = [[UILabel alloc] init];

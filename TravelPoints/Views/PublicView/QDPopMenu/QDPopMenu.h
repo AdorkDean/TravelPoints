@@ -1,9 +1,9 @@
 //
 //  QDPopMenu.h
-//  QDINFI
+//  TravelPoints
 //
-//  Created by ZengTark on 2017/12/8.
-//  Copyright © 2017年 quantdo. All rights reserved.
+//  Created by Charles Ran on 2019/02/20.
+//  Copyright © 2019年 quantdo. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

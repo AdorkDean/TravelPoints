@@ -113,7 +113,7 @@
         
         _priceTF = [[UITextField alloc] init];
         _priceTF.placeholder = @"请输入金额";
-        [_priceTF addTarget:self action:@selector(textFieldChanged:) forControlEvents:UIControlEventEditingChanged];
+        [_priceTF addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
         _priceTF.clearButtonMode = UITextFieldViewModeAlways;
         _priceTF.keyboardType = UIKeyboardTypeDecimalPad;
         _priceTF.hidden = YES;
@@ -137,12 +137,6 @@
         _bottomLab2.font = QDFont(14);
         _bottomLab2.textColor = APP_GRAYTEXTCOLOR;
         [self addSubview:_bottomLab2];
-        
-//        _bottomLab3 = [[UILabel alloc] init];
-//        _bottomLab3.text = @"+0";
-//        _bottomLab3.font = QDFont(14);
-//        _bottomLab3.textColor = APP_BLUECOLOR;
-//        [self addSubview:_bottomLab3];
         
         _bottomLab4 = [[UILabel alloc] init];
         _bottomLab4.text = @"个";
@@ -271,11 +265,6 @@
         make.centerY.equalTo(_bottomLab1);
         make.left.equalTo(_bottomLab1.mas_right).offset(5);
     }];
-    
-//    [_bottomLab3 mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.centerY.equalTo(_bottomLab1);
-//        make.left.equalTo(_bottomLab2.mas_right).offset(1);
-//    }];
 
     [_bottomLab4 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_bottomLab1);
@@ -283,7 +272,35 @@
     }];
 }
 
-- (void)textFieldChanged:(UITextField *)textField{
+- (void)textFieldDidChange:(UITextField *)textField
+{
+    //判断第一位是否为数字
+    if ([textField.text isEqualToString: @"."]) {
+        textField.text = @"";
+    }
+    //判断是否有两个小数点
+    if (textField.text.length >= 2) {
+        NSString *str = [textField.text substringToIndex:textField.text.length-1];
+        NSString *strTwo = [textField.text substringFromIndex:textField.text.length-1];
+        NSRange range = [str rangeOfString:@"."];
+        if (range.location != NSNotFound && [strTwo isEqualToString:@"."]) {
+            textField.text = [textField.text substringToIndex:textField.text.length-1];
+        }
+    }
+    //小数点后面数字位数控制  （此时为小数点后一位，3改4就是两位    思路：取倒数第X个字符是否为小数点，是小数点的话，就不再允许输入）
+    if (textField.text.length > 4) {
+        NSString *myStr = [textField.text substringWithRange:NSMakeRange(textField.text.length-4 , 1)];
+        if ([myStr isEqualToString:@"."]) {
+            textField.text = [textField.text substringToIndex:textField.text.length-1];
+        }
+    }
+    //最大值控制
+    double doubleNum = [textField.text doubleValue];
+    NSUInteger myNub = doubleNum;
+    NSUInteger sum = 1000000;
+    if (myNub > sum) {
+        textField.text = [textField.text substringToIndex:textField.text.length-1];
+    }
     _bottomLab2.text = [NSString stringWithFormat:@"%.lf", [_priceTF.text doubleValue] / _basePrice];
 }
 @end

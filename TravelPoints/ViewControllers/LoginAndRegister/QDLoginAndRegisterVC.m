@@ -360,42 +360,28 @@
 }
 #pragma mark - 忘记密码页面的下一步按钮
 - (void)resetPwdNextStep:(UIButton *)sender{
+    NSDictionary * dic = @{@"legalPhone":_forgetPwdView.phoneTF.text,
+                           };
+    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_VerificationIsRegister params:dic successBlock:^(QDResponseObject *responseObject) {
+        if (responseObject.code == 0) {
+            _isResetPwdNextStep = YES;
+            QDLog(@"%@", self.presentedViewController.view.class);
+            //当前为验证身份inputView
+            [_registerBtn setHidden:YES];
+            [_loginBtn setHidden:NO];
+            [_forgetPwdView setHidden:YES];
+            _currentInputView = _identifyInputView;
+            [_identifyInputView becomeFirstResponder];
+            [_identifyInputView setHidden:NO];
+            [_identifyView setHidden:NO];
+            _userPhoneNum = _forgetPwdView.phoneTF.text;
+            QDLog(@"_userPhoneNum = %@", _userPhoneNum);
+        }else{
+            [WXProgressHUD showErrorWithTittle:responseObject.message];
+        }
+    } failureBlock:^(NSError *error) {
 
-    _isResetPwdNextStep = YES;
-    QDLog(@"%@", self.presentedViewController.view.class);
-    //当前为验证身份inputView
-    [_registerBtn setHidden:YES];
-    [_loginBtn setHidden:NO];
-    [_forgetPwdView setHidden:YES];
-    _currentInputView = _identifyInputView;
-    [_identifyInputView becomeFirstResponder];
-    [_identifyInputView setHidden:NO];
-    [_identifyView setHidden:NO];
-    _userPhoneNum = _forgetPwdView.phoneTF.text;
-    QDLog(@"_userPhoneNum = %@", _userPhoneNum);
-    
-//    NSDictionary * dic = @{@"legalPhone":_registerView.phoneTF.text,
-//                           };
-//    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_VerificationIsRegister params:dic successBlock:^(QDResponseObject *responseObject) {
-//        if (responseObject.code == 0) {
-//            _isResetPwdNextStep = YES;
-//            QDLog(@"%@", self.presentedViewController.view.class);
-//            //当前为验证身份inputView
-//            [_registerBtn setHidden:YES];
-//            [_loginBtn setHidden:NO];
-//            [_forgetPwdView setHidden:YES];
-//            _currentInputView = _identifyInputView;
-//            [_identifyInputView becomeFirstResponder];
-//            [_identifyInputView setHidden:NO];
-//            [_identifyView setHidden:NO];
-//            _userPhoneNum = _forgetPwdView.phoneTF.text;
-//            QDLog(@"_userPhoneNum = %@", _userPhoneNum);
-//        }else{
-//            [WXProgressHUD showErrorWithTittle:responseObject.message];
-//        }
-//    } failureBlock:^(NSError *error) {
-//
-//    }];
+    }];
 }
 
 #pragma mark --------- 获取验证码

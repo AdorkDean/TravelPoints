@@ -1861,8 +1861,8 @@
 			isa = PBXGroup;
 			children = (
 				930F32762240F0BD003741E1 /* QDPopMenuCell.h */,
-				930F32772240F0BD003741E1 /* QDPopMenu.h */,
 				930F32782240F0BD003741E1 /* QDPopMenuCell.m */,
+				930F32772240F0BD003741E1 /* QDPopMenu.h */,
 				930F32792240F0BD003741E1 /* QDPopMenu.m */,
 			);
 			path = QDPopMenu;
@@ -2561,7 +2561,7 @@
 				);
 				GCC_INPUT_FILETYPE = automatic;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = /Users/ranjin/TravelPoints/TravelPoints/QDTravelPoints.pch;
+				GCC_PREFIX_HEADER = "/Users/yl-yin/TravelPoints/TravelPoints/QDTravelPoints.pch";
 				INFOPLIST_FILE = TravelPoints/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2591,7 +2591,7 @@
 				);
 				GCC_INPUT_FILETYPE = automatic;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = /Users/ranjin/TravelPoints/TravelPoints/QDTravelPoints.pch;
+				GCC_PREFIX_HEADER = "/Users/yl-yin/TravelPoints/TravelPoints/QDTravelPoints.pch";
 				INFOPLIST_FILE = TravelPoints/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (

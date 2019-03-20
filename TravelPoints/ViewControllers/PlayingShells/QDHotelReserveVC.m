@@ -189,7 +189,8 @@
 //    _tableView.mj_header = header;
     
     _tableView.mj_header = [QDRefreshHeader headerWithRefreshingBlock:^{
-        [self requestHotelInfoWithURL:api_GetHotelCondition andIsPushVC:NO];
+//        [self requestHotelInfoWithURL:api_GetHotelCondition andIsPushVC:NO];
+        [self loadNewData];
     }];
     //手动刷新请求最新数据
     _tableView.mj_footer = [QDRefreshFooter footerWithRefreshingBlock:^{

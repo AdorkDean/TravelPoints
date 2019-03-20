@@ -180,6 +180,7 @@
     self.titleLab.text = model.topicDescribe;
     self.hates.text = model.invalidCommentCount;
     self.likes.text = model.validCommentCount;
+    self.textOnView.text = [NSString stringWithFormat:@"本榜单已由Aigo为您运算了%@家酒店", model.totalquantity];
     [self.pic sd_setImageWithURL:[NSURL URLWithString:model.imageFullUrl] placeholderImage:[UIImage imageNamed:@"placeHolder"] options:SDWebImageLowPriority];
 }
 

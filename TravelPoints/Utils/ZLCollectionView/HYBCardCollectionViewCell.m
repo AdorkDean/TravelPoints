@@ -82,7 +82,6 @@
       [_backView addSubview:_grayBackView];
       
       _textOnView = [[UILabel alloc] init];
-      _textOnView.text = @"本榜单已由Aigo为您运算了7150家酒店";
       _textOnView.textColor = APP_WHITECOLOR;
       _textOnView.font = QDFont(12);
       [_backView addSubview:_textOnView];
@@ -190,9 +189,16 @@
 }
 
 - (void)loadCellDataWithModel:(RanklistDTO *)model{
-    self.typeLab.text = model.listTypeContent;
+    if ([model.listTypeContent isEqualToString:@"酒店"]) {
+        self.typeLab.text = @"这好住";
+    }else if ([model.listTypeContent isEqualToString:@"景区"]){
+        self.typeLab.text = @"这好玩";
+    }else{
+        self.typeLab.text = @"这好吃";
+    }
     self.descLab.text = model.topicName;
     self.titleLab.text = model.topicDescribe;
+    self.textOnView.text = [NSString stringWithFormat:@"本榜单已由Aigo为您运算了%@家酒店", model.totalquantity];
     self.hates.text = model.invalidCommentCount;
     self.likes.text = model.validCommentCount;
     [self.pic sd_setImageWithURL:[NSURL URLWithString:model.imageFullUrl] placeholderImage:[UIImage imageNamed:@"placeHolder"] options:SDWebImageLowPriority];

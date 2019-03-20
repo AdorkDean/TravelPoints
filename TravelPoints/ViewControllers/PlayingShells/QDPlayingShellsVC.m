@@ -296,7 +296,6 @@
                     QDMallModel *mallModel = [QDMallModel yy_modelWithDictionary:dic];
                     [_mallInfoArr addObject:mallModel];
                 }
-                QDLog(@"_mallInfoArr = %@", _mallInfoArr);
                 [_tableView reloadData];
             }
         }else{

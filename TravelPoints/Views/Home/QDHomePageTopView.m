@@ -35,7 +35,7 @@
         [_topBackView addSubview:_imgView];
         
         _searchBtn = [[UIButton alloc] init];
-        [_searchBtn setTitle:@"搜索目的地,酒店和景点" forState:UIControlStateNormal];
+        [_searchBtn setTitle:@"搜索关键字" forState:UIControlStateNormal];
         _searchBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
         [_searchBtn setTitleColor:APP_GRAYTEXTCOLOR forState:UIControlStateNormal];
         _searchBtn.titleLabel.font = QDFont(15);
