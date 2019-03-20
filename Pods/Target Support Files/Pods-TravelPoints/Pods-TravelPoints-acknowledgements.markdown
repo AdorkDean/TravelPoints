@@ -877,16 +877,6 @@ Public License instead of this License.  But first, please read
 
 
 
-## PgyUpdate
-
-Copyright 2015 pgyer.com. All rights reserved.
-
-
-## Pgyer
-
-Copyright 2017 pgyer.com. All rights reserved.
-
-
 ## TYAlertView
 
 Copyright (c) 2016 luckytianyiyan <luckytianyiyan@gmail.com>

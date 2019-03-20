@@ -13,8 +13,6 @@
 #import "QDMineInfoViewController.h"
 #import "QDBridgeViewController.h"
 #import <AMapFoundationKit/AMapFoundationKit.h>
-#import <PgySDK/PgyManager.h>
-#import <PgyUpdate/PgyUpdateManager.h>
 #import <OpenShareHeader.h>
 #import "LaunchImageTransition.h"
 #import "LaunchAnimationTool.h"
@@ -93,13 +91,6 @@
     _hotelLevel = [[NSMutableArray alloc] init];    //酒店等级
     _hotelTypeId = [[NSMutableArray alloc] init];   //酒店类型
     _level = [[NSMutableArray alloc] init];         //会员等级
-    //启动Pgyer基本SDK
-    [[PgyManager sharedPgyManager] startManagerWithAppId:@"34a23c5629162782e4466e0b8462cee5"];
-
-    //启动更新检查SDK
-    [[PgyUpdateManager sharedPgyManager] startManagerWithAppId:@"34a23c5629162782e4466e0b8462cee5"];
-    
-    [[PgyUpdateManager sharedPgyManager] checkUpdate];
     
     [OpenShare connectQQWithAppId:@"1103194207"];
     [OpenShare connectWeiboWithAppKey:@"402180334"];

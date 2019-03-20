@@ -20,8 +20,6 @@ target 'TravelPoints' do
   pod 'HMSegmentedControl'
   pod 'FSCalendar'
   pod 'DZNEmptyDataSet'
-  pod 'Pgyer'
-  pod 'PgyUpdate'
   pod 'zhPopupController'
   pod 'OpenShare'
   pod 'WMPageController'

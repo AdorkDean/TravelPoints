@@ -29,8 +29,6 @@ PODS:
   - MBProgressHUD (1.1.0)
   - MJRefresh (3.1.15.6)
   - OpenShare (0.0.1)
-  - Pgyer (2.8.9)
-  - PgyUpdate (1.6)
   - Toast (4.0.0)
   - TYAlertView (0.1.1)
   - WMPageController (2.5.2)
@@ -51,8 +49,6 @@ DEPENDENCIES:
   - MBProgressHUD
   - MJRefresh
   - OpenShare
-  - Pgyer
-  - PgyUpdate
   - Toast
   - TYAlertView
   - WMPageController
@@ -75,8 +71,6 @@ SPEC REPOS:
     - MBProgressHUD
     - MJRefresh
     - OpenShare
-    - Pgyer
-    - PgyUpdate
     - Toast
     - TYAlertView
     - WMPageController
@@ -98,8 +92,6 @@ SPEC CHECKSUMS:
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   MJRefresh: 0efa19656679d70a0f47cbe76e56c2271fe53a97
   OpenShare: a560580dbb729d5c0c3cc1ee84cd6aa4a07e94c6
-  Pgyer: 830654e51e23f754cce5d8b3ea9ba72be68452eb
-  PgyUpdate: cd6c2ada5928f36a9f904d8f96a9b3b53e190755
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
   TYAlertView: 5dd26bb314f65b87fe15ab2d9b06276d42587fd7
   WMPageController: 0c7624d2b48e4f1ab92371688cf6744ed701575d
@@ -107,6 +99,6 @@ SPEC CHECKSUMS:
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
   zhPopupController: 4e6bd734062cb9c7ebe8113568550bade168bed7
 
-PODFILE CHECKSUM: 08e37678b12fd7570833bb12c763fb60e2c3fb5f
+PODFILE CHECKSUM: a2b40d4a10bba88eedf1f4149025f6d6701918c6
 
 COCOAPODS: 1.5.3

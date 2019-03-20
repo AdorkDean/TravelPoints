@@ -2561,7 +2561,7 @@
 				);
 				GCC_INPUT_FILETYPE = automatic;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "/Users/yl-yin/TravelPoints/TravelPoints/QDTravelPoints.pch";
+				GCC_PREFIX_HEADER = /Users/ranjin/TravelPoints/TravelPoints/QDTravelPoints.pch;
 				INFOPLIST_FILE = TravelPoints/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2591,7 +2591,7 @@
 				);
 				GCC_INPUT_FILETYPE = automatic;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "/Users/yl-yin/TravelPoints/TravelPoints/QDTravelPoints.pch";
+				GCC_PREFIX_HEADER = /Users/ranjin/TravelPoints/TravelPoints/QDTravelPoints.pch;
 				INFOPLIST_FILE = TravelPoints/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
