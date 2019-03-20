@@ -54,6 +54,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UserMoneyDTO *userMoneyDTO;        //资金信息
 @property (nonatomic, strong) UserCreditDTO *userCreditDTO;      //修改人
 
+@property (nonatomic, strong) NSString *userLevel;           //用户等级
+@property (nonatomic, strong) NSString *userLevelValue;      //用户等级
+@property (nonatomic, strong) NSString *minLevelValue;       //用户等级
+@property (nonatomic, strong) NSString *maxLevelValue;       //用户等级
+@property (nonatomic, strong) NSString *tradingStatus;       //用户等级
+
+
 @end
 
 NS_ASSUME_NONNULL_END

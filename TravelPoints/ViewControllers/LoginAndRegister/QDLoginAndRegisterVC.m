@@ -184,6 +184,7 @@
 
 //点击右上角注册按钮
 - (void)registerAction:(UIButton *)sender{
+    _resetLoginPwdView.hidden = YES;
     [_registerBtn setHidden:YES];
     [_loginBtn setHidden:NO];
     CATransition *animation = [CATransition animation];
@@ -290,6 +291,7 @@
 }
 #pragma mark - 忘记密码
 - (void)forgetPWD:(UIButton *)sender{
+    [_registerBtn setHidden:YES];
     [_loginView setHidden:YES];
     [_forgetPwdView setHidden:NO];
 }
@@ -355,9 +357,6 @@
  忘记密码的时候看手机是否注册
  verificationType: 0验证是否注册 1表示发送验证码
  */
-- (void)checkForgetPwdIsRegister{
- 
-}
 #pragma mark - 忘记密码页面的下一步按钮
 - (void)resetPwdNextStep:(UIButton *)sender{
     NSDictionary * dic = @{@"legalPhone":_forgetPwdView.phoneTF.text,

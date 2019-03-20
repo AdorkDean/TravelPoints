@@ -28,6 +28,8 @@
 #import "QDBuyOrSellViewController.h"
 #import "QDFindSatifiedDataVC.h"
 #import "QDLoginAndRegisterVC.h"
+#import "TABAnimated.h"
+#import "UICollectionView+Animated.h"
 #define K_T_Cell @"t_cell"
 #define K_C_Cell @"c_cell"
 
@@ -225,6 +227,7 @@ typedef enum : NSUInteger {
         }else{
             [WXProgressHUD showErrorWithTittle:responseObject.message];
         }
+        [_collectionView tab_endAnimation];
     } failureBlock:^(NSError *error) {
         [_tableView reloadData];
         [_tableView reloadEmptyDataSet];
@@ -380,6 +383,7 @@ typedef enum : NSUInteger {
 
         self.collectionView.dataSource = self;
         self.collectionView.delegate = self;
+        [self.collectionView tab_endAnimation];
     }
     return _collectionView;
 }

@@ -212,9 +212,9 @@
     
     //手动刷新请求最新数据
     _tableView.mj_footer = [QDRefreshFooter footerWithRefreshingBlock:^{
-        [self requestMallList];
+//        [self requestMallList];
         [self endRefreshing];
-        [_tableView.mj_footer setState:MJRefreshStateNoMoreData];
+        [_tableView.mj_footer endRefreshingWithNoMoreData];
     }];
 }
 

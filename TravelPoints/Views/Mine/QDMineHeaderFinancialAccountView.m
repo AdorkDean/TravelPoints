@@ -182,8 +182,8 @@
     }];
     
     [_levelLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(_levelPic.mas_right).offset(-10);
-        make.centerY.equalTo(_levelPic);
+        make.right.equalTo(_levelPic.mas_right).offset(-13);
+        make.bottom.equalTo(_levelPic.mas_bottom).offset(-3);
     }];
     
     [_financialPic mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -268,4 +268,29 @@
     }];
 }
 
+- (void)loadFinancialViewWithModel:(QDMemberDTO *)member{
+    UserMoneyDTO *moneyDTO = member.userMoneyDTO;
+    UserCreditDTO *creditDTO = member.userCreditDTO;
+    NSString *userLevel = [NSString stringWithFormat:@"Lv%@", member.userLevel];
+    //当前经验值 两个等级
+    NSString *currentLevel = [NSString stringWithFormat:@"Lv%@", member.userLevel];
+    NSString *currentLevelValue = member.userLevelValue;
+    NSString *nextLevel = [NSString stringWithFormat:@"Lv%d", [member.userLevel intValue] + 1];
+    NSString *minLevelValue = [NSString stringWithFormat:@"(%@)",  member.minLevelValue];
+    NSString *maxLevelValue = [NSString stringWithFormat:@"(%@)", member.maxLevelValue];
+    self.info9Lab.text = [creditDTO.available stringValue];
+    self.balance.text = [NSString stringWithFormat:@"%.2f", [moneyDTO.available doubleValue]];
+    self.info2Lab.text = [NSString stringWithFormat:@"%d", [member.maxLevelValue intValue] - [member.userLevelValue intValue]];
+    self.levelLab.text = userLevel;
+    self.info4Lab.text = currentLevel;
+    self.info5Lab.text = minLevelValue;
+    self.info6Lab.text = nextLevel;
+    self.info7Lab.text = maxLevelValue;
+    self.balance.text = [NSString stringWithFormat:@"%.2f", [moneyDTO.available doubleValue]];
+    QDLog(@"用户等级 = %@, 用户当前经验值 = %@, 用户当前等级的最小值 = %@, 用户当前等级的最大值 = %@", userLevel, currentLevelValue, minLevelValue, maxLevelValue);
+    //进度值
+    CGFloat ss = [member.userLevelValue floatValue] / [member.maxLevelValue floatValue];
+    _progressView.progress = ss;
+    QDLog(@"ss = %.2f", ss);
+}
 @end

@@ -35,7 +35,6 @@
         [self addSubview:_info1Lab];
         
         _info2Lab = [[UILabel alloc] init];
-        _info2Lab.text = @"白金会员";
         _info2Lab.textColor = APP_BLACKCOLOR;
         _info2Lab.font = QDBoldFont(17);
         [self addSubview:_info2Lab];
@@ -47,7 +46,6 @@
         [self addSubview:_info3Lab];
         
         _info4Lab = [[UILabel alloc] init];
-        _info4Lab.text = @"75";
         _info4Lab.textColor = APP_BLUECOLOR;
         _info4Lab.font = QDFont(13);
         [self addSubview:_info4Lab];
@@ -70,25 +68,21 @@
         [self addSubview:_progressView];
         
         _leftLevelLab = [[UILabel alloc] init];
-        _leftLevelLab.text = @"LV5";
         _leftLevelLab.textColor = APP_BLACKCOLOR;
         _leftLevelLab.font = QDBoldFont(12);
         [self addSubview:_leftLevelLab];
         
         _leftLevel = [[UILabel alloc] init];
-        _leftLevel.text = @"(425)";
         _leftLevel.textColor = APP_GRAYTEXTCOLOR;
         _leftLevel.font = QDFont(11);
         [self addSubview:_leftLevel];
         
         _rightLevelLab = [[UILabel alloc] init];
-        _rightLevelLab.text = @"LV6";
         _rightLevelLab.textColor = APP_BLACKCOLOR;
         _rightLevelLab.font = QDBoldFont(12);
         [self addSubview:_rightLevelLab];
         
         _rightLevel = [[UILabel alloc] init];
-        _rightLevel.text = @"(500)";
         _rightLevel.textColor = APP_GRAYTEXTCOLOR;
         _rightLevel.font = QDFont(11);
         [self addSubview:_rightLevel];
@@ -302,5 +296,26 @@
         textField.text = [textField.text substringToIndex:textField.text.length-1];
     }
     _bottomLab2.text = [NSString stringWithFormat:@"%.lf", [_priceTF.text doubleValue] / _basePrice];
+}
+
+- (void)loadVipViewWithModel:(QDMemberDTO *)member{
+    //当前经验值 两个等级
+    NSString *currentLevel = [NSString stringWithFormat:@"Lv%@", member.userLevel];
+    NSString *currentLevelValue = member.userLevelValue;
+    NSString *nextLevel = [NSString stringWithFormat:@"Lv%d", [member.userLevel intValue] + 1];
+    NSString *minLevelValue = [NSString stringWithFormat:@"(%@)",  member.minLevelValue];
+    NSString *maxLevelValue = [NSString stringWithFormat:@"(%@)", member.maxLevelValue];
+    self.info2Lab.text = currentLevel;
+    self.info4Lab.text = [NSString stringWithFormat:@"%d", [member.maxLevelValue intValue] - [member.userLevelValue intValue]];
+
+    self.leftLevelLab.text = currentLevel;
+    self.leftLevel.text = minLevelValue;
+    
+    self.rightLevelLab.text = nextLevel;
+    self.rightLevel.text = maxLevelValue;
+    //进度值
+    CGFloat ss = [member.userLevelValue floatValue] / [member.maxLevelValue floatValue];
+    _progressView.progress = ss;
+    QDLog(@"ss = %.2f", ss);
 }
 @end

@@ -106,17 +106,12 @@
             if (responseObject.code == 0) {
                 if (responseObject.result != nil) {
                     _currentQDMemberTDO = [QDMemberDTO yy_modelWithDictionary:responseObject.result];
-                    UserMoneyDTO *moneyDTO = _currentQDMemberTDO.userMoneyDTO;
-                    UserCreditDTO *creditDTO = _currentQDMemberTDO.userCreditDTO;
                     if ([_currentQDMemberTDO.isYepay isEqualToString:@"0"] || _currentQDMemberTDO.isYepay == nil) {
-                        //未开通资金帐户
                         [QDUserDefaults setObject:@"1" forKey:@"loginType"];
-                        _noFinancialView.info9Lab.text = [creditDTO.available stringValue];
-                        _noFinancialView.balance.text = [NSString stringWithFormat:@"%.2f", [moneyDTO.available doubleValue]];
+                        [_noFinancialView loadViewWithModel:_currentQDMemberTDO];
                     }else{
                         [QDUserDefaults setObject:@"2" forKey:@"loginType"];
-                        _haveFinancialView.info9Lab.text = [creditDTO.available stringValue];
-                        _haveFinancialView.balance.text = [NSString stringWithFormat:@"%.2f",[moneyDTO.available doubleValue]];
+                        [_haveFinancialView loadFinancialViewWithModel:_currentQDMemberTDO];
                     }
                 }
             }else{

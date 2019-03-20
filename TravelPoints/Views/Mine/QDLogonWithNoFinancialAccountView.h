@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "SPButton.h"
 #import "MQGradientProgressView.h"
+#import "QDMemberDTO.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QDLogonWithNoFinancialAccountView : UIView
@@ -44,6 +45,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *balance;
 
 @property (nonatomic, strong) UIButton *openFinancialBtn;
-@end
 
+
+- (void)loadViewWithModel:(QDMemberDTO *)member;
+
+@end
 NS_ASSUME_NONNULL_END

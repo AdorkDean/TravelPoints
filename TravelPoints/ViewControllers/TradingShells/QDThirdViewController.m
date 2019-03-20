@@ -27,6 +27,10 @@
 #import "QDBuyOrSellViewController.h"
 #import "QDLoginAndRegisterVC.h"
 #import "QDTradeShellsSectionHeaderView.h"
+#import "TABAnimated.h"
+#import "TABViewAnimated.h"
+#import "UITableView+Animated.h"
+#import "UIView+TABControlAnimation.h"
 #define K_T_Cell @"t_cell"
 #define K_C_Cell @"c_cell"
 
@@ -241,13 +245,13 @@ typedef enum : NSUInteger {
                 }
             }else if (responseObject.code == 2){
                 [WXProgressHUD showErrorWithTittle:@"请先登录"];
-
             }else{
                 [_tableView reloadData];
                 [_tableView reloadEmptyDataSet];
                 [WXProgressHUD showErrorWithTittle:responseObject.message];
             }
         } failureBlock:^(NSError *error) {
+//            [_tableView tab_endAnimation];
             [_tableView reloadData];
             [_tableView reloadEmptyDataSet];
             [WXProgressHUD showErrorWithTittle:@"网络异常"];
@@ -273,6 +277,7 @@ typedef enum : NSUInteger {
     _tableView.backgroundColor = APP_WHITECOLOR;
     _tableView.delegate = self;
     _tableView.dataSource = self;
+//    [_tableView tab_startAnimation];
     _tableView.emptyDataSetSource = self;
     _tableView.emptyDataSetDelegate = self;
     _tableView.estimatedRowHeight = 0;

@@ -67,7 +67,6 @@
         [_financialPic addSubview:_info1Lab];
 
         _info2Lab = [[UILabel alloc] init];
-        _info2Lab.text = @"75";
         _info2Lab.textColor = APP_BLUECOLOR;
         _info2Lab.font = QDFont(13);
         [_financialPic addSubview:_info2Lab];
@@ -82,25 +81,21 @@
         [self addSubview:_progressView];
 
         _info4Lab = [[UILabel alloc] init];
-        _info4Lab.text = @"LV5";
         _info4Lab.textColor = APP_BLACKCOLOR;
         _info4Lab.font = QDFont(12);
         [_financialPic addSubview:_info4Lab];
         
         _info5Lab = [[UILabel alloc] init];
-        _info5Lab.text = @"(425)";
         _info5Lab.textColor = APP_GRAYTEXTCOLOR;
         _info5Lab.font = QDFont(11);
         [_financialPic addSubview:_info5Lab];
         
         _info6Lab = [[UILabel alloc] init];
-        _info6Lab.text = @"LV6";
         _info6Lab.textColor = APP_BLACKCOLOR;
         _info6Lab.font = QDFont(12);
         [_financialPic addSubview:_info6Lab];
         
         _info7Lab = [[UILabel alloc] init];
-        _info7Lab.text = @"(500)";
         _info7Lab.textColor = APP_GRAYTEXTCOLOR;
         _info7Lab.font = QDFont(11);
         [_financialPic addSubview:_info7Lab];
@@ -113,7 +108,6 @@
 
         
         _info9Lab = [[UILabel alloc] init];
-        _info9Lab.text = @"--";
         _info9Lab.textColor = APP_BLACKCOLOR;
         _info9Lab.font = QDBoldFont(18);
         [_financialPic addSubview:_info9Lab];
@@ -257,6 +251,32 @@
         make.height.mas_equalTo(SCREEN_HEIGHT*0.05);
         make.width.mas_equalTo(SCREEN_WIDTH*0.39);
     }];
+}
+
+- (void)loadViewWithModel:(QDMemberDTO *)member{
+    UserMoneyDTO *moneyDTO = member.userMoneyDTO;
+    UserCreditDTO *creditDTO = member.userCreditDTO;
+    NSString *userLevel = [NSString stringWithFormat:@"Lv%@", member.userLevel];
+    //当前经验值 两个等级
+    NSString *currentLevel = [NSString stringWithFormat:@"Lv%@", member.userLevel];
+    NSString *currentLevelValue = member.userLevelValue;
+    NSString *nextLevel = [NSString stringWithFormat:@"Lv%d", [member.userLevel intValue] + 1];
+    NSString *minLevelValue = [NSString stringWithFormat:@"(%@)",  member.minLevelValue];
+    NSString *maxLevelValue = [NSString stringWithFormat:@"(%@)", member.maxLevelValue];
+    self.info9Lab.text = [creditDTO.available stringValue];
+    self.balance.text = [NSString stringWithFormat:@"%.2f", [moneyDTO.available doubleValue]];
+    self.info2Lab.text = [NSString stringWithFormat:@"%d", [member.maxLevelValue intValue] - [member.userLevelValue intValue]];
+    self.levelLab.text = userLevel;
+    self.info4Lab.text = currentLevel;
+    self.info5Lab.text = minLevelValue;
+    self.info6Lab.text = nextLevel;
+    self.info7Lab.text = maxLevelValue;
+    self.balance.text = [NSString stringWithFormat:@"%.2f", [moneyDTO.available doubleValue]];
+    QDLog(@"用户等级 = %@, 用户当前经验值 = %@, 用户当前等级的最小值 = %@, 用户当前等级的最大值 = %@", userLevel, currentLevelValue, minLevelValue, maxLevelValue);
+    //进度值
+    CGFloat ss = [member.userLevelValue floatValue] / [member.maxLevelValue floatValue];
+    _progressView.progress = ss;
+    QDLog(@"ss = %.2f", ss);
 }
 
 @end

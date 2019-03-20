@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "SPButton.h"
 #import "MQGradientProgressView.h"
+#import "QDMemberDTO.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QDMineHeaderFinancialAccountView : UIView
@@ -46,7 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIButton *rechargeBtn;
 @property (nonatomic, strong) UIButton *withdrawBtn;
 
-
+- (void)loadFinancialViewWithModel:(QDMemberDTO *)memberDTO;
 
 @end
 

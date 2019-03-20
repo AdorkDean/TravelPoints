@@ -15,6 +15,7 @@
 #import "QDBuyOrSellViewController.h"
 #import "QDSettingViewController.h"
 #import "NSString+QDDecimalNumberHandler.h"
+#import "QDMemberDTO.h"
 #import "AppDelegate.h"
 @interface QDVipPurchaseVC ()<NewPagedFlowViewDelegate, NewPagedFlowViewDataSource, UITableViewDelegate, UITableViewDataSource>{
     QDVipPurchaseView *_vipPurchaseView;
@@ -88,6 +89,21 @@
     _cardArr = [[NSMutableArray alloc] init];
     [self.view addSubview:self.scrollView];
     _vipPurchaseView = [[QDVipPurchaseView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    NSString *str = [QDUserDefaults getObjectForKey:@"loginType"];
+    if ([str isEqualToString:@"0"] || str == nil) { //未登录
+        _vipPurchaseView.info1Lab.hidden = YES;
+        _vipPurchaseView.info2Lab.hidden = YES;
+        _vipPurchaseView.info3Lab.hidden = YES;
+        _vipPurchaseView.info4Lab.hidden = YES;
+        _vipPurchaseView.info5Lab.hidden = YES;
+        _vipPurchaseView.leftLevel.hidden = YES;
+        _vipPurchaseView.leftLevelLab.hidden = YES;
+        _vipPurchaseView.rightLevel.hidden = YES;
+        _vipPurchaseView.rightLevelLab.hidden = YES;
+        _vipPurchaseView.progressView.hidden = YES;
+    }else{
+        [self requestUserStatus];
+    }
     [self queryOrderPay:api_FindPurchaseInfos];
     [_vipPurchaseView.returnBtn addTarget:self action:@selector(popVC:) forControlEvents:UIControlEventTouchUpInside];
     [_vipPurchaseView.confirmBtn addTarget:self action:@selector(confirmToBuy:) forControlEvents:UIControlEventTouchUpInside];
@@ -108,6 +124,17 @@
     // Do any additional setup after loading the view.
 }
 
+#pragma mark - 请求用户信息
+- (void)requestUserStatus{
+    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_GetUserDetail params:nil successBlock:^(QDResponseObject *responseObject) {
+        if (responseObject.code == 0) {
+            QDMemberDTO *currentQDMemberTDO = [QDMemberDTO yy_modelWithDictionary:responseObject.result];
+            [_vipPurchaseView loadVipViewWithModel:currentQDMemberTDO];
+        }
+    } failureBlock:^(NSError *error) {
+        
+    }];
+}
 - (void)initBottomBtn{
     _confirmBtn = [[UIButton alloc] init];
     [_confirmBtn setTitle:@"确认购买" forState:UIControlStateNormal];
