@@ -14,6 +14,7 @@
 #import "QDLocationTopSelectView.h"
 #import "QDRefreshHeader.h"
 #import "QDRefreshFooter.h"
+#import "QDGifRefreshHeader.h"
 #import "QDCalendarViewController.h"
 #import "QDCitySelectedViewController.h"
 #import "QDBridgeViewController.h"
@@ -172,6 +173,21 @@
     _tableView.tableHeaderView = _headerView;
 //    [self.view addSubview:_tableView];
     self.view = _tableView;
+    // 设置回调（一旦进入刷新状态，就调用target的action，也就是调用self的loadNewData方法）
+//    QDGifRefreshHeader *header = [QDGifRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
+//
+//    // 隐藏时间
+//    header.lastUpdatedTimeLabel.hidden = YES;
+//
+//    // 隐藏状态
+//    header.stateLabel.hidden = YES;
+//
+//    // 马上进入刷新状态
+//    [header beginRefreshing];
+//
+//    // 设置header
+//    _tableView.mj_header = header;
+    
     _tableView.mj_header = [QDRefreshHeader headerWithRefreshingBlock:^{
         [self requestHotelInfoWithURL:api_GetHotelCondition andIsPushVC:NO];
     }];
@@ -183,6 +199,14 @@
     }];
 }
 
+- (void)loadNewData{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        // 刷新表格
+        
+        // 拿到当前的下拉刷新控件，结束刷新状态
+        [_tableView.mj_header endRefreshing];
+    });
+}
 - (void)startSearch:(UIButton *)sender{
     QDKeyWordsSearchVC *keyVC = [[QDKeyWordsSearchVC alloc] init];
     keyVC.playShellType = QDHotelReserve;    //酒店预订的类型
@@ -411,10 +435,7 @@
  */
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     
-    CLLocation *currentLocation = [locations lastObject];
-    // 获取当前所在的城市名
-    NSLog(@"经度=%f 纬度=%f 高度=%f", currentLocation.coordinate.latitude, currentLocation.coordinate.longitude, currentLocation.altitude);
-    
+    CLLocation *currentLocation = [locations lastObject];    
     //根据经纬度反向地理编译出地址信息
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
     [geocoder reverseGeocodeLocation:currentLocation completionHandler:^(NSArray *array, NSError *error) {

@@ -217,6 +217,9 @@
 		930F325C22408F75003741E1 /* UIView+TABLayoutSubviews.m in Sources */ = {isa = PBXBuildFile; fileRef = 930F324D22408F75003741E1 /* UIView+TABLayoutSubviews.m */; };
 		930F325D22408F75003741E1 /* TABBaseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 930F324E22408F75003741E1 /* TABBaseTableViewCell.m */; };
 		930F32732240CDEF003741E1 /* QDMallTableSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 930F32722240CDEF003741E1 /* QDMallTableSectionHeaderView.m */; };
+		930F327A2240F0BD003741E1 /* QDPopMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 930F32782240F0BD003741E1 /* QDPopMenuCell.m */; };
+		930F327B2240F0BD003741E1 /* QDPopMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 930F32792240F0BD003741E1 /* QDPopMenu.m */; };
+		930F327E224101FD003741E1 /* QDGifRefreshHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 930F327D224101FD003741E1 /* QDGifRefreshHeader.m */; };
 		93261118222388C000E3D0BA /* QDMyPurchaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93261117222388C000E3D0BA /* QDMyPurchaseCell.m */; };
 		9326111B222388E900E3D0BA /* QDMySaleOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9326111A222388E900E3D0BA /* QDMySaleOrderCell.m */; };
 		9326111E2223B6E800E3D0BA /* QDOrderField.m in Sources */ = {isa = PBXBuildFile; fileRef = 9326111D2223B6E800E3D0BA /* QDOrderField.m */; };
@@ -706,6 +709,12 @@
 		930F326D2240B8F3003741E1 /* TABDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TABDefine.h; sourceTree = "<group>"; };
 		930F32712240CDEF003741E1 /* QDMallTableSectionHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDMallTableSectionHeaderView.h; sourceTree = "<group>"; };
 		930F32722240CDEF003741E1 /* QDMallTableSectionHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDMallTableSectionHeaderView.m; sourceTree = "<group>"; };
+		930F32762240F0BD003741E1 /* QDPopMenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QDPopMenuCell.h; sourceTree = "<group>"; };
+		930F32772240F0BD003741E1 /* QDPopMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QDPopMenu.h; sourceTree = "<group>"; };
+		930F32782240F0BD003741E1 /* QDPopMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QDPopMenuCell.m; sourceTree = "<group>"; };
+		930F32792240F0BD003741E1 /* QDPopMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QDPopMenu.m; sourceTree = "<group>"; };
+		930F327C224101FD003741E1 /* QDGifRefreshHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDGifRefreshHeader.h; sourceTree = "<group>"; };
+		930F327D224101FD003741E1 /* QDGifRefreshHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDGifRefreshHeader.m; sourceTree = "<group>"; };
 		93261116222388C000E3D0BA /* QDMyPurchaseCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDMyPurchaseCell.h; sourceTree = "<group>"; };
 		93261117222388C000E3D0BA /* QDMyPurchaseCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDMyPurchaseCell.m; sourceTree = "<group>"; };
 		93261119222388E900E3D0BA /* QDMySaleOrderCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDMySaleOrderCell.h; sourceTree = "<group>"; };
@@ -883,10 +892,12 @@
 		3B04DF5421F85001001909CD /* QDRefreshView */ = {
 			isa = PBXGroup;
 			children = (
-				3B04DF5521F85001001909CD /* QDRefreshFooter.m */,
-				3B04DF5621F85001001909CD /* QDRefreshHeader.m */,
-				3B04DF5721F85001001909CD /* QDRefreshHeader.h */,
 				3B04DF5821F85001001909CD /* QDRefreshFooter.h */,
+				3B04DF5521F85001001909CD /* QDRefreshFooter.m */,
+				3B04DF5721F85001001909CD /* QDRefreshHeader.h */,
+				3B04DF5621F85001001909CD /* QDRefreshHeader.m */,
+				930F327C224101FD003741E1 /* QDGifRefreshHeader.h */,
+				930F327D224101FD003741E1 /* QDGifRefreshHeader.m */,
 			);
 			path = QDRefreshView;
 			sourceTree = "<group>";
@@ -1446,6 +1457,7 @@
 		3BD9518621EC5A2200CD0627 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				930F32742240F0B6003741E1 /* PublicView */,
 				93D2D677222F53FA00CCC61D /* Share */,
 				93E30EDD2228BE7A003CA771 /* RotePlanHeaderView */,
 				3BCA5816221959CA00DCEEF7 /* VipPurchase */,
@@ -1835,6 +1847,25 @@
 				930F326D2240B8F3003741E1 /* TABDefine.h */,
 			);
 			path = TABAnimation;
+			sourceTree = "<group>";
+		};
+		930F32742240F0B6003741E1 /* PublicView */ = {
+			isa = PBXGroup;
+			children = (
+				930F32752240F0BD003741E1 /* QDPopMenu */,
+			);
+			path = PublicView;
+			sourceTree = "<group>";
+		};
+		930F32752240F0BD003741E1 /* QDPopMenu */ = {
+			isa = PBXGroup;
+			children = (
+				930F32762240F0BD003741E1 /* QDPopMenuCell.h */,
+				930F32772240F0BD003741E1 /* QDPopMenu.h */,
+				930F32782240F0BD003741E1 /* QDPopMenuCell.m */,
+				930F32792240F0BD003741E1 /* QDPopMenu.m */,
+			);
+			path = QDPopMenu;
 			sourceTree = "<group>";
 		};
 		93744F4E223B46B0000708A3 /* QDGCDTimer */ = {
@@ -2298,12 +2329,15 @@
 				3B7636772217DF2700F77007 /* QDFilterTypeTwoView.m in Sources */,
 				935D55A6223F7BFE00E97FC9 /* QDMallViewController.m in Sources */,
 				3B40EBB521EC953E00656C1F /* YYTextParser.m in Sources */,
+				930F327E224101FD003741E1 /* QDGifRefreshHeader.m in Sources */,
 				930F323122408258003741E1 /* RootFirstCollectionCell.m in Sources */,
 				3B0DC07E220034B30056C318 /* SDWebImageDownloaderOperation.m in Sources */,
+				930F327A2240F0BD003741E1 /* QDPopMenuCell.m in Sources */,
 				3B40EBAC21EC953E00656C1F /* YYTextEffectWindow.m in Sources */,
 				3BF92D7322168E300019B941 /* RootTableCell.m in Sources */,
 				935D559D223F7AFC00E97FC9 /* QDPlayingViewController.m in Sources */,
 				93D2D636222E82F900CCC61D /* QDKeyWordsHomePageVC.m in Sources */,
+				930F327B2240F0BD003741E1 /* QDPopMenu.m in Sources */,
 				3B04DF5321F83E6F001909CD /* QDRoomTypeDTO.m in Sources */,
 				930F325A22408F75003741E1 /* TABManagerMethod.m in Sources */,
 				93DC043022374B5400485100 /* QDFourViewController.m in Sources */,

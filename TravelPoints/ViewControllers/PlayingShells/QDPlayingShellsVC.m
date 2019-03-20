@@ -647,9 +647,7 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     
     CLLocation *currentLocation = [locations lastObject];
-    // 获取当前所在的城市名
-    NSLog(@"经度=%f 纬度=%f 高度=%f", currentLocation.coordinate.latitude, currentLocation.coordinate.longitude, currentLocation.altitude);
-    
+    // 获取当前所在的城市名    
     //根据经纬度反向地理编译出地址信息
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
     [geocoder reverseGeocodeLocation:currentLocation completionHandler:^(NSArray *array, NSError *error) {

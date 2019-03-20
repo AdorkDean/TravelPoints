@@ -10,12 +10,14 @@
 #import "UIButton+ImageTitleStyle.h"
 static char *const btnKey = "btnKey";
 
-@interface QDMallTableSectionHeaderView()
+@interface QDMallTableSectionHeaderView()<UITableViewDelegate, UITableViewDataSource>
 {
     BOOL show;
     BOOL baoyou;
 }
 
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) UIView *backView;
 @end
 
 @implementation QDMallTableSectionHeaderView
@@ -26,6 +28,7 @@ static char *const btnKey = "btnKey";
         [_allBtn setImage:[UIImage imageNamed:@"icon_arrowDown"] forState:UIControlStateNormal];
         [_allBtn setTitle:@"全部" forState:UIControlStateNormal];
         [_allBtn setTitleColor:APP_BLACKCOLOR forState:UIControlStateNormal];
+//        [_allBtn addTarget:self action:@selector(selectCategory:) forControlEvents:UIControlEventTouchUpInside];
         _allBtn.titleLabel.font = QDFont(14);
         [self addSubview:_allBtn];
         
@@ -59,7 +62,24 @@ static char *const btnKey = "btnKey";
     }
     return self;
 }
+- (UIView *)backView{
+    if (!_backView) {
+        _backView = [[UIView alloc] initWithFrame:CGRectMake(0, 40, SCREEN_WIDTH, SCREEN_HEIGHT)];
+        _backView.backgroundColor = APP_BLACKCOLOR;
+        _backView.alpha = 0.3;
+    }
+    return _backView;
+}
 
+- (UITableView *)tableView{
+    if (!_tableView) {
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 40, SCREEN_WIDTH, 393) style:UITableViewStylePlain];
+        _tableView.backgroundColor = APP_BLUECOLOR;
+        _tableView.delegate = self;
+        _tableView.dataSource = self;
+    }
+    return _tableView;
+}
 - (void)selectClick:(UIButton *)btn{
     NSString *str;
     MallBtnClickType type = MallBtnClickTypeNormal ;
@@ -147,4 +167,44 @@ static char *const btnKey = "btnKey";
         [_baoyouBtn setImage:[UIImage imageNamed:@"icon_baoyouNormal"] forState:UIControlStateNormal];
     }
 }
+
+- (void)selectCategory:(UIButton *)sender{
+    sender.selected = !sender.selected;
+    if (sender.selected) {
+        [self addSubview:self.backView];
+        [sender setTitleColor:APP_BLUECOLOR forState:UIControlStateNormal];
+        [sender setImage:[UIImage imageNamed:@"icon_blueArrorDown"] forState:UIControlStateNormal];
+        [self addSubview:self.tableView];
+    }else{
+        [self.backView removeFromSuperview];
+        [sender setTitleColor:APP_BLACKCOLOR forState:UIControlStateNormal];
+        [sender setImage:[UIImage imageNamed:@"icon_arrowDown"] forState:UIControlStateNormal];
+        [self.tableView removeFromSuperview];
+    }
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 1;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 10;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 56;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    static NSString *identifier = @"UITableViewCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+    }
+    cell.userInteractionEnabled = YES;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.textLabel.text = @"会员等级1";
+    return cell;
+}
+
 @end

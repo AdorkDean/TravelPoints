@@ -18,6 +18,7 @@
 #import "QDSearchViewController.h"
 #import <IQKeyboardManager/IQKeyboardManager.h>
 #import "QDMallTableSectionHeaderView.h"
+#import "QDPopMenu.h"
 //预定酒店 定制游 商城
 @interface QDMallViewController ()<UITableViewDelegate, UITableViewDataSource, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource>{
     QDPlayShellType _playShellType;
@@ -25,6 +26,7 @@
     QDMallTableHeaderView *_mallHeaderView;
     NSMutableArray *_mallInfoArr;
     QDMallTableSectionHeaderView *_sectionHeaderView;
+    UIView *_backView;
 }
 @property (nonatomic, getter=isLoading) BOOL loading;
 @property (nonatomic, strong) NSMutableArray *categoryArr;
@@ -175,11 +177,41 @@
     
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    _sectionHeaderView = [[QDMallTableSectionHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 120)];
-    _sectionHeaderView.backgroundColor = APP_GRAYBACKGROUNDCOLOR;
-    [_sectionHeaderView.allBtn addTarget:self action:@selector(allAction:) forControlEvents:UIControlEventTouchUpInside];
-    [_sectionHeaderView.baoyouBtn addTarget:self action:@selector(baoyouAction:) forControlEvents:UIControlEventTouchUpInside];
+    return self.sectionHeaderView;
+}
+
+- (QDMallTableSectionHeaderView *)sectionHeaderView{
+    if (!_sectionHeaderView) {
+        _sectionHeaderView = [[QDMallTableSectionHeaderView alloc] init];
+        _sectionHeaderView.backgroundColor = APP_GRAYBACKGROUNDCOLOR;
+        [_sectionHeaderView.allBtn addTarget:self action:@selector(allAction:) forControlEvents:UIControlEventTouchUpInside];
+        [_sectionHeaderView.baoyouBtn addTarget:self action:@selector(baoyouAction:) forControlEvents:UIControlEventTouchUpInside];
+        [_sectionHeaderView.allBtn addTarget:self action:@selector(chooseCategory:) forControlEvents:UIControlEventTouchUpInside];
+    }
     return _sectionHeaderView;
+}
+
+- (void)chooseCategory:(UIButton *)sender{
+//    QDPopMenu *menu = [[QDPopMenu alloc] init];
+    sender.selected = !sender.selected;
+    if (sender.selected) {
+        [self.view addSubview:self.backView];
+        [self.backView bringSubviewToFront:self.view];
+        [sender setTitleColor:APP_BLUECOLOR forState:UIControlStateNormal];
+        [sender setImage:[UIImage imageNamed:@"icon_blueArrorDown"] forState:UIControlStateNormal];
+    }else{
+        [self.backView removeFromSuperview];
+        [sender setTitleColor:APP_BLACKCOLOR forState:UIControlStateNormal];
+        [sender setImage:[UIImage imageNamed:@"icon_arrowDown"] forState:UIControlStateNormal];
+    }
+}
+- (UIView *)backView{
+    if (!_backView) {
+        _backView = [[UIView alloc] initWithFrame:CGRectMake(0, 40, SCREEN_WIDTH, SCREEN_HEIGHT)];
+        _backView.backgroundColor = APP_BLACKCOLOR;
+        _backView.alpha = 0.3;
+    }
+    return _backView;
 }
 
 - (void)baoyouAction:(UIButton *)sender{
@@ -189,6 +221,8 @@
         QDLog(@"不包邮");
     }
 }
+
+
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 40;
 }
@@ -335,4 +369,5 @@
     _loading = loading;
     [_tableView reloadEmptyDataSet];
 }
+
 @end
