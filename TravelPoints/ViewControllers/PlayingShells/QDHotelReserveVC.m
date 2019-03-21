@@ -26,17 +26,18 @@
 #import "TABViewAnimated.h"
 #import "UITableView+Animated.h"
 #import "UIView+TABControlAnimation.h"
+#import "QDOrderField.h"
+#import <TYAlertView.h>
 //预定酒店 定制游 商城
 @interface QDHotelReserveVC ()<UITableViewDelegate, UITableViewDataSource, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource, CLLocationManagerDelegate, SendDateStrDelegate, UITextFieldDelegate, getChoosedAreaDelegate>{
     UITableView *_tableView;
     QDHotelReserveTableHeaderView *_headerView;    
     NSMutableArray *_hotelListInfoArr;
     NSMutableArray *_hotelImgArr;
-    
     NSMutableArray *_dzyListInfoArr;
     NSMutableArray *_dzyImgArr;
-    
     NSMutableArray *_mallInfoArr;
+    QD_LOCATION_STATUS _locationStatus;
 }
 
 @property (nonatomic, strong) CLLocationManager *locationManager;
@@ -267,7 +268,6 @@
     [self presentViewController:locationVC animated:YES completion:nil];
 }
 
-
 - (void)getChoosedAreaName:(NSString *)areaStr{
     _headerView.locationLab.text = areaStr;
 }
@@ -375,7 +375,6 @@
 
 - (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView
 {
-//    return nil;
     NSString *text = @"请检查您的手机网络后点击重试";
     NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
     paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
@@ -435,7 +434,7 @@
  *  @param locations : 装着CLLocation对象
  */
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
-    
+    _locationStatus = QD_LOCATION_SUCCESS;
     CLLocation *currentLocation = [locations lastObject];    
     //根据经纬度反向地理编译出地址信息
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
@@ -459,10 +458,21 @@
 }
 
 -(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
-    
+    _locationStatus = QD_LOCATION_FAILED;
+    TYAlertView *alertView = [[TYAlertView alloc] initWithTitle:@"尚未打开定位" message:@"是否在设置中打开定位?"];
+    [alertView addAction:[TYAlertAction actionWithTitle:@"取消" style:TYAlertActionStyleCancel handler:^(TYAlertAction *action) {
+        [WXProgressHUD hideHUD];
+    }]];
+    [alertView addAction:[TYAlertAction actionWithTitle:@"确定" style:TYAlertActionStyleDestructive handler:^(TYAlertAction *action) {
+//        []
+    }]];
+    [alertView setButtonTitleColor:APP_BLUECOLOR forActionStyle:TYAlertActionStyleCancel forState:UIControlStateNormal];
+    [alertView setButtonTitleColor:APP_BLUECOLOR forActionStyle:TYAlertActionStyleBlod forState:UIControlStateNormal];
+    [alertView setButtonTitleColor:APP_BLUECOLOR forActionStyle:TYAlertActionStyleDestructive forState:UIControlStateNormal];
+    [alertView show];
     if ([error code] == kCLErrorDenied){
         //访问被拒绝
-        [WXProgressHUD showErrorWithTittle:@"访问被拒绝"];
+        [WXProgressHUD showErrorWithTittle:@"位置访问被拒绝"];
         _headerView.locationLab.text = @"定位失败";
     }
     if ([error code] == kCLErrorLocationUnknown) {

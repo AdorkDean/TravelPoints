@@ -36,6 +36,11 @@
       _pic.layer.cornerRadius = 12;
       [_backView addSubview:_pic];
       
+      //默认这好住图片
+      _typePic = [[UIImageView alloc] init];
+      _typePic.image = [UIImage imageNamed:@"hotel_zhz"];
+      [_backView addSubview:_typePic];
+      
       _descLab = [[UILabel alloc] init];
       _descLab.text = @"揭秘中国设计NO.1究竟是怎样一个宝藏酒店?";
       _descLab.textColor = APP_WHITECOLOR;
@@ -43,15 +48,10 @@
       _descLab.numberOfLines = 0;
       [_backView addSubview:_descLab];
       
+      //默认这好住图片
       _typePic = [[UIImageView alloc] init];
-      _typePic.image = [UIImage imageNamed:@"typePic"];
+      _typePic.image = [UIImage imageNamed:@"hotel_zhz"];
       [_backView addSubview:_typePic];
-      
-      _typeLab = [[UILabel alloc] init];
-      _typeLab.text = @"这好住";
-      _typeLab.textColor = APP_WHITECOLOR;
-      _typeLab.font = QDFont(16);
-      [_backView addSubview:_typeLab];
       
       _titleLab = [[UILabel alloc] init];
       _titleLab.text = @"中国大神设计酒店云南TOP10排行榜";
@@ -108,7 +108,6 @@
 
 - (void)layoutSubviews{
     [super layoutSubviews];
-    
     [_backView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.contentView.mas_top).offset(5);
         make.bottom.equalTo(self.contentView.mas_bottom).offset(-(5));
@@ -121,7 +120,6 @@
         make.height.mas_equalTo(SCREEN_HEIGHT*0.43);
     }];
 
-//    11
     [_descLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_pic.mas_top).offset(SCREEN_HEIGHT*0.03);
         make.left.equalTo(_pic.mas_left).offset(SCREEN_WIDTH*0.24);
@@ -136,10 +134,6 @@
     [_typePic mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_backView);
         make.left.equalTo(self.contentView.mas_left).offset(SCREEN_WIDTH*0.05);
-    }];
-    
-    [_typeLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.center.equalTo(_typePic);
     }];
     
     [_grayBackView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -190,11 +184,11 @@
 
 - (void)loadCellDataWithModel:(RanklistDTO *)model{
     if ([model.listTypeContent isEqualToString:@"酒店"]) {
-        self.typeLab.text = @"这好住";
+        self.typePic.image = [UIImage imageNamed:@"hotel_zhz"];
     }else if ([model.listTypeContent isEqualToString:@"景区"]){
-        self.typeLab.text = @"这好玩";
+        self.typePic.image = [UIImage imageNamed:@"hotel_zhw"];
     }else{
-        self.typeLab.text = @"这好吃";
+        self.typePic.image = [UIImage imageNamed:@"hotel_zhc"];
     }
     self.descLab.text = model.topicName;
     self.titleLab.text = model.topicDescribe;

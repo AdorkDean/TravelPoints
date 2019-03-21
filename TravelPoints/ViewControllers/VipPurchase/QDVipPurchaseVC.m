@@ -101,6 +101,8 @@
         _vipPurchaseView.rightLevel.hidden = YES;
         _vipPurchaseView.rightLevelLab.hidden = YES;
         _vipPurchaseView.progressView.hidden = YES;
+        _vipPurchaseView.leftCircleImg.hidden = YES;
+        _vipPurchaseView.rightCircleImg.hidden = YES;
     }else{
         [self requestUserStatus];
     }

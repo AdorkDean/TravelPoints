@@ -12,7 +12,7 @@
 
 @property (nonatomic, strong) UIView *backView;
 @property (nonatomic, strong) UILabel *descLab;
-@property (nonatomic, strong) UILabel *typeLab; //这好住
+@property (nonatomic, strong) UIImageView *typePic; //酒店类型+图片
 
 @property (nonatomic, strong) UIImageView *pic;
 @property (nonatomic, strong) UILabel *titleLab;

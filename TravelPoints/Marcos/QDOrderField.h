@@ -36,6 +36,11 @@ typedef enum: NSUInteger{
 }QD_ORDER_DEALSTATUS;
 
 typedef enum: NSUInteger{
+    QD_LOCATION_SUCCESS = 0,    //成功
+    QD_LOCATION_FAILED = 1      //失败
+}QD_LOCATION_STATUS;
+
+typedef enum: NSUInteger{
     QD_WaitForPurchase = 0,    //待付款
     QD_HavePurchased = 1,      //已付款
     QD_HaveFinished = 2,       //已完成

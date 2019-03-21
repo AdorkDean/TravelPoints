@@ -672,7 +672,7 @@
     
     if ([error code] == kCLErrorDenied){
         //访问被拒绝
-        [WXProgressHUD showErrorWithTittle:@"访问被拒绝"];
+        [WXProgressHUD showErrorWithTittle:@"位置访问被拒绝"];
         _headerView.locationLab.text = @"定位失败";
     }
     if ([error code] == kCLErrorLocationUnknown) {

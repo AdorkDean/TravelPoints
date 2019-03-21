@@ -23,13 +23,16 @@
 #import "TABViewAnimated.h"
 #import "UITableView+Animated.h"
 #import "UIView+TABControlAnimation.h"
+#import "QDOrderField.h"
+
 //预定酒店 定制游 商城
-@interface QDMallViewController ()<UITableViewDelegate, UITableViewDataSource, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource, QDPopMenuDelegate>{
+@interface QDMallViewController ()<UITableViewDelegate, UITableViewDataSource, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource, QDPopMenuDelegate, UITextFieldDelegate>{
     QDPlayShellType _playShellType;
     UITableView *_tableView;
     QDMallTableHeaderView *_mallHeaderView;
     NSMutableArray *_mallInfoArr;
     QDMallTableSectionHeaderView *_sectionHeaderView;
+    QDEmptyType _emptyType;
 }
 @property (nonatomic, getter=isLoading) BOOL loading;
 @property (nonatomic, strong) NSMutableArray *categoryArr;
@@ -43,6 +46,8 @@
 @property (nonatomic, strong) NSString *sortType;       //排序方式：desc降序，asc升序
 
 @property (nonatomic, strong) NSString *baoyou; //是否包邮
+
+@property (nonatomic, strong) NSString *keywords;   //搜索关键词
 @end
 
 @implementation QDMallViewController
@@ -112,6 +117,7 @@
     _sortColumn = @"";
     _sortType = @"";
     _baoyou = @"";
+    _keywords = @"";
     _categoryArr = [[NSMutableArray alloc] init];
     _categoryIDArr = [[NSMutableArray alloc] init];
     self.view.backgroundColor = APP_WHITECOLOR;
@@ -158,11 +164,12 @@
     }
     NSDictionary * dic1 = @{
                             @"pageNum":@1,
-                            @"pageSize":@10,
+                            @"pageSize":@20,
                             @"catId":_catId,
                             @"sortColumn":_sortColumn,
                             @"sortType":_sortType,
-                            @"isShipping":_baoyou
+                            @"isShipping":_baoyou,
+                            @"keywords":_keywords
                             };
     [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_GetMallList params:dic1 successBlock:^(QDResponseObject *responseObject) {
         if (responseObject.code == 0) {
@@ -175,6 +182,10 @@
                 }
                 QDLog(@"_mallInfoArr = %@", _mallInfoArr);
                 [_tableView reloadData];
+            }else{
+                _emptyType = QDNODataError;
+                [_tableView reloadData];
+                [_tableView reloadEmptyDataSet];
             }
         }else{
             [WXProgressHUD showErrorWithTittle:responseObject.message];
@@ -182,6 +193,7 @@
         [_tableView tab_endAnimation];
         [self endRefreshing];
     } failureBlock:^(NSError *error) {
+        _emptyType = QDNODataError;
         [_tableView reloadData];
         [_tableView reloadEmptyDataSet];
         [_tableView tab_endAnimation];
@@ -203,7 +215,9 @@
     _mallHeaderView = [[QDMallTableHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.08)];
     _mallHeaderView.backgroundColor = APP_WHITECOLOR;
     [_mallHeaderView.carBtn addTarget:self action:@selector(addToCar:) forControlEvents:UIControlEventTouchUpInside];
-//    _tableView.tableHeaderView = _mallHeaderView;
+    _mallHeaderView.inputTF.returnKeyType = UIReturnKeySearch;  //变为搜索按钮
+    _mallHeaderView.inputTF.delegate = self;
+    _tableView.tableHeaderView = _mallHeaderView;
     self.view = _tableView;
 //    [self.view addSubview:_tableView];
     _tableView.mj_header = [QDRefreshHeader headerWithRefreshingBlock:^{
@@ -338,7 +352,11 @@
         return [UIImage imageNamed:@"loading_imgBlue" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
     }
     else {
-        return [UIImage imageNamed:@"icon_noConnect"];
+        if (_emptyType == QDNODataError) {
+            return [UIImage imageNamed:@"icon_nodata"];
+        }else if(_emptyType == QDNetworkError){
+            return [UIImage imageNamed:@"icon_noConnect"];
+        }
     }
     return nil;
 }
@@ -356,22 +374,31 @@
 }
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView{
-    NSString *text = @"页面加载失败";
+    NSString *text;
+    if (_emptyType == QDNODataError) {
+        text = @"暂无数据";
+    }else{
+        text = @"页面加载失败";
+    }
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:16.0f],
                                  NSForegroundColorAttributeName: APP_BLUECOLOR};
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
 
 - (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state{
-    NSString *text = @"重新加载";
-    NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
-    paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
-    paragraphStyle.alignment = NSTextAlignmentCenter;
-    
-    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:18],
-                                 NSForegroundColorAttributeName: APP_WHITECOLOR,
-                                 NSParagraphStyleAttributeName: paragraphStyle};
-    return [[NSMutableAttributedString alloc] initWithString:text attributes:attributes];
+    if (_emptyType == QDNODataError) {
+        return nil;
+    }else{
+        NSString *text = @"重新加载";
+        NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
+        paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+        paragraphStyle.alignment = NSTextAlignmentCenter;
+        
+        NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:18],
+                                     NSForegroundColorAttributeName: APP_WHITECOLOR,
+                                     NSParagraphStyleAttributeName: paragraphStyle};
+        return [[NSMutableAttributedString alloc] initWithString:text attributes:attributes];
+    }
 }
 
 - (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state{
@@ -388,15 +415,19 @@
 
 - (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView
 {
-    NSString *text = @"请检查您的手机网络后点击重试";
-    NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
-    paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
-    paragraphStyle.alignment = NSTextAlignmentCenter;
-    
-    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:14],
-                                 NSForegroundColorAttributeName: APP_GRAYLINECOLOR,
-                                 NSParagraphStyleAttributeName: paragraphStyle};
-    return [[NSMutableAttributedString alloc] initWithString:text attributes:attributes];
+    if (_emptyType == QDNODataError) {
+        return nil;
+    }else{
+        NSString *text = @"请检查您的手机网络后点击重试";
+        NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
+        paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+        paragraphStyle.alignment = NSTextAlignmentCenter;
+        
+        NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:14],
+                                     NSForegroundColorAttributeName: APP_GRAYLINECOLOR,
+                                     NSParagraphStyleAttributeName: paragraphStyle};
+        return [[NSMutableAttributedString alloc] initWithString:text attributes:attributes];
+    }
 }
 #pragma mark - DZNEmptyDataSetDelegate Methods
 
@@ -462,5 +493,13 @@
 
 - (void)dismissPopMenu:(QDPopMenu *)popMenu{
     QDLog(@"dismissPopMenu");
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    QDLog(@"搜索商品");
+    [_mallHeaderView.inputTF resignFirstResponder];
+    _keywords = _mallHeaderView.inputTF.text;
+    [self requestMallList];
+    return YES;
 }
 @end

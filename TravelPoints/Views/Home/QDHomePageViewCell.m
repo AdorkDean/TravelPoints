@@ -25,10 +25,8 @@
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-        
         _backView = [[UIView alloc] init];
         _backView.backgroundColor = APP_WHITECOLOR;
-        
         _backView.layer.cornerRadius = 8;
         [self addShadowToView:self.contentView withColor:APP_GRAYCOLOR];
         [self.contentView addSubview:_backView];
@@ -43,6 +41,11 @@
         _descLab.font = QDBoldFont(17);
         _descLab.numberOfLines = 0;
         [_backView addSubview:_descLab];
+        
+        //默认这好住图片
+        _typePic = [[UIImageView alloc] init];
+        _typePic.image = [UIImage imageNamed:@"hotel_zhz"];
+        [_backView addSubview:_typePic];
         
         _titleLab = [[UILabel alloc] init];
         _titleLab.text = @"中国大神设计酒店云南TOP10排行榜";
@@ -122,6 +125,11 @@
     
     [_textOnView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.equalTo(_grayBackView);
+    }];
+    
+    [_typePic mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_backView);
+        make.left.equalTo(_backView.mas_left).offset(20);
     }];
 
     [_descLab mas_makeConstraints:^(MASConstraintMaker *make) {

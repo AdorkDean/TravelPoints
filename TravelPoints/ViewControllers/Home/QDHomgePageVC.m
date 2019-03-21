@@ -209,7 +209,7 @@ static NSString *cellIdentifier = @"CellIdentifier";
 - (void)theNewPage:(UIButton *)sender{
     QDSearchViewController *searchVC = [[QDSearchViewController alloc] init];
     searchVC.playShellType = QDRankList;
-    searchVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+//    searchVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     [self presentViewController:searchVC animated:YES completion:nil];
 }
 
@@ -307,9 +307,9 @@ static NSString *cellIdentifier = @"CellIdentifier";
 //        [_homePageTopView.iconBtn addTarget:self action:@selector(homeMapPage:) forControlEvents:UIControlEventTouchUpInside];
         _tableView.tableHeaderView = _homePageTopView;
         
-        UITapGestureRecognizer *doubleTapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleDoubleTap:)];
-        doubleTapGesture.numberOfTapsRequired =2;
-        [_homePageTopView addGestureRecognizer:doubleTapGesture];
+//        UITapGestureRecognizer *doubleTapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleDoubleTap:)];
+//        doubleTapGesture.numberOfTapsRequired =2;
+//        [_homePageTopView addGestureRecognizer:doubleTapGesture];
         
         [self.view addSubview:_tableView];
         _tableView.mj_header = [QDRefreshHeader headerWithRefreshingBlock:^{
@@ -557,7 +557,7 @@ static NSString *cellIdentifier = @"CellIdentifier";
 -(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
     if ([error code] == kCLErrorDenied){
         //访问被拒绝
-        [WXProgressHUD showErrorWithTittle:@"访问被拒绝"];
+        [WXProgressHUD showErrorWithTittle:@"位置访问被拒绝"];
         [_homePageTopView.addressBtn setTitle:@"定位失败" forState:UIControlStateNormal];
     }
     if ([error code] == kCLErrorLocationUnknown) {

@@ -6,7 +6,6 @@
 //  Copyright © 2019 Charles Ran. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import "QDOrderField.h"
 NS_ASSUME_NONNULL_BEGIN
 

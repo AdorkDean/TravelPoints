@@ -29,12 +29,17 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self.navigationController.navigationBar setHidden:YES];
     [self.navigationController.tabBarController.tabBar setHidden:YES];
+//    self.tabBarController.tabBar.frame = CGRectZero;
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    [self.navigationController.tabBarController.tabBar setHidden:NO];
+//    CGRect frame = self.tabBarController.tabBar.frame;
+//    frame.origin.y = SCREEN_HEIGHT - frame.size.height;
+//    frame.size = CGSizeMake(frame.size.width, frame.size.height);
+//    self.tabBarController.tabBar.frame = frame;
 }
 
 
@@ -58,14 +63,17 @@
     
     _dzyListInfoArr = [[NSMutableArray alloc] init];
     _dzyImgArr = [[NSMutableArray alloc] init];
-    self.view.backgroundColor = APP_WHITECOLOR;
+    self.view.backgroundColor = APP_BLUECOLOR;
     _topCancelView = [[QDHomeTopCancelView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.1)];
     _topCancelView.inputTF.returnKeyType = UIReturnKeySearch;
     _topCancelView.inputTF.delegate = self;
     _topCancelView.backgroundColor = APP_BLUECOLOR;
+    UIView *vv = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    vv.backgroundColor = APP_WHITECOLOR;
+    [self.view addSubview:vv];
     [_topCancelView.cancelBtn addTarget:self action:@selector(dismissView:) forControlEvents:UIControlEventTouchUpInside];
     [_topCancelView.searchBtn addTarget:self action:@selector(searchAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_topCancelView];
+    [vv addSubview:_topCancelView];
 }
 
 - (void)getHotelList:(SearchHotelListResult)block{

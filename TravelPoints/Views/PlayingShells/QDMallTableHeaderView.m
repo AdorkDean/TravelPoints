@@ -18,9 +18,9 @@
         [self addSubview:_topLineView];
         
         _topBackView = [[UIView alloc] init];
-        _topBackView.backgroundColor = [UIColor colorWithHexString:@"#EEF3F6"];
+        _topBackView.backgroundColor = APP_GRAYBUTTONCOLOR;
         _topBackView.layer.masksToBounds = YES;
-        _topBackView.layer.cornerRadius = 8;
+        _topBackView.layer.cornerRadius = 18;
         [self addSubview:_topBackView];
         
         _imgView = [[UIImageView alloc] init];
