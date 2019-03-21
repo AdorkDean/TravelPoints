@@ -365,7 +365,9 @@
 #pragma mark - 邀请好友
 - (void)inviteFriends{
     if ([[QDUserDefaults getObjectForKey:@"loginType"] isEqualToString:@"0"]) {
-        [WXProgressHUD showErrorWithTittle:@"未登录"];
+        QDLoginAndRegisterVC *loginVC = [[QDLoginAndRegisterVC alloc] init];
+        loginVC.pushVCTag = @"0";
+        [self presentViewController:loginVC animated:YES completion:nil];
     }else{
         [self pushBridgeVCWithStr:[[QDUserDefaults getObjectForKey:@"QD_TESTJSURL"] stringByAppendingString:JS_INVITEFRIENDS]];
     }

@@ -91,9 +91,6 @@ static NSString * identifier = @"collecitonView_cell";
     cell.backgroundColor = [UIColor lightGrayColor];
     cell.layer.masksToBounds = YES;
     cell.layer.cornerRadius = 5.0f;
-
-    
-    NSLog(@"Cell:%f--%f",cell.frame.size.width,cell.frame.size.height);
     return cell;
 }
 

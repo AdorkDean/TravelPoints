@@ -41,11 +41,6 @@
       _typePic.image = [UIImage imageNamed:@"hotel_zhz"];
       [_backView addSubview:_typePic];
       
-      _typeLab = [[UILabel alloc] init];
-      _typeLab.textColor = APP_WHITECOLOR;
-      _typeLab.font = QDFont(16);
-      [_backView addSubview:_typeLab];
-      
       _descLab = [[UILabel alloc] init];
       _descLab.text = @"揭秘中国设计NO.1究竟是怎样一个宝藏酒店?";
       _descLab.textColor = APP_WHITECOLOR;
@@ -57,6 +52,11 @@
       _typePic = [[UIImageView alloc] init];
       _typePic.image = [UIImage imageNamed:@"hotel_zhz"];
       [_backView addSubview:_typePic];
+      
+      _typeLab = [[UILabel alloc] init];
+      _typeLab.textColor = APP_WHITECOLOR;
+      _typeLab.font = QDFont(16);
+      [_backView addSubview:_typeLab];
       
       _titleLab = [[UILabel alloc] init];
       _titleLab.text = @"中国大神设计酒店云南TOP10排行榜";
@@ -142,8 +142,7 @@
     }];
     
     [_typeLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(_typePic);
-        make.top.equalTo(_typePic.mas_top).offset(20);
+        make.center.equalTo(_typePic);
     }];
     
     [_grayBackView mas_makeConstraints:^(MASConstraintMaker *make) {

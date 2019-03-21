@@ -21,7 +21,6 @@
 		3B0CD6E221F05E850020824A /* UIColor+Extention.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0CD6DF21F05E840020824A /* UIColor+Extention.m */; };
 		3B0CD6E321F05E850020824A /* Macro.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0CD6E121F05E850020824A /* Macro.m */; };
 		3B0CD6E621F0620C0020824A /* QDHotelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0CD6E521F0620C0020824A /* QDHotelTableViewCell.m */; };
-		3B0CD6EB21F0689B0020824A /* QDHotelVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0CD6EA21F0689B0020824A /* QDHotelVC.m */; };
 		3B0CD71021F08C360020824A /* QDHotelSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0CD70F21F08C360020824A /* QDHotelSearchView.m */; };
 		3B0CD71321F08E030020824A /* QDHotelHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0CD71221F08E030020824A /* QDHotelHeaderView.m */; };
 		3B0CD72321F16F280020824A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B0CD72221F16F280020824A /* CoreGraphics.framework */; };
@@ -185,7 +184,6 @@
 		3BD9517421EC2A1C00CD0627 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3BD9517221EC2A1C00CD0627 /* LaunchScreen.storyboard */; };
 		3BD9517721EC2A1C00CD0627 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD9517621EC2A1C00CD0627 /* main.m */; };
 		3BD9519221EC5A4A00CD0627 /* QDHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD9519121EC5A4A00CD0627 /* QDHomeViewController.m */; };
-		3BD9519521EC604500CD0627 /* QDRestaurantViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD9519421EC604500CD0627 /* QDRestaurantViewController.m */; };
 		3BEA2C2F21EF3883001C52C4 /* WebViewJavascriptBridgeBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BEA2C2D21EF3882001C52C4 /* WebViewJavascriptBridgeBase.m */; };
 		3BEA2C3221EF39AC001C52C4 /* WebViewJavascriptBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BEA2C3021EF39AC001C52C4 /* WebViewJavascriptBridge.m */; };
 		3BEA2C3521EF4511001C52C4 /* WKWebViewJavascriptBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BEA2C3321EF4511001C52C4 /* WKWebViewJavascriptBridge.m */; };
@@ -220,6 +218,8 @@
 		930F327A2240F0BD003741E1 /* QDPopMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 930F32782240F0BD003741E1 /* QDPopMenuCell.m */; };
 		930F327B2240F0BD003741E1 /* QDPopMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 930F32792240F0BD003741E1 /* QDPopMenu.m */; };
 		930F327E224101FD003741E1 /* QDGifRefreshHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 930F327D224101FD003741E1 /* QDGifRefreshHeader.m */; };
+		93116E7B2243767500BE3879 /* QDHomeSearchVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93116E7A2243767500BE3879 /* QDHomeSearchVC.m */; };
+		93116E7E2243794900BE3879 /* QDSearchResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93116E7D2243794900BE3879 /* QDSearchResultViewController.m */; };
 		93261118222388C000E3D0BA /* QDMyPurchaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93261117222388C000E3D0BA /* QDMyPurchaseCell.m */; };
 		9326111B222388E900E3D0BA /* QDMySaleOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9326111A222388E900E3D0BA /* QDMySaleOrderCell.m */; };
 		9326111E2223B6E800E3D0BA /* QDOrderField.m in Sources */ = {isa = PBXBuildFile; fileRef = 9326111D2223B6E800E3D0BA /* QDOrderField.m */; };
@@ -284,6 +284,10 @@
 		93E30EF42228CBA5003CA771 /* MANaviRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E30EEE2228CBA4003CA771 /* MANaviRoute.m */; };
 		93E30EF7222915CB003CA771 /* QDNavigationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E30EF6222915CB003CA771 /* QDNavigationService.m */; };
 		93E30EFA22295BCB003CA771 /* QDPriceRangeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E30EF922295BCB003CA771 /* QDPriceRangeView.m */; };
+		93EEE8F4224380F300D4EC02 /* QDHomeRankListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93EEE8F3224380F300D4EC02 /* QDHomeRankListVC.m */; };
+		93EEE8F72243810700D4EC02 /* QDHomeZDYListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93EEE8F62243810700D4EC02 /* QDHomeZDYListVC.m */; };
+		93EEE8FA2243811E00D4EC02 /* QDHomeHotelListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93EEE8F92243811E00D4EC02 /* QDHomeHotelListVC.m */; };
+		93EEE8FD2243813A00D4EC02 /* QDHomeMallListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93EEE8FC2243813A00D4EC02 /* QDHomeMallListVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -316,8 +320,6 @@
 		3B0CD6E121F05E850020824A /* Macro.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Macro.m; sourceTree = "<group>"; };
 		3B0CD6E421F0620C0020824A /* QDHotelTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDHotelTableViewCell.h; sourceTree = "<group>"; };
 		3B0CD6E521F0620C0020824A /* QDHotelTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDHotelTableViewCell.m; sourceTree = "<group>"; };
-		3B0CD6E921F0689B0020824A /* QDHotelVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDHotelVC.h; sourceTree = "<group>"; };
-		3B0CD6EA21F0689B0020824A /* QDHotelVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDHotelVC.m; sourceTree = "<group>"; };
 		3B0CD70E21F08C360020824A /* QDHotelSearchView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDHotelSearchView.h; sourceTree = "<group>"; };
 		3B0CD70F21F08C360020824A /* QDHotelSearchView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDHotelSearchView.m; sourceTree = "<group>"; };
 		3B0CD71121F08E030020824A /* QDHotelHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDHotelHeaderView.h; sourceTree = "<group>"; };
@@ -631,8 +633,6 @@
 		3BD9517621EC2A1C00CD0627 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3BD9519021EC5A4A00CD0627 /* QDHomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDHomeViewController.h; sourceTree = "<group>"; };
 		3BD9519121EC5A4A00CD0627 /* QDHomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDHomeViewController.m; sourceTree = "<group>"; };
-		3BD9519321EC604500CD0627 /* QDRestaurantViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDRestaurantViewController.h; sourceTree = "<group>"; };
-		3BD9519421EC604500CD0627 /* QDRestaurantViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDRestaurantViewController.m; sourceTree = "<group>"; };
 		3BD951ED21EC75C700CD0627 /* QDTravelPoints.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDTravelPoints.pch; sourceTree = "<group>"; };
 		3BEA2C2D21EF3882001C52C4 /* WebViewJavascriptBridgeBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewJavascriptBridgeBase.m; sourceTree = "<group>"; };
 		3BEA2C2E21EF3883001C52C4 /* WebViewJavascriptBridgeBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewJavascriptBridgeBase.h; sourceTree = "<group>"; };
@@ -715,6 +715,10 @@
 		930F32792240F0BD003741E1 /* QDPopMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QDPopMenu.m; sourceTree = "<group>"; };
 		930F327C224101FD003741E1 /* QDGifRefreshHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDGifRefreshHeader.h; sourceTree = "<group>"; };
 		930F327D224101FD003741E1 /* QDGifRefreshHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDGifRefreshHeader.m; sourceTree = "<group>"; };
+		93116E792243767500BE3879 /* QDHomeSearchVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDHomeSearchVC.h; sourceTree = "<group>"; };
+		93116E7A2243767500BE3879 /* QDHomeSearchVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDHomeSearchVC.m; sourceTree = "<group>"; };
+		93116E7C2243794900BE3879 /* QDSearchResultViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDSearchResultViewController.h; sourceTree = "<group>"; };
+		93116E7D2243794900BE3879 /* QDSearchResultViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDSearchResultViewController.m; sourceTree = "<group>"; };
 		93261116222388C000E3D0BA /* QDMyPurchaseCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDMyPurchaseCell.h; sourceTree = "<group>"; };
 		93261117222388C000E3D0BA /* QDMyPurchaseCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDMyPurchaseCell.m; sourceTree = "<group>"; };
 		93261119222388E900E3D0BA /* QDMySaleOrderCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDMySaleOrderCell.h; sourceTree = "<group>"; };
@@ -840,6 +844,14 @@
 		93E30EF6222915CB003CA771 /* QDNavigationService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDNavigationService.m; sourceTree = "<group>"; };
 		93E30EF822295BCB003CA771 /* QDPriceRangeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDPriceRangeView.h; sourceTree = "<group>"; };
 		93E30EF922295BCB003CA771 /* QDPriceRangeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDPriceRangeView.m; sourceTree = "<group>"; };
+		93EEE8F2224380F300D4EC02 /* QDHomeRankListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDHomeRankListVC.h; sourceTree = "<group>"; };
+		93EEE8F3224380F300D4EC02 /* QDHomeRankListVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDHomeRankListVC.m; sourceTree = "<group>"; };
+		93EEE8F52243810700D4EC02 /* QDHomeZDYListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDHomeZDYListVC.h; sourceTree = "<group>"; };
+		93EEE8F62243810700D4EC02 /* QDHomeZDYListVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDHomeZDYListVC.m; sourceTree = "<group>"; };
+		93EEE8F82243811E00D4EC02 /* QDHomeHotelListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDHomeHotelListVC.h; sourceTree = "<group>"; };
+		93EEE8F92243811E00D4EC02 /* QDHomeHotelListVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDHomeHotelListVC.m; sourceTree = "<group>"; };
+		93EEE8FB2243813A00D4EC02 /* QDHomeMallListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDHomeMallListVC.h; sourceTree = "<group>"; };
+		93EEE8FC2243813A00D4EC02 /* QDHomeMallListVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDHomeMallListVC.m; sourceTree = "<group>"; };
 		C2211E9E3C715FBAD2B67682 /* libPods-TravelPoints.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TravelPoints.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -1556,9 +1568,7 @@
 				3BF92D5B22165E030019B941 /* PlayingShells */,
 				3B0CD73D21F1DD3D0020824A /* Settings */,
 				3BCE3C2021EC83D8005D518F /* LoginAndRegister */,
-				3BD9519D21EC611200CD0627 /* Hotel */,
 				3BD9518C21EC5A2200CD0627 /* Home */,
-				3BD9518D21EC5A2200CD0627 /* Restaurant */,
 				3BD9518E21EC5A2200CD0627 /* Mine */,
 			);
 			path = ViewControllers;
@@ -1567,6 +1577,7 @@
 		3BD9518C21EC5A2200CD0627 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				93116E782243765300BE3879 /* HomeSearchViewControllers */,
 				3BD9519021EC5A4A00CD0627 /* QDHomeViewController.h */,
 				3BD9519121EC5A4A00CD0627 /* QDHomeViewController.m */,
 				3B1BC01321FB260E0005C415 /* QDHotelsInAreaViewController.h */,
@@ -1577,15 +1588,6 @@
 				3B52107B2220D04E003BEA9B /* QDSearchViewController.m */,
 			);
 			path = Home;
-			sourceTree = "<group>";
-		};
-		3BD9518D21EC5A2200CD0627 /* Restaurant */ = {
-			isa = PBXGroup;
-			children = (
-				3BD9519321EC604500CD0627 /* QDRestaurantViewController.h */,
-				3BD9519421EC604500CD0627 /* QDRestaurantViewController.m */,
-			);
-			path = Restaurant;
 			sourceTree = "<group>";
 		};
 		3BD9518E21EC5A2200CD0627 /* Mine */ = {
@@ -1601,15 +1603,6 @@
 				3B2C1F8D21F732AD00DD94CD /* QDMineInfoViewController.m */,
 			);
 			path = Mine;
-			sourceTree = "<group>";
-		};
-		3BD9519D21EC611200CD0627 /* Hotel */ = {
-			isa = PBXGroup;
-			children = (
-				3B0CD6E921F0689B0020824A /* QDHotelVC.h */,
-				3B0CD6EA21F0689B0020824A /* QDHotelVC.m */,
-			);
-			path = Hotel;
 			sourceTree = "<group>";
 		};
 		3BD9519E21EC611D00CD0627 /* Hotel */ = {
@@ -1866,6 +1859,25 @@
 				930F32792240F0BD003741E1 /* QDPopMenu.m */,
 			);
 			path = QDPopMenu;
+			sourceTree = "<group>";
+		};
+		93116E782243765300BE3879 /* HomeSearchViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				93116E792243767500BE3879 /* QDHomeSearchVC.h */,
+				93116E7A2243767500BE3879 /* QDHomeSearchVC.m */,
+				93116E7C2243794900BE3879 /* QDSearchResultViewController.h */,
+				93116E7D2243794900BE3879 /* QDSearchResultViewController.m */,
+				93EEE8F2224380F300D4EC02 /* QDHomeRankListVC.h */,
+				93EEE8F3224380F300D4EC02 /* QDHomeRankListVC.m */,
+				93EEE8F52243810700D4EC02 /* QDHomeZDYListVC.h */,
+				93EEE8F62243810700D4EC02 /* QDHomeZDYListVC.m */,
+				93EEE8F82243811E00D4EC02 /* QDHomeHotelListVC.h */,
+				93EEE8F92243811E00D4EC02 /* QDHomeHotelListVC.m */,
+				93EEE8FB2243813A00D4EC02 /* QDHomeMallListVC.h */,
+				93EEE8FC2243813A00D4EC02 /* QDHomeMallListVC.m */,
+			);
+			path = HomeSearchViewControllers;
 			sourceTree = "<group>";
 		};
 		93744F4E223B46B0000708A3 /* QDGCDTimer */ = {
@@ -2195,6 +2207,7 @@
 				93D2D67A222F540F00CCC61D /* QDShareView.m in Sources */,
 				3B1DFDFB21F2CDDF007D4B12 /* SYHeaderView.m in Sources */,
 				930F32732240CDEF003741E1 /* QDMallTableSectionHeaderView.m in Sources */,
+				93EEE8F72243810700D4EC02 /* QDHomeZDYListVC.m in Sources */,
 				93E30EE32228CA8E003CA771 /* ErrorInfoUtility.m in Sources */,
 				3B40EBBE21EC953E00656C1F /* UIView+YYText.m in Sources */,
 				3B0DC07F220034B30056C318 /* NSData+ImageContentType.m in Sources */,
@@ -2209,10 +2222,10 @@
 				3BCE3C1D21EC7FED005D518F /* QDServiceErrorHandler.m in Sources */,
 				3B7636922218E71C00F77007 /* QDHomgePageVC.m in Sources */,
 				3B04DF5A21F85002001909CD /* QDRefreshHeader.m in Sources */,
-				3B0CD6EB21F0689B0020824A /* QDHotelVC.m in Sources */,
 				3BCE3C2821EC84A3005D518F /* QDRegisterView.m in Sources */,
 				3BC3C86C221BAB7300E68D85 /* QDMallTableHeaderView.m in Sources */,
 				3B2C1F8521F5D89500DD94CD /* RangePickerCell.m in Sources */,
+				93EEE8FD2243813A00D4EC02 /* QDHomeMallListVC.m in Sources */,
 				3B7636832217F44F00F77007 /* QDOrderDetailView.m in Sources */,
 				3B0DC04B21FFDB4E0056C318 /* PooCodeView.m in Sources */,
 				3BD9516C21EC2A1800CD0627 /* ViewController.m in Sources */,
@@ -2230,6 +2243,7 @@
 				3B40EBF121EDB79600656C1F /* GBverifyButton.m in Sources */,
 				3B40EC0221EDE33300656C1F /* UIColor+CustomFunctions.m in Sources */,
 				3B1DFDFE21F2CEF8007D4B12 /* SYTableViewCell.m in Sources */,
+				93116E7B2243767500BE3879 /* QDHomeSearchVC.m in Sources */,
 				3B0DC083220034B30056C318 /* UIView+WebCacheOperation.m in Sources */,
 				3B1DFE1F21F32D1F007D4B12 /* QDRestaurantViewCell.m in Sources */,
 				93E30EBE22256002003CA771 /* RanklistDTO.m in Sources */,
@@ -2265,6 +2279,7 @@
 				93E30EC12225630D003CA771 /* ImageDTO.m in Sources */,
 				3B40EBBC21EC953E00656C1F /* UIPasteboard+YYText.m in Sources */,
 				3B40EBAB21EC953E00656C1F /* YYTextContainerView.m in Sources */,
+				93EEE8FA2243811E00D4EC02 /* QDHomeHotelListVC.m in Sources */,
 				3BCA581F221A600600DCEEF7 /* QDMineSectionHeaderView.m in Sources */,
 				93BB7AAF2220F97F0061FB9C /* QDHomeTopCancelView.m in Sources */,
 				3B04DF4D21F83E17001909CD /* QDBankaccountDTO.m in Sources */,
@@ -2352,7 +2367,6 @@
 				3BF92D7B2216BEFB0019B941 /* SnailQuickMaskPopups.m in Sources */,
 				3B2ADD6B21FF28A400F62D63 /* TFDropDownMenuView.m in Sources */,
 				93D400452221527E00633479 /* QDTradingViewController.m in Sources */,
-				3BD9519521EC604500CD0627 /* QDRestaurantViewController.m in Sources */,
 				3B0CD71021F08C360020824A /* QDHotelSearchView.m in Sources */,
 				3B7636802217EAC800F77007 /* QDPickUpOrderCell.m in Sources */,
 				3B1DFE1621F31588007D4B12 /* QDHotelTypeView.m in Sources */,
@@ -2383,6 +2397,7 @@
 				3BC3C86F221BB14B00E68D85 /* QDMallModel.m in Sources */,
 				3B7636AF221900C700F77007 /* HYBCardCollectionViewCell.m in Sources */,
 				3B40EBC321EC956300656C1F /* QDUserDefaults.m in Sources */,
+				93116E7E2243794900BE3879 /* QDSearchResultViewController.m in Sources */,
 				93D2D5B1222A149D00CCC61D /* SFDualWaySlider.m in Sources */,
 				3B7636BD22193A5C00F77007 /* ZLCollectionView.m in Sources */,
 				93BB7AB222212D710061FB9C /* WaterLayou.m in Sources */,
@@ -2397,6 +2412,7 @@
 				3B40EBB721EC953E00656C1F /* YYTextArchiver.m in Sources */,
 				3B04DF8621F9AA66001909CD /* CustomTravelDTO.m in Sources */,
 				3B2C1F8E21F732AD00DD94CD /* QDMineInfoViewController.m in Sources */,
+				93EEE8F4224380F300D4EC02 /* QDHomeRankListVC.m in Sources */,
 				3BCA5819221959DE00DCEEF7 /* QDVipPurchaseView.m in Sources */,
 				3B1BC00C21FAEDF10005C415 /* RadialCircleAnnotationView.m in Sources */,
 				93E30EF42228CBA5003CA771 /* MANaviRoute.m in Sources */,

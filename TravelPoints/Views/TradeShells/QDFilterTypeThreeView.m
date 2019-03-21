@@ -95,7 +95,7 @@
         [_confirmBtn setTitle:@"确定" forState:UIControlStateNormal];
         [_confirmBtn setTitleColor:APP_WHITECOLOR forState:UIControlStateNormal];
         CAGradientLayer *gradientLayer =  [CAGradientLayer layer];
-        gradientLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH*0.5, SCREEN_HEIGHT*0.087);
+        gradientLayer.frame = CGRectMake(0, 0, 187, 58);
         gradientLayer.startPoint = CGPointMake(0, 0);
         gradientLayer.endPoint = CGPointMake(1, 0);
         gradientLayer.locations = @[@(0.5),@(1.0)];//渐变点
@@ -221,15 +221,14 @@
     [_resetbtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self);
         make.left.equalTo(self.mas_left);
-        make.width.mas_equalTo(SCREEN_WIDTH/2);
-        make.height.mas_equalTo(SCREEN_HEIGHT*0.087);
+        make.width.mas_equalTo(187);
+        make.height.mas_equalTo(58);
     }];
     
     [_confirmBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_bottom).offset(-(SCREEN_HEIGHT*0.09));
         make.left.equalTo(_resetbtn.mas_right);
-        make.width.mas_equalTo(SCREEN_WIDTH/2);
-        make.height.equalTo(_resetbtn);
+        make.width.and.height.equalTo(_resetbtn);
     }];
     
     [_bottomLine mas_makeConstraints:^(MASConstraintMaker *make) {

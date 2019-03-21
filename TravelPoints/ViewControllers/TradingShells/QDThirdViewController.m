@@ -105,7 +105,9 @@ typedef enum : NSUInteger {
 
 - (void)loginSucceeded:(NSNotification *)noti{
     QDLog(@"登录成功");
+    [WXProgressHUD showHUD];
     [self requestMyOrdersData];
+    [WXProgressHUD hideHUD];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -195,6 +197,7 @@ typedef enum : NSUInteger {
             }
         } failureBlock:^(NSError *error) {
             _emptyType = QDNetworkError;
+            self.loading = NO;
             [_tableView reloadData];
             [_tableView reloadEmptyDataSet];
             [self endRefreshing];

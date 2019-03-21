@@ -13,7 +13,7 @@
 #import "ZLCollectionView.h"
 #import "QDVipPurchaseVC.h"
 #import "NavigationView.h"
-#import "QDSearchViewController.h"
+#import "QDHomeSearchVC.h"
 #import "QDOrderField.h"
 #import "RanklistDTO.h"
 #import <DZNEmptyDataSet/UIScrollView+EmptyDataSet.h>
@@ -26,6 +26,7 @@
 #import "AppDelegate.h"
 #import "LQPopUpView.h"
 #import "QDPlayingViewController.h"
+#import "QDHomeSearchVC.h"
 #import <TYAlertView.h>
 
 
@@ -206,13 +207,6 @@ static NSString *cellIdentifier = @"CellIdentifier";
     }];
 }
 
-- (void)theNewPage:(UIButton *)sender{
-    QDSearchViewController *searchVC = [[QDSearchViewController alloc] init];
-    searchVC.playShellType = QDRankList;
-//    searchVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    [self presentViewController:searchVC animated:YES completion:nil];
-}
-
 //会员申购
 - (void)hysgAction:(UIButton *)sender{
     switch (sender.tag) {
@@ -342,9 +336,7 @@ static NSString *cellIdentifier = @"CellIdentifier";
 
 #pragma mark - 首页搜索
 - (void)customerTourSearchAction:(UIButton *)sender{
-    QDSearchViewController *searchVC = [[QDSearchViewController alloc] init];
-    searchVC.playShellType = QDRankList;
-    searchVC.rankList = _rankTotalArr;
+    QDHomeSeachVC *searchVC = [[QDHomeSeachVC alloc] init];
     [self.navigationController pushViewController:searchVC animated:YES];
 }
 
