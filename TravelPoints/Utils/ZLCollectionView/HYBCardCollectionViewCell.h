@@ -19,7 +19,6 @@
 @property (nonatomic, strong) UILabel *warnLab1;
 @property (nonatomic, strong) UILabel *hates;
 
-@property (nonatomic, strong) UIImageView *typePic;
 @property (nonatomic, strong) UIImageView *robbotPic;
 
 @property (nonatomic, strong) UIView *grayBackView;

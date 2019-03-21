@@ -229,8 +229,7 @@
     _yyLabel.textAlignment = NSTextAlignmentCenter;
 }
 
-#pragma mark - 用户登录
-- (void)userLogin:(UIButton *)sender{
+- (void)login{
     [WXProgressHUD showHUD];
     [[QDServiceClient shareClient] loginWithUserName:_loginView.phoneTF.text password:_loginView.userNameTF.text userType:@"member" successBlock:^(QDResponseObject *responseObject) {
         if (responseObject.code == 0) {
@@ -250,6 +249,22 @@
         }
     } failureBlock:^(NSError *error) {
         [WXProgressHUD hideHUD];
+        [WXProgressHUD showErrorWithTittle:@"网络异常"];
+    }];
+}
+
+#pragma mark - 用户登录
+- (void)userLogin:(UIButton *)sender{
+    //先验证手机是否注册
+    NSDictionary * dic = @{@"legalPhone":_loginView.phoneTF.text};
+    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_VerificationIsRegister params:dic successBlock:^(QDResponseObject *responseObject) {
+        if (responseObject.code == 0) {
+            QDLog(@"responseObject");
+            [self login];
+        }else{
+            [WXProgressHUD showErrorWithTittle:responseObject.message];
+        }
+    } failureBlock:^(NSError *error) {
         [WXProgressHUD showErrorWithTittle:@"网络异常"];
     }];
 }

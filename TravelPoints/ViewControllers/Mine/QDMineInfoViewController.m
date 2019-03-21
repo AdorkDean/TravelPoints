@@ -246,6 +246,10 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     _sectionHeaderView = [[QDMineSectionHeaderView alloc] init];
     [_sectionHeaderView.btn1 addTarget:self action:@selector(ordersAction:) forControlEvents:UIControlEventTouchUpInside];
+    [_sectionHeaderView.btn2 addTarget:self action:@selector(ordersAction:) forControlEvents:UIControlEventTouchUpInside];
+    [_sectionHeaderView.btn3 addTarget:self action:@selector(ordersAction:) forControlEvents:UIControlEventTouchUpInside];
+    [_sectionHeaderView.btn4 addTarget:self action:@selector(ordersAction:) forControlEvents:UIControlEventTouchUpInside];
+
     _sectionHeaderView.backgroundColor = APP_WHITECOLOR;
     return _sectionHeaderView;
 }
@@ -370,6 +374,8 @@
 - (void)ordersAction:(UIButton *)sender{
     if ([[QDUserDefaults getObjectForKey:@"loginType"] isEqualToString:@"0"]) {
         [WXProgressHUD showErrorWithTittle:@"未登录"];
+        QDLoginAndRegisterVC *loginVC = [[QDLoginAndRegisterVC alloc] init];
+        [self presentViewController:loginVC animated:YES completion:nil];
     }else{
         [self pushBridgeVCWithStr:[[QDUserDefaults getObjectForKey:@"QD_JSURL"] stringByAppendingString:JS_ORDERS]];
     }

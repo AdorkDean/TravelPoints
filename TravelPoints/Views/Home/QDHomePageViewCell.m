@@ -26,7 +26,6 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         
-        
         _backView = [[UIView alloc] init];
         _backView.backgroundColor = APP_WHITECOLOR;
         
