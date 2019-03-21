@@ -11,6 +11,7 @@
 #import "QDCurrentLocationView.h"
 #import <DZNEmptyDataSet/UIScrollView+EmptyDataSet.h>
 #import "QDHotelsInAreaViewController.h"
+#import <TYAlertView.h>
 @interface QDCitySelectedViewController ()<UITextFieldDelegate, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource, UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) QDLocationTopSelectView *topView;
 @property (nonatomic, strong) QDCurrentLocationView *currentLocationView;
@@ -400,8 +401,6 @@
         UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"定位不成功 ,请确认开启定位" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         [alertView show];
     }
-    // 开始定位
-    [_locationManager startUpdatingLocation];
 }
 
 #pragma mark - CLLocationManagerDelegate
@@ -438,7 +437,6 @@
 }
 
 -(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
-    
     if ([error code] == kCLErrorDenied){
         //访问被拒绝
         [WXProgressHUD showErrorWithTittle:@"位置访问被拒绝"];
@@ -450,6 +448,17 @@
         _currentLocationView.detailLocationLab.text = @"无法获取位置信息,定位失败";
         QDLog(@"kCLErrorLocationUnknown");
     }
+    TYAlertView *alertView = [[TYAlertView alloc] initWithTitle:@"尚未打开定位" message:@"是否在设置中打开定位?"];
+    [alertView addAction:[TYAlertAction actionWithTitle:@"取消" style:TYAlertActionStyleCancel handler:^(TYAlertAction *action) {
+    }]];
+    [alertView addAction:[TYAlertAction actionWithTitle:@"确定" style:TYAlertActionStyleDestructive handler:^(TYAlertAction *action) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+    }]];
+    
+    [alertView setButtonTitleColor:APP_BLUECOLOR forActionStyle:TYAlertActionStyleCancel forState:UIControlStateNormal];
+    [alertView setButtonTitleColor:APP_BLUECOLOR forActionStyle:TYAlertActionStyleBlod forState:UIControlStateNormal];
+    [alertView setButtonTitleColor:APP_BLUECOLOR forActionStyle:TYAlertActionStyleDestructive forState:UIControlStateNormal];
+    [alertView show];
 }
 
 - (void)setBackView:(UIView *)backView {

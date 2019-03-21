@@ -28,6 +28,7 @@
 #import "QDSettingViewController.h"
 #import "QDBridgeViewController.h"
 #import "QDLoginAndRegisterVC.h"
+#import "QDOrderField.h"
 
 #define K_T_Cell @"t_cell"
 #define K_C_Cell @"c_cell"
@@ -47,6 +48,7 @@ typedef enum : NSUInteger {
     int _pageSize;
     int _pageNum;
     int _totalPage;
+    QDEmptyType _emptyType;
 }
 @property (nonatomic, strong) UIImageView *emptyView;
 @property (nonatomic, strong) UILabel *tipLab;
@@ -229,6 +231,29 @@ QD_ManualCanceled = 4      //手工取消
         }];
     }
 }
+#pragma mark - 用户是否登录
+- (void)isLogin{
+    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_IsLogin params:nil successBlock:^(QDResponseObject *responseObject) {
+        NSString *cookie = [NSString stringWithFormat:@"%@", [QDUserDefaults getCookies]];
+        if ([responseObject.result intValue] == 0) {
+            _emptyType = QDNODataError;
+            QDLog(@"未登录, cookie = %@", cookie);
+            [QDUserDefaults setObject:@"0" forKey:@"loginType"];
+            QDLoginAndRegisterVC *loginVC = [[QDLoginAndRegisterVC alloc] init];
+            loginVC.pushVCTag = @"0";
+            [self presentViewController:loginVC animated:YES completion:nil];
+            [QDUserDefaults removeCookies]; //未登录的时候移除cookie
+        }else if ([responseObject.result intValue] == 1){
+            QDLog(@"已登录,cookie = %@", cookie);
+            [self requestMyZhaiDanData];
+        }
+    } failureBlock:^(NSError *error) {
+        _emptyType = QDNetworkError;
+        [_tableView reloadData];
+        [_tableView reloadEmptyDataSet];
+        [WXProgressHUD showErrorWithTittle:@"网络异常"];
+    }];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -240,7 +265,7 @@ QD_ManualCanceled = 4      //手工取消
     _totalPage = 0; //总页数默认
     self.view.backgroundColor = APP_WHITECOLOR;
     [self initTableView];
-    [self requestMyZhaiDanData];
+    [self isLogin];
 }
 
 - (void)setTopView{
@@ -456,7 +481,6 @@ QD_ManualCanceled = 4      //手工取消
         return;
     }
     _loading = loading;
-    [_tableView reloadEmptyDataSet];
 }
 
 #pragma mark - DZNEmtpyDataSet Delegate
@@ -465,11 +489,14 @@ QD_ManualCanceled = 4      //手工取消
         return [UIImage imageNamed:@"loading_imgBlue" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
     }
     else {
-        return [UIImage imageNamed:@"icon_noConnect"];
+        if (_emptyType == QDNODataError) {
+            return [UIImage imageNamed:@"icon_nodata"];
+        }else if(_emptyType == QDNetworkError){
+            return [UIImage imageNamed:@"icon_noConnect"];
+        }
     }
     return nil;
 }
-
 - (CAAnimation *)imageAnimationForEmptyDataSet:(UIScrollView *)scrollView
 {
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform"];
@@ -483,22 +510,42 @@ QD_ManualCanceled = 4      //手工取消
 }
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView{
-    NSString *text = @"页面加载失败";
+    NSString *text;
+    if (_emptyType == QDNetworkError) {
+        text = @"页面加载失败";
+    }else{
+        NSString *str = [QDUserDefaults getObjectForKey:@"loginType"];
+        if ([str isEqualToString:@"0"] || str == nil) { //未登录
+            text = @"未登录";
+        }else{
+            text = @"暂无数据";
+        }
+    }
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:16.0f],
                                  NSForegroundColorAttributeName: APP_BLUECOLOR};
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
 
 - (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state{
-    NSString *text = @"重新加载";
-    NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
-    paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
-    paragraphStyle.alignment = NSTextAlignmentCenter;
-    
-    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:18],
-                                 NSForegroundColorAttributeName: APP_WHITECOLOR,
-                                 NSParagraphStyleAttributeName: paragraphStyle};
-    return [[NSMutableAttributedString alloc] initWithString:text attributes:attributes];
+    NSString *text;
+    if (_emptyType == QDNetworkError) {
+        return nil;
+    }else{
+        NSString *str = [QDUserDefaults getObjectForKey:@"loginType"];
+        if ([str isEqualToString:@"0"] || str == nil) { //未登录
+            text = @"前往登录";
+        }else{
+            text = @"暂无数据";
+        }
+        NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
+        paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+        paragraphStyle.alignment = NSTextAlignmentCenter;
+        
+        NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:18],
+                                     NSForegroundColorAttributeName: APP_WHITECOLOR,
+                                     NSParagraphStyleAttributeName: paragraphStyle};
+        return [[NSMutableAttributedString alloc] initWithString:text attributes:attributes];
+    }
 }
 
 - (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state{
@@ -513,15 +560,19 @@ QD_ManualCanceled = 4      //手工取消
 
 - (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView
 {
-    NSString *text = @"请检查您的手机网络后点击重试";
-    NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
-    paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
-    paragraphStyle.alignment = NSTextAlignmentCenter;
-    
-    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:14],
-                                 NSForegroundColorAttributeName: APP_GRAYLINECOLOR,
-                                 NSParagraphStyleAttributeName: paragraphStyle};
-    return [[NSMutableAttributedString alloc] initWithString:text attributes:attributes];
+    if (_emptyType == QDNODataError) {
+        return nil;
+    }else{
+        NSString *text = @"请检查您的手机网络后点击重试";
+        NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
+        paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+        paragraphStyle.alignment = NSTextAlignmentCenter;
+        
+        NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:14],
+                                     NSForegroundColorAttributeName: APP_GRAYLINECOLOR,
+                                     NSParagraphStyleAttributeName: paragraphStyle};
+        return [[NSMutableAttributedString alloc] initWithString:text attributes:attributes];
+    }
 }
 #pragma mark - DZNEmptyDataSetDelegate Methods
 
@@ -547,20 +598,22 @@ QD_ManualCanceled = 4      //手工取消
 
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapView:(UIView *)view
 {
-    self.loading = YES;
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        self.loading = NO;
-    });
+//    self.loading = YES;
+//
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        self.loading = NO;
+//    });
 }
 
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button
 {
     self.loading = YES;
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        self.loading = NO;
-    });
+    NSString *str = [QDUserDefaults getObjectForKey:@"loginType"];
+    if ([str isEqualToString:@"0"] || str == nil) { //未登录
+        [self isLogin];
+    }else{
+        [self requestHeaderTopData];
+    }
 }
 
 @end

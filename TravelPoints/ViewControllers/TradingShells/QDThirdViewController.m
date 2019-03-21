@@ -31,6 +31,7 @@
 #import "TABViewAnimated.h"
 #import "UITableView+Animated.h"
 #import "UIView+TABControlAnimation.h"
+#import "QDOrderField.h"
 #define K_T_Cell @"t_cell"
 #define K_C_Cell @"c_cell"
 
@@ -49,6 +50,7 @@ typedef enum : NSUInteger {
     int _pageNum;
     int _totalPage;
     QDTradeShellsSectionHeaderView *_sectionHeaderView;
+    QDEmptyType _emptyType;
 }
 @property (nonatomic, strong) UIImageView *emptyView;
 @property (nonatomic, strong) UILabel *tipLab;
@@ -82,7 +84,9 @@ typedef enum : NSUInteger {
     [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_IsLogin params:nil successBlock:^(QDResponseObject *responseObject) {
         NSString *cookie = [NSString stringWithFormat:@"%@", [QDUserDefaults getCookies]];
         if ([responseObject.result intValue] == 0) {
+            _emptyType = QDNODataError;
             QDLog(@"未登录, cookie = %@", cookie);
+            [QDUserDefaults setObject:@"0" forKey:@"loginType"];
             QDLoginAndRegisterVC *loginVC = [[QDLoginAndRegisterVC alloc] init];
             loginVC.pushVCTag = @"0";
             [self presentViewController:loginVC animated:YES completion:nil];
@@ -92,6 +96,9 @@ typedef enum : NSUInteger {
             [self requestMyOrdersData];
         }
     } failureBlock:^(NSError *error) {
+        _emptyType = QDNetworkError;
+        [_tableView reloadData];
+        [_tableView reloadEmptyDataSet];
         [WXProgressHUD showErrorWithTittle:@"网络异常"];
     }];
 }
@@ -142,7 +149,6 @@ typedef enum : NSUInteger {
         return;
     }
     _loading = loading;
-    [self.tableView reloadEmptyDataSet];
 }
 
 
@@ -178,6 +184,7 @@ typedef enum : NSUInteger {
                     }
                     [_tableView reloadData];
                 }else{
+                    _emptyType = QDNODataError;
                     [_tableView.mj_header endRefreshing];
                 }
             }else{
@@ -187,6 +194,7 @@ typedef enum : NSUInteger {
                 [WXProgressHUD showErrorWithTittle:responseObject.message];
             }
         } failureBlock:^(NSError *error) {
+            _emptyType = QDNetworkError;
             [_tableView reloadData];
             [_tableView reloadEmptyDataSet];
             [self endRefreshing];
@@ -240,6 +248,7 @@ typedef enum : NSUInteger {
                         }
                     }
                 }else{
+                    _emptyType = QDNODataError;
                     [_tableView.mj_footer endRefreshing];
                     [_tableView.mj_footer endRefreshingWithNoMoreData];
                 }
@@ -251,7 +260,7 @@ typedef enum : NSUInteger {
                 [WXProgressHUD showErrorWithTittle:responseObject.message];
             }
         } failureBlock:^(NSError *error) {
-//            [_tableView tab_endAnimation];
+            _emptyType = QDNetworkError;
             [_tableView reloadData];
             [_tableView reloadEmptyDataSet];
             [WXProgressHUD showErrorWithTittle:@"网络异常"];
@@ -468,7 +477,11 @@ typedef enum : NSUInteger {
         return [UIImage imageNamed:@"loading_imgBlue" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
     }
     else {
-        return [UIImage imageNamed:@"icon_noConnect"];
+        if (_emptyType == QDNODataError) {
+            return [UIImage imageNamed:@"icon_nodata"];
+        }else if(_emptyType == QDNetworkError){
+            return [UIImage imageNamed:@"icon_noConnect"];
+        }
     }
     return nil;
 }
@@ -486,22 +499,42 @@ typedef enum : NSUInteger {
 }
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView{
-    NSString *text = @"页面加载失败";
+    NSString *text;
+    if (_emptyType == QDNetworkError) {
+        text = @"网络异常";
+    }else{
+        NSString *str = [QDUserDefaults getObjectForKey:@"loginType"];
+        if ([str isEqualToString:@"0"] || str == nil) { //未登录
+            text = @"未登录";
+        }else{
+            text = @"暂无数据";
+        }
+    }
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:16.0f],
                                  NSForegroundColorAttributeName: APP_BLUECOLOR};
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
 
 - (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state{
-    NSString *text = @"重新加载";
-    NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
-    paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
-    paragraphStyle.alignment = NSTextAlignmentCenter;
-    
-    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:18],
-                                 NSForegroundColorAttributeName: APP_WHITECOLOR,
-                                 NSParagraphStyleAttributeName: paragraphStyle};
-    return [[NSMutableAttributedString alloc] initWithString:text attributes:attributes];
+    NSString *text;
+    if (_emptyType == QDNetworkError) {
+        return nil;
+    }else{
+        NSString *str = [QDUserDefaults getObjectForKey:@"loginType"];
+        if ([str isEqualToString:@"0"] || str == nil) { //未登录
+            text = @"前往登录";
+        }else{
+            text = @"暂无数据";
+        }
+        NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
+        paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+        paragraphStyle.alignment = NSTextAlignmentCenter;
+        
+        NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:18],
+                                     NSForegroundColorAttributeName: APP_WHITECOLOR,
+                                     NSParagraphStyleAttributeName: paragraphStyle};
+        return [[NSMutableAttributedString alloc] initWithString:text attributes:attributes];
+    }
 }
 
 - (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state{
@@ -516,15 +549,19 @@ typedef enum : NSUInteger {
 
 - (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView
 {
-    NSString *text = @"请检查您的手机网络后点击重试";
-    NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
-    paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
-    paragraphStyle.alignment = NSTextAlignmentCenter;
-    
-    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:14],
-                                 NSForegroundColorAttributeName: APP_GRAYLINECOLOR,
-                                 NSParagraphStyleAttributeName: paragraphStyle};
-    return [[NSMutableAttributedString alloc] initWithString:text attributes:attributes];
+    if (_emptyType == QDNODataError) {
+        return nil;
+    }else{
+        NSString *text = @"请检查您的手机网络后点击重试";
+        NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
+        paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+        paragraphStyle.alignment = NSTextAlignmentCenter;
+        
+        NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:14],
+                                     NSForegroundColorAttributeName: APP_GRAYLINECOLOR,
+                                     NSParagraphStyleAttributeName: paragraphStyle};
+        return [[NSMutableAttributedString alloc] initWithString:text attributes:attributes];
+    }
 }
 #pragma mark - DZNEmptyDataSetDelegate Methods
 
@@ -550,20 +587,22 @@ typedef enum : NSUInteger {
 
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapView:(UIView *)view
 {
-    self.loading = YES;
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        self.loading = NO;
-    });
+//    self.loading = YES;
+//    [self requestHeaderTopData];
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        self.loading = NO;
+//    });
 }
 
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button
 {
     self.loading = YES;
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        self.loading = NO;
-    });
+    NSString *str = [QDUserDefaults getObjectForKey:@"loginType"];
+    if ([str isEqualToString:@"0"] || str == nil) { //未登录
+        [self isLogin];
+    }else{
+        [self requestHeaderTopData];
+    }
 }
 
 @end

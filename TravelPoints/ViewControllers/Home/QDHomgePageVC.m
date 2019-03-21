@@ -26,6 +26,7 @@
 #import "AppDelegate.h"
 #import "LQPopUpView.h"
 #import "QDPlayingViewController.h"
+#import <TYAlertView.h>
 
 
 static NSString *cellIdentifier = @"CellIdentifier";
@@ -118,9 +119,8 @@ static NSString *cellIdentifier = @"CellIdentifier";
         UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"定位不成功 ,请确认开启定位" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         [alertView show];
     }
-    // 开始定位
-    [_locationManager startUpdatingLocation];
 }
+
 //跳转到地图页面
 - (void)homeMapPage:(UIButton *)sender{
     QDHomeViewController *homeVC = [[QDHomeViewController alloc] init];
@@ -564,8 +564,19 @@ static NSString *cellIdentifier = @"CellIdentifier";
         //无法获取位置信息
         [WXProgressHUD showErrorWithTittle:@"无法获取位置信息"];
         [_homePageTopView.addressBtn setTitle:@"定位失败" forState:UIControlStateNormal];
-        QDLog(@"kCLErrorLocationUnknown");
     }
+    TYAlertView *alertView = [[TYAlertView alloc] initWithTitle:@"尚未打开定位" message:@"是否在设置中打开定位?"];
+    [alertView addAction:[TYAlertAction actionWithTitle:@"取消" style:TYAlertActionStyleCancel handler:^(TYAlertAction *action) {
+    }]];
+        [_homePageTopView.addressBtn setTitle:@"定位失败" forState:UIControlStateNormal];
+    [alertView addAction:[TYAlertAction actionWithTitle:@"确定" style:TYAlertActionStyleDestructive handler:^(TYAlertAction *action) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+    }]];
+    
+    [alertView setButtonTitleColor:APP_BLUECOLOR forActionStyle:TYAlertActionStyleCancel forState:UIControlStateNormal];
+    [alertView setButtonTitleColor:APP_BLUECOLOR forActionStyle:TYAlertActionStyleBlod forState:UIControlStateNormal];
+    [alertView setButtonTitleColor:APP_BLUECOLOR forActionStyle:TYAlertActionStyleDestructive forState:UIControlStateNormal];
+    [alertView show];
 }
 
 - (void)getChoosedAreaName:(NSString *)areaStr{

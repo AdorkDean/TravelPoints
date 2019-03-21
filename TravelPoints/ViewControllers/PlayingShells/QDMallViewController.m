@@ -193,7 +193,7 @@
         [_tableView tab_endAnimation];
         [self endRefreshing];
     } failureBlock:^(NSError *error) {
-        _emptyType = QDNODataError;
+        _emptyType = QDNetworkError;
         [_tableView reloadData];
         [_tableView reloadEmptyDataSet];
         [_tableView tab_endAnimation];

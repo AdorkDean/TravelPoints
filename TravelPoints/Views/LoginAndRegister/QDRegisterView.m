@@ -22,7 +22,7 @@
 //        [self addSubview:_loginBtn];
         
         _registerLab = [[UILabel alloc] init];
-        _registerLab.text = @"注册行点";
+        _registerLab.text = @"注册这好玩";
         _registerLab.font = QDFont(32);
         [self addSubview:_registerLab];
         

@@ -47,16 +47,21 @@
 
 #pragma mark - 短信发送
 -(void)sendPhoneMsg{
-    NSDictionary * dic1 = @{@"legalPhone":_legalPhone};
+    [WXProgressHUD showHUD];
+    NSDictionary * dic1 = @{@"legalPhone":_legalPhone,
+                            @"smsType":@"0"
+                            };
     [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_SendVerificationCode params:dic1 successBlock:^(QDResponseObject *responseObject) {
         QDLog(@"responseObject =%@", responseObject);
         if (responseObject.code == 0) {
+            [WXProgressHUD hideHUD];
             [WXProgressHUD showSuccessWithTittle:@"短信发送成功"];
             [_sendBtn startGetMessage];
         }else{
             [WXProgressHUD showErrorWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
+        [WXProgressHUD hideHUD];
         [WXProgressHUD showErrorWithTittle:@"短信发送失败"];
     }];
 }

@@ -13,7 +13,7 @@
 - (instancetype)initWithFrame:(CGRect)frame{
     if ([super initWithFrame:frame]) {
         _loginLab = [[UILabel alloc] init];
-        _loginLab.text = @"登录行点";
+        _loginLab.text = @"登录这好玩";
         _loginLab.font = QDFont(32);
         [self addSubview:_loginLab];
         

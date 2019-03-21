@@ -15,6 +15,7 @@
 #import "QDBuyOrSellViewController.h"
 #import "QDSettingViewController.h"
 #import "NSString+QDDecimalNumberHandler.h"
+#import "QDLoginAndRegisterVC.h"
 #import "QDMemberDTO.h"
 #import "AppDelegate.h"
 @interface QDVipPurchaseVC ()<NewPagedFlowViewDelegate, NewPagedFlowViewDataSource, UITableViewDelegate, UITableViewDataSource>{
@@ -51,11 +52,19 @@
     [super viewWillAppear:animated];
     [self.navigationController.tabBarController.tabBar setHidden:YES];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshVipInfo:) name:Notification_LoginSucceeded object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [self.navigationController.tabBarController.tabBar setHidden:NO];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:Notification_LoginSucceeded object:nil];
+}
+
+#pragma mark - 登录成功
+- (void)refreshVipInfo:(NSNotification *)noti{
+    QDLog(@"refreshVipInfo=============");
+    [self requestUserStatus];
 }
 
 - (UIScrollView *)scrollView{
@@ -91,18 +100,7 @@
     _vipPurchaseView = [[QDVipPurchaseView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     NSString *str = [QDUserDefaults getObjectForKey:@"loginType"];
     if ([str isEqualToString:@"0"] || str == nil) { //未登录
-        _vipPurchaseView.info1Lab.hidden = YES;
-        _vipPurchaseView.info2Lab.hidden = YES;
-        _vipPurchaseView.info3Lab.hidden = YES;
-        _vipPurchaseView.info4Lab.hidden = YES;
-        _vipPurchaseView.info5Lab.hidden = YES;
-        _vipPurchaseView.leftLevel.hidden = YES;
-        _vipPurchaseView.leftLevelLab.hidden = YES;
-        _vipPurchaseView.rightLevel.hidden = YES;
-        _vipPurchaseView.rightLevelLab.hidden = YES;
-        _vipPurchaseView.progressView.hidden = YES;
-        _vipPurchaseView.leftCircleImg.hidden = YES;
-        _vipPurchaseView.rightCircleImg.hidden = YES;
+        [self showPurchaseViewWithBool:YES];
     }else{
         [self requestUserStatus];
     }
@@ -130,6 +128,19 @@
 - (void)requestUserStatus{
     [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_GetUserDetail params:nil successBlock:^(QDResponseObject *responseObject) {
         if (responseObject.code == 0) {
+            [self showPurchaseViewWithBool:NO];
+            _vipPurchaseView.info1Lab.hidden = NO;
+            _vipPurchaseView.info2Lab.hidden = NO;
+            _vipPurchaseView.info3Lab.hidden = NO;
+            _vipPurchaseView.info4Lab.hidden = NO;
+            _vipPurchaseView.info5Lab.hidden = NO;
+            _vipPurchaseView.leftLevel.hidden = NO;
+            _vipPurchaseView.leftLevelLab.hidden = NO;
+            _vipPurchaseView.rightLevel.hidden = NO;
+            _vipPurchaseView.rightLevelLab.hidden = NO;
+            _vipPurchaseView.progressView.hidden = NO;
+            _vipPurchaseView.leftCircleImg.hidden = NO;
+            _vipPurchaseView.rightCircleImg.hidden = NO;
             QDMemberDTO *currentQDMemberTDO = [QDMemberDTO yy_modelWithDictionary:responseObject.result];
             [_vipPurchaseView loadVipViewWithModel:currentQDMemberTDO];
         }
@@ -245,25 +256,32 @@
 
 #pragma mark - 确认购买
 - (void)confirmToBuy:(UIButton *)sender{
-    QDReadyToCreateOrderVC *orderVC = [[QDReadyToCreateOrderVC alloc] init];
-    if (_currentModel == nil && _cardArr.count) {
-        _currentModel = _cardArr[0];
+    NSString *str = [QDUserDefaults getObjectForKey:@"loginType"];
+    if ([str isEqualToString:@"0"] || str == nil) { //未登录
+        QDLoginAndRegisterVC *loginVC = [[QDLoginAndRegisterVC alloc] init];
+        loginVC.pushVCTag = @"0";
+        [self presentViewController:loginVC animated:YES completion:nil];
+    }else{
+        QDReadyToCreateOrderVC *orderVC = [[QDReadyToCreateOrderVC alloc] init];
+        if (_currentModel == nil && _cardArr.count) {
+            _currentModel = _cardArr[0];
+        }
+        if (![_vipPurchaseView.priceTF isHidden] && (_vipPurchaseView.priceTF.text == nil || [_vipPurchaseView.priceTF.text isEqualToString:@""])) {
+            [WXProgressHUD showErrorWithTittle:@"请输入充值金额"];
+            return;
+        }
+        if (_cardArr.count == 0) {
+            [WXProgressHUD showErrorWithTittle:@"充值卡信息获取失败"];
+            return;
+        }
+        //针对输入金额
+        if ([_currentModel.vipMoney isEqualToString:@"0"]) {
+            _currentModel.vipMoney = _vipPurchaseView.priceTF.text;
+            _currentModel.subscriptCount = _vipPurchaseView.bottomLab2.text;
+        }
+        orderVC.vipModel = _currentModel;
+        [self.navigationController pushViewController:orderVC animated:YES];
     }
-    if (![_vipPurchaseView.priceTF isHidden] && (_vipPurchaseView.priceTF.text == nil || [_vipPurchaseView.priceTF.text isEqualToString:@""])) {
-        [WXProgressHUD showErrorWithTittle:@"请输入充值金额"];
-        return;
-    }
-    if (_cardArr.count == 0) {
-        [WXProgressHUD showErrorWithTittle:@"充值卡信息获取失败"];
-        return;
-    }
-    //针对输入金额
-    if ([_currentModel.vipMoney isEqualToString:@"0"]) {
-        _currentModel.vipMoney = _vipPurchaseView.priceTF.text;
-        _currentModel.subscriptCount = _vipPurchaseView.bottomLab2.text;
-    }
-    orderVC.vipModel = _currentModel;
-    [self.navigationController pushViewController:orderVC animated:YES];
 }
 
 #pragma mark - NewPagedFlowView Delegate
@@ -343,4 +361,18 @@
     return cell;
 }
 
+- (void)showPurchaseViewWithBool:(BOOL)isShow{
+    _vipPurchaseView.info1Lab.hidden = isShow;
+    _vipPurchaseView.info2Lab.hidden = isShow;
+    _vipPurchaseView.info3Lab.hidden = isShow;
+    _vipPurchaseView.info4Lab.hidden = isShow;
+    _vipPurchaseView.info5Lab.hidden = isShow;
+    _vipPurchaseView.leftLevel.hidden = isShow;
+    _vipPurchaseView.leftLevelLab.hidden = isShow;
+    _vipPurchaseView.rightLevel.hidden = isShow;
+    _vipPurchaseView.rightLevelLab.hidden = isShow;
+    _vipPurchaseView.progressView.hidden = isShow;
+    _vipPurchaseView.leftCircleImg.hidden = YES;
+    _vipPurchaseView.rightCircleImg.hidden = YES;
+}
 @end

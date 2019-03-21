@@ -201,9 +201,9 @@
     UIColor *color = self.isSelect ? [UIColor blackColor] : [UIColor lightGrayColor];
     NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:@"PingFangSC-Regular" size:12], NSForegroundColorAttributeName: color};
     
-    NSMutableAttributedString *text = [[NSMutableAttributedString alloc] initWithString:@"  已阅读并同意《行点用户注册协议》" attributes:attributes];
+    NSMutableAttributedString *text = [[NSMutableAttributedString alloc] initWithString:@"  已阅读并同意《这好玩用户注册协议》" attributes:attributes];
     //设置高亮色和点击事件
-    [text yy_setTextHighlightRange:[[text string] rangeOfString:@"《行点用户注册协议》"] color:[UIColor blackColor] backgroundColor:[UIColor clearColor] tapAction:^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
+    [text yy_setTextHighlightRange:[[text string] rangeOfString:@"《这好玩用户注册协议》"] color:[UIColor blackColor] backgroundColor:[UIColor clearColor] tapAction:^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
         NSLog(@"点击了《用户协议》");
     }];
     //添加图片
@@ -450,6 +450,7 @@
 
 #pragma mark - 设置登录密码
 - (void)setLoginPwd:(UIButton *)sender{
+    [WXProgressHUD showHUD];
     NSDictionary * dic = @{@"legalPhone":_userPhoneNum,
                            @"userName":_userName,
                            @"userPwd":_setLogPwdView.pwdTF.text,
@@ -457,6 +458,7 @@
                            @"beInvitedCode":_setLogPwdView.inviteTF.text
                            };
     [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_TryToRegister params:dic successBlock:^(QDResponseObject *responseObject) {
+        [WXProgressHUD hideHUD];
         if (responseObject.code == 0) {
             [WXProgressHUD showSuccessWithTittle:@"注册成功,请前往登录"];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -466,6 +468,7 @@
             [WXProgressHUD showErrorWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
+        [WXProgressHUD hideHUD];
         [WXProgressHUD showErrorWithTittle:@"网络请求失败"];
     }];
 }

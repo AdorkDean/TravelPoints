@@ -47,6 +47,11 @@
         _typePic.image = [UIImage imageNamed:@"hotel_zhz"];
         [_backView addSubview:_typePic];
         
+        _typeLab = [[UILabel alloc] init];
+        _typeLab.textColor = APP_WHITECOLOR;
+        _typeLab.font = QDFont(16);
+        [_backView addSubview:_typeLab];
+        
         _titleLab = [[UILabel alloc] init];
         _titleLab.text = @"中国大神设计酒店云南TOP10排行榜";
         _titleLab.textColor = APP_BLACKCOLOR;
@@ -132,6 +137,11 @@
         make.left.equalTo(_backView.mas_left).offset(20);
     }];
 
+    [_typeLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(_typePic);
+        make.top.equalTo(_typePic.mas_top).offset(29);
+    }];
+    
     [_descLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_pic.mas_top).offset(SCREEN_HEIGHT*0.03);
         make.left.equalTo(_pic.mas_left).offset(SCREEN_WIDTH*0.24);
@@ -184,6 +194,7 @@
 
 - (void)loadTableViewCellDataWithModel:(RanklistDTO *)model{
     self.descLab.text = model.topicName;
+    self.typeLab.text = model.listTypeContent;
     self.titleLab.text = model.topicDescribe;
     self.hates.text = model.invalidCommentCount;
     self.likes.text = model.validCommentCount;

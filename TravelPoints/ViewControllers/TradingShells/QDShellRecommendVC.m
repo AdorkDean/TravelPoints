@@ -57,7 +57,7 @@
     _isPartialDeal = @"1";  //默认为允许部分成交
     [self initTableView];
     [self saveIntentionPosters];
-    self.title = @"行点";
+    self.title = @"这好玩";
     self.view.backgroundColor = APP_WHITECOLOR;
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"naviga"] forBarMetrics:UIBarMetricsDefault];
     // Do any additional setup after loading the view.

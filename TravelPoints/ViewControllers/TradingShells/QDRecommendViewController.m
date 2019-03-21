@@ -56,7 +56,7 @@
         _isPartialDeal = @"1";  //如果为空,默认选择不允许全部成交
     }
     //创建瀑布流布局
-    self.title = @"行点";
+    self.title = @"这好玩";
     WaterLayou *layou = [[WaterLayou alloc] init];
     self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT- SCREEN_HEIGHT*0.06-50) collectionViewLayout:layou];
     self.collectionView.backgroundColor = APP_WHITECOLOR;

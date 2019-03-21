@@ -41,6 +41,11 @@
       _typePic.image = [UIImage imageNamed:@"hotel_zhz"];
       [_backView addSubview:_typePic];
       
+      _typeLab = [[UILabel alloc] init];
+      _typeLab.textColor = APP_WHITECOLOR;
+      _typeLab.font = QDFont(16);
+      [_backView addSubview:_typeLab];
+      
       _descLab = [[UILabel alloc] init];
       _descLab.text = @"揭秘中国设计NO.1究竟是怎样一个宝藏酒店?";
       _descLab.textColor = APP_WHITECOLOR;
@@ -136,6 +141,11 @@
         make.left.equalTo(self.contentView.mas_left).offset(SCREEN_WIDTH*0.05);
     }];
     
+    [_typeLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(_typePic);
+        make.top.equalTo(_typePic.mas_top).offset(20);
+    }];
+    
     [_grayBackView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(_backView);
         make.top.equalTo(_titleLab.mas_bottom).offset(SCREEN_HEIGHT*0.03);
@@ -183,13 +193,7 @@
 }
 
 - (void)loadCellDataWithModel:(RanklistDTO *)model{
-    if ([model.listTypeContent isEqualToString:@"酒店"]) {
-        self.typePic.image = [UIImage imageNamed:@"hotel_zhz"];
-    }else if ([model.listTypeContent isEqualToString:@"景区"]){
-        self.typePic.image = [UIImage imageNamed:@"hotel_zhw"];
-    }else{
-        self.typePic.image = [UIImage imageNamed:@"hotel_zhc"];
-    }
+    self.typeLab.text = model.listTypeContent;
     self.descLab.text = model.topicName;
     self.titleLab.text = model.topicDescribe;
     self.textOnView.text = [NSString stringWithFormat:@"本榜单已由Aigo为您运算了%@家酒店", model.totalquantity];

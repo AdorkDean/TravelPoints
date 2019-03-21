@@ -300,6 +300,7 @@
 
 - (void)loadVipViewWithModel:(QDMemberDTO *)member{
     //当前经验值 两个等级
+    
     NSString *currentLevel = [NSString stringWithFormat:@"Lv%@", member.userLevel];
     NSString *currentLevelValue = member.userLevelValue;
     NSString *nextLevel = [NSString stringWithFormat:@"Lv%d", [member.userLevel intValue] + 1];

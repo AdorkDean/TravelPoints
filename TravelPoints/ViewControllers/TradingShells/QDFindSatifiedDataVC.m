@@ -59,7 +59,7 @@
     minNumber = 0;
     maxNumber = 5;
     _isPartialDeal = @"1";
-    self.title = @"行点";
+    self.title = @"";
     self.view.backgroundColor = APP_WHITECOLOR;
     [self setLeftBtnItem];
     [self initTableView];
