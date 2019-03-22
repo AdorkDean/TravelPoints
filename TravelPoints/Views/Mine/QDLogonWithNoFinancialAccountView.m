@@ -16,10 +16,10 @@
         [_settingBtn setImage:[UIImage imageNamed:@"icon_setting"] forState:UIControlStateNormal];
         [self addSubview:_settingBtn];
         
-        _voiceBtn = [[UIButton alloc] init];
-        [_voiceBtn setImage:[UIImage imageNamed:@"icon_info"] forState:UIControlStateNormal];
-        [self addSubview:_voiceBtn];
-        
+//        _voiceBtn = [[UIButton alloc] init];
+//        [_voiceBtn setImage:[UIImage imageNamed:@"icon_info"] forState:UIControlStateNormal];
+//        [self addSubview:_voiceBtn];
+//        
         _picView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*0.06, SCREEN_HEIGHT*0.1, SCREEN_WIDTH*0.12, SCREEN_WIDTH*0.12)];
         _picView.layer.cornerRadius = SCREEN_WIDTH*0.06;
         _picView.layer.masksToBounds = YES;
@@ -133,7 +133,6 @@
         _openFinancialBtn = [[UIButton alloc] init];
         [_openFinancialBtn setTitle:@"开通资金账户" forState:UIControlStateNormal];
         [_openFinancialBtn setTitleColor:APP_WHITECOLOR forState:UIControlStateNormal];
-//        _openFinancialBtn.backgroundColor = APP_BLUECOLOR;
         CAGradientLayer *gradientLayer =  [CAGradientLayer layer];
         gradientLayer.frame = CGRectMake(0, 0, 140, 36);
         gradientLayer.startPoint = CGPointMake(0, 0);
@@ -156,10 +155,10 @@
         make.top.equalTo(self.mas_top).offset(SCREEN_HEIGHT*0.06);
         make.right.equalTo(self.mas_right).offset(-(SCREEN_WIDTH*0.16));
     }];
-    [_voiceBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.settingBtn);
-        make.right.equalTo(self.mas_right).offset(-(SCREEN_WIDTH*0.05));
-    }];
+//    [_voiceBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerY.equalTo(self.settingBtn);
+//        make.right.equalTo(self.mas_right).offset(-(SCREEN_WIDTH*0.05));
+//    }];
     
     [_userNameLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_top).offset(SCREEN_HEIGHT*0.1);

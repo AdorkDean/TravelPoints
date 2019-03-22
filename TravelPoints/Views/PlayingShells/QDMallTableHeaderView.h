@@ -12,7 +12,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface QDMallTableHeaderView : UIView
 
-@property (nonatomic, strong) UIView *topLineView;
 @property (nonatomic, strong) UIView *topBackView;
 @property (nonatomic, strong) UIImageView *imgView;
 @property (nonatomic, strong) UITextField *inputTF;

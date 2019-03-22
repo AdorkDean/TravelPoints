@@ -16,9 +16,9 @@
         [_settingBtn setImage:[UIImage imageNamed:@"icon_setting"] forState:UIControlStateNormal];
         [self addSubview:_settingBtn];
         
-        _voiceBtn = [[UIButton alloc] init];
-        [_voiceBtn setImage:[UIImage imageNamed:@"icon_info"] forState:UIControlStateNormal];
-        [self addSubview:_voiceBtn];
+//        _voiceBtn = [[UIButton alloc] init];
+//        [_voiceBtn setImage:[UIImage imageNamed:@"icon_info"] forState:UIControlStateNormal];
+//        [self addSubview:_voiceBtn];
         
         _picView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*0.06, SCREEN_HEIGHT*0.1, SCREEN_WIDTH*0.12, SCREEN_WIDTH*0.12)];
         _picView.layer.cornerRadius = SCREEN_WIDTH*0.06;
@@ -59,7 +59,6 @@
         
         _financialPic = [[UIImageView alloc] init];
         [_financialPic setImage:[UIImage imageNamed:@"vipLevel"]];
-        _financialPic.backgroundColor = APP_BLUECOLOR;
         [self addSubview:_financialPic];
         
         _info1Lab = [[UILabel alloc] init];
@@ -165,11 +164,11 @@
         make.top.equalTo(self.mas_top).offset(SCREEN_HEIGHT*0.06);
         make.right.equalTo(self.mas_right).offset(-(SCREEN_WIDTH*0.16));
     }];
-    [_voiceBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.settingBtn);
-        make.right.equalTo(self.mas_right).offset(-(SCREEN_WIDTH*0.05));
-    }];
-    
+//    [_voiceBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerY.equalTo(self.settingBtn);
+//        make.right.equalTo(self.mas_right).offset(-(SCREEN_WIDTH*0.05));
+//    }];
+//    
     [_userNameLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_top).offset(SCREEN_HEIGHT*0.1);
         make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH*0.2);

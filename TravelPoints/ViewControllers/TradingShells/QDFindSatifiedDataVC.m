@@ -59,7 +59,7 @@
     minNumber = 0;
     maxNumber = 5;
     _isPartialDeal = @"1";
-    self.title = @"";
+    self.title = @"这好玩";
     self.view.backgroundColor = APP_WHITECOLOR;
     [self setLeftBtnItem];
     [self initTableView];
@@ -197,6 +197,7 @@
 }
 
 - (void)payAction:(UIButton *)sender{
+    
     QDRecommendViewController *recommendVC = [[QDRecommendViewController alloc] init];
     
 //    QDShellRecommendVC *recommendVC = [[QDShellRecommendVC alloc] init];

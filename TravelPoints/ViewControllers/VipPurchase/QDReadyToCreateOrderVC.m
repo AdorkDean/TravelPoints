@@ -128,7 +128,7 @@
     [gradientLayer setColors:@[(id)[[UIColor colorWithHexString:@"#159095"] CGColor],(id)[[UIColor colorWithHexString:@"#3CC8B1"] CGColor]]];//渐变数组
     [recommendBtn.layer addSublayer:gradientLayer];
     recommendBtn.titleLabel.font = QDFont(19);
-    recommendBtn.layer.cornerRadius = 12;
+    recommendBtn.layer.cornerRadius = 4;
     recommendBtn.layer.masksToBounds = YES;
     [_tableView addSubview:recommendBtn];
     [recommendBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -164,12 +164,10 @@
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT*0.015 + SafeAreaTopHeight, SCREEN_WIDTH, SCREEN_HEIGHT) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-
     _tableView.dataSource = self;
-    _tableView.backgroundColor = APP_GRAYBACKGROUNDCOLOR;
+    _tableView.backgroundColor = [UIColor colorWithHexString:@"#F5F5F7"];
     _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     _tableView.showsVerticalScrollIndicator = NO;
-    _tableView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_tableView];
 }
 

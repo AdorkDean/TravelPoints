@@ -46,6 +46,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = APP_WHITECOLOR;
+    UIView *ss = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    ss.backgroundColor = APP_WHITECOLOR;
+    [self.view addSubview:ss];
     [self setLeftBtnItem];
     _recommendList = [[NSMutableArray alloc] init];
     if (_recommendModel == nil) {
@@ -66,7 +69,7 @@
     self.collectionView.dataSource = self;
     self.collectionView.emptyDataSetSource = self;
     self.collectionView.emptyDataSetDelegate = self;
-    [self.view addSubview:self.collectionView];
+    [ss addSubview:self.collectionView];
     [self saveIntentionPosters];
 
     _recommendBtn = [[UIButton alloc] init];
@@ -88,7 +91,7 @@
     _recommendBtn.titleLabel.font = QDFont(19);
     _recommendBtn.layer.cornerRadius = 4;
     _recommendBtn.layer.masksToBounds = YES;
-    [self.view addSubview:_recommendBtn];
+    [ss addSubview:_recommendBtn];
     [_recommendBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view);
         make.bottom.equalTo(self.view.mas_bottom).offset(SCREEN_HEIGHT*0.03);
@@ -100,28 +103,35 @@
 #pragma mark - 跳过推荐 直接购买
 - (void)buyOrderAction:(UIButton *)sender{
     //直接购买
-    NSDictionary *paramsDic = @{@"postersId":_postersId};
-    [WXProgressHUD showHUD];
-    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_saveBiddingPosters params:paramsDic successBlock:^(QDResponseObject *responseObject) {
-        if (responseObject.code == 0) {
-            [WXProgressHUD hideHUD];
-            [WXProgressHUD showSuccessWithTittle:@"挂单生成成功"];
-            NSString *str = responseObject.result;
-            QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
-            NSString *balance = [NSString stringWithFormat:@"%.2f", [_volume doubleValue] * [_price doubleValue]];
-            bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?amount=%@&&postersId=%@", [QDUserDefaults getObjectForKey:@"QD_JSURL"], JS_PAYACTION, balance, str];
-            [self.navigationController pushViewController:bridgeVC animated:YES];
-        }else{
-            [WXProgressHUD showErrorWithTittle:responseObject.message];
-        }
-    } failureBlock:^(NSError *error) {
-        [WXProgressHUD showErrorWithTittle:@"网络请求失败"];
-    }];
+    if (_postersId == nil) {
+        [WXProgressHUD showErrorWithTittle:@"该用户未开通资金账户,无法交易"];
+    }else{
+        NSDictionary *paramsDic = @{@"postersId":_postersId};
+        [WXProgressHUD showHUD];
+        [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_saveBiddingPosters params:paramsDic successBlock:^(QDResponseObject *responseObject) {
+            if (responseObject.code == 0) {
+                [WXProgressHUD hideHUD];
+                [WXProgressHUD showSuccessWithTittle:@"挂单生成成功"];
+                NSString *str = responseObject.result;
+                QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
+                NSString *balance = [NSString stringWithFormat:@"%.2f", [_volume doubleValue] * [_price doubleValue]];
+                bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?amount=%@&&postersId=%@", [QDUserDefaults getObjectForKey:@"QD_JSURL"], JS_PAYACTION, balance, str];
+                [self.navigationController pushViewController:bridgeVC animated:YES];
+            }else{
+                [WXProgressHUD showErrorWithTittle:responseObject.message];
+            }
+        } failureBlock:^(NSError *error) {
+            [WXProgressHUD showErrorWithTittle:@"网络请求失败"];
+        }];
+    }
 }
 
 #pragma mark - 跳过推荐 直接卖出 生成卖单
 - (void)sellOrderAction:(UIButton *)sender{
     //直接卖出
+    if (_postersId == nil) {
+        [WXProgressHUD showErrorWithTittle:@"该用户未开通资金账户,无法交易"];
+    }
     NSDictionary *paramsDic = @{@"postersId":_postersId};
     [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_saveBiddingPosters params:paramsDic successBlock:^(QDResponseObject *responseObject) {
         if (responseObject.code == 0) {

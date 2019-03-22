@@ -12,11 +12,6 @@
 
 - (instancetype)initWithFrame:(CGRect)frame{
     if ([super initWithFrame:frame]) {
-        _topLineView = [[UIView alloc] init];
-        _topLineView.backgroundColor = APP_GRAYLINECOLOR;
-        _topLineView.alpha = 0.5;
-        [self addSubview:_topLineView];
-        
         _topBackView = [[UIView alloc] init];
         _topBackView.backgroundColor = APP_GRAYBUTTONCOLOR;
         _topBackView.layer.masksToBounds = YES;
@@ -46,11 +41,6 @@
 
 - (void)layoutSubviews{
     [super layoutSubviews];
-    [_topLineView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.top.and.right.equalTo(self);
-        make.height.mas_equalTo(1);
-    }];
-    
     [_topBackView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self);
         make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH*0.05);

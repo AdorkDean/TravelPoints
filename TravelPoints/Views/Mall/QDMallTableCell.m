@@ -70,9 +70,14 @@
         [self.contentView addSubview:_totalSales];
         
         _isShipping = [[UILabel alloc] init];
-        _isShipping.backgroundColor = [UIColor colorWithHexString:@"#D8EFF2"];
+//        _isShipping.backgroundColor = [UIColor colorWithHexString:@"#D8EFF2"];
         _isShipping.textColor = APP_BLUECOLOR;
+        _isShipping.textAlignment = NSTextAlignmentCenter;
         _isShipping.font = QDFont(11);
+        
+        _isShipping.layer.backgroundColor = [UIColor colorWithRed:2/255.0 green:170/255.0 blue:176/255.0 alpha:0.09].CGColor;
+        _isShipping.layer.cornerRadius = 2;
+        _isShipping.layer.masksToBounds = YES;
         [self.contentView addSubview:_isShipping];
     }
     return self;
@@ -126,6 +131,8 @@
     [_isShipping mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_yueLab);
         make.left.equalTo(_priceLab.mas_right).offset(SCREEN_WIDTH*0.03);
+        make.width.mas_equalTo(34);
+        make.height.mas_equalTo(18);
     }];
 }
 

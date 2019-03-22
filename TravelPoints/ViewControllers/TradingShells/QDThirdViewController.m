@@ -548,6 +548,9 @@ typedef enum : NSUInteger {
     return [[image resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
 }
 
+//-(CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView{
+//    return 30;
+//}
 
 - (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView
 {

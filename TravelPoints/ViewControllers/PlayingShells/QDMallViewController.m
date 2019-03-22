@@ -277,7 +277,7 @@
 - (QDMallTableSectionHeaderView *)sectionHeaderView{
     if (!_sectionHeaderView) {
         _sectionHeaderView = [[QDMallTableSectionHeaderView alloc] init];
-        _sectionHeaderView.backgroundColor = APP_GRAYBACKGROUNDCOLOR;
+        _sectionHeaderView.backgroundColor = APP_WHITECOLOR;
         [_sectionHeaderView.allBtn addTarget:self action:@selector(allAction:) forControlEvents:UIControlEventTouchUpInside];
         [_sectionHeaderView.baoyouBtn addTarget:self action:@selector(baoyouAction:) forControlEvents:UIControlEventTouchUpInside];
         [_sectionHeaderView.allBtn addTarget:self action:@selector(chooseCategory:) forControlEvents:UIControlEventTouchUpInside];
