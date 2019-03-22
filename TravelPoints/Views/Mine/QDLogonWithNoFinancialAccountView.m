@@ -133,8 +133,9 @@
         _openFinancialBtn = [[UIButton alloc] init];
         [_openFinancialBtn setTitle:@"开通资金账户" forState:UIControlStateNormal];
         [_openFinancialBtn setTitleColor:APP_WHITECOLOR forState:UIControlStateNormal];
+//        _openFinancialBtn.backgroundColor = APP_BLUECOLOR;
         CAGradientLayer *gradientLayer =  [CAGradientLayer layer];
-        gradientLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH*0.37, SCREEN_HEIGHT*0.05);
+        gradientLayer.frame = CGRectMake(0, 0, 140, 36);
         gradientLayer.startPoint = CGPointMake(0, 0);
         gradientLayer.endPoint = CGPointMake(1, 0);
         gradientLayer.locations = @[@(0.5),@(1.0)];//渐变点
@@ -180,7 +181,7 @@
         make.top.equalTo(self.mas_top).offset(SCREEN_HEIGHT*0.18);
         make.centerX.equalTo(self);
         make.width.mas_equalTo(335);
-        make.height.mas_equalTo(204);
+        make.height.mas_equalTo(202);
     }];
     
     [_info1Lab mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -222,12 +223,12 @@
 
     [_info8Lab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_info1Lab);
-        make.bottom.equalTo(_financialPic.mas_bottom).offset(-(SCREEN_HEIGHT*0.06));
+        make.top.equalTo(self.mas_top).offset(232);
     }];
     
     [_info9Lab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(_info8Lab);
-        make.bottom.equalTo(_financialPic.mas_bottom).offset(-(SCREEN_HEIGHT*0.02));
+        make.top.equalTo(self.mas_top).offset(260);
     }];
 
     [_accountInfo mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -236,8 +237,8 @@
     }];
     
     [_balanceLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH*0.08);
-        make.top.equalTo(_financialPic.mas_bottom).offset(SCREEN_WIDTH*0.05);
+        make.left.equalTo(self.mas_left).offset(30);
+        make.top.equalTo(self.mas_top).offset(328);
     }];
     
     [_balance mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -246,10 +247,11 @@
     }];
     
     [_openFinancialBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(_balance);
-        make.right.equalTo(self.mas_right).offset(-(SCREEN_WIDTH*0.05));
-        make.height.mas_equalTo(SCREEN_HEIGHT*0.05);
-        make.width.mas_equalTo(SCREEN_WIDTH*0.39);
+//        make.centerY.equalTo(_balance);
+        make.top.equalTo(self.mas_top).offset(336);
+        make.right.equalTo(self.mas_right).offset(-20);
+        make.height.mas_equalTo(36);
+        make.width.mas_equalTo(140);
     }];
 }
 

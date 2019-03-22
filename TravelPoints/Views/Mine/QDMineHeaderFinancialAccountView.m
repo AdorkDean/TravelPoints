@@ -59,6 +59,7 @@
         
         _financialPic = [[UIImageView alloc] init];
         [_financialPic setImage:[UIImage imageNamed:@"vipLevel"]];
+        _financialPic.backgroundColor = APP_BLUECOLOR;
         [self addSubview:_financialPic];
         
         _info1Lab = [[UILabel alloc] init];
@@ -115,7 +116,6 @@
         
         _info9Lab = [[UILabel alloc] init];
         _info9Lab.text = @"--";
-        _info9Lab.textColor = APP_BLACKCOLOR;
         _info9Lab.font = QDBoldFont(18);
         [_financialPic addSubview:_info9Lab];
         
@@ -189,9 +189,13 @@
     [_financialPic mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_top).offset(SCREEN_HEIGHT*0.18);
         make.centerX.equalTo(self);
-        make.height.mas_equalTo(204);
         make.width.mas_equalTo(335);
+        make.height.mas_equalTo(202);
+//        make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH*0.05);
+//        make.right.equalTo(self.mas_right).offset(-(SCREEN_WIDTH*0.05));
+//        make.height.mas_equalTo(SCREEN_HEIGHT*0.25);
     }];
+
     
     [_info1Lab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_financialPic.mas_left).offset(SCREEN_WIDTH*0.06);
@@ -232,12 +236,12 @@
     
     [_info8Lab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_info1Lab);
-        make.bottom.equalTo(_financialPic.mas_bottom).offset(-(SCREEN_HEIGHT*0.06));
+        make.top.equalTo(self.mas_top).offset(232);
     }];
     
     [_info9Lab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(_info8Lab);
-        make.bottom.equalTo(_financialPic.mas_bottom).offset(-(SCREEN_HEIGHT*0.02));
+        make.top.equalTo(self.mas_top).offset(260);
     }];
     
     [_accountInfo mas_makeConstraints:^(MASConstraintMaker *make) {

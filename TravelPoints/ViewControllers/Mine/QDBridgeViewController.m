@@ -346,6 +346,7 @@
         OSMessage *message=[[OSMessage alloc]init];
         message.title = _weiboTitle;
         message.image = _weiboImgUrl;
+//        message.link = _weiboDownUrl;
         [OpenShare shareToWeibo:message Success:^(OSMessage *message) {
             QDLog(@"分享到sina微博成功:\%@",message);
             [self hideMaskViewSucceedWithStr:@"分享到sina微博成功"];
@@ -358,6 +359,7 @@
         msg.desc = _weiboTitle;
         msg.title = _weiboTitle;
         msg.image = _weiboImgUrl;
+        msg.link = _weiboDownUrl;
         //    msg.thumbnail = testThumbImage;
         [OpenShare shareToWeixinTimeline:msg Success:^(OSMessage *message) {
             QDLog(@"微信分享到朋友圈成功：\n%@",message);
