@@ -235,12 +235,12 @@
     
     [_info8Lab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_info1Lab);
-        make.top.equalTo(self.mas_top).offset(232);
+        make.top.equalTo(self.info4Lab.mas_bottom).offset(21);
     }];
     
     [_info9Lab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(_info8Lab);
-        make.top.equalTo(self.mas_top).offset(260);
+        make.top.equalTo(_info8Lab.mas_bottom).offset(8);
     }];
     
     [_accountInfo mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -250,7 +250,7 @@
     
     [_balanceLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH*0.08);
-        make.top.equalTo(_financialPic.mas_bottom).offset(SCREEN_WIDTH*0.05);
+        make.top.equalTo(_info8Lab.mas_bottom).offset(76);
     }];
     
     [_balance mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -259,7 +259,7 @@
     }];
     
     [_rechargeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_financialPic.mas_bottom).offset(SCREEN_HEIGHT*0.04);
+        make.top.equalTo(_info8Lab.mas_bottom).offset(84);
         make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH*0.54);
         make.height.mas_equalTo(SCREEN_HEIGHT*0.05);
         make.width.mas_equalTo(SCREEN_WIDTH*0.19);

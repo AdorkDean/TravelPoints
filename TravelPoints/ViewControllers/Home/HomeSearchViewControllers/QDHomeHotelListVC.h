@@ -12,7 +12,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface QDHomeHotelListVC : UIViewController
 
-@property (nonatomic, strong) NSString *keyStr;
 @end
 
 NS_ASSUME_NONNULL_END

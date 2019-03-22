@@ -31,13 +31,16 @@
 
 
 - (void)searchAction:(UIButton *)sender{
-    NSString *keyStr = _topCancelView.inputTF.text;
-    if (keyStr == nil || [keyStr isEqualToString:@""]) {
+    QDLog(@"点击了搜索");
+    if (_topCancelView.inputTF.text == nil || [_topCancelView.inputTF.text isEqualToString:@""]) {
         [WXProgressHUD showErrorWithTittle:@"请输入关键词"];
     }else{
-        QDSearchResultViewController *resultVC = [[QDSearchResultViewController alloc] init];
-        resultVC.keyStr = keyStr;
-        [self.navigationController pushViewController:resultVC animated:YES];
+        //
+        QDLog(@"_topCancelView.inputTF.tex = %@", _topCancelView.inputTF.text);
+        [QDUserDefaults setObject:_topCancelView.inputTF.text forKey:@"homeKeyStr"];
+        QDSearchResultViewController *searchResultVC = [[QDSearchResultViewController alloc] init];
+        searchResultVC.keyStr = _topCancelView.inputTF.text;
+        [self.navigationController pushViewController:searchResultVC animated:YES];
     }
 }
 
@@ -77,7 +80,11 @@
     if (_topCancelView.inputTF.text == nil || [_topCancelView.inputTF.text isEqualToString:@""]) {
         [WXProgressHUD showErrorWithTittle:@"请输入关键词"];
     }else{
+        //
+        QDLog(@"_topCancelView.inputTF.tex = %@", _topCancelView.inputTF.text);
+        [QDUserDefaults setObject:_topCancelView.inputTF.text forKey:@"homeKeyStr"];
         QDSearchResultViewController *searchResultVC = [[QDSearchResultViewController alloc] init];
+        searchResultVC.keyStr = _topCancelView.inputTF.text;
         [self.navigationController pushViewController:searchResultVC animated:YES];
     }
     return YES;

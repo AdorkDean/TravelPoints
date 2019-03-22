@@ -311,7 +311,7 @@
     [_forgetPwdView setHidden:NO];
 }
 
-#pragma mark - 下一步按钮:注册行点&&找回密码
+#pragma mark - 下一步按钮:注册这好玩&&找回密码
 - (void)registNextStep:(UIButton *)sender{
     
     //先验证是否注册

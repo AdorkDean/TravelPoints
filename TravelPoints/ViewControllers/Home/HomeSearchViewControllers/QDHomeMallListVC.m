@@ -158,6 +158,10 @@
     if (_mallInfoArr.count) {
         [_mallInfoArr removeAllObjects];
     }
+    NSString *keyStr = [QDUserDefaults getObjectForKey:@"homeKeyStr"];
+    if (keyStr == nil) {
+        keyStr = @"";
+    }
     NSDictionary * dic1 = @{
                             @"pageNum":@1,
                             @"pageSize":@20,
@@ -165,7 +169,7 @@
                             @"sortColumn":_sortColumn,
                             @"sortType":_sortType,
                             @"isShipping":_baoyou,
-                            @"keywords":_keywords
+                            @"goodsName":keyStr
                             };
     [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_GetMallList params:dic1 successBlock:^(QDResponseObject *responseObject) {
         if (responseObject.code == 0) {

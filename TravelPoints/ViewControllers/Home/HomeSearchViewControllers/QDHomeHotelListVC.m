@@ -48,7 +48,6 @@
     self.view.backgroundColor = APP_WHITECOLOR;
     _hotelListInfoArr = [[NSMutableArray alloc] init];
     _hotelImgArr = [[NSMutableArray alloc] init];
-    _keyStr = @"";
     //设置筛选header
     _array1 = [[NSMutableArray alloc] initWithObjects:@"全部区域", nil];
     _array2 = [[NSMutableArray alloc] init];
@@ -134,7 +133,11 @@
         [_hotelListInfoArr removeAllObjects];
         [_hotelImgArr removeAllObjects];
     }
-    NSDictionary * dic1 = @{@"label":_keyStr,
+    NSString *keyStr = [QDUserDefaults getObjectForKey:@"homeKeyStr"];
+    if (keyStr == nil) {
+        keyStr = @"";
+    }
+    NSDictionary * dic1 = @{@"hotelName":keyStr,
                             @"pageNum":@1,
                             @"pageSize":@10
                             };
@@ -231,13 +234,10 @@
         return [UIImage imageNamed:@"loading_imgBlue" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
     }
     else {
+        
         return [UIImage imageNamed:@"icon_noConnect"];
     }
     return nil;
-}
-
-- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView{
-    return 155;
 }
 
 - (CAAnimation *)imageAnimationForEmptyDataSet:(UIScrollView *)scrollView

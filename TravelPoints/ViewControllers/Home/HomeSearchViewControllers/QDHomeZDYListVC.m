@@ -57,7 +57,11 @@
         [_dzyListInfoArr removeAllObjects];
         [_dzyImgArr removeAllObjects];
     }
-    NSDictionary * dic1 = @{@"travelName":@"",
+    NSString *keyStr = [QDUserDefaults getObjectForKey:@"homeKeyStr"];
+    if (keyStr == nil) {
+        keyStr = @"";
+    }
+    NSDictionary * dic1 = @{@"travelName":keyStr,
                             @"pageNum":@1,
                             @"pageSize":@10
                             };
