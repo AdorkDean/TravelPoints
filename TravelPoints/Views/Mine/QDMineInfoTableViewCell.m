@@ -47,20 +47,20 @@
     }];
 }
 
-- (void)drawRect:(CGRect)rect
-{
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    CGContextSetFillColorWithColor(context, [UIColor clearColor].CGColor);
-    CGContextFillRect(context, rect);
-    
-    //上分割线，
+//- (void)drawRect:(CGRect)rect
+//{
+//    CGContextRef context = UIGraphicsGetCurrentContext();
+//
+//    CGContextSetFillColorWithColor(context, [UIColor clearColor].CGColor);
+//    CGContextFillRect(context, rect);
+//
+//    //上分割线，
+////    CGContextSetStrokeColorWithColor(context, APP_BLUECOLOR.CGColor);
+////    CGContextStrokeRect(context, CGRectMake(5, -1, rect.size.width - 10, 1));
+//
+//    //下分割线
 //    CGContextSetStrokeColorWithColor(context, APP_BLUECOLOR.CGColor);
-//    CGContextStrokeRect(context, CGRectMake(5, -1, rect.size.width - 10, 1));
-    
-    //下分割线
-    CGContextSetStrokeColorWithColor(context, APP_LIGHTGRAYCOLOR.CGColor);
-    CGContextStrokeRect(context, CGRectMake(SCREEN_WIDTH*0.05, rect.size.height, rect.size.width - SCREEN_WIDTH*0.1-10, 1));
-}
+//    CGContextStrokeRect(context, CGRectMake(20, rect.size.height, 335, 0.5));
+//}
 
 @end

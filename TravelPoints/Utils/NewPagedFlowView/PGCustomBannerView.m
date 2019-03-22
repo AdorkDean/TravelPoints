@@ -74,7 +74,7 @@
 - (UILabel *)cardMoney {
     if (_cardMoney == nil) {
         _cardMoney = [[UILabel alloc] init];
-        _cardMoney.text = @"5000";
+        _cardMoney.text = @"";
         _cardMoney.font = QDBoldFont(24);
         _cardMoney.textColor = APP_BLACKCOLOR;
     }

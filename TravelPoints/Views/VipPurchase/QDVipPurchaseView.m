@@ -100,7 +100,6 @@
         [self addSubview:_priceLab];
         
         _price = [[UILabel alloc] init];
-        _price.text = @"3000";
         _price.textColor = APP_BLACKCOLOR;
         _price.font = QDBoldFont(24);
         [self addSubview:_price];
@@ -124,7 +123,6 @@
         _bottomLab1.font = QDFont(14);
         _bottomLab1.textColor = APP_GRAYTEXTCOLOR;
         [self addSubview:_bottomLab1];
-        
         
         _bottomLab2 = [[UILabel alloc] init];
         _bottomLab2.text = @"";

@@ -178,9 +178,9 @@
     
     [_financialPic mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_top).offset(SCREEN_HEIGHT*0.18);
-        make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH*0.05);
-        make.right.equalTo(self.mas_right).offset(-(SCREEN_WIDTH*0.05));
-        make.height.mas_equalTo(SCREEN_HEIGHT*0.25);
+        make.centerX.equalTo(self);
+        make.width.mas_equalTo(335);
+        make.height.mas_equalTo(204);
     }];
     
     [_info1Lab mas_makeConstraints:^(MASConstraintMaker *make) {

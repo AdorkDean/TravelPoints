@@ -186,6 +186,19 @@
     [_tableView reloadData];
 }
 
+-(void)customSeparateLineToCell:(UITableViewCell *)cell{
+    UIView *separateLineBottom = [[UIView alloc] init];
+    [separateLineBottom setBackgroundColor:[UIColor colorWithHexString:@"#DDDDDD"]];
+    [cell.contentView addSubview:separateLineBottom];
+    [separateLineBottom mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(cell.contentView);
+        make.centerX.equalTo(cell.contentView);
+        make.width.mas_equalTo(335);
+        make.height.mas_equalTo(0.5);
+    }];
+    
+}
+
 - (void)initTableView{
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) style:UITableViewStylePlain];
     if (@available(iOS 11.0, *)) {
@@ -198,6 +211,8 @@
     _tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+//    _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+
     _tableView.showsVerticalScrollIndicator = NO;
     _tableView.contentInset = UIEdgeInsetsMake(0, 0, SafeAreaTopHeight, 0);
     _tableView.backgroundColor = [UIColor whiteColor];
@@ -319,6 +334,7 @@
     if (cell == nil) {
         cell = [[QDMineInfoTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
+    [self customSeparateLineToCell:cell];
     cell.textLabel.text = _cellTitleArr[indexPath.row];
     cell.textLabel.textColor = APP_BLACKCOLOR;
     cell.textLabel.font = QDFont(16);

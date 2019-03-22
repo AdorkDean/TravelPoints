@@ -153,7 +153,6 @@ typedef enum : NSUInteger {
     _loading = loading;
 }
 
-
 #pragma mark - 上拉重新加载数据
 - (void)requestHeaderTopData{
     NSString *str = [QDUserDefaults getObjectForKey:@"loginType"];
