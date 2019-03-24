@@ -93,7 +93,7 @@
     _level = [[NSMutableArray alloc] init];         //会员等级
     
 //    [OpenShare connectQQWithAppId:@"1103194207"];
-    [OpenShare connectQQWithAppId:@"101559247"];
+    [OpenShare connectQQWithAppId:@"1103194207"];
 
     [OpenShare connectWeiboWithAppKey:@"402180334"];
 //    [OpenShare connectWeixinWithAppId:@"wxd930ea5d5a258f4f"];

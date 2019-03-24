@@ -286,10 +286,11 @@
             [self presentViewController:loginVC animated:YES completion:nil];
         }else if ([URL.path isEqualToString:@"/Main"]){
             //跳转到首页
-            AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-            UITabBarController *tabVC = (UITabBarController *)delegate.window.rootViewController;
-            [tabVC setSelectedIndex:0];
-            [_webView removeFromSuperview];
+//            AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+//            UITabBarController *tabVC = (UITabBarController *)delegate.window.rootViewController;
+//            [tabVC setSelectedIndex:0];
+//            [_webView removeFromSuperview];
+            [self.navigationController popToRootViewControllerAnimated:YES];
         }
         else{
             QDBridgeTViewController *bridgeVC = [[QDBridgeTViewController alloc] init];
@@ -342,12 +343,14 @@
 #pragma mark - 微博Handler
 -(void)btnViewHandler:(UIButton*)btn{
     if (btn.tag == 1001) {
-        [OpenShare connectWeiboWithAppKey:FT_WEIBO_APPKEY];
-        OSMessage *message=[[OSMessage alloc]init];
-        message.title = _weiboTitle;
-        message.image = _weiboImgUrl;
-//        message.link = _weiboDownUrl;
-        [OpenShare shareToWeibo:message Success:^(OSMessage *message) {
+//        [OpenShare connectWeiboWithAppKey:FT_WEIBO_APPKEY];
+        OSMessage *msg=[[OSMessage alloc]init];
+        msg.title = _weiboTitle;
+        msg.image = _weiboImgUrl;
+        msg.link = _weiboDownUrl;
+//        msg.desc = _weiboTitle;
+        msg.thumbnail = _weiboImgUrl;
+        [OpenShare shareToWeibo:msg Success:^(OSMessage *message) {
             QDLog(@"分享到sina微博成功:\%@",message);
             [self hideMaskViewSucceedWithStr:@"分享到sina微博成功"];
         } Fail:^(OSMessage *message, NSError *error) {
