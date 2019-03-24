@@ -149,14 +149,14 @@
     
     [_bridge registerHandler:@"getShare" handler:^(id data, WVJBResponseCallback responseCallback) {
         QDLog(@"getShare");
-//        [self.view addSubview:self.shareView];
-//        _weiboTitle = [data objectForKey:@"title"];
-//        _weiboDownUrl = [data objectForKey:@"url"];
-//        _weiboImgUrl = [NSData dataWithContentsOfURL:[NSURL URLWithString:[data objectForKey:@"imgeUrl"]]];
-//        _popups = [SnailQuickMaskPopups popupsWithMaskStyle:MaskStyleBlackTranslucent aView:_shareView];
-//        _popups.presentationStyle = PresentationStyleBottom;
-//        _popups.delegate = self;
-//        [_popups presentInView:self.view animated:YES completion:NULL];
+        [self.view addSubview:self.shareView];
+        _weiboTitle = [data objectForKey:@"title"];
+        _weiboDownUrl = [data objectForKey:@"url"];
+        _weiboImgUrl = [NSData dataWithContentsOfURL:[NSURL URLWithString:[data objectForKey:@"imgeUrl"]]];
+        _popups = [SnailQuickMaskPopups popupsWithMaskStyle:MaskStyleBlackTranslucent aView:_shareView];
+        _popups.presentationStyle = PresentationStyleBottom;
+        _popups.delegate = self;
+        [_popups presentInView:self.view animated:YES completion:NULL];
     }];
     
     //调用日历 多选
@@ -393,11 +393,13 @@
             QDLog(@"分享到QQ空间失败:%@\n%@",msg,error);
             [self hideMaskViewFailedWithStr:@"分享到QQ空间失败"];
         }];
-    }else{     //QQ好友
+    }else{     //QQ好友 带有链接的标准格式 参考OpenShare+QQ.m文件
         OSMessage *msg=[[OSMessage alloc]init];
-        msg.desc = _weiboTitle;
         msg.title = _weiboTitle;
+        msg.desc = _weiboTitle;
         msg.image = _weiboImgUrl;
+        msg.link = _weiboDownUrl;
+        msg.multimediaType = OSMultimediaTypeNews;
         [OpenShare shareToQQFriends:msg Success:^(OSMessage *message) {
             QDLog(@"分享到QQ好友成功:%@",msg);
             [self hideMaskViewSucceedWithStr:@"分享到QQ好友成功"];

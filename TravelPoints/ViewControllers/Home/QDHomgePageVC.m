@@ -165,6 +165,7 @@ static NSString *cellIdentifier = @"CellIdentifier";
                     [_rankTableViewData addObject:arr];
                 }
                 _currentTableViewData = _rankTableViewData[0];
+                [self endRefreshing];
                 if (_tableView) {
                     [_tableView reloadData];
                 }else{
@@ -172,9 +173,11 @@ static NSString *cellIdentifier = @"CellIdentifier";
                 }
             }
         }else{
+            [self endRefreshing];
             [WXProgressHUD showErrorWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
+        [self endRefreshing];
         [WXProgressHUD showErrorWithTittle:@"网络异常"];
         [self initTableView];
         [_tableView reloadData];
@@ -311,10 +314,14 @@ static NSString *cellIdentifier = @"CellIdentifier";
         _tableView.mj_header = [QDRefreshHeader headerWithRefreshingBlock:^{
             if (_rankTotalArr.count) {
                 [_rankTotalArr removeAllObjects];
+                [_rankTableViewData removeAllObjects];
             }
-            [self findRankType];
-            [_tableView reloadData];
-            [self endRefreshing];
+            _currentTypeIndex = 0;
+            if (_rankTypeArr.count) {
+                [self getRankedSortingWithTypeStr:_rankTypeArr[_currentTypeIndex]];
+            }else{
+                [self endRefreshing];
+            }
         }];
         _tableView.mj_footer = [QDRefreshFooter footerWithRefreshingBlock:^{
             [self endRefreshing];

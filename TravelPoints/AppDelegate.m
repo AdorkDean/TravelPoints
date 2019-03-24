@@ -92,7 +92,9 @@
     _hotelTypeId = [[NSMutableArray alloc] init];   //酒店类型
     _level = [[NSMutableArray alloc] init];         //会员等级
     
-    [OpenShare connectQQWithAppId:@"101559483"];
+//    [OpenShare connectQQWithAppId:@"1103194207"];
+    [OpenShare connectQQWithAppId:@"101559247"];
+
     [OpenShare connectWeiboWithAppKey:@"402180334"];
 //    [OpenShare connectWeixinWithAppId:@"wxd930ea5d5a258f4f"];
     [OpenShare connectWeixinWithAppId:@"wx506d6b4dffc9de5f"];

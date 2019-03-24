@@ -23,7 +23,7 @@
     UITableView *_tableView;
     NSMutableArray *_dzyListInfoArr;
     NSMutableArray *_dzyImgArr;
-    QDEmptyType *_emptyType;
+    QDEmptyType _emptyType;
 }
 @property (nonatomic, getter=isLoading) BOOL loading;
 
@@ -77,6 +77,8 @@
                     [_dzyImgArr addObject:[dic objectForKey:@"url"]];
                 }
                 [_tableView reloadData];
+            }else{
+                _emptyType = QDNODataError;
             }
         }else{
             [WXProgressHUD showErrorWithTittle:responseObject.message];
@@ -86,6 +88,7 @@
         [_tableView tab_endAnimation];
         [self endRefreshing];
     } failureBlock:^(NSError *error) {
+        _emptyType = QDNetworkError;
         [self endRefreshing];
         [_tableView reloadData];
         [_tableView reloadEmptyDataSet];
@@ -185,13 +188,18 @@
     }
 }
 
-#pragma mark - DZNEmtpyDataSet Delegate
+#pragma mark - emptyDataSource
+
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView{
     if (self.isLoading) {
         return [UIImage imageNamed:@"loading_imgBlue" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
     }
     else {
-        return [UIImage imageNamed:@"icon_noConnect"];
+        if (_emptyType == QDNODataError) {
+            return [UIImage imageNamed:@"icon_nodata"];
+        }else if(_emptyType == QDNetworkError){
+            return [UIImage imageNamed:@"icon_noConnect"];
+        }
     }
     return nil;
 }
@@ -209,14 +217,46 @@
 }
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView{
-    NSString *text = @"页面加载失败";
+    NSString *text;
+    if (_emptyType == QDNetworkError) {
+        text = @"网络异常";
+    }else{
+        text = @"暂无数据";
+    }
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:16.0f],
                                  NSForegroundColorAttributeName: APP_BLUECOLOR};
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
 
+- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView
+{
+    NSString *text;
+    if (_emptyType == QDNODataError) {
+        text = @"刷新试试";
+    }else{
+        text = @"请检查您的手机网络后点击重试";
+    }
+    NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
+    paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+    paragraphStyle.alignment = NSTextAlignmentCenter;
+    
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:14],
+                                 NSForegroundColorAttributeName: APP_GRAYLINECOLOR,
+                                 NSParagraphStyleAttributeName: paragraphStyle};
+    return [[NSMutableAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+-(CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView{
+    return -100;
+}
+
 - (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state{
-    NSString *text = @"重新加载";
+    NSString *text;
+    if (_emptyType == QDNetworkError) {
+        text = @"重新加载";
+    }else{
+        text = @"点击刷新";
+    }
     NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
     paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
     paragraphStyle.alignment = NSTextAlignmentCenter;
@@ -230,6 +270,8 @@
 - (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state{
     NSString *imageName = @"button_background_kickstarter";
     if (state == UIControlStateNormal) imageName = [imageName stringByAppendingString:@"_normal"];
+    if (state == UIControlStateHighlighted) imageName = [imageName stringByAppendingString:@"_highlight"];
+    
     UIEdgeInsets capInsets = UIEdgeInsetsMake(22.0, 22.0, 22.0, 22.0);
     UIEdgeInsets rectInsets = UIEdgeInsetsMake(0.0, -20, 0.0, -20);
     UIImage *image = [UIImage imageNamed:imageName inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
@@ -237,18 +279,6 @@
 }
 
 
-- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView
-{
-    NSString *text = @"请检查您的手机网络后点击重试";
-    NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
-    paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
-    paragraphStyle.alignment = NSTextAlignmentCenter;
-    
-    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:14],
-                                 NSForegroundColorAttributeName: APP_GRAYLINECOLOR,
-                                 NSParagraphStyleAttributeName: paragraphStyle};
-    return [[NSMutableAttributedString alloc] initWithString:text attributes:attributes];
-}
 #pragma mark - DZNEmptyDataSetDelegate Methods
 
 - (BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView
@@ -275,12 +305,15 @@
 {
     self.loading = YES;
     [self requestDZYList];
+    
+    //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    //        self.loading = NO;
+    //    });
 }
 
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button
 {
     self.loading = YES;
     [self requestDZYList];
-    
 }
 @end

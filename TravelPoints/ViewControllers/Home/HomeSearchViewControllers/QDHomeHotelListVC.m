@@ -18,6 +18,7 @@
 #import "UIView+TABControlAnimation.h"
 #import "AppDelegate.h"
 #import "TFDropDownMenu.h"
+#import "QDOrderField.h"
 @interface QDHomeHotelListVC ()<UITableViewDelegate, UITableViewDataSource, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource, TFDropDownMenuViewDelegate>{
     UITableView *_tableView;
     NSMutableArray *_hotelListInfoArr;
@@ -26,6 +27,7 @@
     NSMutableArray *_array2;
     NSMutableArray *_array3;
     TFDropDownMenuView *_menu;
+    QDEmptyType _emptyType;
 }
 @property (nonatomic, getter=isLoading) BOOL loading;
 
@@ -57,15 +59,20 @@
         [_array2 removeAllObjects];
     }
     _array2 = appD.hotelTypeId;
-    if (![_array2[0] isEqualToString:@"酒店类型"]) {
-        [_array2 insertObject:@"酒店类型" atIndex:0];
+    if (_array2.count) {
+        if (![_array2[0] isEqualToString:@"酒店类型"]) {
+            [_array2 insertObject:@"酒店类型" atIndex:0];
+        }
     }
+    
     if (_array3.count) {
         [_array3 removeAllObjects];
     }
     _array3 = appD.hotelLevel;
-    if (![_array3[0] isEqualToString:@"星级"]) {
-        [_array3 insertObject:@"星级" atIndex:0];
+    if (_array3.count) {
+        if (![_array3[0] isEqualToString:@"星级"]) {
+            [_array3 insertObject:@"星级" atIndex:0];
+        }
     }
 //    [self setDropMenu];
     [self initTableView];
@@ -143,6 +150,7 @@
                             };
     [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_GetHotelCondition params:dic1 successBlock:^(QDResponseObject *responseObject) {
         if (responseObject.code == 0) {
+            self.loading = NO;
             NSDictionary *dic = responseObject.result;
             NSArray *hotelArr = [dic objectForKey:@"result"];
             if (hotelArr.count) {
@@ -158,11 +166,13 @@
                 [_tableView reloadData];
                 [self endRefreshing];
             }else{
-                [WXProgressHUD showErrorWithTittle:@"无数据返回,请重试"];
+                _emptyType = QDNODataError;
             }
             [_tableView tab_endAnimation];
         }
     } failureBlock:^(NSError *error) {
+        _emptyType = QDNetworkError;
+        self.loading = NO;
         [WXProgressHUD showErrorWithTittle:@"网络异常"];
         [_tableView tab_endAnimation];
         [self endRefreshing];
@@ -234,8 +244,11 @@
         return [UIImage imageNamed:@"loading_imgBlue" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
     }
     else {
-        
-        return [UIImage imageNamed:@"icon_noConnect"];
+        if (_emptyType == QDNODataError) {
+            return [UIImage imageNamed:@"icon_nodata"];
+        }else if(_emptyType == QDNetworkError){
+            return [UIImage imageNamed:@"icon_noConnect"];
+        }
     }
     return nil;
 }
@@ -253,7 +266,12 @@
 }
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView{
-    NSString *text = @"页面加载失败";
+    NSString *text;
+    if (_emptyType == QDNetworkError) {
+        text = @"网络异常";
+    }else{
+        text = @"暂无数据";
+    }
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:16.0f],
                                  NSForegroundColorAttributeName: APP_BLUECOLOR};
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
@@ -261,7 +279,12 @@
 
 - (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView
 {
-    NSString *text = @"请检查您的手机网络后点击重试";
+    NSString *text;
+    if (_emptyType == QDNODataError) {
+        text = @"刷新试试";
+    }else{
+        text = @"请检查您的手机网络后点击重试";
+    }
     NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
     paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
     paragraphStyle.alignment = NSTextAlignmentCenter;
@@ -271,6 +294,40 @@
                                  NSParagraphStyleAttributeName: paragraphStyle};
     return [[NSMutableAttributedString alloc] initWithString:text attributes:attributes];
 }
+
+-(CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView{
+    return -100;
+}
+
+- (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state{
+    NSString *text;
+    if (_emptyType == QDNetworkError) {
+        text = @"重新加载";
+    }else{
+        text = @"点击刷新";
+    }
+    NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
+    paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+    paragraphStyle.alignment = NSTextAlignmentCenter;
+    
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:18],
+                                 NSForegroundColorAttributeName: APP_WHITECOLOR,
+                                 NSParagraphStyleAttributeName: paragraphStyle};
+    return [[NSMutableAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+- (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state{
+    NSString *imageName = @"button_background_kickstarter";
+    if (state == UIControlStateNormal) imageName = [imageName stringByAppendingString:@"_normal"];
+    if (state == UIControlStateHighlighted) imageName = [imageName stringByAppendingString:@"_highlight"];
+    
+    UIEdgeInsets capInsets = UIEdgeInsetsMake(22.0, 22.0, 22.0, 22.0);
+    UIEdgeInsets rectInsets = UIEdgeInsetsMake(0.0, -20, 0.0, -20);
+    UIImage *image = [UIImage imageNamed:imageName inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
+    return [[image resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
+}
+
+
 #pragma mark - DZNEmptyDataSetDelegate Methods
 
 - (BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView
@@ -316,36 +373,4 @@
         [_tableView.mj_footer endRefreshing];
     }
 }
-//
-//#pragma mark - TFDropDownMenuView Delegate
-//- (void)menuView:(TFDropDownMenuView *)menu selectIndex:(TFIndexPatch *)index{
-//    QDLog(@"第%ld列 第%ld个", (long)index.column, (long)index.section);
-//    switch (index.column) {
-//        case 0:             //全部区域
-//            QDLog(@"0");
-//            break;
-//        case 1:             //酒店类型
-//            QDLog(@"1");
-//            _hotelTypeId = (index.section == 0)? @"": ([NSString stringWithFormat:@"%ld", (long)index.section]);
-//            QDLog(@"_hotelTypeId = %@", _hotelTypeId);
-//            break;
-//        case 2:             //价格
-//
-//            QDLog(@"2");
-//            break;
-//        case 3:             //星级
-//            _hotelLevel = (index.section == 0)? @"": ([NSString stringWithFormat:@"%ld", (long)index.section]);
-//            QDLog(@"_hotelLevel = %@", _hotelLevel);
-//            break;
-//        default:
-//            break;
-//    }
-//    [self requestHotelInfoWithURL];
-//}
-//
-//- (void)menuView:(TFDropDownMenuView *)menu tfColumn:(NSInteger)column{
-//    QDLog(@"column:%ld", (long)column);
-//    //让tableView滚动到顶部位置
-//    [_tableView setContentOffset:CGPointZero animated:YES];
-//}
 @end
