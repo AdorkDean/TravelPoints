@@ -149,14 +149,14 @@
     
     [_bridge registerHandler:@"getShare" handler:^(id data, WVJBResponseCallback responseCallback) {
         QDLog(@"getShare");
-        [self.view addSubview:self.shareView];
-        _weiboTitle = [data objectForKey:@"title"];
-        _weiboDownUrl = [data objectForKey:@"url"];
-        _weiboImgUrl = [NSData dataWithContentsOfURL:[NSURL URLWithString:[data objectForKey:@"imgeUrl"]]];
-        _popups = [SnailQuickMaskPopups popupsWithMaskStyle:MaskStyleBlackTranslucent aView:_shareView];
-        _popups.presentationStyle = PresentationStyleBottom;
-        _popups.delegate = self;
-        [_popups presentInView:self.view animated:YES completion:NULL];
+//        [self.view addSubview:self.shareView];
+//        _weiboTitle = [data objectForKey:@"title"];
+//        _weiboDownUrl = [data objectForKey:@"url"];
+//        _weiboImgUrl = [NSData dataWithContentsOfURL:[NSURL URLWithString:[data objectForKey:@"imgeUrl"]]];
+//        _popups = [SnailQuickMaskPopups popupsWithMaskStyle:MaskStyleBlackTranslucent aView:_shareView];
+//        _popups.presentationStyle = PresentationStyleBottom;
+//        _popups.delegate = self;
+//        [_popups presentInView:self.view animated:YES completion:NULL];
     }];
     
     //调用日历 多选

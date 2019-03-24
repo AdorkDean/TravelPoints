@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface QDHomePageTopView : UIView
 
 @property(nonatomic, strong) SPButton *addressBtn;
-@property(nonatomic, strong) UIImageView *iconBtn;
+@property(nonatomic, strong) UIButton *iconBtn;
 @property (nonatomic, strong) UIView *topLineView;
 @property (nonatomic, strong) UIView *topBackView;
 @property (nonatomic, strong) UIImageView *imgView;

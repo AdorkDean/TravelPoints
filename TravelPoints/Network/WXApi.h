@@ -9,7 +9,7 @@
 #ifndef WXApi_h
 #define WXApi_h
 
-const static NSString *APIKey = @"57a1622b84c1d562292011ec34875571";
+const static NSString *APIKey = @"4d9a3eeccc55429b57663893c21a7813";
 
 static NSString * const QD_Domain = @"http://appuat.wedotting.com";
 
