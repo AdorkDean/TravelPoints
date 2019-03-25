@@ -72,7 +72,7 @@
     _sortType = @"asc";
     [_tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
     [self requestMallList];
-    [_sectionHeaderView.priceBtn setImage:[UIImage imageNamed:@"icon_shellpositive"] forState:UIControlStateNormal];
+//    [_sectionHeaderView.priceBtn setImage:[UIImage imageNamed:@"icon_shellpositive"] forState:UIControlStateNormal];
     [_sectionHeaderView.amountBtn setImage:[UIImage imageNamed:@"icon_shellDefault"] forState:UIControlStateNormal];
 }
 
@@ -82,26 +82,26 @@
     _sortType = @"desc";
     [_tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
     [self requestMallList];
-    [_sectionHeaderView.priceBtn setImage:[UIImage imageNamed:@"icon_shellreverse"] forState:UIControlStateNormal];
+//    [_sectionHeaderView.priceBtn setImage:[UIImage imageNamed:@"icon_shellreverse"] forState:UIControlStateNormal];
     [_sectionHeaderView.amountBtn setImage:[UIImage imageNamed:@"icon_shellDefault"] forState:UIControlStateNormal];
 }
 
 - (void)amuntUp{
-    _sortColumn = @"volume";
+    _sortColumn = @"virtualSales";
     _sortType = @"asc";
     [self requestMallList];
     [_tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
     [_sectionHeaderView.amountBtn setImage:[UIImage imageNamed:@"icon_shellpositive"] forState:UIControlStateNormal];
-    [_sectionHeaderView.priceBtn setImage:[UIImage imageNamed:@"icon_shellDefault"] forState:UIControlStateNormal];
+//    [_sectionHeaderView.priceBtn setImage:[UIImage imageNamed:@"icon_shellDefault"] forState:UIControlStateNormal];
 }
 
 - (void)amountDown{
     [_tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
-    _sortColumn = @"volume";
+    _sortColumn = @"virtualSales";
     _sortType = @"desc";
     [self requestMallList];
     [_sectionHeaderView.amountBtn setImage:[UIImage imageNamed:@"icon_shellreverse"] forState:UIControlStateNormal];
-    [_sectionHeaderView.priceBtn setImage:[UIImage imageNamed:@"icon_shellDefault"] forState:UIControlStateNormal];
+//    [_sectionHeaderView.priceBtn setImage:[UIImage imageNamed:@"icon_shellDefault"] forState:UIControlStateNormal];
     
 }
 
@@ -175,6 +175,7 @@
         if (responseObject.code == 0) {
             NSDictionary *dic = responseObject.result;
             NSArray *mallArr = [dic objectForKey:@"result"];
+            self.loading = NO;
             if (mallArr.count) {
                 for (NSDictionary *dic in mallArr) {
                     QDMallModel *mallModel = [QDMallModel yy_modelWithDictionary:dic];
@@ -194,6 +195,7 @@
         [self endRefreshing];
     } failureBlock:^(NSError *error) {
         _emptyType = QDNetworkError;
+        self.loading = NO;
         [_tableView reloadData];
         [_tableView reloadEmptyDataSet];
         [_tableView tab_endAnimation];

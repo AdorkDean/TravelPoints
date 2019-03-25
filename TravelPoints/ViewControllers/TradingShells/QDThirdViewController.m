@@ -599,6 +599,9 @@ typedef enum : NSUInteger {
 //    });
 }
 
+- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView{
+    return -100;
+}
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button
 {
     self.loading = YES;

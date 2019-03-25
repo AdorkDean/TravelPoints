@@ -608,4 +608,7 @@ QD_ManualCanceled = 4      //手工取消
     }
 }
 
+- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView{
+    return -100;
+}
 @end

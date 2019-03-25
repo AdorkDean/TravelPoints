@@ -115,7 +115,7 @@ typedef enum{
 /**
  *  获取可重复使用的Cell
  *
- *  @return <#return value description#>
+ *  @return return value description
  */
 - (PGIndexBannerSubiew *)dequeueReusableCell;
 

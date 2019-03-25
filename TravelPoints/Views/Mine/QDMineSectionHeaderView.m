@@ -39,6 +39,7 @@
     if ([super initWithFrame:frame]) {
         _btn1 = [[SPButton alloc] initWithImagePosition:SPButtonImagePositionTop];
         _btn1.imageTitleSpace = 10;
+        _btn1.tag = 0;
         [_btn1 setTitle:@"全部订单" forState:UIControlStateNormal];
         _btn1.titleLabel.font = QDFont(12);
         [_btn1 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -48,6 +49,7 @@
         
         _btn2 = [[SPButton alloc] initWithImagePosition:SPButtonImagePositionTop];
         _btn2.imageTitleSpace = 10;
+        _btn2.tag = 1;
         [_btn2 setTitle:@"待出行" forState:UIControlStateNormal];
         _btn2.titleLabel.font = QDFont(12);
         [_btn2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -56,6 +58,7 @@
         
         _btn3 = [[SPButton alloc] initWithImagePosition:SPButtonImagePositionTop];
         _btn3.imageTitleSpace = 10;
+        _btn3.tag = 2;
         [_btn3 setTitle:@"待支付" forState:UIControlStateNormal];
         _btn3.titleLabel.font = QDFont(12);
         [_btn3 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -65,6 +68,7 @@
         
         _btn4 = [[SPButton alloc] initWithImagePosition:SPButtonImagePositionTop];
         _btn4.imageTitleSpace = 10;
+        _btn4.tag = 3;
         [_btn4 setTitle:@"退款单" forState:UIControlStateNormal];
         _btn4.titleLabel.font = QDFont(12);
         [_btn4 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];

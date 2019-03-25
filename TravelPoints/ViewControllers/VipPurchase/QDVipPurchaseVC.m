@@ -121,7 +121,6 @@
     }
     [self setupCardUI];
     [self initBottomBtn];
-    // Do any additional setup after loading the view.
 }
 
 #pragma mark - 请求用户信息
@@ -223,7 +222,7 @@
     pageFlowView.delegate = self;
     pageFlowView.dataSource = self;
     pageFlowView.minimumPageAlpha = 0.01;
-    pageFlowView.isCarousel = YES;
+    pageFlowView.isCarousel = NO;
     pageFlowView.orginPageCount = self.imageArray.count;
     pageFlowView.leftRightMargin = 30;
     pageFlowView.topBottomMargin = 0;
@@ -232,6 +231,7 @@
     [pageFlowView reloadData];
     [self.scrollView addSubview:pageFlowView];
     self.pageFlowView = pageFlowView;
+    [self.pageFlowView adjustCenterSubview];
     //添加到主view上
 //    [self.view addSubview:self.indicateLabel];
     

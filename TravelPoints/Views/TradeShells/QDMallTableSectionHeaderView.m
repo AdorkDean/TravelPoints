@@ -39,15 +39,15 @@ static char *const btnKey = "btnKey";
         [self addSubview:_amountBtn];
         objc_setAssociatedObject(_amountBtn, btnKey, @"1", OBJC_ASSOCIATION_ASSIGN);
         
-        _priceBtn = [[SPButton alloc] initWithImagePosition:SPButtonImagePositionRight];
-        [_priceBtn setImage:[UIImage imageNamed:@"icon_shellDefault"] forState:UIControlStateNormal];
-        [_priceBtn setTitle:@"价格" forState:UIControlStateNormal];
-        [_priceBtn setTitleColor:APP_BLACKCOLOR forState:UIControlStateNormal];
-        _priceBtn.titleLabel.font = QDFont(14);
-        _priceBtn.tag = 102;
-        [_priceBtn addTarget:self action:@selector(selectClick:) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:_priceBtn];
-        objc_setAssociatedObject(_priceBtn, btnKey, @"2", OBJC_ASSOCIATION_ASSIGN);
+//        _priceBtn = [[SPButton alloc] initWithImagePosition:SPButtonImagePositionRight];
+//        [_priceBtn setImage:[UIImage imageNamed:@"icon_shellDefault"] forState:UIControlStateNormal];
+//        [_priceBtn setTitle:@"价格" forState:UIControlStateNormal];
+//        [_priceBtn setTitleColor:APP_BLACKCOLOR forState:UIControlStateNormal];
+//        _priceBtn.titleLabel.font = QDFont(14);
+//        _priceBtn.tag = 102;
+//        [_priceBtn addTarget:self action:@selector(selectClick:) forControlEvents:UIControlEventTouchUpInside];
+//        [self addSubview:_priceBtn];
+//        objc_setAssociatedObject(_priceBtn, btnKey, @"2", OBJC_ASSOCIATION_ASSIGN);
         
         _baoyouBtn = [[SPButton alloc] initWithImagePosition:SPButtonImagePositionLeft];
         [_baoyouBtn setImage:[UIImage imageNamed:@"icon_baoyouNormal"] forState:UIControlStateNormal];
@@ -113,7 +113,7 @@ static char *const btnKey = "btnKey";
 - (void)layoutSubviews{
     [super layoutSubviews];
     [_allBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.mas_left).offset(20);
+        make.left.equalTo(self.mas_left).offset(25);
         make.centerY.equalTo(self);
         make.width.mas_equalTo(60);
         make.height.mas_equalTo(40);
@@ -121,19 +121,19 @@ static char *const btnKey = "btnKey";
     
     [_amountBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self);
-        make.left.equalTo(self.mas_left).offset(100);
+        make.left.equalTo(self.mas_left).offset(140);
         make.width.and.height.equalTo(_allBtn);
     }];
     
-    [_priceBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self);
-        make.left.equalTo(self.mas_left).offset(180);
-        make.width.and.height.equalTo(_allBtn);
-    }];
+//    [_priceBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerY.equalTo(self);
+//        make.left.equalTo(self.mas_left).offset(180);
+//        make.width.and.height.equalTo(_allBtn);
+//    }];
     
     [_baoyouBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self);
-        make.right.equalTo(self.mas_right).offset(-36);
+        make.right.equalTo(self.mas_right).offset(-50);
         make.width.and.height.equalTo(_allBtn);
     }];
 }

@@ -43,7 +43,7 @@ static NSString *subviewClassName;
     self.isCarousel = YES;
     self.leftRightMargin = 20;
     self.topBottomMargin = 30;
-    _currentPageIndex = 2;
+    self.currentPageIndex = 3;
     
     _minimumPageAlpha = 1.0;
     _autoTime = 5.0;

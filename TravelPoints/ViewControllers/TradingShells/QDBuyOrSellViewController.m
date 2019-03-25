@@ -242,12 +242,6 @@
 {
     if (!_numberButton) {
         _numberButton = [[PPNumberButton alloc] initWithFrame:CGRectMake(0, 0, 145, 40)];
-        _numberButton.decreaseBtn.frame = CGRectMake(0, 0, 20, 20);
-        _numberButton.decreaseBtn.backgroundColor =[UIColor redColor];
-//
-//        _numberButton.increaseBtn.frame = CGRectMake(0, 0, 30, 30);
-//        _numberButton.increaseBtn.backgroundColor = [UIColor blueColor];
-
         _numberButton.shakeAnimation = YES;
         // 设置最小值
         if (_operateModel != nil) {

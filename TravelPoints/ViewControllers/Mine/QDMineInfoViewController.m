@@ -385,13 +385,19 @@
     }
 }
 #pragma mark - 全部订单
+/*
+ 全部订单 #/my/orders/home?index=0 全部订单添加index 0-全部订单 1-待出行 2-待支付 3-退款单
+ http://203.110.179.27:60409/app/#/my/orders/home?index=1
+
+ */
 - (void)ordersAction:(UIButton *)sender{
     if ([[QDUserDefaults getObjectForKey:@"loginType"] isEqualToString:@"0"]) {
         [WXProgressHUD showErrorWithTittle:@"未登录"];
         QDLoginAndRegisterVC *loginVC = [[QDLoginAndRegisterVC alloc] init];
         [self presentViewController:loginVC animated:YES completion:nil];
     }else{
-        [self pushBridgeVCWithStr:[QD_JSURL stringByAppendingString:JS_ORDERS]];
+        NSString *urlStr = [NSString stringWithFormat:@"%@%@?index=%ld", QD_JSURL, JS_ORDERS, (long)sender.tag];
+        [self pushBridgeVCWithStr:urlStr];
     }
 }
 

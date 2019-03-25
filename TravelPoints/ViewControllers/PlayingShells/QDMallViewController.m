@@ -76,7 +76,7 @@
     _sortType = @"asc";
     [_tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
     [self requestMallList];
-    [_sectionHeaderView.priceBtn setImage:[UIImage imageNamed:@"icon_shellpositive"] forState:UIControlStateNormal];
+//    [_sectionHeaderView.priceBtn setImage:[UIImage imageNamed:@"icon_shellpositive"] forState:UIControlStateNormal];
     [_sectionHeaderView.amountBtn setImage:[UIImage imageNamed:@"icon_shellDefault"] forState:UIControlStateNormal];
 }
 
@@ -86,26 +86,26 @@
     _sortType = @"desc";
     [_tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
     [self requestMallList];
-    [_sectionHeaderView.priceBtn setImage:[UIImage imageNamed:@"icon_shellreverse"] forState:UIControlStateNormal];
+//    [_sectionHeaderView.priceBtn setImage:[UIImage imageNamed:@"icon_shellreverse"] forState:UIControlStateNormal];
     [_sectionHeaderView.amountBtn setImage:[UIImage imageNamed:@"icon_shellDefault"] forState:UIControlStateNormal];
 }
 
 - (void)amuntUp{
-    _sortColumn = @"volume";
+    _sortColumn = @"virtualSales";
     _sortType = @"asc";
     [self requestMallList];
     [_tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
     [_sectionHeaderView.amountBtn setImage:[UIImage imageNamed:@"icon_shellpositive"] forState:UIControlStateNormal];
-    [_sectionHeaderView.priceBtn setImage:[UIImage imageNamed:@"icon_shellDefault"] forState:UIControlStateNormal];
+//    [_sectionHeaderView.priceBtn setImage:[UIImage imageNamed:@"icon_shellDefault"] forState:UIControlStateNormal];
 }
 
 - (void)amountDown{
     [_tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
-    _sortColumn = @"volume";
+    _sortColumn = @"virtualSales";
     _sortType = @"desc";
     [self requestMallList];
     [_sectionHeaderView.amountBtn setImage:[UIImage imageNamed:@"icon_shellreverse"] forState:UIControlStateNormal];
-    [_sectionHeaderView.priceBtn setImage:[UIImage imageNamed:@"icon_shellDefault"] forState:UIControlStateNormal];
+//    [_sectionHeaderView.priceBtn setImage:[UIImage imageNamed:@"icon_shellDefault"] forState:UIControlStateNormal];
     
 }
 
