@@ -55,6 +55,17 @@
             _orderID = [orderDetail objectForKey:@"orderId"];
             _pickOrderView.zdNum.text = _orderID;
             _pickOrderView.bdTime.text = [QDDateUtils timeStampConversionNSString:[orderDetail objectForKey:@"createTime"]];
+            //请求到剩余s数之后 开始计时
+            _balance = [NSString stringWithFormat:@"%.2lf",[[orderDetail objectForKey:@"amount"] doubleValue]];
+            if ([_orderModel.businessType isEqualToString:@"0"]) {
+                _pickOrderView.operationType.text = @"买入";
+            }else{
+                _pickOrderView.operationType.text = @"卖出";
+            }
+            _pickOrderView.lab3.text = _balance;
+            _pickOrderView.lab5.text = [NSString stringWithFormat:@"%.2lf", [[orderDetail objectForKey:@"number"] doubleValue]];
+            _pickOrderView.lab7.text = [NSString stringWithFormat:@"¥%.2lf", [[orderDetail objectForKey:@"price"] doubleValue]];
+            _pickOrderView.lab9.text = [NSString stringWithFormat:@"¥%.2lf",[[orderDetail objectForKey:@"poundage"] doubleValue]];
             if ([[orderDetail objectForKey:@"state"] intValue] == 0) {  //待付款情况
                 _pickOrderView.statusLab.text = @"待付款";
                 NSString *ss = [NSString stringWithFormat:@"%d", [[orderDetail objectForKey:@"countDownSec"] intValue]];
@@ -78,12 +89,6 @@
                     }
                     _pickOrderView.remain.text = [QDDateUtils getMMSSFromSS:[NSString stringWithFormat:@"%ld",weakSelf.currentEditStatusTime]];
                 }];
-                //请求到剩余s数之后 开始计时
-                _balance = [NSString stringWithFormat:@"%.2lf",[[orderDetail objectForKey:@"amount"] doubleValue]];
-                _pickOrderView.lab3.text = _balance;
-                _pickOrderView.lab5.text = [NSString stringWithFormat:@"%.2lf", [[orderDetail objectForKey:@"number"] doubleValue]];
-                _pickOrderView.lab7.text = [NSString stringWithFormat:@"¥%.2lf", [[orderDetail objectForKey:@"price"] doubleValue]];
-                _pickOrderView.lab9.text = [NSString stringWithFormat:@"¥%.2lf",[[orderDetail objectForKey:@"poundage"] doubleValue]];
                 _pickOrderView.payBtn.hidden = NO;
                 _pickOrderView.withdrawBtn.hidden = NO;
                 _pickOrderView.infoLab.hidden = NO;
