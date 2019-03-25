@@ -70,7 +70,6 @@
     [self.tabBarController.tabBar setHidden:YES];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
     self.tabBarController.tabBar.frame = CGRectZero;
-    
 }
 
 - (void)viewDidLoad {
@@ -343,13 +342,13 @@
 #pragma mark - 微博Handler
 -(void)btnViewHandler:(UIButton*)btn{
     if (btn.tag == 1001) {
-//        [OpenShare connectWeiboWithAppKey:FT_WEIBO_APPKEY];
+        [OpenShare connectWeiboWithAppKey:FT_WEIBO_APPKEY];
         OSMessage *msg=[[OSMessage alloc]init];
         msg.title = _weiboTitle;
         msg.image = _weiboImgUrl;
-        msg.link = _weiboDownUrl;
+//        msg.link = _weiboDownUrl;
 //        msg.desc = _weiboTitle;
-        msg.thumbnail = _weiboImgUrl;
+//        msg.thumbnail = _weiboImgUrl;
         [OpenShare shareToWeibo:msg Success:^(OSMessage *message) {
             QDLog(@"分享到sina微博成功:\%@",message);
             [self hideMaskViewSucceedWithStr:@"分享到sina微博成功"];
