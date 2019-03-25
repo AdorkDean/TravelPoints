@@ -224,6 +224,13 @@
 		9326111B222388E900E3D0BA /* QDMySaleOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9326111A222388E900E3D0BA /* QDMySaleOrderCell.m */; };
 		9326111E2223B6E800E3D0BA /* QDOrderField.m in Sources */ = {isa = PBXBuildFile; fileRef = 9326111D2223B6E800E3D0BA /* QDOrderField.m */; };
 		932611212223C72C00E3D0BA /* QDMyPickOrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 932611202223C72C00E3D0BA /* QDMyPickOrderModel.m */; };
+		932715AB22486ED7008CD6A8 /* OpenShare+Weibo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9327159E22486ED7008CD6A8 /* OpenShare+Weibo.m */; };
+		932715AC22486ED7008CD6A8 /* OpenShare.m in Sources */ = {isa = PBXBuildFile; fileRef = 9327159F22486ED7008CD6A8 /* OpenShare.m */; };
+		932715AD22486ED7008CD6A8 /* OpenShare+QQ.m in Sources */ = {isa = PBXBuildFile; fileRef = 932715A122486ED7008CD6A8 /* OpenShare+QQ.m */; };
+		932715AE22486ED7008CD6A8 /* OpenShare+Alipay.m in Sources */ = {isa = PBXBuildFile; fileRef = 932715A222486ED7008CD6A8 /* OpenShare+Alipay.m */; };
+		932715AF22486ED7008CD6A8 /* OpenShare+Weixin.m in Sources */ = {isa = PBXBuildFile; fileRef = 932715A322486ED7008CD6A8 /* OpenShare+Weixin.m */; };
+		932715B022486ED7008CD6A8 /* OpenShare+Renren.m in Sources */ = {isa = PBXBuildFile; fileRef = 932715A622486ED7008CD6A8 /* OpenShare+Renren.m */; };
+		932715B322486F0B008CD6A8 /* UIControl+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 932715B222486F0A008CD6A8 /* UIControl+Blocks.m */; };
 		935D559A223F721800E97FC9 /* LaunchAnimationTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 935D5599223F721800E97FC9 /* LaunchAnimationTool.m */; };
 		935D559D223F7AFC00E97FC9 /* QDPlayingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 935D559C223F7AFC00E97FC9 /* QDPlayingViewController.m */; };
 		935D55A0223F7BBD00E97FC9 /* QDHotelReserveVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 935D559F223F7BBD00E97FC9 /* QDHotelReserveVC.m */; };
@@ -727,6 +734,21 @@
 		9326111D2223B6E800E3D0BA /* QDOrderField.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDOrderField.m; sourceTree = "<group>"; };
 		9326111F2223C72C00E3D0BA /* QDMyPickOrderModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDMyPickOrderModel.h; sourceTree = "<group>"; };
 		932611202223C72C00E3D0BA /* QDMyPickOrderModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDMyPickOrderModel.m; sourceTree = "<group>"; };
+		9327159E22486ED7008CD6A8 /* OpenShare+Weibo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OpenShare+Weibo.m"; sourceTree = "<group>"; };
+		9327159F22486ED7008CD6A8 /* OpenShare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenShare.m; sourceTree = "<group>"; };
+		932715A022486ED7008CD6A8 /* OpenShare+Renren.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OpenShare+Renren.h"; sourceTree = "<group>"; };
+		932715A122486ED7008CD6A8 /* OpenShare+QQ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OpenShare+QQ.m"; sourceTree = "<group>"; };
+		932715A222486ED7008CD6A8 /* OpenShare+Alipay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OpenShare+Alipay.m"; sourceTree = "<group>"; };
+		932715A322486ED7008CD6A8 /* OpenShare+Weixin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OpenShare+Weixin.m"; sourceTree = "<group>"; };
+		932715A422486ED7008CD6A8 /* OpenShareHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenShareHeader.h; sourceTree = "<group>"; };
+		932715A522486ED7008CD6A8 /* OpenShare+Weibo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OpenShare+Weibo.h"; sourceTree = "<group>"; };
+		932715A622486ED7008CD6A8 /* OpenShare+Renren.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OpenShare+Renren.m"; sourceTree = "<group>"; };
+		932715A722486ED7008CD6A8 /* OpenShare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenShare.h; sourceTree = "<group>"; };
+		932715A822486ED7008CD6A8 /* OpenShare+QQ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OpenShare+QQ.h"; sourceTree = "<group>"; };
+		932715A922486ED7008CD6A8 /* OpenShare+Weixin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OpenShare+Weixin.h"; sourceTree = "<group>"; };
+		932715AA22486ED7008CD6A8 /* OpenShare+Alipay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OpenShare+Alipay.h"; sourceTree = "<group>"; };
+		932715B122486F0A008CD6A8 /* UIControl+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIControl+Blocks.h"; sourceTree = "<group>"; };
+		932715B222486F0A008CD6A8 /* UIControl+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIControl+Blocks.m"; sourceTree = "<group>"; };
 		935D5598223F721800E97FC9 /* LaunchAnimationTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchAnimationTool.h; sourceTree = "<group>"; };
 		935D5599223F721800E97FC9 /* LaunchAnimationTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchAnimationTool.m; sourceTree = "<group>"; };
 		935D559B223F7AFC00E97FC9 /* QDPlayingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDPlayingViewController.h; sourceTree = "<group>"; };
@@ -1089,6 +1111,7 @@
 		3B40EB7321EC952800656C1F /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				9327159D22486ED7008CD6A8 /* OpenShare */,
 				930F323222408F75003741E1 /* TABAnimated */,
 				935D5598223F721800E97FC9 /* LaunchAnimationTool.h */,
 				935D5599223F721800E97FC9 /* LaunchAnimationTool.m */,
@@ -1362,6 +1385,8 @@
 				3B40EBCC21ECA64A00656C1F /* NSDictionary+Helper.m */,
 				3BCE3C3021EC8A08005D518F /* UIColor+QDColor.h */,
 				3BCE3C2F21EC8A08005D518F /* UIColor+QDColor.m */,
+				932715B122486F0A008CD6A8 /* UIControl+Blocks.h */,
+				932715B222486F0A008CD6A8 /* UIControl+Blocks.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -1880,6 +1905,26 @@
 			path = HomeSearchViewControllers;
 			sourceTree = "<group>";
 		};
+		9327159D22486ED7008CD6A8 /* OpenShare */ = {
+			isa = PBXGroup;
+			children = (
+				932715A522486ED7008CD6A8 /* OpenShare+Weibo.h */,
+				9327159E22486ED7008CD6A8 /* OpenShare+Weibo.m */,
+				932715A722486ED7008CD6A8 /* OpenShare.h */,
+				9327159F22486ED7008CD6A8 /* OpenShare.m */,
+				932715A622486ED7008CD6A8 /* OpenShare+Renren.m */,
+				932715A022486ED7008CD6A8 /* OpenShare+Renren.h */,
+				932715A822486ED7008CD6A8 /* OpenShare+QQ.h */,
+				932715A122486ED7008CD6A8 /* OpenShare+QQ.m */,
+				932715AA22486ED7008CD6A8 /* OpenShare+Alipay.h */,
+				932715A222486ED7008CD6A8 /* OpenShare+Alipay.m */,
+				932715A922486ED7008CD6A8 /* OpenShare+Weixin.h */,
+				932715A322486ED7008CD6A8 /* OpenShare+Weixin.m */,
+				932715A422486ED7008CD6A8 /* OpenShareHeader.h */,
+			);
+			path = OpenShare;
+			sourceTree = "<group>";
+		};
 		93744F4E223B46B0000708A3 /* QDGCDTimer */ = {
 			isa = PBXGroup;
 			children = (
@@ -2214,6 +2259,7 @@
 				3B0DC078220034B30056C318 /* SDWebImageDownloader.m in Sources */,
 				3B8984B5221BB6F9001A9970 /* QDMallTableCell.m in Sources */,
 				3B40EBFD21EDD83500656C1F /* QDBackgroundView.m in Sources */,
+				932715AF22486ED7008CD6A8 /* OpenShare+Weixin.m in Sources */,
 				3B0CD6E321F05E850020824A /* Macro.m in Sources */,
 				93261118222388C000E3D0BA /* QDMyPurchaseCell.m in Sources */,
 				3B04DF4A21F83A95001909CD /* QDHotelListInfoModel.m in Sources */,
@@ -2251,6 +2297,7 @@
 				3B40EBE921ED925F00656C1F /* VertificationCodeInputView.m in Sources */,
 				3BCE3C3121EC8A08005D518F /* UIColor+QDColor.m in Sources */,
 				93E30EAB22251947003CA771 /* VipCardDTO.m in Sources */,
+				932715AB22486ED7008CD6A8 /* OpenShare+Weibo.m in Sources */,
 				93E30ECA222641B3003CA771 /* QDKeyWordsSearchHeaderView.m in Sources */,
 				93E30EFA22295BCB003CA771 /* QDPriceRangeView.m in Sources */,
 				93E30ED92227E1AB003CA771 /* QDKeyWordsSearchViewT.m in Sources */,
@@ -2289,6 +2336,7 @@
 				93E30EA12224D18D003CA771 /* NewPagedFlowView.m in Sources */,
 				3BC3C863221B9A9A00E68D85 /* QDCustomTourSectionHeaderView.m in Sources */,
 				93744F5A223B953E000708A3 /* QDRecommendViewController.m in Sources */,
+				932715B022486ED7008CD6A8 /* OpenShare+Renren.m in Sources */,
 				937344E4223137850054D753 /* LQPopUpView.m in Sources */,
 				93744F5D223BB179000708A3 /* LaunchImageTransition.m in Sources */,
 				3B40EBBB21EC953E00656C1F /* NSAttributedString+YYText.m in Sources */,
@@ -2315,6 +2363,7 @@
 				3B7636952218E8B200F77007 /* QDHomePageTopView.m in Sources */,
 				3B40EBB921EC953E00656C1F /* YYTextUtilities.m in Sources */,
 				3BF92D7222168E300019B941 /* MyTableCell.m in Sources */,
+				932715AD22486ED7008CD6A8 /* OpenShare+QQ.m in Sources */,
 				3B40EBCD21ECA64A00656C1F /* NSDictionary+Helper.m in Sources */,
 				3B1BC01521FB260E0005C415 /* QDHotelsInAreaViewController.m in Sources */,
 				93E30EF32228CBA5003CA771 /* MANaviAnnotation.m in Sources */,
@@ -2358,6 +2407,7 @@
 				93DC043022374B5400485100 /* QDFourViewController.m in Sources */,
 				936CB21522367C2200D67896 /* QDFirstViewController.m in Sources */,
 				3B1DFE0721F2D005007D4B12 /* SYCitysCell.m in Sources */,
+				932715B322486F0B008CD6A8 /* UIControl+Blocks.m in Sources */,
 				3BCE3C1E21EC7FED005D518F /* QDServiceClient.m in Sources */,
 				3B40EBC021EC953E00656C1F /* YYTextWeakProxy.m in Sources */,
 				3B40EC1B21EED50F00656C1F /* QDBaseViewController.m in Sources */,
@@ -2395,6 +2445,7 @@
 				3B40EC0F21EE0C2200656C1F /* QDMineHeaderNotLoginView.m in Sources */,
 				3B0DC07A220034B30056C318 /* UIImage+MultiFormat.m in Sources */,
 				3BC3C86F221BB14B00E68D85 /* QDMallModel.m in Sources */,
+				932715AE22486ED7008CD6A8 /* OpenShare+Alipay.m in Sources */,
 				3B7636AF221900C700F77007 /* HYBCardCollectionViewCell.m in Sources */,
 				3B40EBC321EC956300656C1F /* QDUserDefaults.m in Sources */,
 				93116E7E2243794900BE3879 /* QDSearchResultViewController.m in Sources */,
@@ -2418,6 +2469,7 @@
 				93E30EF42228CBA5003CA771 /* MANaviRoute.m in Sources */,
 				3B04DF3F21F7FE27001909CD /* QDMemberDTO.m in Sources */,
 				3BD9516921EC2A1800CD0627 /* AppDelegate.m in Sources */,
+				932715AC22486ED7008CD6A8 /* OpenShare.m in Sources */,
 				93E30EB12225409D003CA771 /* QDReadyToPayViewCell.m in Sources */,
 				93E30EC722263FF2003CA771 /* QDKeyWordsSearchVC.m in Sources */,
 				3B2ADD1421FEA51600F62D63 /* QDHotelAndStrategyFilterView.m in Sources */,

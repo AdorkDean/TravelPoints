@@ -18,10 +18,10 @@
 #import "AppDelegate.h"
 #import "QDShareView.h"
 #import "SnailQuickMaskPopups.h"
-#import <OpenShare.h>
-#import <OpenShare+Weibo.h>
-#import <OpenShare+Weixin.h>
-#import <OpenShare+QQ.h>
+#import "OpenShare.h"
+#import "OpenShare+QQ.h"
+#import "OpenShare+Weibo.h"
+#import "OpenShare+Weixin.h"
 
 #define FT_WEIBO_APPKEY         @"2645776991"
 #define FT_WEIBO_APPSECRET      @"785818577abc810dfac71fa7c59d1957"
@@ -30,7 +30,7 @@
 @interface QDBridgeViewController ()<WKNavigationDelegate, SnailQuickMaskPopupsDelegate>{
     WebViewJavascriptBridge *_bridge;
     CAReplicatorLayer *_containerLayer;
-    NSData *_weiboImgUrl;
+    UIImage *_weiboImg;
     NSString *_weiboDownUrl;
     NSString *_weiboTitle;
 }
@@ -150,8 +150,9 @@
         QDLog(@"getShare");
         [self.view addSubview:self.shareView];
         _weiboTitle = [data objectForKey:@"title"];
+        NSData *imgData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[data objectForKey:@"imgeUrl"]]];
+        _weiboImg = [UIImage imageWithData:imgData];
         _weiboDownUrl = [data objectForKey:@"url"];
-        _weiboImgUrl = [NSData dataWithContentsOfURL:[NSURL URLWithString:[data objectForKey:@"imgeUrl"]]];
         _popups = [SnailQuickMaskPopups popupsWithMaskStyle:MaskStyleBlackTranslucent aView:_shareView];
         _popups.presentationStyle = PresentationStyleBottom;
         _popups.delegate = self;
@@ -345,9 +346,9 @@
         [OpenShare connectWeiboWithAppKey:FT_WEIBO_APPKEY];
         OSMessage *msg=[[OSMessage alloc]init];
         msg.title = _weiboTitle;
-        msg.image = _weiboImgUrl;
-//        msg.link = _weiboDownUrl;
-//        msg.desc = _weiboTitle;
+        msg.image = _weiboImg;
+        msg.link = _weiboDownUrl;
+        msg.desc = _weiboTitle;
 //        msg.thumbnail = _weiboImgUrl;
         [OpenShare shareToWeibo:msg Success:^(OSMessage *message) {
             QDLog(@"分享到sina微博成功:\%@",message);
@@ -360,7 +361,7 @@
         OSMessage *msg=[[OSMessage alloc]init];
         msg.desc = _weiboTitle;
         msg.title = _weiboTitle;
-        msg.image = _weiboImgUrl;
+        msg.image = _weiboImg;
         msg.link = _weiboDownUrl;
         //    msg.thumbnail = testThumbImage;
         [OpenShare shareToWeixinTimeline:msg Success:^(OSMessage *message) {
@@ -375,7 +376,7 @@
         msg.desc = _weiboTitle;
         msg.title = _weiboTitle;
         msg.link = _weiboDownUrl;
-        msg.image = _weiboImgUrl;
+        msg.image = _weiboImg;
         [OpenShare shareToWeixinSession:msg Success:^(OSMessage *message) {
             QDLog(@"微信分享到会话成功：\n%@",message);
             [self hideMaskViewSucceedWithStr:@"微信分享到会话成功"];
@@ -387,7 +388,7 @@
         OSMessage *msg=[[OSMessage alloc]init];
         msg.desc = _weiboTitle;
         msg.title = _weiboTitle;
-        msg.image = _weiboImgUrl;
+        msg.image = _weiboImg;
         [OpenShare shareToQQZone:msg Success:^(OSMessage *message) {
             QDLog(@"分享到QQ空间成功:%@",msg);
             [self hideMaskViewSucceedWithStr:@"分享到QQ空间成功"];
@@ -399,7 +400,7 @@
         OSMessage *msg=[[OSMessage alloc]init];
         msg.title = _weiboTitle;
         msg.desc = _weiboTitle;
-        msg.image = _weiboImgUrl;
+        msg.image = _weiboImg;
         msg.link = _weiboDownUrl;
         msg.multimediaType = OSMultimediaTypeNews;
         [OpenShare shareToQQFriends:msg Success:^(OSMessage *message) {
