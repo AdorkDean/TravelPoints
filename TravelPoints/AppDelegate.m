@@ -95,22 +95,6 @@
     [OpenShare connectQQWithAppId:@"101559247"];
     [OpenShare connectWeiboWithAppKey:@"402180334"];
     [OpenShare connectWeixinWithAppId:@"wx2f631a50a1c2b9c5" miniAppId:@"gh_d43f693ca31f"];
-    
-    //添加默认地址
-    if ([QDUserDefaults getObjectForKey:@"QD_Domain"] == nil || [[QDUserDefaults getObjectForKey:@"QD_Domain"] isEqualToString:@""]) {
-        [QDUserDefaults setObject:@"http://203.110.179.27:60409" forKey:@"QD_Domain"];
-//        [QDUserDefaults setObject:@"http://47.101.222.172:8080" forKey:@"QD_Domain"];
-//        [QDUserDefaults setObject:@"http://appuat.wedotting.com" forKey:@"QD_Domain"];
-    }
-    if ([QDUserDefaults getObjectForKey:@"QD_JSURL"] == nil || [[QDUserDefaults getObjectForKey:@"QD_JSURL"] isEqualToString:@""]) {
-        [QDUserDefaults setObject:@"http://203.110.179.27:60409/app" forKey:@"QD_JSURL"];
-//        [QDUserDefaults setObject:@"http://47.101.222.172:8080/app" forKey:@"QD_JSURL"];
-//        [QDUserDefaults setObject:@"http://appuat.wedotting.com/app" forKey:@"QD_JSURL"];
-    }    if ([QDUserDefaults getObjectForKey:@"QD_TESTJSURL"] == nil || [[QDUserDefaults getObjectForKey:@"QD_TESTJSURL"] isEqualToString:@""]) {
-        [QDUserDefaults setObject:@"http://203.110.179.27:60409/app/#" forKey:@"QD_TESTJSURL"];
-//        [QDUserDefaults setObject:@"http://47.101.222.172:8080/app/#" forKey:@"QD_TESTJSURL"];
-//        [QDUserDefaults setObject:@"http://appuat.wedotting.com/app/#" forKey:@"QD_TESTJSURL"];
-    }
     [QDServiceClient startMonitoringNetworking];
     //获取基准价
     [self getBasicPrice];
@@ -153,7 +137,7 @@
                 }
             }
         }else{
-            [WXProgressHUD showErrorWithTittle:responseObject.message];
+            [WXProgressHUD showInfoWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
         [WXProgressHUD hideHUD];
@@ -165,7 +149,7 @@
         if (responseObject.code == 0) {
             self.basePirceRate = [responseObject.result doubleValue];
         }else{
-            [WXProgressHUD showErrorWithTittle:responseObject.message];
+            [WXProgressHUD showInfoWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
         [WXProgressHUD hideHUD];

@@ -58,7 +58,7 @@
             [WXProgressHUD showSuccessWithTittle:@"短信发送成功"];
             [_sendBtn startGetMessage];
         }else{
-            [WXProgressHUD showErrorWithTittle:responseObject.message];
+            [WXProgressHUD showInfoWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
         [WXProgressHUD hideHUD];

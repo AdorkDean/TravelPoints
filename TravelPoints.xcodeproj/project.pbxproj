@@ -160,7 +160,6 @@
 		3B7636BD22193A5C00F77007 /* ZLCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7636BA22193A5C00F77007 /* ZLCollectionView.m */; };
 		3B7636C0221951C600F77007 /* QDHomePageViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7636BF221951C600F77007 /* QDHomePageViewCell.m */; };
 		3B8984B5221BB6F9001A9970 /* QDMallTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B8984B4221BB6F9001A9970 /* QDMallTableCell.m */; };
-		3B8984B7221BE32C001A9970 /* naviga@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B8984B6221BE32B001A9970 /* naviga@2x.png */; };
 		3BC3C863221B9A9A00E68D85 /* QDCustomTourSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BC3C862221B9A9A00E68D85 /* QDCustomTourSectionHeaderView.m */; };
 		3BC3C869221BA08600E68D85 /* QDCustomTourCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BC3C868221BA08600E68D85 /* QDCustomTourCell.m */; };
 		3BC3C86C221BAB7300E68D85 /* QDMallTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BC3C86B221BAB7300E68D85 /* QDMallTableHeaderView.m */; };
@@ -198,7 +197,6 @@
 		3BF92D7422168E300019B941 /* RootCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF92D7022168E2F0019B941 /* RootCollectionCell.m */; };
 		3BF92D772216B04F0019B941 /* QDFilterTypeOneView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF92D762216B04F0019B941 /* QDFilterTypeOneView.m */; };
 		3BF92D7B2216BEFB0019B941 /* SnailQuickMaskPopups.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF92D792216BEFB0019B941 /* SnailQuickMaskPopups.m */; };
-		3BF92D7D2216D8BE0019B941 /* shellBanner@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BF92D7C2216D8BD0019B941 /* shellBanner@2x.png */; };
 		930F323122408258003741E1 /* RootFirstCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 930F323022408258003741E1 /* RootFirstCollectionCell.m */; };
 		930F325022408F75003741E1 /* UIView+TABControlAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 930F323322408F75003741E1 /* UIView+TABControlAnimation.m */; };
 		930F325122408F75003741E1 /* TABAnimationMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = 930F323422408F75003741E1 /* TABAnimationMethod.m */; };
@@ -231,6 +229,7 @@
 		932715AF22486ED7008CD6A8 /* OpenShare+Weixin.m in Sources */ = {isa = PBXBuildFile; fileRef = 932715A322486ED7008CD6A8 /* OpenShare+Weixin.m */; };
 		932715B022486ED7008CD6A8 /* OpenShare+Renren.m in Sources */ = {isa = PBXBuildFile; fileRef = 932715A622486ED7008CD6A8 /* OpenShare+Renren.m */; };
 		932715B322486F0B008CD6A8 /* UIControl+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 932715B222486F0A008CD6A8 /* UIControl+Blocks.m */; };
+		932715B52248B1F0008CD6A8 /* shellBanner@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 932715B42248B1EF008CD6A8 /* shellBanner@2x.png */; };
 		935D559A223F721800E97FC9 /* LaunchAnimationTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 935D5599223F721800E97FC9 /* LaunchAnimationTool.m */; };
 		935D559D223F7AFC00E97FC9 /* QDPlayingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 935D559C223F7AFC00E97FC9 /* QDPlayingViewController.m */; };
 		935D55A0223F7BBD00E97FC9 /* QDHotelReserveVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 935D559F223F7BBD00E97FC9 /* QDHotelReserveVC.m */; };
@@ -247,8 +246,6 @@
 		93744F57223B7AF8000708A3 /* QDMyBiddingOrderDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93744F56223B7AF8000708A3 /* QDMyBiddingOrderDetailVC.m */; };
 		93744F5A223B953E000708A3 /* QDRecommendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93744F59223B953E000708A3 /* QDRecommendViewController.m */; };
 		93744F5D223BB179000708A3 /* LaunchImageTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 93744F5C223BB179000708A3 /* LaunchImageTransition.m */; };
-		93744F5F223BB22A000708A3 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 93744F5E223BB22A000708A3 /* Default@2x.png */; };
-		93744F61223BBDFF000708A3 /* icon_backview@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 93744F60223BBDFF000708A3 /* icon_backview@2x.png */; };
 		93744F6A223BCC17000708A3 /* UIButton+ImageTitleStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 93744F69223BCC17000708A3 /* UIButton+ImageTitleStyle.m */; };
 		93BB7AAF2220F97F0061FB9C /* QDHomeTopCancelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BB7AAE2220F97F0061FB9C /* QDHomeTopCancelView.m */; };
 		93BB7AB222212D710061FB9C /* WaterLayou.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BB7AB022212D700061FB9C /* WaterLayou.m */; };
@@ -593,7 +590,6 @@
 		3B7636BF221951C600F77007 /* QDHomePageViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDHomePageViewCell.m; sourceTree = "<group>"; };
 		3B8984B3221BB6F9001A9970 /* QDMallTableCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDMallTableCell.h; sourceTree = "<group>"; };
 		3B8984B4221BB6F9001A9970 /* QDMallTableCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDMallTableCell.m; sourceTree = "<group>"; };
-		3B8984B6221BE32B001A9970 /* naviga@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "naviga@2x.png"; sourceTree = "<group>"; };
 		3BC3C861221B9A9A00E68D85 /* QDCustomTourSectionHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDCustomTourSectionHeaderView.h; sourceTree = "<group>"; };
 		3BC3C862221B9A9A00E68D85 /* QDCustomTourSectionHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDCustomTourSectionHeaderView.m; sourceTree = "<group>"; };
 		3BC3C867221BA08600E68D85 /* QDCustomTourCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDCustomTourCell.h; sourceTree = "<group>"; };
@@ -668,7 +664,6 @@
 		3BF92D762216B04F0019B941 /* QDFilterTypeOneView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDFilterTypeOneView.m; sourceTree = "<group>"; };
 		3BF92D792216BEFB0019B941 /* SnailQuickMaskPopups.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SnailQuickMaskPopups.m; sourceTree = "<group>"; };
 		3BF92D7A2216BEFB0019B941 /* SnailQuickMaskPopups.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SnailQuickMaskPopups.h; sourceTree = "<group>"; };
-		3BF92D7C2216D8BD0019B941 /* shellBanner@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shellBanner@2x.png"; sourceTree = "<group>"; };
 		511DB104CDCE097693D079A1 /* Pods-TravelPoints.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TravelPoints.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TravelPoints/Pods-TravelPoints.debug.xcconfig"; sourceTree = "<group>"; };
 		930F322F22408258003741E1 /* RootFirstCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RootFirstCollectionCell.h; sourceTree = "<group>"; };
 		930F323022408258003741E1 /* RootFirstCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RootFirstCollectionCell.m; sourceTree = "<group>"; };
@@ -749,6 +744,7 @@
 		932715AA22486ED7008CD6A8 /* OpenShare+Alipay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OpenShare+Alipay.h"; sourceTree = "<group>"; };
 		932715B122486F0A008CD6A8 /* UIControl+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIControl+Blocks.h"; sourceTree = "<group>"; };
 		932715B222486F0A008CD6A8 /* UIControl+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIControl+Blocks.m"; sourceTree = "<group>"; };
+		932715B42248B1EF008CD6A8 /* shellBanner@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shellBanner@2x.png"; sourceTree = "<group>"; };
 		935D5598223F721800E97FC9 /* LaunchAnimationTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchAnimationTool.h; sourceTree = "<group>"; };
 		935D5599223F721800E97FC9 /* LaunchAnimationTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchAnimationTool.m; sourceTree = "<group>"; };
 		935D559B223F7AFC00E97FC9 /* QDPlayingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDPlayingViewController.h; sourceTree = "<group>"; };
@@ -781,8 +777,6 @@
 		93744F59223B953E000708A3 /* QDRecommendViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDRecommendViewController.m; sourceTree = "<group>"; };
 		93744F5B223BB179000708A3 /* LaunchImageTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchImageTransition.h; sourceTree = "<group>"; };
 		93744F5C223BB179000708A3 /* LaunchImageTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchImageTransition.m; sourceTree = "<group>"; };
-		93744F5E223BB22A000708A3 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		93744F60223BBDFF000708A3 /* icon_backview@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_backview@2x.png"; sourceTree = "<group>"; };
 		93744F68223BCC17000708A3 /* UIButton+ImageTitleStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+ImageTitleStyle.h"; sourceTree = "<group>"; };
 		93744F69223BCC17000708A3 /* UIButton+ImageTitleStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+ImageTitleStyle.m"; sourceTree = "<group>"; };
 		93BB7AAD2220F97F0061FB9C /* QDHomeTopCancelView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDHomeTopCancelView.h; sourceTree = "<group>"; };
@@ -1662,11 +1656,8 @@
 		3BD951B821EC6E5300CD0627 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				93744F5E223BB22A000708A3 /* Default@2x.png */,
-				93744F60223BBDFF000708A3 /* icon_backview@2x.png */,
+				932715B42248B1EF008CD6A8 /* shellBanner@2x.png */,
 				93D2D62F222E59D100CCC61D /* emptySource@2x.png */,
-				3B8984B6221BE32B001A9970 /* naviga@2x.png */,
-				3BF92D7C2216D8BD0019B941 /* shellBanner@2x.png */,
 				3B0DC04F220033150056C318 /* placeHolder@2x.png */,
 				3B2ADD1521FEA68B00F62D63 /* seach_01@2x.png */,
 				3B1BC00F21FAFAE20005C415 /* gpsStat1@2x.png */,
@@ -2107,7 +2098,7 @@
 						CreatedOnToolsVersion = 10.1;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -2145,13 +2136,10 @@
 				3BD9516F21EC2A1800CD0627 /* Main.storyboard in Resources */,
 				3B1BC01221FAFAE20005C415 /* gpsStat1@2x.png in Resources */,
 				3B2ADD1621FEA68B00F62D63 /* seach_01@2x.png in Resources */,
-				3B8984B7221BE32C001A9970 /* naviga@2x.png in Resources */,
+				932715B52248B1F0008CD6A8 /* shellBanner@2x.png in Resources */,
 				3B1BC01021FAFAE20005C415 /* decrease@2x.png in Resources */,
-				93744F61223BBDFF000708A3 /* icon_backview@2x.png in Resources */,
-				3BF92D7D2216D8BE0019B941 /* shellBanner@2x.png in Resources */,
 				3B1BC00321FAA1590005C415 /* MBProgressHUD.bundle in Resources */,
 				3B1BC01121FAFAE20005C415 /* increase@2x.png in Resources */,
-				93744F5F223BB22A000708A3 /* Default@2x.png in Resources */,
 				3BEA2C3D21EF4C15001C52C4 /* ExampleApp.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

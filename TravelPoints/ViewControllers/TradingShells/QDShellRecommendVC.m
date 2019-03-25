@@ -81,7 +81,7 @@
                 [WXProgressHUD showErrorWithTittle:@"挂单ID无法获取"];
             }
         }else{
-            [WXProgressHUD showErrorWithTittle:responseObject.message];
+            [WXProgressHUD showInfoWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
         [_tableView reloadData];
@@ -112,7 +112,7 @@
                 [_tableView reloadData];
             }
         }else{
-            [WXProgressHUD showErrorWithTittle:responseObject.message];
+            [WXProgressHUD showInfoWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
         [_tableView reloadData];
@@ -170,7 +170,7 @@
 - (void)toBuyVC:(UIButton *)sender{
     QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
     NSString *balance = [NSString stringWithFormat:@"%.2f", [_volume doubleValue] * [_price doubleValue]];
-    bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?amount=%@&&id=%@", [QDUserDefaults getObjectForKey:@"QD_JSURL"], JS_PAYACTION, balance, _postersId];
+    bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?amount=%@&&id=%@", QD_JSURL, JS_PAYACTION, balance, _postersId];
     [self.navigationController pushViewController:bridgeVC animated:YES];
 }
 

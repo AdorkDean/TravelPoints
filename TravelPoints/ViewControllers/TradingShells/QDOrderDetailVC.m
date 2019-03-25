@@ -114,7 +114,7 @@
             }
             
         }else{
-            [WXProgressHUD showErrorWithTittle:responseObject.message];
+            [WXProgressHUD showInfoWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
         QDLog(@"123");
@@ -129,7 +129,7 @@
             [WXProgressHUD showSuccessWithTittle:@"订单超时取消"];
             [self requestOrderDetail];
         }else{
-            [WXProgressHUD showErrorWithTittle:responseObject.message];
+            [WXProgressHUD showInfoWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
         [WXProgressHUD showErrorWithTittle:@"网络异常"];
@@ -166,7 +166,7 @@
     }]];
     [alertView addAction:[TYAlertAction actionWithTitle:@"确定" style:TYAlertActionStyleDestructive handler:^(TYAlertAction *action) {
         QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
-        bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?amount=%@&&id=%@", [QDUserDefaults getObjectForKey:@"QD_JSURL"], JS_PAYACTION, _balance, _orderID];
+        bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?amount=%@&&id=%@", QD_JSURL, JS_PAYACTION, _balance, _orderID];
         [self.navigationController pushViewController:bridgeVC animated:YES];
     }]];
     [alertView setButtonTitleColor:APP_BLUECOLOR forActionStyle:TYAlertActionStyleCancel forState:UIControlStateNormal];
@@ -188,7 +188,7 @@
                 [WXProgressHUD showSuccessWithTittle:@"撤单成功"];
                 [self.navigationController popViewControllerAnimated:YES];
             }else{
-                [WXProgressHUD showErrorWithTittle:responseObject.message];
+                [WXProgressHUD showInfoWithTittle:responseObject.message];
             }
         } failureBlock:^(NSError *error) {
             [WXProgressHUD showErrorWithTittle:@"网络异常"];

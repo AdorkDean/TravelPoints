@@ -234,7 +234,7 @@
 
 - (void)addToCar:(UIButton *)sender{
     QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
-    bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@", [QDUserDefaults getObjectForKey:@"QD_JSURL"], JS_SHOPCART];
+    bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@", QD_JSURL, JS_SHOPCART];
     QDLog(@"urlStr = %@", bridgeVC.urlStr);
     [self.navigationController pushViewController:bridgeVC animated:YES];
 }
@@ -264,7 +264,7 @@
                 [_tableView reloadData];
             }
         }else{
-            [WXProgressHUD showErrorWithTittle:responseObject.message];
+            [WXProgressHUD showInfoWithTittle:responseObject.message];
             [_tableView reloadData];
             [_tableView reloadEmptyDataSet];
         }
@@ -299,7 +299,7 @@
                 [_tableView reloadData];
             }
         }else{
-            [WXProgressHUD showErrorWithTittle:responseObject.message];
+            [WXProgressHUD showInfoWithTittle:responseObject.message];
         }
         [self endRefreshing];
     } failureBlock:^(NSError *error) {
@@ -558,7 +558,7 @@
             QDHotelListInfoModel *model = _hotelListInfoArr[indexPath.row];
             //传递ID
             QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
-            bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?id=%ld&&startDate=%@&&endDate=%@", [QDUserDefaults getObjectForKey:@"QD_JSURL"], JS_HOTELDETAIL, (long)model.id, _dateInPassedVal, _dateOutPassedVal];
+            bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?id=%ld&&startDate=%@&&endDate=%@", QD_JSURL, JS_HOTELDETAIL, (long)model.id, _dateInPassedVal, _dateOutPassedVal];
             QDLog(@"urlStr = %@", bridgeVC.urlStr);
             bridgeVC.infoModel = model;
             self.tabBarController.hidesBottomBarWhenPushed = YES;
@@ -569,7 +569,7 @@
             CustomTravelDTO *model = _dzyListInfoArr[indexPath.row];
             //传递ID
             QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
-            bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?id=%ld", [QDUserDefaults getObjectForKey:@"QD_JSURL"], JS_CUSTOMERTRAVEL, (long)model.id];
+            bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?id=%ld", QD_JSURL, JS_CUSTOMERTRAVEL, (long)model.id];
             QDLog(@"urlStr = %@", bridgeVC.urlStr);
             bridgeVC.customTravelModel = model;
             [self.navigationController pushViewController:bridgeVC animated:YES];
@@ -578,7 +578,7 @@
         if (_mallInfoArr.count) {
             QDMallModel *model = _mallInfoArr[indexPath.row];
             QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
-            bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?id=%ld", [QDUserDefaults getObjectForKey:@"QD_JSURL"], JS_SHOPPING, (long)model.id];
+            bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?id=%ld", QD_JSURL, JS_SHOPPING, (long)model.id];
             QDLog(@"urlStr = %@", bridgeVC.urlStr);
             bridgeVC.mallModel = model;
             self.tabBarController.hidesBottomBarWhenPushed = YES;

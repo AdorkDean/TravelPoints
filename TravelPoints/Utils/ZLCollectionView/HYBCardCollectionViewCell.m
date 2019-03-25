@@ -192,7 +192,7 @@
 }
 
 - (void)loadCellDataWithModel:(RanklistDTO *)model{
-    self.typeLab.text = model.listTypeContent;
+    self.typeLab.text = model.labelsContent;
     self.descLab.text = model.topicName;
     self.titleLab.text = model.topicDescribe;
     self.textOnView.text = [NSString stringWithFormat:@"本榜单已由Aigo为您运算了%@家酒店", model.totalquantity];

@@ -129,7 +129,7 @@
             [QDUserDefaults removeCookies];
             [self.navigationController popViewControllerAnimated:YES];
         }else{
-            [WXProgressHUD showErrorWithTittle:responseObject.message];
+            [WXProgressHUD showInfoWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
         [WXProgressHUD showErrorWithTittle:@"网络异常"];

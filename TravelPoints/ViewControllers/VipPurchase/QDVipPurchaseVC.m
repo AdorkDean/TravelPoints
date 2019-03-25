@@ -210,7 +210,7 @@
                 [WXProgressHUD showErrorWithTittle:@"暂无VIP售卡信息"];
             }
         }else{
-            [WXProgressHUD showErrorWithTittle:responseObject.message];
+            [WXProgressHUD showInfoWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
         [_tableView reloadData];

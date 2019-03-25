@@ -241,7 +241,7 @@
         }
         else{
             QDBridgeTViewController *bridgeVC = [[QDBridgeTViewController alloc] init];
-            NSString *sss = [NSString stringWithFormat:@"%@%@",[QDUserDefaults getObjectForKey:@"QD_TESTJSURL"], arr.lastObject];
+            NSString *sss = [NSString stringWithFormat:@"%@%@",QD_TESTJSURL, arr.lastObject];
             QDLog(@"sss = %@", sss);
             bridgeVC.urlStr = sss;
             [self.navigationController pushViewController:bridgeVC animated:YES];

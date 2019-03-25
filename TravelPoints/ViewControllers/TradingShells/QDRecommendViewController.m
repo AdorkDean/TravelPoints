@@ -115,10 +115,10 @@
                 NSString *str = responseObject.result;
                 QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
                 NSString *balance = [NSString stringWithFormat:@"%.2f", [_volume doubleValue] * [_price doubleValue]];
-                bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?amount=%@&&postersId=%@", [QDUserDefaults getObjectForKey:@"QD_JSURL"], JS_PAYACTION, balance, str];
+                bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?amount=%@&&postersId=%@", QD_JSURL, JS_PAYACTION, balance, str];
                 [self.navigationController pushViewController:bridgeVC animated:YES];
             }else{
-                [WXProgressHUD showErrorWithTittle:responseObject.message];
+                [WXProgressHUD showInfoWithTittle:responseObject.message];
             }
         } failureBlock:^(NSError *error) {
             [WXProgressHUD showErrorWithTittle:@"网络请求失败"];
@@ -138,7 +138,7 @@
             [WXProgressHUD showSuccessWithTittle:@"挂单生成成功"];
             [self.navigationController popToRootViewControllerAnimated:YES];
         }else{
-            [WXProgressHUD showErrorWithTittle:responseObject.message];
+            [WXProgressHUD showInfoWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
         [WXProgressHUD showErrorWithTittle:@"网络请求失败"];
@@ -163,7 +163,7 @@
                 [WXProgressHUD showErrorWithTittle:@"挂单ID无法获取"];
             }
         }else{
-            [WXProgressHUD showErrorWithTittle:responseObject.message];
+            [WXProgressHUD showInfoWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
         [_collectionView reloadData];
@@ -194,7 +194,7 @@
                 [_collectionView reloadData];
             }
         }else{
-            [WXProgressHUD showErrorWithTittle:responseObject.message];
+            [WXProgressHUD showInfoWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
         [_collectionView reloadData];

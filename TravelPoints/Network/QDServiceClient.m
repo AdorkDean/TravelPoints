@@ -81,12 +81,12 @@ typedef void(^PrivateRequestFailure)(NSURLSessionDataTask *task, NSError *error)
 
 - (NSString *)getFullUrlByUrl:(NSString *)urlString
 {
-    return [NSString stringWithFormat:@"%@%@%@", [QDUserDefaults getObjectForKey:@"QD_Domain"], QD_ProjectName, urlString];
+    return [NSString stringWithFormat:@"%@%@%@", QD_Domain, QD_ProjectName, urlString];
 }
 
 - (NSString *)getRequestURLStr:(NSString *)urlStr
 {
-    return [NSString stringWithFormat:@"%@%@", [QDUserDefaults getObjectForKey:@"QD_Domain"], urlStr];
+    return [NSString stringWithFormat:@"%@%@", QD_Domain, urlStr];
 }
 
 /**

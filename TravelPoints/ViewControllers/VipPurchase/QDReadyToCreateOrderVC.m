@@ -78,7 +78,7 @@
                     }
                 }
             }else{
-                [WXProgressHUD showErrorWithTittle:responseObject.message];
+                [WXProgressHUD showInfoWithTittle:responseObject.message];
             }
         } failureBlock:^(NSError *error) {
             [_tableView reloadData];
@@ -283,11 +283,11 @@
         if (responseObject.code == 0) {
             NSString *resultNum = responseObject.result;
             QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
-            bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?amount=%@&&id=%@", [QDUserDefaults getObjectForKey:@"QD_JSURL"], JS_PAYACTION,[subscribeTotalPriceNum stringValue], resultNum];
+            bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?amount=%@&&id=%@", QD_JSURL, JS_PAYACTION,[subscribeTotalPriceNum stringValue], resultNum];
             QDLog(@"urlStr = %@", bridgeVC.urlStr);
             [self.navigationController pushViewController:bridgeVC animated:YES];
         }else{
-            [WXProgressHUD showErrorWithTittle:responseObject.message];
+            [WXProgressHUD showInfoWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
         [_tableView reloadData];

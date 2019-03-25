@@ -211,12 +211,12 @@ typedef enum : NSUInteger {
             }else{
                 [_hotelListInfoArr removeAllObjects];
                 [_hotelImgArr removeAllObjects];
-                [WXProgressHUD showErrorWithTittle:responseObject.message];
+                [WXProgressHUD showInfoWithTittle:responseObject.message];
                 [_tableView reloadData];
                 [_tableView reloadEmptyDataSet];
             }
         }else{
-            [WXProgressHUD showErrorWithTittle:responseObject.message];
+            [WXProgressHUD showInfoWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
         
@@ -249,7 +249,7 @@ typedef enum : NSUInteger {
         }else{
             [_strategryArr removeAllObjects];
             [_strategyImgArr removeAllObjects];
-            [WXProgressHUD showErrorWithTittle:responseObject.message];
+            [WXProgressHUD showInfoWithTittle:responseObject.message];
             [_tableView reloadData];
             [_tableView reloadEmptyDataSet];
         }

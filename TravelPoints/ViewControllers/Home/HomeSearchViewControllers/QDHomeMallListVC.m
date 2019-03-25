@@ -148,7 +148,7 @@
 
 - (void)addToCar:(UIButton *)sender{
     QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
-    bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@", [QDUserDefaults getObjectForKey:@"QD_JSURL"], JS_SHOPCART];
+    bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@", QD_JSURL, JS_SHOPCART];
     QDLog(@"urlStr = %@", bridgeVC.urlStr);
     [self.navigationController pushViewController:bridgeVC animated:YES];
 }
@@ -188,7 +188,7 @@
                 [_tableView reloadEmptyDataSet];
             }
         }else{
-            [WXProgressHUD showErrorWithTittle:responseObject.message];
+            [WXProgressHUD showInfoWithTittle:responseObject.message];
         }
         [_tableView tab_endAnimation];
         [self endRefreshing];
@@ -332,7 +332,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     QDMallModel *model = _mallInfoArr[indexPath.row];
     QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
-    bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?id=%ld", [QDUserDefaults getObjectForKey:@"QD_JSURL"], JS_SHOPPING, (long)model.id];
+    bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?id=%ld", QD_JSURL, JS_SHOPPING, (long)model.id];
     QDLog(@"urlStr = %@", bridgeVC.urlStr);
     bridgeVC.mallModel = model;
     self.tabBarController.hidesBottomBarWhenPushed = YES;

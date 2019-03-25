@@ -245,7 +245,7 @@
                 [self findMyUserCreditWithUrlStr:api_GetUserDetail];
             }
         }else{
-            [WXProgressHUD showErrorWithTittle:responseObject.message];
+            [WXProgressHUD showInfoWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
         [WXProgressHUD hideHUD];
@@ -262,7 +262,7 @@
             QDLog(@"responseObject");
             [self login];
         }else{
-            [WXProgressHUD showErrorWithTittle:responseObject.message];
+            [WXProgressHUD showInfoWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
         [WXProgressHUD showErrorWithTittle:@"网络异常"];
@@ -290,7 +290,7 @@
                 }];
             }
         }else{
-            [WXProgressHUD showErrorWithTittle:responseObject.message];
+            [WXProgressHUD showInfoWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
         [WXProgressHUD showErrorWithTittle:@"网络异常"];
@@ -361,7 +361,7 @@
                 [WXProgressHUD showErrorWithTittle:@"请先阅读完注册协议并勾选"];
             }
         }else{
-            [WXProgressHUD showErrorWithTittle:responseObject.message];
+            [WXProgressHUD showInfoWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
         
@@ -391,7 +391,7 @@
             _userPhoneNum = _forgetPwdView.phoneTF.text;
             QDLog(@"_userPhoneNum = %@", _userPhoneNum);
         }else{
-            [WXProgressHUD showErrorWithTittle:responseObject.message];
+            [WXProgressHUD showInfoWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
 
@@ -441,7 +441,7 @@
                 [_setLogPwdView setHidden:NO];
             }
         }else{
-            [WXProgressHUD showErrorWithTittle:responseObject.message];
+            [WXProgressHUD showInfoWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
         
@@ -465,7 +465,7 @@
                 [self dismissViewControllerAnimated:YES completion:nil];
             });
         }else{
-            [WXProgressHUD showErrorWithTittle:responseObject.message];
+            [WXProgressHUD showInfoWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
         [WXProgressHUD hideHUD];
@@ -487,7 +487,7 @@
                 [self dismissViewControllerAnimated:YES completion:nil];
             });
         }else{
-            [WXProgressHUD showErrorWithTittle:responseObject.message];
+            [WXProgressHUD showInfoWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
         [WXProgressHUD showErrorWithTittle:@"网络请求失败"];

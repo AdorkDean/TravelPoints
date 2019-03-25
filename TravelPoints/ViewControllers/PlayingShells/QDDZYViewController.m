@@ -84,7 +84,7 @@
                 [_tableView reloadData];
             }
         }else{
-            [WXProgressHUD showErrorWithTittle:responseObject.message];
+            [WXProgressHUD showInfoWithTittle:responseObject.message];
             [_tableView reloadData];
             [_tableView reloadEmptyDataSet];
         }
@@ -188,7 +188,7 @@
         CustomTravelDTO *model = _dzyListInfoArr[indexPath.row];
         //传递ID
         QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
-        bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?id=%ld", [QDUserDefaults getObjectForKey:@"QD_JSURL"], JS_CUSTOMERTRAVEL, (long)model.id];
+        bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?id=%ld", QD_JSURL, JS_CUSTOMERTRAVEL, (long)model.id];
         QDLog(@"urlStr = %@", bridgeVC.urlStr);
         bridgeVC.customTravelModel = model;
         [self.navigationController pushViewController:bridgeVC animated:YES];

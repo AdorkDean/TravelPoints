@@ -192,7 +192,7 @@ typedef enum : NSUInteger {
                 [_tableView reloadData];
                 [_tableView reloadEmptyDataSet];
                 [self endRefreshing];
-                [WXProgressHUD showErrorWithTittle:responseObject.message];
+                [WXProgressHUD showInfoWithTittle:responseObject.message];
             }
         } failureBlock:^(NSError *error) {
             _emptyType = QDNetworkError;
@@ -259,7 +259,7 @@ typedef enum : NSUInteger {
             }else{
                 [_tableView reloadData];
                 [_tableView reloadEmptyDataSet];
-                [WXProgressHUD showErrorWithTittle:responseObject.message];
+                [WXProgressHUD showInfoWithTittle:responseObject.message];
             }
         } failureBlock:^(NSError *error) {
             _emptyType = QDNetworkError;
@@ -339,7 +339,7 @@ typedef enum : NSUInteger {
                 [_myOrdersArr removeObjectAtIndex:sender.tag];
                 [_tableView reloadData];
             }else{
-                [WXProgressHUD showErrorWithTittle:responseObject.message];
+                [WXProgressHUD showInfoWithTittle:responseObject.message];
             }
         } failureBlock:^(NSError *error) {
             [WXProgressHUD showErrorWithTittle:@"网络异常"];

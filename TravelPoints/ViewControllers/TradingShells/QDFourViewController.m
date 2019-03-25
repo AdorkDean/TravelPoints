@@ -157,7 +157,7 @@ QD_ManualCanceled = 4      //手工取消
         }else{
             [_tableView reloadData];
             [_tableView reloadEmptyDataSet];
-            [WXProgressHUD showErrorWithTittle:responseObject.message];
+            [WXProgressHUD showInfoWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
         [_tableView reloadData];
@@ -221,7 +221,7 @@ QD_ManualCanceled = 4      //手工取消
             }else{
                 [_tableView reloadData];
                 [_tableView reloadEmptyDataSet];
-                [WXProgressHUD showErrorWithTittle:responseObject.message];
+                [WXProgressHUD showInfoWithTittle:responseObject.message];
             }
         } failureBlock:^(NSError *error) {
             [_tableView reloadData];
@@ -325,7 +325,7 @@ QD_ManualCanceled = 4      //手工取消
                 [_myPickOrdersArr removeObjectAtIndex:sender.tag];
                 [_tableView reloadData];
             }else{
-                [WXProgressHUD showErrorWithTittle:responseObject.message];
+                [WXProgressHUD showInfoWithTittle:responseObject.message];
             }
         } failureBlock:^(NSError *error) {
             [self endRefreshing];
@@ -350,9 +350,7 @@ QD_ManualCanceled = 4      //手工取消
         QDMyPickOrderModel *model = _myPickOrdersArr[sender.tag];
         QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
         NSString *balance = model.amount;
-        bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?amount=%@&&id=%@", [QDUserDefaults getObjectForKey:@"QD_JSURL"], JS_PAYACTION,balance, model.orderId];
-
-//        bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?id=%@", [QDUserDefaults getObjectForKey:@"QD_TESTJSURL"], JS_PREPARETOPAY,model.orderId];
+        bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?amount=%@&&id=%@", QD_JSURL, JS_PAYACTION,balance, model.orderId];
         [self.navigationController pushViewController:bridgeVC animated:YES];
     }]];
     [alertView setButtonTitleColor:APP_BLUECOLOR forActionStyle:TYAlertActionStyleCancel forState:UIControlStateNormal];
@@ -361,12 +359,6 @@ QD_ManualCanceled = 4      //手工取消
     [alertView show];
 }
 
-- (void)cancelOrderForm:(NSString *)orderId{
-    
-//    111
-//     NSDictionary *paramsDic = @{@"orderId":_model ],
-//    [QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_CancelOrderForm params:<#(id)#> successBlock:<#^(QDResponseObject *responseObject)successBlock#> failureBlock:<#^(NSError *error)failureBlock#>
-}
 #pragma mark -- tableView delegate
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{

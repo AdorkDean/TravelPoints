@@ -114,7 +114,7 @@
     if (_rankListArr.count) {
         RanklistDTO *dto = _rankListArr[indexPath.row];
         QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
-        bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?ranklistId=%ld", [QDUserDefaults getObjectForKey:@"QD_TESTJSURL"], JS_RANKLIST, (long)dto.id];
+        bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?ranklistId=%ld", QD_TESTJSURL, JS_RANKLIST, (long)dto.id];
         [self.navigationController pushViewController:bridgeVC animated:YES];
     }
 }
@@ -152,7 +152,7 @@
             }
             [_tableView reloadData];
         }else{
-            [WXProgressHUD showErrorWithTittle:responseObject.message];
+            [WXProgressHUD showInfoWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
         [WXProgressHUD showErrorWithTittle:@"网络异常"];

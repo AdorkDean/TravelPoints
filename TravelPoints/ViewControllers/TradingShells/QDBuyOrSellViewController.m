@@ -196,7 +196,7 @@
             [alertView addAction:[TYAlertAction actionWithTitle:@"确定" style:TYAlertActionStyleDestructive handler:^(TYAlertAction *action) {
                 QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
                 NSString *balance = [NSString stringWithFormat:@"%.2f", [_balanceLab.text doubleValue]];
-                bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?amount=%@&id=%@", [QDUserDefaults getObjectForKey:@"QD_JSURL"], JS_PAYACTION, balance, str];
+                bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?amount=%@&id=%@", QD_JSURL, JS_PAYACTION, balance, str];
                 [self.navigationController pushViewController:bridgeVC animated:YES];
             }]];
             [alertView setButtonTitleColor:APP_BLUECOLOR forActionStyle:TYAlertActionStyleCancel forState:UIControlStateNormal];
@@ -205,7 +205,7 @@
             [alertView show];
         }else{
             [WXProgressHUD hideHUD];
-            [WXProgressHUD showErrorWithTittle:responseObject.message];
+            [WXProgressHUD showInfoWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
         [WXProgressHUD showErrorWithTittle:@"网络请求失败"];
@@ -231,7 +231,7 @@
             [self.navigationController popToRootViewControllerAnimated:YES];
         }else{
             [WXProgressHUD hideHUD];
-            [WXProgressHUD showErrorWithTittle:responseObject.message];
+            [WXProgressHUD showInfoWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
         [WXProgressHUD showErrorWithTittle:@"网络请求失败"];
@@ -242,6 +242,11 @@
 {
     if (!_numberButton) {
         _numberButton = [[PPNumberButton alloc] initWithFrame:CGRectMake(0, 0, 145, 40)];
+        _numberButton.decreaseBtn.frame = CGRectMake(0, 0, 20, 20);
+        _numberButton.decreaseBtn.backgroundColor =[UIColor redColor];
+//
+//        _numberButton.increaseBtn.frame = CGRectMake(0, 0, 30, 30);
+//        _numberButton.increaseBtn.backgroundColor = [UIColor blueColor];
 
         _numberButton.shakeAnimation = YES;
         // 设置最小值

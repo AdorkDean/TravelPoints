@@ -79,7 +79,8 @@
         _info3Lab.font = QDFont(13);
         [_financialPic addSubview:_info3Lab];
         
-        _progressView = [[MQGradientProgressView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*0.09, SCREEN_HEIGHT*0.28, SCREEN_WIDTH*0.63, SCREEN_HEIGHT*0.008)];
+//        _progressView = [[MQGradientProgressView alloc] initWithFrame:CGRectMake(40, 187, 238, 4)];
+        _progressView = [[MQGradientProgressView alloc] initWithFrame:CGRectMake(0, 0, 238, 4)];
         [self addSubview:_progressView];
         
         _info4Lab = [[UILabel alloc] init];
@@ -195,7 +196,10 @@
 //        make.height.mas_equalTo(SCREEN_HEIGHT*0.25);
     }];
 
-    
+    [_progressView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_info1Lab);
+        make.top.equalTo(_info1Lab.mas_bottom).offset(7);
+    }];
     [_info1Lab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_financialPic.mas_left).offset(SCREEN_WIDTH*0.06);
         make.top.equalTo(_financialPic.mas_top).offset(SCREEN_HEIGHT*0.06);

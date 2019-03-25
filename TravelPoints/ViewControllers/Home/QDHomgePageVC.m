@@ -174,7 +174,7 @@ static NSString *cellIdentifier = @"CellIdentifier";
             }
         }else{
             [self endRefreshing];
-            [WXProgressHUD showErrorWithTittle:responseObject.message];
+            [WXProgressHUD showInfoWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
         [self endRefreshing];
@@ -407,7 +407,7 @@ static NSString *cellIdentifier = @"CellIdentifier";
         _collectionView.selectedItems = ^(NSIndexPath *indexPath) {
             RanklistDTO *dto = _rankFirstArr[indexPath.row];
             QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
-            bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?ranklistId=%ld", [QDUserDefaults getObjectForKey:@"QD_TESTJSURL"], JS_RANKLIST, (long)dto.id];
+            bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?ranklistId=%ld", QD_TESTJSURL, JS_RANKLIST, (long)dto.id];
             [self.navigationController pushViewController:bridgeVC animated:YES];
             QDLog(@"indexpath.row = %ld", (long)indexPath.row);
         };
@@ -461,7 +461,7 @@ static NSString *cellIdentifier = @"CellIdentifier";
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     RanklistDTO *dto = _currentTableViewData[indexPath.row];
     QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
-    bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?ranklistId=%ld", [QDUserDefaults getObjectForKey:@"QD_TESTJSURL"], JS_RANKLIST, (long)dto.id];
+    bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?ranklistId=%ld", QD_TESTJSURL, JS_RANKLIST, (long)dto.id];
     [self.navigationController pushViewController:bridgeVC animated:YES];
 }
 

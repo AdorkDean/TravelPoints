@@ -194,7 +194,7 @@
 
 - (void)loadTableViewCellDataWithModel:(RanklistDTO *)model{
     self.descLab.text = model.topicName;
-    self.typeLab.text = model.listTypeContent;
+    self.typeLab.text = model.labelsContent;
     self.titleLab.text = model.topicDescribe;
     self.hates.text = model.invalidCommentCount;
     self.likes.text = model.validCommentCount;

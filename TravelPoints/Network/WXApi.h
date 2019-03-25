@@ -145,7 +145,7 @@ static NSString * const api_findCategory       = @"/lyjfapp/api/v1/goods/findCat
 //static NSString * const QD_TESTJSURL            = @"http://203.110.179.27:60409/app/#";    //前端地址
 
 
-static NSString * const QD_JSURL                = @"http://appuat.wedotting.com";    //前端地址
+static NSString * const QD_JSURL                = @"http://appuat.wedotting.com/app";    //前端地址
 static NSString * const QD_TESTJSURL            = @"http://appuat.wedotting.com/app/#";    //前端地址
 
 //static NSString * const QD_JSURL                = @"http://47.101.222.172:8080/app";    //前端地址

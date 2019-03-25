@@ -212,8 +212,9 @@
 - (PPNumberButton *)priceNumBtn
 {
     if (!_priceNumBtn) {
-        _priceNumBtn = [[PPNumberButton alloc] initWithFrame:CGRectMake(0, 0, 145, 40)];
+        _priceNumBtn = [[PPNumberButton alloc] initWithFrame:CGRectMake(0, 0, 145, 28)];
 //        _priceNumBtn.inputFieldFont
+//        _priceNumBtn.backgroundColor = APP_BLUECOLOR;
         _priceNumBtn.shakeAnimation = YES;
         _priceNumBtn.stepValue = 0.1;
         _priceNumBtn.decimalNum = YES;
