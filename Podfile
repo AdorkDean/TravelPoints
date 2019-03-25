@@ -21,6 +21,5 @@ target 'TravelPoints' do
   pod 'FSCalendar'
   pod 'DZNEmptyDataSet'
   pod 'zhPopupController'
-  pod 'OpenShare'
   pod 'WMPageController'
 end
