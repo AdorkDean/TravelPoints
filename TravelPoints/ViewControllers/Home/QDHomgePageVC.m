@@ -459,10 +459,12 @@ static NSString *cellIdentifier = @"CellIdentifier";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-    RanklistDTO *dto = _currentTableViewData[indexPath.row];
-    QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
-    bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?ranklistId=%ld", QD_TESTJSURL, JS_RANKLIST, (long)dto.id];
-    [self.navigationController pushViewController:bridgeVC animated:YES];
+    if (_currentTableViewData.count) {
+        RanklistDTO *dto = _currentTableViewData[indexPath.row];
+        QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
+        bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?ranklistId=%ld", QD_TESTJSURL, JS_RANKLIST, (long)dto.id];
+        [self.navigationController pushViewController:bridgeVC animated:YES];
+    }
 }
 
 #pragma mark - NavigationViewDelegate

@@ -50,6 +50,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     QDLog(@"urlStr = %@", _urlStr);
+    self.tabBarController.tabBar.frame = CGRectZero;
     [self.navigationController.navigationBar setHidden:YES];
     [self.tabBarController.tabBar setHidden:YES];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;

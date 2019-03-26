@@ -16,8 +16,8 @@ const static NSString *APIKey = @"ab0b884fbd773609e7fccbbd5f9ccbe0";
 //static NSString * const QD_Domain = @"http://appuat.wedotting.com";
 
 //测试环境
-//static NSString * const QD_Domain = @"http://203.110.179.27:60409";
-static NSString * const QD_Domain = @"http://112.64.226.138:60409";
+static NSString * const QD_Domain = @"http://203.110.179.27:60409";
+//static NSString * const QD_Domain = @"http://112.64.226.138:60409";
 
 
 //阿里云外网
@@ -142,8 +142,11 @@ static NSString * const api_findCategory       = @"/lyjfapp/api/v1/goods/findCat
  */
 
 
-static NSString * const QD_JSURL                = @"http://112.64.226.138:60409/app";    //前端地址
-static NSString * const QD_TESTJSURL            = @"http://112.64.226.138:60409/app/#";    //前端地址
+//static NSString * const QD_JSURL                = @"http://112.64.226.138:60409/app";    //前端地址
+//static NSString * const QD_TESTJSURL            = @"http://112.64.226.138:60409/app/#";    //前端地址
+static NSString * const QD_JSURL                = @"http://203.110.179.27:60409/app";    //前端地址
+static NSString * const QD_TESTJSURL            = @"http://203.110.179.27:60409/app/#";    //前端地址
+
 
 
 //static NSString * const QD_JSURL                = @"http://appuat.wedotting.com/app";    //前端地址

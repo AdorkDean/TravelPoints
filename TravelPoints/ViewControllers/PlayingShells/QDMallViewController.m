@@ -231,6 +231,16 @@
     self.view = _tableView;
 //    [self.view addSubview:_tableView];
     _tableView.mj_header = [QDRefreshHeader headerWithRefreshingBlock:^{
+        //重置所有选项
+        _catId = @"";
+        _sortColumn = @"";
+        _sortType = @"";
+        _baoyou = @"";
+        _keywords = @"";
+        [_sectionHeaderView.allBtn setTitle:_categoryArr[0] forState:UIControlStateNormal];
+
+        [_sectionHeaderView.amountBtn setImage:[UIImage imageNamed:@"icon_shellDefault"] forState:UIControlStateNormal];
+        [_sectionHeaderView.baoyouBtn setImage:[UIImage imageNamed:@"icon_baoyouNormal"] forState:UIControlStateNormal];
         [self requestMallList];
     }];
     
