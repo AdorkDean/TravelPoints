@@ -58,7 +58,11 @@
 #pragma mark - SET ---> data
 
 - (void)setProgress:(CGFloat)progress {
+    QDLog(@"progress = %lf", progress);
     _progress = progress;
+    if (isnan(progress)) {
+        progress = 0.65;
+    }
     [self updateView];
 }
 
@@ -100,6 +104,9 @@
 }
 
 - (void)updateView {
+    if (isnan(self.progress)) {
+        self.progress = 0.65;
+    }
     self.gradientLayer.bounds = CGRectMake(0, 0, self.frame.size.width * self.progress, self.frame.size.height);
     self.gradientLayer.colors = self.colorArr;
 }

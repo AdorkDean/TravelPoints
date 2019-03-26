@@ -164,7 +164,9 @@ static NSString *cellIdentifier = @"CellIdentifier";
                     [arr removeObjectAtIndex:0];
                     [_rankTableViewData addObject:arr];
                 }
-                _currentTableViewData = _rankTableViewData[0];
+                if (_rankTableViewData.count) {
+                    _currentTableViewData = _rankTableViewData[0];
+                }
                 [self endRefreshing];
                 if (_tableView) {
                     [_tableView reloadData];
@@ -383,7 +385,7 @@ static NSString *cellIdentifier = @"CellIdentifier";
         if (_currentTableViewData.count) {
             return _currentTableViewData.count;
         }else{
-            return 1;
+            return 0;
         }
     }
     return 0;

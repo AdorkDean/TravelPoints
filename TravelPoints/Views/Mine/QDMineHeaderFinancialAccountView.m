@@ -79,7 +79,6 @@
         [_financialPic addSubview:_info3Lab];
         
         _progressView = [[MQGradientProgressView alloc] initWithFrame:CGRectMake(0, 0, 238, 4)];
-        _progressView.progress = 0.4;
         [self addSubview:_progressView];
         
         _info4Lab = [[UILabel alloc] init];
