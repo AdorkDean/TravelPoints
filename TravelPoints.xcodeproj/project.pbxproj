@@ -1612,6 +1612,7 @@
 		3BD9518E21EC5A2200CD0627 /* Mine */ = {
 			isa = PBXGroup;
 			children = (
+				932715BF224A1FE4008CD6A8 /* QDUserOrders */,
 				3B40EC1621EECDED00656C1F /* QDSettingViewController.h */,
 				3B40EC1721EECDED00656C1F /* QDSettingViewController.m */,
 				3BEA2C3921EF478E001C52C4 /* QDBridgeViewController.h */,
@@ -1914,6 +1915,13 @@
 				932715A422486ED7008CD6A8 /* OpenShareHeader.h */,
 			);
 			path = OpenShare;
+			sourceTree = "<group>";
+		};
+		932715BF224A1FE4008CD6A8 /* QDUserOrders */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = QDUserOrders;
 			sourceTree = "<group>";
 		};
 		93744F4E223B46B0000708A3 /* QDGCDTimer */ = {

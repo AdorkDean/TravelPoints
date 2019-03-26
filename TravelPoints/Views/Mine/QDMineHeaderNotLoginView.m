@@ -27,9 +27,9 @@
         [_settingBtn setImage:[UIImage imageNamed:@"icon_setting"] forState:UIControlStateNormal];
         [_whiteBackView addSubview:_settingBtn];
         
-        _voiceBtn = [[UIButton alloc] init];
-        [_voiceBtn setImage:[UIImage imageNamed:@"icon_info"] forState:UIControlStateNormal];
-        [_whiteBackView addSubview:_voiceBtn];
+//        _voiceBtn = [[UIButton alloc] init];
+//        [_voiceBtn setImage:[UIImage imageNamed:@"icon_info"] forState:UIControlStateNormal];
+//        [_whiteBackView addSubview:_voiceBtn];
         
         _picBtn = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*0.06, SCREEN_HEIGHT*0.1, SCREEN_WIDTH*0.12, SCREEN_WIDTH*0.12)];
         [_picBtn setImage:[UIImage imageNamed:@"icon_headerPic"] forState:UIControlStateNormal];
@@ -67,10 +67,10 @@
         make.top.equalTo(_whiteBackView.mas_top).offset(SCREEN_HEIGHT*0.05);
         make.left.equalTo(_whiteBackView.mas_left).offset(SCREEN_WIDTH*0.76);
     }];
-    [_voiceBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.settingBtn);
-        make.right.equalTo(_whiteBackView.mas_right).offset(-(SCREEN_WIDTH*0.05));
-    }];
+//    [_voiceBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerY.equalTo(self.settingBtn);
+//        make.right.equalTo(_whiteBackView.mas_right).offset(-(SCREEN_WIDTH*0.05));
+//    }];
 
     [_infoLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_picBtn);

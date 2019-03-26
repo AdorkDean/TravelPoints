@@ -123,48 +123,51 @@ QD_ManualCanceled = 4      //手工取消
 }
 
 - (void)requestHeaderTopData{
-    if (_myPickOrdersArr.count) {
-        [_myPickOrdersArr removeAllObjects];
-    }
-//    NSDictionary * paramsDic = @{@"postersStatus":_state,       //订单状态
-//                                 @"postersType":_businessType,  //订单类型
-//                                 @"pageNum":@1,
-//                                 @"pageSize":[NSNumber numberWithInt:_pageSize]
-//                                 };
-    NSDictionary * paramsDic = @{@"state":_state,       //订单状态
-                                 @"businessType":_businessType,  //订单类型
-                                 @"pageNum":@1,
-                                 @"pageSize":[NSNumber numberWithInt:_pageSize]
-                                 };
-    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_FindMyOrder params:paramsDic successBlock:^(QDResponseObject *responseObject) {
-        if (responseObject.code == 0) {
-            NSDictionary *dic = responseObject.result;
-            NSArray *hotelArr = [dic objectForKey:@"result"];
-            _totalPage = [[dic objectForKey:@"totalPage"] intValue];
-            if (hotelArr.count) {
-                for (NSDictionary *dic in hotelArr) {
-                    QDMyPickOrderModel *infoModel = [QDMyPickOrderModel yy_modelWithDictionary:dic];
-                    [_myPickOrdersArr addObject:infoModel];
+    NSString *str = [QDUserDefaults getObjectForKey:@"loginType"];
+    if ([str isEqualToString:@"0"] || str == nil) { //未登录
+        [self endRefreshing];
+        QDLoginAndRegisterVC *loginVC = [[QDLoginAndRegisterVC alloc] init];
+        loginVC.pushVCTag = @"0";
+        [self presentViewController:loginVC animated:YES completion:nil];
+    }else{
+        if (_myPickOrdersArr.count) {
+            [_myPickOrdersArr removeAllObjects];
+        }
+        NSDictionary * paramsDic = @{@"state":_state,       //订单状态
+                                     @"businessType":_businessType,  //订单类型
+                                     @"pageNum":@1,
+                                     @"pageSize":[NSNumber numberWithInt:_pageSize]
+                                     };
+        [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_FindMyOrder params:paramsDic successBlock:^(QDResponseObject *responseObject) {
+            if (responseObject.code == 0) {
+                NSDictionary *dic = responseObject.result;
+                NSArray *hotelArr = [dic objectForKey:@"result"];
+                _totalPage = [[dic objectForKey:@"totalPage"] intValue];
+                if (hotelArr.count) {
+                    for (NSDictionary *dic in hotelArr) {
+                        QDMyPickOrderModel *infoModel = [QDMyPickOrderModel yy_modelWithDictionary:dic];
+                        [_myPickOrdersArr addObject:infoModel];
+                    }
+                    if ([self.tableView.mj_header isRefreshing]) {
+                        [self.tableView.mj_header endRefreshing];
+                    }
+                    [_tableView reloadData];
+                }else{
+                    [_tableView.mj_header endRefreshing];
+                    [_tableView reloadData];
                 }
-                if ([self.tableView.mj_header isRefreshing]) {
-                    [self.tableView.mj_header endRefreshing];
-                }
-                [_tableView reloadData];
             }else{
-                [_tableView.mj_header endRefreshing];
                 [_tableView reloadData];
+                [_tableView reloadEmptyDataSet];
+                [WXProgressHUD showInfoWithTittle:responseObject.message];
             }
-        }else{
+        } failureBlock:^(NSError *error) {
             [_tableView reloadData];
             [_tableView reloadEmptyDataSet];
-            [WXProgressHUD showInfoWithTittle:responseObject.message];
-        }
-    } failureBlock:^(NSError *error) {
-        [_tableView reloadData];
-        [_tableView reloadEmptyDataSet];
-        [self endRefreshing];
-        [WXProgressHUD showErrorWithTittle:@"网络异常"];
-    }];
+            [self endRefreshing];
+            [WXProgressHUD showErrorWithTittle:@"网络异常"];
+        }];
+    }
 }
 
 #pragma mark - 请求我的摘单数据(买入与卖出)

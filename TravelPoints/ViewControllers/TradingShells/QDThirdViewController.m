@@ -105,9 +105,7 @@ typedef enum : NSUInteger {
 
 - (void)loginSucceeded:(NSNotification *)noti{
     QDLog(@"登录成功");
-    [WXProgressHUD showHUD];
     [self requestMyOrdersData];
-    [WXProgressHUD hideHUD];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -207,6 +205,7 @@ typedef enum : NSUInteger {
 
 #pragma mark - 请求我的报单数据
 - (void)requestMyOrdersData{
+    [WXProgressHUD showHUD];
     NSString *str = [QDUserDefaults getObjectForKey:@"loginType"];
     if ([str isEqualToString:@"0"] || str == nil) { //未登录
         QDLoginAndRegisterVC *loginVC = [[QDLoginAndRegisterVC alloc] init];
@@ -225,6 +224,7 @@ typedef enum : NSUInteger {
                                      @"pageSize":[NSNumber numberWithInt:_pageSize]
                                      };
         [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_FindMyBiddingPosterse params:paramsDic successBlock:^(QDResponseObject *responseObject) {
+            [WXProgressHUD hideHUD];
             if (responseObject.code == 0) {
                 NSDictionary *dic = responseObject.result;
                 NSArray *hotelArr = [dic objectForKey:@"result"];
@@ -262,6 +262,7 @@ typedef enum : NSUInteger {
                 [WXProgressHUD showInfoWithTittle:responseObject.message];
             }
         } failureBlock:^(NSError *error) {
+            [WXProgressHUD hideHUD];
             _emptyType = QDNetworkError;
             [_tableView reloadData];
             [_tableView reloadEmptyDataSet];
@@ -288,7 +289,6 @@ typedef enum : NSUInteger {
     _tableView.backgroundColor = APP_WHITECOLOR;
     _tableView.delegate = self;
     _tableView.dataSource = self;
-//    [_tableView tab_startAnimation];
     _tableView.emptyDataSetSource = self;
     _tableView.emptyDataSetDelegate = self;
     _tableView.estimatedRowHeight = 0;

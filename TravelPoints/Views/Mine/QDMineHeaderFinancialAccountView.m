@@ -79,6 +79,7 @@
         [_financialPic addSubview:_info3Lab];
         
         _progressView = [[MQGradientProgressView alloc] initWithFrame:CGRectMake(0, 0, 238, 4)];
+        _progressView.progress = 0.4;
         [self addSubview:_progressView];
         
         _info4Lab = [[UILabel alloc] init];
@@ -185,19 +186,18 @@
         make.centerX.equalTo(self);
         make.width.mas_equalTo(335);
         make.height.mas_equalTo(202);
-//        make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH*0.05);
-//        make.right.equalTo(self.mas_right).offset(-(SCREEN_WIDTH*0.05));
-//        make.height.mas_equalTo(SCREEN_HEIGHT*0.25);
     }];
 
     [_progressView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_info1Lab);
         make.top.equalTo(_info1Lab.mas_bottom).offset(7);
+        make.width.mas_equalTo(238);
+        make.height.mas_equalTo(4);
     }];
+    
     [_info1Lab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_financialPic.mas_left).offset(SCREEN_WIDTH*0.06);
         make.top.equalTo(_financialPic.mas_top).offset(SCREEN_HEIGHT*0.06);
-        
     }];
     
     [_info2Lab mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -291,7 +291,7 @@
     QDLog(@"用户等级 = %@, 用户当前经验值 = %@, 用户当前等级的最小值 = %@, 用户当前等级的最大值 = %@", userLevel, currentLevelValue, minLevelValue, maxLevelValue);
     //进度值
     CGFloat ss = [member.userLevelValue floatValue] / [member.maxLevelValue floatValue];
-    _progressView.progress = ss;
     QDLog(@"ss = %.2f", ss);
+    self.progressView.progress = ss;
 }
 @end
