@@ -18,25 +18,15 @@
     [super viewWillAppear:animated];
     [self.navigationController.navigationBar setHidden:YES];
     [self.navigationController.tabBarController.tabBar setHidden:NO];
-//    CGRect frame = self.tabBarController.tabBar.frame;
-//    frame.origin.y = SCREEN_HEIGHT - frame.size.height - TabbarSafeBottomMargin;
-//    frame.size = CGSizeMake(frame.size.width, frame.size.height + TabbarSafeBottomMargin);
-//    self.tabBarController.tabBar.frame = frame;
-//    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-//    self.tabBarController.tabBar.frame = CGRectZero;
-//    [self.navigationController.navigationBar setHidden:NO];
 }
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    [self.navigationController.navigationBar setTitleTextAttributes:
-//     @{NSForegroundColorAttributeName:[UIColor whiteColor]}];
-    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {

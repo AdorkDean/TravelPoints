@@ -27,7 +27,6 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         _hotelImg = [[UIImageView alloc] init];
-        _hotelImg.image = [UIImage imageNamed:@"hotel"];
         _hotelImg.layer.cornerRadius = 5;
         _hotelImg.layer.masksToBounds = YES;
         _hotelImg.loadStyle = TABViewLoadAnimationWithOnlySkeleton;
@@ -52,6 +51,7 @@
         _yueLab = [[UILabel alloc] init];
         _yueLab.font = QDFont(12);
         _yueLab.textColor = APP_GRAYCOLOR;
+        _yueLab.loadStyle = TABViewLoadAnimationWithOnlySkeleton;
         [self.contentView addSubview:_yueLab];
         
         _priceLab = [[UILabel alloc] init];
@@ -62,6 +62,7 @@
         _salesLab = [[UILabel alloc] init];
         _salesLab.font = QDFont(12);
         _salesLab.textColor = APP_GRAYCOLOR;
+        _salesLab.loadStyle = TABViewLoadAnimationWithOnlySkeleton;
         [self.contentView addSubview:_salesLab];
         
         _totalSales = [[UILabel alloc] init];

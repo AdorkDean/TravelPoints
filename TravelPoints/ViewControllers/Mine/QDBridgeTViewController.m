@@ -17,6 +17,7 @@
 #import "AppDelegate.h"
 #import "QDPlayingShellsVC.h"
 #import "QDCalendarCustomerTourVC.h"
+#import "QYBaseView.h"
 @interface QDBridgeTViewController ()<WKNavigationDelegate>{
     WebViewJavascriptBridge *_bridge;
     CAReplicatorLayer *_containerLayer;
@@ -49,8 +50,6 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    QDLog(@"urlStr = %@", _urlStr);
-    self.tabBarController.tabBar.frame = CGRectZero;
     [self.navigationController.navigationBar setHidden:YES];
     [self.tabBarController.tabBar setHidden:YES];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
@@ -60,10 +59,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     //初始化UIWebView,设置webView代理
+    if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+    }
+    
+    QYBaseView *baseView = [[QYBaseView alloc] initWithFrame:self.view.frame];
+    self.view = baseView;
     _webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 3, SCREEN_WIDTH, SCREEN_HEIGHT)];
     _webView.navigationDelegate = self;
-    _webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-    [self.view addSubview:_webView];
+//    _webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    [baseView addSubview:_webView];
     
     //设置能够进行桥接
     [WebViewJavascriptBridge enableLogging];

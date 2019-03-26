@@ -30,16 +30,11 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController.tabBarController.tabBar setHidden:YES];
-//    self.tabBarController.tabBar.frame = CGRectZero;
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [self.navigationController.tabBarController.tabBar setHidden:NO];
-//    CGRect frame = self.tabBarController.tabBar.frame;
-//    frame.origin.y = SCREEN_HEIGHT - frame.size.height;
-//    frame.size = CGSizeMake(frame.size.width, frame.size.height);
-//    self.tabBarController.tabBar.frame = frame;
 }
 
 

@@ -22,6 +22,7 @@
 #import "OpenShare+QQ.h"
 #import "OpenShare+Weibo.h"
 #import "OpenShare+Weixin.h"
+#import "QYBaseView.h"
 
 #define FT_WEIBO_APPKEY         @"2645776991"
 #define FT_WEIBO_APPSECRET      @"785818577abc810dfac71fa7c59d1957"
@@ -60,7 +61,6 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [self.tabBarController.tabBar setHidden:NO];
-    self.tabBarController.tabBar.frame = CGRectMake(0, SCREEN_HEIGHT - TabbarSafeBottomMarginT, SCREEN_WIDTH, TabbarSafeBottomMarginT);
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
 
@@ -69,16 +69,19 @@
     [self.navigationController.navigationBar setHidden:YES];
     [self.tabBarController.tabBar setHidden:YES];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
-    self.tabBarController.tabBar.frame = CGRectZero;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     //初始化UIWebView,设置webView代理
+    if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+    }
+    QYBaseView *baseView = [[QYBaseView alloc] initWithFrame:self.view.frame];
+    self.view = baseView;
     _webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 3, SCREEN_WIDTH, SCREEN_HEIGHT)];
     _webView.navigationDelegate = self;
-    _webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-    [self.view addSubview:_webView];
+    [baseView addSubview:_webView];
     
     //设置能够进行桥接
     [WebViewJavascriptBridge enableLogging];

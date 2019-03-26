@@ -230,6 +230,7 @@
 		932715B022486ED7008CD6A8 /* OpenShare+Renren.m in Sources */ = {isa = PBXBuildFile; fileRef = 932715A622486ED7008CD6A8 /* OpenShare+Renren.m */; };
 		932715B322486F0B008CD6A8 /* UIControl+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 932715B222486F0A008CD6A8 /* UIControl+Blocks.m */; };
 		932715B52248B1F0008CD6A8 /* shellBanner@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 932715B42248B1EF008CD6A8 /* shellBanner@2x.png */; };
+		932715C2224A2EE6008CD6A8 /* QYBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 932715C1224A2EE6008CD6A8 /* QYBaseView.m */; };
 		935D559A223F721800E97FC9 /* LaunchAnimationTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 935D5599223F721800E97FC9 /* LaunchAnimationTool.m */; };
 		935D559D223F7AFC00E97FC9 /* QDPlayingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 935D559C223F7AFC00E97FC9 /* QDPlayingViewController.m */; };
 		935D55A0223F7BBD00E97FC9 /* QDHotelReserveVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 935D559F223F7BBD00E97FC9 /* QDHotelReserveVC.m */; };
@@ -745,6 +746,8 @@
 		932715B122486F0A008CD6A8 /* UIControl+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIControl+Blocks.h"; sourceTree = "<group>"; };
 		932715B222486F0A008CD6A8 /* UIControl+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIControl+Blocks.m"; sourceTree = "<group>"; };
 		932715B42248B1EF008CD6A8 /* shellBanner@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shellBanner@2x.png"; sourceTree = "<group>"; };
+		932715C0224A2EE6008CD6A8 /* QYBaseView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QYBaseView.h; sourceTree = "<group>"; };
+		932715C1224A2EE6008CD6A8 /* QYBaseView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QYBaseView.m; sourceTree = "<group>"; };
 		935D5598223F721800E97FC9 /* LaunchAnimationTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchAnimationTool.h; sourceTree = "<group>"; };
 		935D5599223F721800E97FC9 /* LaunchAnimationTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchAnimationTool.m; sourceTree = "<group>"; };
 		935D559B223F7AFC00E97FC9 /* QDPlayingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDPlayingViewController.h; sourceTree = "<group>"; };
@@ -1722,6 +1725,8 @@
 				93E30ED82227E1AB003CA771 /* QDKeyWordsSearchViewT.m */,
 				93E30EF822295BCB003CA771 /* QDPriceRangeView.h */,
 				93E30EF922295BCB003CA771 /* QDPriceRangeView.m */,
+				932715C0224A2EE6008CD6A8 /* QYBaseView.h */,
+				932715C1224A2EE6008CD6A8 /* QYBaseView.m */,
 			);
 			path = PlayingShells;
 			sourceTree = "<group>";
@@ -2344,6 +2349,7 @@
 				935D559A223F721800E97FC9 /* LaunchAnimationTool.m in Sources */,
 				3B40EBF721EDC4C300656C1F /* QDForgetPwdView.m in Sources */,
 				935D55A3223F7BF000E97FC9 /* QDDZYViewController.m in Sources */,
+				932715C2224A2EE6008CD6A8 /* QYBaseView.m in Sources */,
 				93E30EE02228BE8B003CA771 /* QDRoutePlanHeaderView.m in Sources */,
 				3BCA5823221A844D00DCEEF7 /* MQGradientProgressView.m in Sources */,
 				3B40EBAA21EC953E00656C1F /* YYTextMagnifier.m in Sources */,
