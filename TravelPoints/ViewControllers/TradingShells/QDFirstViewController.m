@@ -348,9 +348,9 @@ typedef enum : NSUInteger {
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (_ordersArr.count % 2 == 0) {
-        return _ordersArr.count /2  * SCREEN_HEIGHT * 0.33 + _ordersArr.count/2 * 10 + 10;
+        return _ordersArr.count /2  * 220 + _ordersArr.count/2 * 10 + 10;
     }else{
-        return (_ordersArr.count /2 + 1) * SCREEN_HEIGHT * 0.33 + (_ordersArr.count/2 + 1) * 10 + 10;
+        return (_ordersArr.count /2 + 1) * 220 + (_ordersArr.count/2 + 1) * 10 + 10;
     }
 }
 
@@ -365,9 +365,9 @@ typedef enum : NSUInteger {
         //创建collectionView
         CGFloat y = 0;
         if (_ordersArr.count % 2 == 0) {
-            y = _ordersArr.count /2  * SCREEN_HEIGHT * 0.33 + _ordersArr.count/2 * 10 + 10;
+            y = _ordersArr.count /2  * 220 + _ordersArr.count/2 * 10 + 10;
         }else{
-            y = (_ordersArr.count /2 + 1) * SCREEN_HEIGHT * 0.33 + (_ordersArr.count/2 + 1) * 10 + 10;
+            y = (_ordersArr.count /2 + 1) * 220 + (_ordersArr.count/2 + 1) * 10 + 10;
         }
         self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, y) collectionViewLayout:layou];
         self.collectionView.backgroundColor = APP_WHITECOLOR;
@@ -393,9 +393,9 @@ typedef enum : NSUInteger {
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     CGFloat y = 0;
     if (_ordersArr.count % 2 == 0) {
-        y = _ordersArr.count /2  * SCREEN_HEIGHT * 0.33 + _ordersArr.count/2 * 10 + 10;
+        y = _ordersArr.count /2  * 220 + _ordersArr.count/2 * 10 + 10;
     }else{
-        y = (_ordersArr.count /2 + 1) * SCREEN_HEIGHT * 0.33 + (_ordersArr.count/2 + 1) * 10 + 10;
+        y = (_ordersArr.count /2 + 1) * 220 + (_ordersArr.count/2 + 1) * 10 + 10;
     }
     self.collectionView.frame = CGRectMake(0, 0, SCREEN_WIDTH, y);
     if (_ordersArr.count) {

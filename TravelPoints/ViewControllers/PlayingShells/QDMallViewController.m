@@ -180,6 +180,7 @@
                             @"keywords":_keywords
                             };
     [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_GetMallList params:dic1 successBlock:^(QDResponseObject *responseObject) {
+        [self endRefreshing];
         if (responseObject.code == 0) {
             NSDictionary *dic = responseObject.result;
             NSArray *mallArr = [dic objectForKey:@"result"];
@@ -201,6 +202,7 @@
         [_tableView tab_endAnimation];
         [self endRefreshing];
     } failureBlock:^(NSError *error) {
+        [self endRefreshing];
         _emptyType = QDNetworkError;
         [_tableView reloadData];
         [_tableView reloadEmptyDataSet];
@@ -229,7 +231,7 @@
     self.view = _tableView;
 //    [self.view addSubview:_tableView];
     _tableView.mj_header = [QDRefreshHeader headerWithRefreshingBlock:^{
-        [self endRefreshing];
+        [self requestMallList];
     }];
     
     //手动刷新请求最新数据
