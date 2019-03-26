@@ -37,7 +37,6 @@
         [self addSubview:_levelPic];
         
         _levelLab = [[UILabel alloc] init];
-        _levelLab.text = @"Lv2";
         _levelLab.textColor = APP_WHITECOLOR;
         _levelLab.font = QDFont(12);
         [_levelPic addSubview:_levelLab];
@@ -68,7 +67,7 @@
         [_financialPic addSubview:_info1Lab];
         
         _info2Lab = [[UILabel alloc] init];
-        _info2Lab.text = @"75";
+        _info2Lab.text = @"--";
         _info2Lab.textColor = APP_BLUECOLOR;
         _info2Lab.font = QDFont(13);
         [_financialPic addSubview:_info2Lab];
@@ -83,25 +82,21 @@
         [self addSubview:_progressView];
         
         _info4Lab = [[UILabel alloc] init];
-        _info4Lab.text = @"LV5";
         _info4Lab.textColor = APP_BLACKCOLOR;
         _info4Lab.font = QDFont(12);
         [_financialPic addSubview:_info4Lab];
         
         _info5Lab = [[UILabel alloc] init];
-        _info5Lab.text = @"(425)";
         _info5Lab.textColor = APP_GRAYTEXTCOLOR;
         _info5Lab.font = QDFont(11);
         [_financialPic addSubview:_info5Lab];
         
         _info6Lab = [[UILabel alloc] init];
-        _info6Lab.text = @"LV6";
         _info6Lab.textColor = APP_BLACKCOLOR;
         _info6Lab.font = QDFont(12);
         [_financialPic addSubview:_info6Lab];
         
         _info7Lab = [[UILabel alloc] init];
-        _info7Lab.text = @"(500)";
         _info7Lab.textColor = APP_GRAYLINECOLOR;
         _info7Lab.font = QDFont(11);
         [_financialPic addSubview:_info7Lab];
