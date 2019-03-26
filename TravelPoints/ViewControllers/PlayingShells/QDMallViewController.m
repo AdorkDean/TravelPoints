@@ -24,6 +24,7 @@
 #import "UITableView+Animated.h"
 #import "UIView+TABControlAnimation.h"
 #import "QDOrderField.h"
+#import "QDLoginAndRegisterVC.h"
 
 //预定酒店 定制游 商城
 @interface QDMallViewController ()<UITableViewDelegate, UITableViewDataSource, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource, QDPopMenuDelegate, UITextFieldDelegate>{
@@ -151,10 +152,17 @@
 }
 
 - (void)addToCar:(UIButton *)sender{
-    QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
-    bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@", QD_JSURL, JS_SHOPCART];
-    QDLog(@"urlStr = %@", bridgeVC.urlStr);
-    [self.navigationController pushViewController:bridgeVC animated:YES];
+    NSString *str = [QDUserDefaults getObjectForKey:@"loginType"];
+    if ([str isEqualToString:@"0"] || str == nil) { //未登录
+        QDLoginAndRegisterVC *loginVC = [[QDLoginAndRegisterVC alloc] init];
+        loginVC.pushVCTag = @"0";
+        [self presentViewController:loginVC animated:YES completion:nil];
+    }else{
+        QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
+        bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@", QD_JSURL, JS_SHOPCART];
+        QDLog(@"urlStr = %@", bridgeVC.urlStr);
+        [self.navigationController pushViewController:bridgeVC animated:YES];
+    }
 }
 
 #pragma mark - 查询商城列表信息

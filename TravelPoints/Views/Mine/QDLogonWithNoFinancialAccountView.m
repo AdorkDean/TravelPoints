@@ -77,7 +77,7 @@
         _info3Lab.font = QDFont(13);
         [_financialPic addSubview:_info3Lab];
         
-        _progressView = [[MQGradientProgressView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*0.11, SCREEN_HEIGHT*0.28, SCREEN_WIDTH*0.63, SCREEN_HEIGHT*0.008)];
+        _progressView = [[MQGradientProgressView alloc] initWithFrame:CGRectMake(0, 0, 238, 4)];
         [self addSubview:_progressView];
 
         _info4Lab = [[UILabel alloc] init];
@@ -183,6 +183,11 @@
         make.height.mas_equalTo(202);
     }];
     
+    [_progressView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_info1Lab);
+        make.top.equalTo(_info1Lab.mas_bottom).offset(7);
+    }];
+    
     [_info1Lab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_financialPic.mas_left).offset(SCREEN_WIDTH*0.06);
         make.top.equalTo(_financialPic.mas_top).offset(SCREEN_HEIGHT*0.06);
@@ -222,22 +227,22 @@
 
     [_info8Lab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_info1Lab);
-        make.top.equalTo(self.mas_top).offset(232);
+        make.top.equalTo(self.info4Lab.mas_bottom).offset(21);
     }];
     
     [_info9Lab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(_info8Lab);
-        make.top.equalTo(self.mas_top).offset(260);
+        make.top.equalTo(_info8Lab.mas_bottom).offset(8);
     }];
 
     [_accountInfo mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_info9Lab);
-        make.left.equalTo(_info9Lab.mas_right).offset(29);
+        make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH*0.34);
     }];
     
     [_balanceLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.mas_left).offset(30);
-        make.top.equalTo(self.mas_top).offset(328);
+        make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH*0.08);
+        make.top.equalTo(_info8Lab.mas_bottom).offset(76);
     }];
     
     [_balance mas_makeConstraints:^(MASConstraintMaker *make) {

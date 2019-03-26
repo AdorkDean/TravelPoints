@@ -231,7 +231,6 @@
     [pageFlowView reloadData];
     [self.scrollView addSubview:pageFlowView];
     self.pageFlowView = pageFlowView;
-    [self.pageFlowView adjustCenterSubview];
     //添加到主view上
 //    [self.view addSubview:self.indicateLabel];
     

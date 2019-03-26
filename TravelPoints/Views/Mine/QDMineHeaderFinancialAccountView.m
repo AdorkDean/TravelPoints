@@ -79,7 +79,6 @@
         _info3Lab.font = QDFont(13);
         [_financialPic addSubview:_info3Lab];
         
-//        _progressView = [[MQGradientProgressView alloc] initWithFrame:CGRectMake(40, 187, 238, 4)];
         _progressView = [[MQGradientProgressView alloc] initWithFrame:CGRectMake(0, 0, 238, 4)];
         [self addSubview:_progressView];
         

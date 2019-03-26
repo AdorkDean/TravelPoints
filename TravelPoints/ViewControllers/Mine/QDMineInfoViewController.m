@@ -396,6 +396,7 @@
         QDLoginAndRegisterVC *loginVC = [[QDLoginAndRegisterVC alloc] init];
         [self presentViewController:loginVC animated:YES completion:nil];
     }else{
+//        NSString *urlStr = [NSString stringWithFormat:@"%@%@", QD_JSURL, JS_ORDERS];
         NSString *urlStr = [NSString stringWithFormat:@"%@%@?index=%ld", QD_JSURL, JS_ORDERS, (long)sender.tag];
         [self pushBridgeVCWithStr:urlStr];
     }
