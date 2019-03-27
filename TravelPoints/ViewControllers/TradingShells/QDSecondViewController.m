@@ -147,7 +147,6 @@
     [gradientLayer setColors:@[(id)[[UIColor colorWithHexString:@"#159095"] CGColor],(id)[[UIColor colorWithHexString:@"#3CC8B1"] CGColor]]];//渐变数组
     [_optionBtn.layer addSublayer:gradientLayer];
     [_optionBtn setTitle:@"转玩贝" forState:UIControlStateNormal];
-    _optionBtn.backgroundColor = [UIColor redColor];
     _optionBtn.layer.cornerRadius = 22;
     _optionBtn.layer.masksToBounds = YES;
     _optionBtn.titleLabel.font = QDFont(17);

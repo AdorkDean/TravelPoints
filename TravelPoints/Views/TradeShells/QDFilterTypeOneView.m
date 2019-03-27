@@ -60,6 +60,8 @@
         [_yesBtn setTitleColor:APP_BLACKCOLOR forState:UIControlStateNormal];
         _yesBtn.layer.borderWidth = 1;
         _yesBtn.layer.borderColor = APP_GRAYCOLOR.CGColor;
+        _yesBtn.layer.cornerRadius = 2;
+        _yesBtn.layer.masksToBounds = YES;
         [self addSubview:_yesBtn];
         
         _noBtn = [[UIButton alloc] init];
@@ -69,6 +71,8 @@
         [_noBtn setTitleColor:APP_BLACKCOLOR forState:UIControlStateNormal];
         _noBtn.layer.borderWidth = 1;
         _noBtn.layer.borderColor = APP_GRAYCOLOR.CGColor;
+        _noBtn.layer.cornerRadius = 2;
+        _noBtn.layer.masksToBounds = YES;
         [_noBtn addTarget:self action:@selector(isAllDealed:) forControlEvents:UIControlEventTouchUpInside];
         _noBtn.tag = 202;
         [self addSubview:_noBtn];
@@ -89,7 +93,7 @@
         [_confirmBtn setTitle:@"确定" forState:UIControlStateNormal];
         [_confirmBtn setTitleColor:APP_WHITECOLOR forState:UIControlStateNormal];
         CAGradientLayer *gradientLayer =  [CAGradientLayer layer];
-        gradientLayer.frame = CGRectMake(0, 0, 187, 58);
+        gradientLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH/2, 58);
         gradientLayer.startPoint = CGPointMake(0, 0);
         gradientLayer.endPoint = CGPointMake(1, 0);
         gradientLayer.locations = @[@(0.5),@(1.0)];//渐变点
@@ -175,13 +179,13 @@
     [_resetbtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self);
         make.left.equalTo(self.mas_left);
-        make.width.mas_equalTo(187);
+        make.width.mas_equalTo(SCREEN_WIDTH/2);
         make.height.mas_equalTo(58);
     }];
     
     [_confirmBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self);
-        make.left.equalTo(_resetbtn.mas_right);
+        make.centerY.equalTo(_resetbtn);
+        make.right.equalTo(self);
         make.width.and.height.equalTo(_resetbtn);
     }];
     
@@ -193,6 +197,10 @@
 }
 
 - (void)setUpTextFieldWithHolderStr:(UITextField *)textField andHolderStr:(NSString *)holderStr{
+    textField.layer.cornerRadius = 2;
+    textField.layer.masksToBounds = YES;
+    textField.keyboardType = UIKeyboardTypeDecimalPad;
+    [textField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     textField.font = QDFont(14);
     NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
     style.alignment = NSTextAlignmentCenter;
@@ -245,6 +253,37 @@
     self.hightPrice.text = @"";
     self.lowAmount.text = @"";
     self.hightAmount.text = @"";
+}
+
+- (void)textFieldDidChange:(UITextField *)textField
+{
+    //判断第一位是否为数字
+    if ([textField.text isEqualToString: @"."]) {
+        textField.text = @"";
+    }
+    //判断是否有两个小数点
+    if (textField.text.length >= 2) {
+        NSString *str = [textField.text substringToIndex:textField.text.length-1];
+        NSString *strTwo = [textField.text substringFromIndex:textField.text.length-1];
+        NSRange range = [str rangeOfString:@"."];
+        if (range.location != NSNotFound && [strTwo isEqualToString:@"."]) {
+            textField.text = [textField.text substringToIndex:textField.text.length-1];
+        }
+    }
+    //小数点后面数字位数控制  （此时为小数点后一位，3改4就是两位    思路：取倒数第X个字符是否为小数点，是小数点的话，就不再允许输入）
+    if (textField.text.length > 4) {
+        NSString *myStr = [textField.text substringWithRange:NSMakeRange(textField.text.length-4 , 1)];
+        if ([myStr isEqualToString:@"."]) {
+            textField.text = [textField.text substringToIndex:textField.text.length-1];
+        }
+    }
+    //最大值控制
+    double doubleNum = [textField.text doubleValue];
+    NSUInteger myNub = doubleNum;
+    NSUInteger sum = 100000000;
+    if (myNub > sum) {
+        textField.text = [textField.text substringToIndex:textField.text.length-1];
+    }
 }
 
 @end

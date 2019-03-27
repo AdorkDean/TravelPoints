@@ -26,6 +26,8 @@
         [_buyBtn setTitleColor:APP_GRAYBUTTONTEXTCOLOR forState:UIControlStateNormal];
         _buyBtn.layer.borderWidth = 1;
         _buyBtn.layer.borderColor = APP_GRAYLAYERCOLOR.CGColor;
+        _buyBtn.layer.cornerRadius = 2;
+        _buyBtn.layer.masksToBounds = YES;
         [self addSubview:_buyBtn];
         
         
@@ -38,6 +40,8 @@
         [_sellBtn setTitleColor:APP_GRAYBUTTONTEXTCOLOR forState:UIControlStateNormal];
         _sellBtn.layer.borderWidth = 1;
         _sellBtn.layer.borderColor = APP_GRAYLAYERCOLOR.CGColor;
+        _sellBtn.layer.cornerRadius = 2;
+        _sellBtn.layer.masksToBounds = YES;
         [self addSubview:_sellBtn];
         
         _orderStatusLab = [[UILabel alloc] init];
@@ -54,6 +58,8 @@
         [_dfkBtn setTitleColor:APP_GRAYBUTTONTEXTCOLOR forState:UIControlStateNormal];
         _dfkBtn.layer.borderWidth = 1;
         _dfkBtn.layer.borderColor = APP_GRAYLAYERCOLOR.CGColor;
+        _dfkBtn.layer.cornerRadius = 2;
+        _dfkBtn.layer.masksToBounds = YES;
         [self addSubview:_dfkBtn];
         
         _ycjBtn = [[UIButton alloc] init];
@@ -65,6 +71,8 @@
         [_ycjBtn setTitleColor:APP_GRAYBUTTONTEXTCOLOR forState:UIControlStateNormal];
         _ycjBtn.layer.borderWidth = 1;
         _ycjBtn.layer.borderColor = APP_GRAYLAYERCOLOR.CGColor;
+        _ycjBtn.layer.cornerRadius = 2;
+        _ycjBtn.layer.masksToBounds = YES;
         [self addSubview:_ycjBtn];
         
         _yqxBtn = [[UIButton alloc] init];
@@ -76,6 +84,8 @@
         [_yqxBtn setTitleColor:APP_GRAYBUTTONTEXTCOLOR forState:UIControlStateNormal];
         _yqxBtn.layer.borderWidth = 1;
         _yqxBtn.layer.borderColor = APP_GRAYLAYERCOLOR.CGColor;
+        _yqxBtn.layer.cornerRadius = 2;
+        _yqxBtn.layer.masksToBounds = YES;
         [self addSubview:_yqxBtn];
         
         _bottomLine = [[UIView alloc] init];
@@ -95,7 +105,7 @@
         [_confirmBtn setTitle:@"确定" forState:UIControlStateNormal];
         [_confirmBtn setTitleColor:APP_WHITECOLOR forState:UIControlStateNormal];
         CAGradientLayer *gradientLayer =  [CAGradientLayer layer];
-        gradientLayer.frame = CGRectMake(0, 0, 187, 58);
+        gradientLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH/2, 58);
         gradientLayer.startPoint = CGPointMake(0, 0);
         gradientLayer.endPoint = CGPointMake(1, 0);
         gradientLayer.locations = @[@(0.5),@(1.0)];//渐变点
@@ -178,59 +188,60 @@
 - (void)layoutSubviews{
     [super layoutSubviews];
     [_direction mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH*0.05);
-        make.top.equalTo(self.mas_top).offset(SCREEN_HEIGHT*0.05);
+        make.left.equalTo(self.mas_left).offset(20);
+        make.top.equalTo(self.mas_top).offset(36);
     }];
     
     [_buyBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_direction);
-        make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH*0.26);
-        make.width.mas_equalTo(SCREEN_WIDTH*0.16);
-        make.height.mas_equalTo(SCREEN_HEIGHT*0.05);
+        make.left.equalTo(_direction.mas_right).offset(20);
+        make.width.mas_equalTo(60);
+        make.height.mas_equalTo(32);
     }];
     
     [_sellBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.width.and.height.equalTo(_direction);
-        make.left.equalTo(_buyBtn.mas_right).offset(SCREEN_WIDTH*0.08);
+        make.centerY.equalTo(_direction);
+        make.left.equalTo(_buyBtn.mas_right).offset(10);
         make.width.and.height.equalTo(_buyBtn);
     }];
-    
+
     [_orderStatusLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_direction);
-        make.top.equalTo(self.mas_top).offset(SCREEN_HEIGHT*0.16);
+        make.top.equalTo(self.mas_top).offset(108);
     }];
-    
+
     //待付款 已成交 已取消
     [_dfkBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.and.height.equalTo(_orderStatusLab);
-        make.width.mas_equalTo(SCREEN_WIDTH*0.21);
-        make.left.equalTo(_buyBtn);
+        make.centerY.equalTo(_orderStatusLab);
+        make.width.mas_equalTo(80);
+        make.height.mas_equalTo(32);
+        make.left.equalTo(_orderStatusLab.mas_right).offset(20);
     }];
-    
+
     [_ycjBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.width.and.height.equalTo(_dfkBtn);
-        make.left.equalTo(_sellBtn);
+        make.left.equalTo(_dfkBtn.mas_right).offset(10);
         make.width.mas_equalTo(SCREEN_WIDTH*0.26);
     }];
-    
+
     [_yqxBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.width.and.height.equalTo(_ycjBtn);
-        make.left.equalTo(_ycjBtn.mas_right).offset(SCREEN_WIDTH*0.02);
+        make.left.equalTo(_ycjBtn.mas_right).offset(10);
     }];
-    
+
     [_resetbtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self);
         make.left.equalTo(self.mas_left);
-        make.width.mas_equalTo(187);
+        make.width.mas_equalTo(SCREEN_WIDTH/2);
         make.height.mas_equalTo(58);
     }];
-    
+
     [_confirmBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.mas_bottom).offset(-(SCREEN_HEIGHT*0.09));
-        make.left.equalTo(_resetbtn.mas_right);
+        make.centerY.equalTo(_resetbtn);
+        make.right.equalTo(self);
         make.width.and.height.equalTo(_resetbtn);
     }];
-    
+
     [_bottomLine mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(_resetbtn.mas_top);
         make.left.and.width.equalTo(self);
