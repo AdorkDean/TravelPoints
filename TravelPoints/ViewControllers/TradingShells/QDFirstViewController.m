@@ -140,7 +140,7 @@ typedef enum : NSUInteger {
     _totalPage = 0; //总页数默认为1
     _ordersArr = [[NSMutableArray alloc] init];
     [self initTableView];
-    _optionBtn = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*0.31, SCREEN_HEIGHT*0.72, 140, 44)];
+    _optionBtn = [[UIButton alloc] initWithFrame:CGRectMake(125, 460, 140, 44)];
     [_optionBtn addTarget:self action:@selector(operateAction:) forControlEvents:UIControlEventTouchUpInside];
     CAGradientLayer *gradientLayer =  [CAGradientLayer layer];
     gradientLayer.frame = CGRectMake(0, 0, 140, 44);
@@ -152,7 +152,7 @@ typedef enum : NSUInteger {
     [_optionBtn setTitle:@"要玩贝" forState:UIControlStateNormal];
     _optionBtn.layer.cornerRadius = 22;
     _optionBtn.layer.masksToBounds = YES;
-    _optionBtn.titleLabel.font = QDFont(17);
+    _optionBtn.titleLabel.font = QDFont(18);
     [self.view addSubview:_optionBtn];
     [self requestYWBData];
 }

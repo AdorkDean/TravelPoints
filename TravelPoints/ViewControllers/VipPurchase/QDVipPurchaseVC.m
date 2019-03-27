@@ -18,11 +18,13 @@
 #import "QDLoginAndRegisterVC.h"
 #import "QDMemberDTO.h"
 #import "AppDelegate.h"
+#import "QYBaseView.h"
 @interface QDVipPurchaseVC ()<NewPagedFlowViewDelegate, NewPagedFlowViewDataSource, UITableViewDelegate, UITableViewDataSource>{
     QDVipPurchaseView *_vipPurchaseView;
     UITableView *_tableView;
     BOOL _selected;
     VipCardDTO *_currentModel;
+    QYBaseView *_baseView;
 }
 @property (nonatomic, strong) UIButton *confirmBtn;
 
@@ -84,7 +86,7 @@
         _scrollView.bouncesZoom = YES;
         //设置委托
         _scrollView.delegate = self;
-        [self.view addSubview:_scrollView];
+        [_baseView addSubview:_scrollView];
     }
     return _scrollView;
 }
@@ -93,6 +95,8 @@
     [super viewDidLoad];
     self.title = @"会员申购";
     [self showBack:YES];
+    _baseView = [[QYBaseView alloc] initWithFrame:self.view.frame];
+    self.view = _baseView;
     self.view.backgroundColor = APP_WHITECOLOR;
     _imageArray = [[NSMutableArray alloc] init];
     _cardArr = [[NSMutableArray alloc] init];
