@@ -212,12 +212,12 @@ typedef enum : NSUInteger {
         loginVC.pushVCTag = @"0";
         [self presentViewController:loginVC animated:YES completion:nil];
     }else{
-            if (_totalPage != 0) {
-            if (_pageNum >= _totalPage) {
-                [self.tableView.mj_footer endRefreshingWithNoMoreData];
-                return;
-            }
+        if (_totalPage != 0) {
+        if (_pageNum >= _totalPage) {
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+            return;
         }
+    }
         NSDictionary * paramsDic = @{@"postersStatus":_state,
                                      @"postersType":_businessType,
                                      @"pageNum":[NSNumber numberWithInt:_pageNum],
@@ -548,10 +548,6 @@ typedef enum : NSUInteger {
     return [[image resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
 }
 
-//-(CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView{
-//    return 30;
-//}
-
 - (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView
 {
     if (_emptyType == QDNODataError) {
@@ -600,7 +596,7 @@ typedef enum : NSUInteger {
 }
 
 - (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView{
-    return -100;
+    return -50;
 }
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button
 {

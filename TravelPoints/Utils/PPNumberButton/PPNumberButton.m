@@ -57,7 +57,7 @@
     if (self = [super initWithFrame:frame]) {
         [self setupUI];
         //整个控件的默认尺寸(和某宝上面的按钮同样大小)
-        if(CGRectIsEmpty(frame)) {self.frame = CGRectMake(0, 0, 110, 30);};
+        if(CGRectIsEmpty(frame)) {self.frame = CGRectMake(0, 0, 110, 28);};
     }
     return self;
 }
@@ -128,13 +128,13 @@
     
     _width =  self.frame.size.width;
     _height = self.frame.size.height;
-    _textField.frame = CGRectMake(_height, 0, _width - 2*_height, _height);
-    _increaseBtn.frame = CGRectMake(_width - _height, 0, _height, _height);
-    
+    QDLog(@"_width = %lf, _height = %lf", _width, _height);
+    _textField.frame = CGRectMake(28, 10, 65, 28);
+    _increaseBtn.frame = CGRectMake(_width - _height, 10, 28, 28);
     if (_decreaseHide && _textField.text.floatValue < _minValue) {
-        _decreaseBtn.frame = CGRectMake(_width-_height, 0, _height, _height);
+        _decreaseBtn.frame = CGRectMake(_width-_height, 0, 28, 28);
     } else {
-        _decreaseBtn.frame = CGRectMake(0, 0, _height, _height);
+        _decreaseBtn.frame = CGRectMake(0, 10, 28, 28);
     }
 }
 

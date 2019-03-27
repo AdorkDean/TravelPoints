@@ -81,7 +81,7 @@
     [_operateBtn setTitleColor:APP_BLUECOLOR forState:UIControlStateNormal];
     [_operateBtn setTitleColor:APP_WHITECOLOR forState:UIControlStateNormal];
     CAGradientLayer *gradientLayer =  [CAGradientLayer layer];
-    gradientLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH*0.89, SCREEN_HEIGHT*0.08);
+    gradientLayer.frame = CGRectMake(0, 0, 335, 50);
     gradientLayer.startPoint = CGPointMake(0, 0);
     gradientLayer.endPoint = CGPointMake(1, 0);
     gradientLayer.locations = @[@(0.5),@(1.0)];//渐变点
@@ -90,13 +90,16 @@
 
     [gradientLayer setColors:@[(id)[[UIColor colorWithHexString:@"#159095"] CGColor],(id)[[UIColor colorWithHexString:@"#3CC8B1"] CGColor]]];//渐变数组
     [_operateBtn.layer addSublayer:gradientLayer];
-    _operateBtn.titleLabel.font = QDFont(19);
+    _operateBtn.titleLabel.font = QDFont(20);
     [_tableView addSubview:_operateBtn];
     [_operateBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view.mas_left).offset(SCREEN_WIDTH*0.05);
-        make.right.equalTo(self.view.mas_right).offset(-(SCREEN_WIDTH*0.05));
+        make.centerX.equalTo(self.view);
+        
+//        make.left.equalTo(self.view.mas_left).offset(SCREEN_WIDTH*0.05);
+//        make.right.equalTo(self.view.mas_right).offset(-(SCREEN_WIDTH*0.05));
         make.top.equalTo(self.view.mas_top).offset(SCREEN_HEIGHT*0.4);
-        make.height.mas_equalTo(SCREEN_HEIGHT*0.08);
+        make.height.mas_equalTo(50);
+        make.width.mas_equalTo(335);
     }];
 }
 

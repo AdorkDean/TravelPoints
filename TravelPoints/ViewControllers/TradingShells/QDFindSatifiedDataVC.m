@@ -98,7 +98,7 @@
     [_tableView addSubview:_operateBtn];
     [_operateBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view);
-        make.top.equalTo(self.view.mas_top).offset(306);
+        make.top.equalTo(self.view.mas_top).offset(354);
         make.width.mas_equalTo(335);
         make.height.mas_equalTo(50);
     }];
@@ -115,7 +115,7 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return SCREEN_HEIGHT*0.08;
+    return 52;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -213,8 +213,6 @@
 {
     if (!_priceNumBtn) {
         _priceNumBtn = [[PPNumberButton alloc] initWithFrame:CGRectMake(0, 0, 145, 28)];
-//        _priceNumBtn.inputFieldFont
-//        _priceNumBtn.backgroundColor = APP_BLUECOLOR;
         _priceNumBtn.shakeAnimation = YES;
         _priceNumBtn.stepValue = 0.1;
         _priceNumBtn.decimalNum = YES;
@@ -242,7 +240,7 @@
 - (PPNumberButton *)amountNumBtn
 {
     if (!_amountNumBtn) {
-        _amountNumBtn = [[PPNumberButton alloc] initWithFrame:CGRectMake(0, 0, 145, 40)];
+        _amountNumBtn = [[PPNumberButton alloc] initWithFrame:CGRectMake(0, 0, 145, 28)];
         _amountNumBtn.shakeAnimation = YES;
         _amountNumBtn.stepValue = 1;
         // 设置最小值

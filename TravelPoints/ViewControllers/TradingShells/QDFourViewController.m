@@ -153,6 +153,7 @@ QD_ManualCanceled = 4      //手工取消
                     }
                     [_tableView reloadData];
                 }else{
+                    _emptyType = QDNODataError;
                     [_tableView.mj_header endRefreshing];
                     [_tableView reloadData];
                 }
@@ -162,6 +163,7 @@ QD_ManualCanceled = 4      //手工取消
                 [WXProgressHUD showInfoWithTittle:responseObject.message];
             }
         } failureBlock:^(NSError *error) {
+            _emptyType = QDNetworkError;
             [_tableView reloadData];
             [_tableView reloadEmptyDataSet];
             [self endRefreshing];
@@ -215,18 +217,17 @@ QD_ManualCanceled = 4      //手工取消
                         }
                     }
                 }else{
+                    _emptyType = QDNODataError;
                     [_tableView.mj_footer endRefreshing];
                     [_tableView.mj_footer endRefreshingWithNoMoreData];
-                    
                 }
-            }else if (responseObject.code == 2){
-                
             }else{
                 [_tableView reloadData];
                 [_tableView reloadEmptyDataSet];
                 [WXProgressHUD showInfoWithTittle:responseObject.message];
             }
         } failureBlock:^(NSError *error) {
+            _emptyType = QDNetworkError;
             [_tableView reloadData];
             [_tableView reloadEmptyDataSet];
             [self endRefreshing];
@@ -529,18 +530,20 @@ QD_ManualCanceled = 4      //手工取消
         NSString *str = [QDUserDefaults getObjectForKey:@"loginType"];
         if ([str isEqualToString:@"0"] || str == nil) { //未登录
             text = @"前往登录";
+            NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
+            paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+            paragraphStyle.alignment = NSTextAlignmentCenter;
+            
+            NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:18],
+                                         NSForegroundColorAttributeName: APP_WHITECOLOR,
+                                         NSParagraphStyleAttributeName: paragraphStyle};
+            return [[NSMutableAttributedString alloc] initWithString:text attributes:attributes];
         }else{
-            text = @"暂无数据";
+            return nil;
         }
-        NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
-        paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
-        paragraphStyle.alignment = NSTextAlignmentCenter;
-        
-        NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:18],
-                                     NSForegroundColorAttributeName: APP_WHITECOLOR,
-                                     NSParagraphStyleAttributeName: paragraphStyle};
-        return [[NSMutableAttributedString alloc] initWithString:text attributes:attributes];
+       
     }
+    return nil;
 }
 
 - (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state{
@@ -612,6 +615,6 @@ QD_ManualCanceled = 4      //手工取消
 }
 
 - (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView{
-    return -100;
+    return -50;
 }
 @end
