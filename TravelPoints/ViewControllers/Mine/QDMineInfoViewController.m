@@ -298,7 +298,7 @@
 #pragma mark - 充值
 - (void)rechargeAction:(UIButton *)sender{
     QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
-    bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@", [QDUserDefaults getObjectForKey:@"QD_TESTJSURL"], JS_RECHARGE];
+    bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@", QD_TESTJSURL, JS_RECHARGE];
     QDLog(@"urlStr = %@", bridgeVC.urlStr);
     [self.navigationController pushViewController:bridgeVC animated:YES];
 }

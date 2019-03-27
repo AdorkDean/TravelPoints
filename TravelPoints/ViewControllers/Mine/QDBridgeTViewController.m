@@ -100,11 +100,16 @@
         //准备post请求
         QDLog(@"JS调用OC,并传值过来");
         NSDictionary *dataDic = [data objectForKey:@"param"];
-        if(![dataDic count]){
-            dataDic = nil;
+        NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithDictionary:dataDic];
+        if(![dic count]){
+            dic = nil;
+        }
+        if ([[dic allKeys] containsObject:@"shareroomAmount"]) {
+            double shareroomAmountDouble = [[dic objectForKey:@"shareroomAmount"] doubleValue];
+            [dic setObject:[self decimalNumberWithDouble:shareroomAmountDouble] forKey:@"shareroomAmount"];
         }
         NSString *urlStr = [data objectForKey:@"url"];
-        [[QDServiceClient shareClient] requestWithHTMLType:kHTTPRequestTypePOST urlString:urlStr params:dataDic successBlock:^(id responseObject) {
+        [[QDServiceClient shareClient] requestWithHTMLType:kHTTPRequestTypePOST urlString:urlStr params:dic successBlock:^(id responseObject) {
             QDLog(@"responseObject");
             NSInteger code = [[responseObject objectForKey:@"code"] integerValue];
             if (code == 2) {
@@ -272,4 +277,9 @@
     return _progressView;
 }
 
+- (NSString *)decimalNumberWithDouble:(double)conversionValue{
+    NSString *doubleString = [NSString stringWithFormat:@"%lf", conversionValue];
+    NSDecimalNumber *decNumber = [NSDecimalNumber decimalNumberWithString:doubleString];
+    return [decNumber stringValue];
+}
 @end

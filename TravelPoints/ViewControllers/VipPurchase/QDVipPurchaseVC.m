@@ -175,11 +175,13 @@
 
 #pragma mark - 积分充值卡查询
 - (void)queryOrderPay:(NSString *)urlStr{
+    [WXProgressHUD showHUD];
     if (_cardArr.count) {
         [_cardArr removeAllObjects];
     }
     //先查询全部
     [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:urlStr params:nil successBlock:^(QDResponseObject *responseObject) {
+        [WXProgressHUD hideHUD];
         if (responseObject.code == 0) {
             NSDictionary *dic = responseObject.result;
             NSArray *hotelArr = [dic objectForKey:@"vipCardInfos"];
@@ -206,12 +208,15 @@
                 [_vipPurchaseView layoutSubviews];
                 
             }else{
+                //
+                [self showPurchaseViewWithBool:YES];
                 [WXProgressHUD showErrorWithTittle:@"暂无VIP售卡信息"];
             }
         }else{
             [WXProgressHUD showInfoWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
+        [WXProgressHUD hideHUD];
         [_tableView reloadData];
         [WXProgressHUD showErrorWithTittle:@"网络异常"];
     }];
@@ -275,10 +280,26 @@
         }
         //针对输入金额
         if ([_currentModel.vipMoney isEqualToString:@"0"]) {
-            _currentModel.vipMoney = _vipPurchaseView.priceTF.text;
-            _currentModel.subscriptCount = _vipPurchaseView.bottomLab2.text;
+            VipCardDTO *cardDTO = [[VipCardDTO alloc] init];
+            cardDTO.vipMoney = _vipPurchaseView.priceTF.text;
+            cardDTO.subscriptCount = _vipPurchaseView.bottomLab2.text;
+            /*
+             @property (nonatomic, strong) NSString *creditCode;             //积分卡id
+             @property (nonatomic, strong) NSString *vipTypeName;            //IP卡类型
+             @property (nonatomic, strong) NSString *vipMoney;               //VIP卡金额
+             @property (nonatomic, strong) NSString *isDefault;              //isDefault
+             @property (nonatomic, strong) NSString *basePrice;              //基准价
+             @property (nonatomic, strong) NSString *subscriptCount;         //申购数量
+             */
+            cardDTO.creditCode = _currentModel.creditCode;
+            cardDTO.vipTypeName = _currentModel.vipTypeName;
+            cardDTO.id = _currentModel.id;
+            cardDTO.basePrice = _currentModel.basePrice;
+            cardDTO.isDefault = _currentModel.isDefault;
+            orderVC.vipModel = cardDTO;
+        }else{
+            orderVC.vipModel = _currentModel;
         }
-        orderVC.vipModel = _currentModel;
         [self.navigationController pushViewController:orderVC animated:YES];
     }
 }
@@ -300,6 +321,7 @@
             _vipPurchaseView.price.hidden = YES;
             _vipPurchaseView.priceTF.hidden = NO;
             _vipPurchaseView.bottomLab2.text = @"--";
+            _vipPurchaseView.priceTF.text = @"";
         }else{
             _vipPurchaseView.price.hidden = NO;
             _vipPurchaseView.price.text = _currentModel.vipMoney;

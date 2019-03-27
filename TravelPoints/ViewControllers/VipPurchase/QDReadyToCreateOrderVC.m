@@ -46,6 +46,7 @@
 #pragma mark - 积分充值卡查询
 - (void)readyToCreateOrder:(NSString *)urlStr{
     //判空 如果没有选择卡片 则进来的时候 model为nil
+    [WXProgressHUD showHUD];
     NSString *str = [QDUserDefaults getObjectForKey:@"loginType"];
     if ([str isEqualToString:@"0"] || str == nil) { //未登录
         QDLoginAndRegisterVC *loginVC = [[QDLoginAndRegisterVC alloc] init];
@@ -81,6 +82,7 @@
                 [WXProgressHUD showInfoWithTittle:responseObject.message];
             }
         } failureBlock:^(NSError *error) {
+            [WXProgressHUD hideHUD];
             [_tableView reloadData];
             [WXProgressHUD showErrorWithTittle:@"网络异常"];
         }];
@@ -264,6 +266,7 @@
 #pragma mark - 弹出承销商选择视图
 - (void)showCurrentSaleViewInfo{
     //先查询全部
+    [WXProgressHUD showHUD];
     NSDecimalNumber *subscribeCountNum = [NSDecimalNumber decimalNumberWithString:_vipModel.subscriptCount];
     NSDecimalNumber *subscribePriceNum = [NSDecimalNumber decimalNumberWithString:_vipModel.basePrice];
     NSDecimalNumber *subscribeTotalPriceNum = [NSDecimalNumber decimalNumberWithString:_vipModel.vipMoney];
@@ -280,6 +283,7 @@
                                 @"subscriptionUnit":actualPriceNum
                                 };
     [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_SaleByProxyApply params:paramsDic successBlock:^(QDResponseObject *responseObject) {
+        [WXProgressHUD hideHUD];
         if (responseObject.code == 0) {
             NSString *resultNum = responseObject.result;
             QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
@@ -290,6 +294,7 @@
             [WXProgressHUD showInfoWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
+        [WXProgressHUD hideHUD];
         [_tableView reloadData];
         [WXProgressHUD showErrorWithTittle:@"网络异常"];
     }];

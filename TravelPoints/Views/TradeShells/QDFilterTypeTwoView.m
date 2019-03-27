@@ -121,7 +121,7 @@
         [_resetbtn addTarget:self action:@selector(resetAction:) forControlEvents:UIControlEventTouchUpInside];
         [_resetbtn setTitle:@"重置" forState:UIControlStateNormal];
         [_resetbtn setTitleColor:APP_BLACKCOLOR forState:UIControlStateNormal];
-        _resetbtn.titleLabel.font = QDFont(19);
+        _resetbtn.titleLabel.font = QDFont(20);
         [self addSubview:_resetbtn];
         
         _confirmBtn = [[UIButton alloc] init];
@@ -134,7 +134,7 @@
         gradientLayer.locations = @[@(0.5),@(1.0)];//渐变点
         [gradientLayer setColors:@[(id)[[UIColor colorWithHexString:@"#159095"] CGColor],(id)[[UIColor colorWithHexString:@"#3CC8B1"] CGColor]]];//渐变数组
         [_confirmBtn.layer addSublayer:gradientLayer];
-        _confirmBtn.titleLabel.font= QDFont(19);
+        _confirmBtn.titleLabel.font= QDFont(20);
         [self addSubview:_confirmBtn];
     }
     return self;

@@ -31,18 +31,18 @@
         _info1Lab = [[UILabel alloc] init];
         _info1Lab.text = @"您当前是";
         _info1Lab.textColor = APP_GRAYLINECOLOR;
-        _info1Lab.font = QDFont(11);
+        _info1Lab.font = QDFont(14);
         [self addSubview:_info1Lab];
         
         _info2Lab = [[UILabel alloc] init];
         _info2Lab.textColor = APP_BLACKCOLOR;
-        _info2Lab.font = QDBoldFont(17);
+        _info2Lab.font = QDBoldFont(18);
         [self addSubview:_info2Lab];
         
         _info3Lab = [[UILabel alloc] init];
         _info3Lab.text = @"升级还需";
         _info3Lab.textColor = APP_GRAYLINECOLOR;
-        _info3Lab.font = QDFont(13);
+        _info3Lab.font = QDFont(14);
         [self addSubview:_info3Lab];
         
         _info4Lab = [[UILabel alloc] init];
@@ -53,7 +53,7 @@
         _info5Lab = [[UILabel alloc] init];
         _info5Lab.text = @"成长值";
         _info5Lab.textColor = APP_GRAYLINECOLOR;
-        _info5Lab.font = QDFont(13);
+        _info5Lab.font = QDFont(14);
         [self addSubview:_info5Lab];
         
         _leftCircleImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_circleImg"]];
@@ -110,6 +110,7 @@
         _priceTF.clearButtonMode = UITextFieldViewModeAlways;
         _priceTF.keyboardType = UIKeyboardTypeDecimalPad;
         _priceTF.hidden = YES;
+        _priceTF.font = QDBoldFont(24);
         [_priceTF setValue:APP_GRAYLINECOLOR forKeyPath:@"placeholderLabel.textColor"];
         [_priceTF setValue:QDFont(24) forKeyPath:@"_placeholderLabel.font"];
         [self addSubview:_priceTF];
@@ -165,12 +166,12 @@
 
     [_info2Lab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_info1Lab);
-        make.top.equalTo(_info1Lab.mas_bottom);
+        make.top.equalTo(_info1Lab.mas_bottom).offset(2);
     }];
 
     [_info3Lab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(_info2Lab);
-        make.left.equalTo(_info2Lab.mas_right).offset(SCREEN_WIDTH*0.01);
+        make.top.equalTo(_info1Lab.mas_bottom).offset(5);
+        make.left.equalTo(_info2Lab.mas_right).offset(5);
     }];
 
     [_info4Lab mas_makeConstraints:^(MASConstraintMaker *make) {

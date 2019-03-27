@@ -113,9 +113,9 @@
         //准备post请求
         QDLog(@"JS调用OC,并传值过来");
         NSDictionary *dataDic = [data objectForKey:@"param"];
-        if(![dataDic count]){
-            dataDic = nil;
-        }
+//        if(![dataDic count]){
+//            dataDic = nil;
+//        }
         NSString *urlStr = [data objectForKey:@"url"];
         [[QDServiceClient shareClient] requestWithHTMLType:kHTTPRequestTypePOST urlString:urlStr params:dataDic successBlock:^(id responseObject) {
             QDLog(@"responseObject");

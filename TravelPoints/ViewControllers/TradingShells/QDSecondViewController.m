@@ -137,7 +137,7 @@
     
     [self setTopView];
     [self initTableView];
-    _optionBtn = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*0.31, SCREEN_HEIGHT*0.72, SCREEN_WIDTH*0.37, SCREEN_HEIGHT*0.06)];
+    _optionBtn = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*0.31, SCREEN_HEIGHT*0.72, 140, 44)];
     [_optionBtn addTarget:self action:@selector(operateAction:) forControlEvents:UIControlEventTouchUpInside];
     CAGradientLayer *gradientLayer =  [CAGradientLayer layer];
     gradientLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH*0.37, SCREEN_HEIGHT*0.06);
@@ -148,7 +148,7 @@
     [_optionBtn.layer addSublayer:gradientLayer];
     [_optionBtn setTitle:@"转玩贝" forState:UIControlStateNormal];
     _optionBtn.backgroundColor = [UIColor redColor];
-    _optionBtn.layer.cornerRadius = SCREEN_HEIGHT*0.03;
+    _optionBtn.layer.cornerRadius = 22;
     _optionBtn.layer.masksToBounds = YES;
     _optionBtn.titleLabel.font = QDFont(17);
     [self.view addSubview:_optionBtn];

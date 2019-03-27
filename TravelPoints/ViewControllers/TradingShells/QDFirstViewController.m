@@ -19,7 +19,6 @@
 #import "QDOrderDetailVC.h"
 #import <TYAlertView/TYAlertView.h>
 #import "BiddingPostersDTO.h"
-#import <DZNEmptyDataSet/UIScrollView+EmptyDataSet.h>
 #import "QDRefreshHeader.h"
 #import "QDRefreshFooter.h"
 #import "RootCollectionCell.h"
@@ -28,6 +27,7 @@
 #import "QDBuyOrSellViewController.h"
 #import "QDFindSatifiedDataVC.h"
 #import "QDLoginAndRegisterVC.h"
+#import "QDOrderField.h"
 #define K_T_Cell @"t_cell"
 #define K_C_Cell @"c_cell"
 
@@ -39,7 +39,7 @@ typedef enum : NSUInteger {
     QDPickUpOrders = 3
 } QDShellType;
 
-@interface QDFirstViewController ()<UITableViewDelegate, UITableViewDataSource, SnailQuickMaskPopupsDelegate, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource, UICollectionViewDelegate, UICollectionViewDataSource>{
+@interface QDFirstViewController ()<UITableViewDelegate, UITableViewDataSource, SnailQuickMaskPopupsDelegate, UICollectionViewDelegate, UICollectionViewDataSource>{
     QDTradeShellsSectionHeaderView *_sectionHeaderView;
     QDShellType _shellType;
     UIView *_backView;
@@ -64,8 +64,6 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) NSString *sortColumn;     //数量排序：volume，价格排序：price
 @property (nonatomic, strong) NSString *sortType;       //排序方式：desc降序，asc升序
 @property (nonatomic, strong) NSString *isPartialDeal;  //是否部分成交0:允许 1:不允许
-
-
 
 @end
 
@@ -153,11 +151,10 @@ typedef enum : NSUInteger {
     [_optionBtn.layer addSublayer:gradientLayer];
     [_optionBtn setTitle:@"要玩贝" forState:UIControlStateNormal];
     _optionBtn.backgroundColor = [UIColor redColor];
-    _optionBtn.layer.cornerRadius = SCREEN_HEIGHT*0.03;
+    _optionBtn.layer.cornerRadius = 22;
     _optionBtn.layer.masksToBounds = YES;
     _optionBtn.titleLabel.font = QDFont(17);
     [self.view addSubview:_optionBtn];
-
     [self requestYWBData];
 }
 
@@ -220,14 +217,12 @@ typedef enum : NSUInteger {
             }else{
                 [self endRefreshing];
                 [_tableView.mj_footer endRefreshingWithNoMoreData];
-
             }
         }else{
             [WXProgressHUD showInfoWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
         [_tableView reloadData];
-        [_tableView reloadEmptyDataSet];
         [self endRefreshing];
         [_tableView.mj_footer endRefreshingWithNoMoreData];
         [WXProgressHUD showErrorWithTittle:@"网络异常"];
@@ -282,7 +277,6 @@ typedef enum : NSUInteger {
         }
     } failureBlock:^(NSError *error) {
         [_tableView reloadData];
-        [_tableView reloadEmptyDataSet];
         [self endRefreshing];
         [WXProgressHUD showErrorWithTittle:@"网络异常"];
     }];
@@ -300,8 +294,6 @@ typedef enum : NSUInteger {
     _tableView.backgroundColor = APP_WHITECOLOR;
     _tableView.delegate = self;
     _tableView.dataSource = self;
-    _tableView.emptyDataSetSource = self;
-    _tableView.emptyDataSetDelegate = self;
     _tableView.estimatedRowHeight = 0;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableView.showsVerticalScrollIndicator = NO;

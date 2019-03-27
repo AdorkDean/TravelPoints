@@ -252,7 +252,7 @@ typedef void(^PrivateRequestFailure)(NSURLSessionDataTask *task, NSError *error)
     }
     else {
         
-        //        insetParams = @{@"params":@[]};
+            insetParams = @{@"params":@[]};
     }
 //    NSString *requestUrl = [self getRequestURLStr:urlString];
     NSString *requestUrl = urlString;
