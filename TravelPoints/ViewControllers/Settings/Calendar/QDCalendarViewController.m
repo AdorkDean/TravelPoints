@@ -72,13 +72,13 @@
     
     calendar.calendarHeaderView.backgroundColor = [UIColor redColor];
     calendar.appearance.titleDefaultColor = [UIColor blackColor];
-    
+    calendar.appearance.titleSelectionColor = APP_GRAYTEXTCOLOR;
     calendar.appearance.headerTitleColor = APP_BLACKCOLOR;
     calendar.appearance.titlePlaceholderColor = APP_GRAYTEXTCOLOR;
     calendar.appearance.todayColor = APP_ORANGETEXTCOLOR;
     calendar.appearance.todaySelectionColor = APP_ORANGETEXTCOLOR;
     calendar.appearance.titleTodayColor = APP_ORANGETEXTCOLOR;
-
+    
     calendar.appearance.subtitleDefaultColor = APP_BLUECOLOR;
     calendar.weekdayHeight = 0;
     calendar.firstWeekday = 1;

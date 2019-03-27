@@ -94,9 +94,6 @@
     [_tableView addSubview:_operateBtn];
     [_operateBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view);
-        
-//        make.left.equalTo(self.view.mas_left).offset(SCREEN_WIDTH*0.05);
-//        make.right.equalTo(self.view.mas_right).offset(-(SCREEN_WIDTH*0.05));
         make.top.equalTo(self.view.mas_top).offset(SCREEN_HEIGHT*0.4);
         make.height.mas_equalTo(50);
         make.width.mas_equalTo(335);
@@ -246,22 +243,29 @@
     if (!_numberButton) {
         _numberButton = [[PPNumberButton alloc] initWithFrame:CGRectMake(0, 0, 145, 40)];
         _numberButton.shakeAnimation = YES;
+        _numberButton.delegate = self;
         // 设置最小值
         if (_operateModel != nil) {
-            _numberButton.minValue = 1;
-            _numberButton.currentNumber = 1;
-            // 设置最大值
-            _numberButton.maxValue = [_operateModel.surplusVolume floatValue];;
+            if ([_operateModel.isPartialDeal isEqualToString:@"0"]) {   //不可部分成交
+                _numberButton.currentNumber = [_operateModel.surplusVolume intValue];
+                _numberButton.minValue = [_operateModel.surplusVolume intValue];
+                _numberButton.maxValue = [_operateModel.surplusVolume intValue];
+                _numberButton.increaseImage = [UIImage imageNamed:@"icon_grayIncrease"];
+                _numberButton.decreaseImage = [UIImage imageNamed:@"icon_grayDecrease"];
+            }else{
+                _numberButton.minValue = 1;
+                _numberButton.currentNumber = 1;
+                // 设置最大值
+                _numberButton.maxValue = [_operateModel.surplusVolume floatValue];
+                _numberButton.increaseImage = [UIImage imageNamed:@"icon_increase"];
+                _numberButton.decreaseImage = [UIImage imageNamed:@"icon_grayDecrease"];
+            }
         }else{
             _numberButton.minValue = 1;
             _numberButton.currentNumber = 1;
             // 设置最大值
             _numberButton.maxValue = 10000;
         }
-        _numberButton.delegate = self;
-        _numberButton.increaseImage = [UIImage imageNamed:@"icon_increase"];
-        _numberButton.decreaseImage = [UIImage imageNamed:@"icon_grayDecrease"];
-        
         // 设置输入框中的字体大小
         _numberButton.inputFieldFont = 16;
         _numberButton.resultBlock = ^(PPNumberButton *ppBtn, CGFloat number, BOOL increaseStatus) {

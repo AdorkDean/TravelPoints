@@ -71,9 +71,9 @@
 - (void)initAttributes {
     self.menuBackgroundColor = [UIColor whiteColor];
     self.itemTextSelectColor = APP_BLUECOLOR;
-    self.itemTextUnSelectColor = [UIColor colorWithRed:51.0/255.0 green:51.0/255.0 blue:51.0/255.0 alpha:1.0];
+    self.itemTextUnSelectColor = APP_BLACKCOLOR;
     self.cellTextSelectColor = APP_BLUECOLOR;
-    self.cellTextUnSelectColor = [UIColor colorWithRed:51.0/255.0 green:51.0/255.0 blue:51.0/255.0 alpha:1.0];
+    self.cellTextUnSelectColor = APP_BLACKCOLOR;
     self.separatorColor = [UIColor colorWithRed:219.0/255.0 green:219.0/255.0 blue:219.0/255.0 alpha:1.0];
     self.cellSelectBackgroundColor = [UIColor whiteColor];
     self.cellUnselectBackgroundColor = [UIColor whiteColor];

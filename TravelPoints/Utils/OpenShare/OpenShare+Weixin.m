@@ -60,7 +60,7 @@ static NSString *schema=@"Weixin";
             dic[@"mediaUrl"] = msg.link;
             dic[@"mediaDataUrl"] = msg.mediaDataUrl;
             dic[@"objectType"] = @"3";
-            dic[@"thumbData"] = msg.thumbnail? [self dataWithImage:msg.thumbnail]:[self dataWithImage:msg.image scale:CGSizeMake(100, 100)];;
+            dic[@"thumbData"] = msg.thumbnail? [self dataWithImage:msg.thumbnail]:[self dataWithImage:msg.image scale:CGSizeMake(100, 100)];
             dic[@"title"] = msg.title;
             break;
 
@@ -68,7 +68,7 @@ static NSString *schema=@"Weixin";
             dic[@"description"] = msg.desc?:msg.title;
             dic[@"mediaUrl"] = msg.link;
             dic[@"objectType"] = @"4";
-            dic[@"thumbData"] = msg.thumbnail? [self dataWithImage:msg.thumbnail]:[self dataWithImage:msg.image scale:CGSizeMake(100, 100)];;
+            dic[@"thumbData"] = msg.thumbnail? [self dataWithImage:msg.thumbnail]:[self dataWithImage:msg.image scale:CGSizeMake(100, 100)];
             dic[@"title"] = msg.title;
             break;
         case OSMultimediaTypeApp:
@@ -79,7 +79,7 @@ static NSString *schema=@"Weixin";
             dic[@"fileData"] = [self dataWithImage:msg.image];
             dic[@"mediaUrl"] = msg.link;
             dic[@"objectType"] = @"7";
-            dic[@"thumbData"] = msg.thumbnail? [self dataWithImage:msg.thumbnail]:[self dataWithImage:msg.image scale:CGSizeMake(100, 100)];;
+            dic[@"thumbData"] = msg.thumbnail? [self dataWithImage:msg.thumbnail]:[self dataWithImage:msg.image scale:CGSizeMake(100, 100)];
             dic[@"title"] = msg.title;
             break;
         case OSMultimediaTypeFile:
@@ -88,7 +88,7 @@ static NSString *schema=@"Weixin";
             dic[@"fileData"] = msg.file;
             dic[@"objectType"] = @"6";
             dic[@"fileExt"] = msg.fileExt?:@"";
-            dic[@"thumbData"] = msg.thumbnail? [self dataWithImage:msg.thumbnail]:[self dataWithImage:msg.image scale:CGSizeMake(100, 100)];;
+            dic[@"thumbData"] = msg.thumbnail? [self dataWithImage:msg.thumbnail]:[self dataWithImage:msg.image scale:CGSizeMake(100, 100)];
             dic[@"title"] = msg.title;
             break;
         case OSMultimediaTypeMiniApp:

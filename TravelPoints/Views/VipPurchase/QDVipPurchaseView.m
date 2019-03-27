@@ -153,10 +153,9 @@
     }];
     
     [_picView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH*0.05);
-        make.top.equalTo(self.mas_top).offset(SCREEN_HEIGHT*0.10);
-        make.width.mas_equalTo(SCREEN_WIDTH*0.13);
-        make.height.mas_equalTo(SCREEN_WIDTH*0.13);
+        make.left.equalTo(self.mas_left).offset(20);
+        make.top.equalTo(self.mas_top).offset(70);
+        make.width.and.height.mas_equalTo(48);
     }];
     
     [_info1Lab mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -185,8 +184,8 @@
     }];
 
     [_leftCircleImg mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH*0.26);
-        make.top.equalTo(self.mas_top).offset(SCREEN_HEIGHT*0.18);
+        make.left.equalTo(self.mas_left).offset(98);
+        make.top.equalTo(_picView.mas_bottom).offset(7);
     }];
 
     [_rightCircleImg mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -222,8 +221,8 @@
     }];
 
     [_priceTextLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH*0.05);
-        make.top.equalTo(self.mas_top).offset(SCREEN_HEIGHT*0.8);
+        make.left.equalTo(self.mas_left).offset(20);
+        make.top.equalTo(self.mas_top).offset(470);
     }];
 
     [_priceLab mas_makeConstraints:^(MASConstraintMaker *make) {

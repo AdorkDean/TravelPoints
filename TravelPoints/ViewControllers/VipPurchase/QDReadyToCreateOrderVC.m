@@ -58,6 +58,7 @@
                                      @"vipMoney":[NSNumber numberWithInt:[_vipModel.vipMoney intValue]]
                                      };
         [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:urlStr params:paramsDic successBlock:^(QDResponseObject *responseObject) {
+            [WXProgressHUD hideHUD];
             if (responseObject.code == 0) {
                 NSDictionary *dic = responseObject.result;
                 _allowSelect = [dic objectForKey:@"allowSelect"];
@@ -78,6 +79,11 @@
                         }
                     }
                 }
+            }else if (responseObject.code == 2){
+                [QDUserDefaults removeCookies];
+                QDLoginAndRegisterVC *loginVC = [[QDLoginAndRegisterVC alloc] init];
+                loginVC.pushVCTag = @"0";
+                [self presentViewController:loginVC animated:YES completion:nil];
             }else{
                 [WXProgressHUD showInfoWithTittle:responseObject.message];
             }
@@ -123,7 +129,7 @@
     [recommendBtn addTarget:self action:@selector(conformToPayAction:) forControlEvents:UIControlEventTouchUpInside];
     [recommendBtn setTitleColor:APP_WHITECOLOR forState:UIControlStateNormal];
     CAGradientLayer *gradientLayer =  [CAGradientLayer layer];
-    gradientLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH*0.89, SCREEN_HEIGHT*0.08);
+    gradientLayer.frame = CGRectMake(0, 0, 335, 50);
     gradientLayer.startPoint = CGPointMake(0, 0);
     gradientLayer.endPoint = CGPointMake(1, 0);
     gradientLayer.locations = @[@(0.5),@(1.0)];//渐变点
@@ -135,11 +141,10 @@
     [_tableView addSubview:recommendBtn];
     [recommendBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(_tableView);
-        make.top.equalTo(self.view.mas_top).offset(SCREEN_HEIGHT*0.55);
-        make.width.mas_equalTo(SCREEN_WIDTH*0.89);
-        make.height.mas_equalTo(SCREEN_HEIGHT*0.08);
+        make.top.equalTo(self.view.mas_top).offset(347+SafeAreaTopHeight);
+        make.width.mas_equalTo(335);
+        make.height.mas_equalTo(50);
     }];
-    // Do any additional setup after loading the view.
 }
 
 #pragma mark - 代销申购

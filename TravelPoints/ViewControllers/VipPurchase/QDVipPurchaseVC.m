@@ -128,20 +128,15 @@
     [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_GetUserDetail params:nil successBlock:^(QDResponseObject *responseObject) {
         if (responseObject.code == 0) {
             [self showPurchaseViewWithBool:NO];
-            _vipPurchaseView.info1Lab.hidden = NO;
-            _vipPurchaseView.info2Lab.hidden = NO;
-            _vipPurchaseView.info3Lab.hidden = NO;
-            _vipPurchaseView.info4Lab.hidden = NO;
-            _vipPurchaseView.info5Lab.hidden = NO;
-            _vipPurchaseView.leftLevel.hidden = NO;
-            _vipPurchaseView.leftLevelLab.hidden = NO;
-            _vipPurchaseView.rightLevel.hidden = NO;
-            _vipPurchaseView.rightLevelLab.hidden = NO;
-            _vipPurchaseView.progressView.hidden = NO;
-            _vipPurchaseView.leftCircleImg.hidden = NO;
-            _vipPurchaseView.rightCircleImg.hidden = NO;
             QDMemberDTO *currentQDMemberTDO = [QDMemberDTO yy_modelWithDictionary:responseObject.result];
             [_vipPurchaseView loadVipViewWithModel:currentQDMemberTDO];
+        }else if (responseObject.code == 2){
+            [QDUserDefaults removeCookies];
+            [QDUserDefaults setObject:@"0" forKey:@"loginType"];
+            [self showPurchaseViewWithBool:YES];
+        }else{
+            [WXProgressHUD showErrorWithTittle:responseObject.message];
+            [self showPurchaseViewWithBool:YES];
         }
     } failureBlock:^(NSError *error) {
         
@@ -153,22 +148,22 @@
     _confirmBtn.backgroundColor = APP_BLUECOLOR;
     [_confirmBtn setTitleColor:APP_WHITECOLOR forState:UIControlStateNormal];
     CAGradientLayer *gradientLayer =  [CAGradientLayer layer];
-    gradientLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH*0.89, 50);
+    gradientLayer.frame = CGRectMake(0, 0, 335, 50);
     gradientLayer.startPoint = CGPointMake(0, 0);
     gradientLayer.endPoint = CGPointMake(1, 0);
     gradientLayer.locations = @[@(0.5),@(1.0)];//渐变点
 
     [gradientLayer setColors:@[(id)[[UIColor colorWithHexString:@"#159095"] CGColor],(id)[[UIColor colorWithHexString:@"#3CC8B1"] CGColor]]];//渐变数组
     [_confirmBtn.layer addSublayer:gradientLayer];
-    _confirmBtn.layer.cornerRadius = 8;
+    _confirmBtn.layer.cornerRadius = 4;
     _confirmBtn.layer .masksToBounds = YES;
     _confirmBtn.titleLabel.font = QDFont(19);
     [_confirmBtn addTarget:self action:@selector(confirmToBuy:) forControlEvents:UIControlEventTouchUpInside];
     [_scrollView addSubview:_confirmBtn];
     [_confirmBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_scrollView.mas_top).offset(SCREEN_HEIGHT*1.02);
+        make.top.equalTo(_scrollView.mas_top).offset(585);
         make.centerX.equalTo(_scrollView);
-        make.width.mas_equalTo(SCREEN_WIDTH*0.89);
+        make.width.mas_equalTo(335);
         make.height.mas_equalTo(50);
     }];
 }
@@ -194,16 +189,11 @@
                 //默认数据
                 if (_cardArr.count) {
                     VipCardDTO *model = _cardArr.firstObject;
-                    
-//                    _vipPurchaseView.price.hidden = NO;
-//                    _vipPurchaseView.price.text = _currentModel.vipMoney;
                     //折合玩贝
                     NSString *ss = [model.vipMoney stringByDividingBy:model.basePrice withRoundingMode:NSRoundPlain scale:0];
                     _vipPurchaseView.bottomLab2.text = ss;
                     _vipPurchaseView.price.text = model.vipMoney;
                     _vipPurchaseView.priceTF.hidden = YES;
-
-//                    _vipPurchaseView.bottomLab2.text = model.vipMoney;
                 }
                 [_vipPurchaseView layoutSubviews];
                 
@@ -222,7 +212,7 @@
     }];
 }
 - (void)setupCardUI{
-    NewPagedFlowView *pageFlowView = [[NewPagedFlowView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT*0.24, SCREEN_WIDTH, SCREEN_HEIGHT*0.54)];
+    NewPagedFlowView *pageFlowView = [[NewPagedFlowView alloc] initWithFrame:CGRectMake(0, 170, SCREEN_WIDTH, 300)];
     pageFlowView.backgroundColor = APP_WHITECOLOR;
     pageFlowView.delegate = self;
     pageFlowView.dataSource = self;
@@ -283,14 +273,6 @@
             VipCardDTO *cardDTO = [[VipCardDTO alloc] init];
             cardDTO.vipMoney = _vipPurchaseView.priceTF.text;
             cardDTO.subscriptCount = _vipPurchaseView.bottomLab2.text;
-            /*
-             @property (nonatomic, strong) NSString *creditCode;             //积分卡id
-             @property (nonatomic, strong) NSString *vipTypeName;            //IP卡类型
-             @property (nonatomic, strong) NSString *vipMoney;               //VIP卡金额
-             @property (nonatomic, strong) NSString *isDefault;              //isDefault
-             @property (nonatomic, strong) NSString *basePrice;              //基准价
-             @property (nonatomic, strong) NSString *subscriptCount;         //申购数量
-             */
             cardDTO.creditCode = _currentModel.creditCode;
             cardDTO.vipTypeName = _currentModel.vipTypeName;
             cardDTO.id = _currentModel.id;
@@ -306,7 +288,7 @@
 
 #pragma mark - NewPagedFlowView Delegate
 - (CGSize)sizeForPageInFlowView:(NewPagedFlowView *)flowView{
-    return CGSizeMake(SCREEN_WIDTH*0.59, SCREEN_HEIGHT*0.54);
+    return CGSizeMake(236, 300);
 }
 
 - (void)didSelectCell:(PGIndexBannerSubiew *)subView withSubViewIndex:(NSInteger)subIndex{
@@ -366,7 +348,7 @@
     return SCREEN_HEIGHT*0.075;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return SCREEN_HEIGHT*0.225;
+    return 300;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
