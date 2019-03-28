@@ -19,9 +19,6 @@ const static NSString *APIKey = @"ab0b884fbd773609e7fccbbd5f9ccbe0";
 static NSString * const QD_Domain = @"http://203.110.179.27:60409";
 //static NSString * const QD_Domain = @"http://112.64.226.138:60409";
 
-
-//阿里云外网
-
 //static NSString * const QD_Domain = @"http://192.168.65.130:9092";
 
 static NSString * const QD_ProjectName = @"/lyjfapp/sso/";
@@ -136,6 +133,7 @@ static NSString * const api_GetBiddingPosterByPosterId = @"/lyjfapp/api/v1/ctrad
 static NSString * const api_CancelBiddingPosters = @"/lyjfapp/api/v1/ctrade/cancelBiddingPosters";                     //撤销挂单
 static NSString * const api_saveBiddingPosters = @"/lyjfapp/api/v1/ctrade/saveBiddingPosters";                       //挂单申请
 static NSString * const api_findCategory       = @"/lyjfapp/api/v1/goods/findCategory";                  //获取商品分类列表
+static NSString * const api_findAllMyHouseCoupon       = @"/lyjfapp/api/v1/hotelCoupon/findAllMyHouseCoupon";                  //查询我的房券
 
 /**
  JAVAScriptBridgeWebView
@@ -144,8 +142,8 @@ static NSString * const api_findCategory       = @"/lyjfapp/api/v1/goods/findCat
 
 //static NSString * const QD_JSURL                = @"http://112.64.226.138:60409/app";    //前端地址
 //static NSString * const QD_TESTJSURL            = @"http://112.64.226.138:60409/app/#";    //前端地址
-static NSString * const QD_JSURL                = @"http://203.110.179.27:60409/app";    //前端地址
-static NSString * const QD_TESTJSURL            = @"http://203.110.179.27:60409/app/#";    //前端地址
+//static NSString * const QD_JSURL                = @"http://203.110.179.27:60409/app";    //前端地址
+//static NSString * const QD_TESTJSURL            = @"http://203.110.179.27:60409/app/#";    //前端地址
 
 
 //static NSString * const QD_JSURL                = @"http://192.168.65.130:9092/app";    //前端地址

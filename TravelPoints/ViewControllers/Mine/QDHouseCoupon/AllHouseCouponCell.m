@@ -53,6 +53,18 @@
         _infoLab.font = QDFont(12);
         [_backView addSubview:_infoLab];
        
+        _info2Lab = [[UILabel alloc] init];
+        _info2Lab.text = @"不可使用日期：2019-02-14、2019-02-05";
+        _info2Lab.textColor = APP_GRAYTEXTCOLOR;
+        _info2Lab.font = QDFont(12);
+        [_backView addSubview:_info2Lab];
+        
+        _info3Lab = [[UILabel alloc] init];
+        _info3Lab.text = @"需要提前3天预订";
+        _info3Lab.textColor = APP_GRAYTEXTCOLOR;
+        _info3Lab.font = QDFont(12);
+        [_backView addSubview:_info3Lab];
+        
         _ruleBtn = [[SPButton alloc] init];
         [_ruleBtn setTitle:@"规则" forState:UIControlStateNormal];
         _ruleBtn.titleLabel.font = QDFont(12);
@@ -93,6 +105,16 @@
         make.top.equalTo(_backView.mas_top).offset(106);
     }];
     
+    [_info2Lab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_backView.mas_left).offset(10);
+        make.top.equalTo(_infoLab.mas_bottom);
+    }];
+    
+    [_infoLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_backView.mas_left).offset(10);
+        make.top.equalTo(_info2Lab.mas_bottom);
+    }];
+    
     [_ruleBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_infoLab);
         make.right.equalTo(_backView.mas_right).offset(-10);
@@ -102,9 +124,17 @@
 - (void)reLayout:(UIButton *)sender{
     sender.selected = !sender.selected;
     if (sender.selected) {
-        [_backView mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.height.mas_equalTo(176);
-        }];
+        [_ruleBtn setImage:[UIImage imageNamed:@"icon_arrowDown"] forState:UIControlStateNormal];
+    }else{
+        [_ruleBtn setImage:[UIImage imageNamed:@"icon_arrowUp"] forState:UIControlStateNormal];
     }
 }
+
+//+ (CGFloat)cellDefaultHeight:(TextEntity *)entity{
+//    return 136;
+//}
+//
+//+ (CGFloat)cellMoreHeight:(TextEntity *)entity{
+//    return 176;
+//}
 @end

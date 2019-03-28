@@ -17,8 +17,17 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *couponNo;
 @property (nonatomic, strong) UILabel *deadLineLab;
 @property (nonatomic, strong) UILabel *infoLab;
+@property (nonatomic, strong) UILabel *info2Lab;
+@property (nonatomic, strong) UILabel *info3Lab;
+
 @property (nonatomic, strong) SPButton *ruleBtn;
 
+
+//默认cell高度
+//+ (CGFloat)cellDefaultHeight:(TextEntity *)entity;
+//
+////展开后的高度
+//+ (CGFloat)cellMoreHeight:(TextEntity *)entity;
 @end
 
 NS_ASSUME_NONNULL_END

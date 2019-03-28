@@ -9,6 +9,7 @@
 #import "AllHouseCouponVC.h"
 #import "QYBaseView.h"
 #import "AllHouseCouponCell.h"
+#import "HouseCouponModel.h"
 @interface AllHouseCouponVC ()<UITableViewDelegate, UITableViewDataSource>{
     UITableView *_tableView;
     QYBaseView *_baseView;
@@ -48,8 +49,20 @@
         make.height.mas_equalTo(58);
         make.bottom.equalTo(_baseView);
     }];
+    //查询我的房券
+    [self findAllMyHouseCoupon];
 }
 
+- (void)findAllMyHouseCoupon{
+    NSDictionary *dic = @{@"isUsed":@""};
+    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_findAllMyHouseCoupon params:dic successBlock:^(QDResponseObject *responseObject) {
+        if (responseObject.code == 0) {
+            NSArray *arr = responseObject.result;
+        }
+    } failureBlock:^(NSError *error) {
+        
+    }];
+}
 - (void)joinActivity:(UIButton *)sender{
     QDLog(@"==============");
 }
@@ -72,7 +85,10 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return 10;
 }
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    HouseCouponModel *model = nil;
+    
     return 171;
 }
 
@@ -82,15 +98,18 @@
     if (cell == nil) {
         cell = [[AllHouseCouponCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
-    [cell.ruleBtn addTarget:self action:@selector(reLayout:) forControlEvents:UIControlEventTouchUpInside];
+//    [cell.ruleBtn addTarget:self action:@selector(reLayout:) forControlEvents:UIControlEventTouchUpInside];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.backgroundColor = APP_GRAYBACKGROUNDCOLOR;
     return cell;
 }
 
-- (void)reLayout:(UIButton *)sender{
-    sender.selected = !sender.selected;
-    [_tableView reloadData];
-}
+//- (void)reLayout:(UIButton *)sender{
+//    sender.selected = !sender.selected;
+//    if (sender.isSelected) {
+//        sender setImage:[UIImage imageNamed:@""] forState:<#(UIControlState)#>
+//    }
+//    [_tableView reloadData];
+//}
 
 @end
