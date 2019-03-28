@@ -142,8 +142,8 @@ static NSString * const api_findAllMyHouseCoupon       = @"/lyjfapp/api/v1/hotel
 
 //static NSString * const QD_JSURL                = @"http://112.64.226.138:60409/app";    //前端地址
 //static NSString * const QD_TESTJSURL            = @"http://112.64.226.138:60409/app/#";    //前端地址
-//static NSString * const QD_JSURL                = @"http://203.110.179.27:60409/app";    //前端地址
-//static NSString * const QD_TESTJSURL            = @"http://203.110.179.27:60409/app/#";    //前端地址
+static NSString * const QD_JSURL                = @"http://203.110.179.27:60409/app";    //前端地址
+static NSString * const QD_TESTJSURL            = @"http://203.110.179.27:60409/app/#";    //前端地址
 
 
 //static NSString * const QD_JSURL                = @"http://192.168.65.130:9092/app";    //前端地址
