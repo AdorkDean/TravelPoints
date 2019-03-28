@@ -172,7 +172,7 @@
     _tableView.delegate = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     _tableView.dataSource = self;
-    _tableView.backgroundColor = [UIColor colorWithHexString:@"#F5F5F7"];
+    _tableView.backgroundColor = APP_GRAYBACKGROUNDCOLOR;
     _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     _tableView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:_tableView];

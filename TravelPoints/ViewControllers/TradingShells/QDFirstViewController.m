@@ -140,7 +140,7 @@ typedef enum : NSUInteger {
     _totalPage = 0; //总页数默认为1
     _ordersArr = [[NSMutableArray alloc] init];
     [self initTableView];
-    _optionBtn = [[UIButton alloc] initWithFrame:CGRectMake(125, 460, 140, 44)];
+    _optionBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 140, 44)];
     [_optionBtn addTarget:self action:@selector(operateAction:) forControlEvents:UIControlEventTouchUpInside];
     CAGradientLayer *gradientLayer =  [CAGradientLayer layer];
     gradientLayer.frame = CGRectMake(0, 0, 140, 44);
@@ -154,6 +154,12 @@ typedef enum : NSUInteger {
     _optionBtn.layer.masksToBounds = YES;
     _optionBtn.titleLabel.font = QDFont(18);
     [self.view addSubview:_optionBtn];
+    [_optionBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view);
+        make.bottom.equalTo(self.view.mas_bottom).offset(-71);
+        make.width.mas_equalTo(140);
+        make.height.mas_equalTo(44);
+    }];
     [self requestYWBData];
 }
 

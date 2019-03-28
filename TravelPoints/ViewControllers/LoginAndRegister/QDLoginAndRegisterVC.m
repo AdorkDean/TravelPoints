@@ -431,7 +431,7 @@
     [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_VerificationCode params:dic successBlock:^(QDResponseObject *responseObject) {
         if (responseObject.code == 0) {
             [WXProgressHUD showSuccessWithTittle:@"验证成功"];
-            //
+            [QDUserDefaults setObject:code forKey:@"verificationCode"];
             [_msgVerifyView setHidden:YES];
             [_msgInputView setHidden:YES];
             if (_isResetPwdNextStep) {
@@ -451,11 +451,13 @@
 #pragma mark - 设置登录密码
 - (void)setLoginPwd:(UIButton *)sender{
     [WXProgressHUD showHUD];
+    NSString *code = [QDUserDefaults getObjectForKey:@"verificationCode"];
     NSDictionary * dic = @{@"legalPhone":_userPhoneNum,
                            @"userName":_userName,
                            @"userPwd":_setLogPwdView.pwdTF.text,
                            @"confirmUserPwd":_setLogPwdView.confirmPwdTF.text,
-                           @"beInvitedCode":_setLogPwdView.inviteTF.text
+                           @"beInvitedCode":_setLogPwdView.inviteTF.text,
+                           @"verificationCode":code
                            };
     [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_TryToRegister params:dic successBlock:^(QDResponseObject *responseObject) {
         [WXProgressHUD hideHUD];

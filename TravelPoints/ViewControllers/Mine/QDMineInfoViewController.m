@@ -19,6 +19,8 @@
 #import "QDMineSectionHeaderView.h"
 #import "QDBuyOrSellViewController.h"
 #import "QDBridgeViewController.h"
+#import "QDHouseCouponVC.h"
+#import "AllHouseCouponVC.h"
 @interface QDMineInfoViewController ()<UITableViewDelegate, UITableViewDataSource>{
     UITableView *_tableView;
     QDMineHeaderNotLoginView *_notLoginHeaderView;
@@ -349,7 +351,12 @@
             [self gotoLoginWithAction:JS_BANKCARD];
             break;
         case 3: //房券
-            [self gotoLoginWithAction:JS_MYHOURSE];
+        {
+            QDHouseCouponVC *houseVC = [[QDHouseCouponVC alloc] init];
+            self.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:houseVC animated:YES];
+        }
+//            [self gotoLoginWithAction:JS_MYHOURSE];
             break;
         case 4: //地址
             [self gotoLoginWithAction:JS_ADDRESS];

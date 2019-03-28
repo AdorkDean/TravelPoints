@@ -139,7 +139,7 @@
     //返回 清空 开始搜索
     [_calendarTopView.cleanBtn addTarget:self action:@selector(cleanAction:) forControlEvents:UIControlEventTouchUpInside];
     [_calendarTopView.cancelBtn addTarget:self action:@selector(dismissVC:) forControlEvents:UIControlEventTouchUpInside];
-    _calendarTopView.backgroundColor = [UIColor colorWithHexString:@"#F5F5F7"];
+    _calendarTopView.backgroundColor = APP_GRAYBACKGROUNDCOLOR;
     [self.view addSubview:_calendarTopView];
     //中国农历
     self.gregorian = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
