@@ -351,12 +351,12 @@
             [self gotoLoginWithAction:JS_BANKCARD];
             break;
         case 3: //房券
-//        {
-//            QDHouseCouponVC *houseVC = [[QDHouseCouponVC alloc] init];
-//            self.hidesBottomBarWhenPushed = YES;
-//            [self.navigationController pushViewController:houseVC animated:YES];
-//        }
-            [self gotoLoginWithAction:JS_MYHOURSE];
+        {
+            QDHouseCouponVC *houseVC = [[QDHouseCouponVC alloc] init];
+            self.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:houseVC animated:YES];
+        }
+//            [self gotoLoginWithAction:JS_MYHOURSE];
             break;
         case 4: //地址
             [self gotoLoginWithAction:JS_ADDRESS];

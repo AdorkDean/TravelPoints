@@ -50,7 +50,7 @@
         make.bottom.equalTo(_baseView);
     }];
     //查询我的房券
-//    [self findAllMyHouseCoupon];
+    [self findAllMyHouseCoupon];
 }
 
 - (void)findAllMyHouseCoupon{

@@ -78,7 +78,7 @@
     }
     
     //设置筛选header
-    _array1 = [[NSMutableArray alloc] initWithObjects:@"全部区域", nil];
+//    _array1 = [[NSMutableArray alloc] initWithObjects:@"全部区域", nil];
     _array2 = [[NSMutableArray alloc] init];
     _array3 = [[NSMutableArray alloc] init];
     AppDelegate *appD = (AppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -368,8 +368,8 @@
     [self.view addSubview:_segmentControl];
 }
 - (void)setDropMenu{
-    NSMutableArray *data1 = [NSMutableArray arrayWithObjects:_array1, _array2, @[@"价格"], _array3, nil];
-    NSMutableArray *data2 = [NSMutableArray arrayWithObjects:@[], @[], @[], @[], nil];
+    NSMutableArray *data1 = [NSMutableArray arrayWithObjects:_array2, @[@"价格"], _array3, nil];
+    NSMutableArray *data2 = [NSMutableArray arrayWithObjects:@[], @[], @[], nil];
     _menu = [[TFDropDownMenuView alloc] initWithFrame:CGRectMake(0, 20+SCREEN_HEIGHT*0.1, SCREEN_WIDTH, 50) firstArray:data1 secondArray:data2];
     _menu.backgroundColor = APP_WHITECOLOR;
     _menu.delegate = self;
@@ -377,7 +377,7 @@
     [self.view addSubview:_menu];
     
     /*风格*/
-    _menu.menuStyleArray = [NSMutableArray arrayWithObjects:[NSNumber numberWithInteger:TFDropDownMenuStyleTableView], [NSNumber numberWithInteger:TFDropDownMenuStyleTableView], [NSNumber numberWithInteger:TFDropDownMenuStyleCustom], [NSNumber numberWithInteger:TFDropDownMenuStyleTableView], nil];
+    _menu.menuStyleArray = [NSMutableArray arrayWithObjects:[NSNumber numberWithInteger:TFDropDownMenuStyleTableView], [NSNumber numberWithInteger:TFDropDownMenuStyleCustom], [NSNumber numberWithInteger:TFDropDownMenuStyleTableView], nil];
     _priceRangeView = [[QDPriceRangeView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.38)];
     _priceRangeView.backgroundColor = APP_WHITECOLOR;
     [_priceRangeView.resetBtn addTarget:self action:@selector(priceRangeRest:) forControlEvents:UIControlEventTouchUpInside];
@@ -395,7 +395,7 @@
         };
         NSLog(@"minValue = %.f, maxValue = %.f", minValue, maxValue);
     };
-    _menu.customViews = [NSMutableArray arrayWithObjects:[NSNull null], [NSNull null], _priceRangeView, [NSNull null], nil];
+    _menu.customViews = [NSMutableArray arrayWithObjects:[NSNull null], _priceRangeView, [NSNull null], nil];
     [self.view addSubview:_menu];
 }
 - (void)initTableView{
@@ -545,14 +545,16 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     if (_playShellType == QDHotelReserve) {
-        QDHotelListInfoModel *model = _hotelListInfoArr[indexPath.row];
-        //传递ID
-        QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
-        bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?id=%ld&&startDate=%@&&endDate=%@", QD_JSURL, JS_HOTELDETAIL, (long)model.id, _dateInPassedVal, _dateOutPassedVal];
-        QDLog(@"urlStr = %@", bridgeVC.urlStr);
-        bridgeVC.infoModel = model;
-        self.tabBarController.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:bridgeVC animated:YES];
+        if (_hotelListInfoArr.count) {
+            QDHotelListInfoModel *model = _hotelListInfoArr[indexPath.row];
+            //传递ID
+            QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
+            bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?id=%ld&&startDate=%@&&endDate=%@", QD_JSURL, JS_HOTELDETAIL, (long)model.id, _dateInPassedVal, _dateOutPassedVal];
+            QDLog(@"urlStr = %@", bridgeVC.urlStr);
+            bridgeVC.infoModel = model;
+            self.tabBarController.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:bridgeVC animated:YES];
+        }
     }else if (_playShellType == QDCustomTour){
         CustomTravelDTO *model = _dzyListInfoArr[indexPath.section];
         //传递ID
@@ -588,26 +590,23 @@
 }
 
 - (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView{
-    return 0;
+    return -90;
 }
 
 #pragma mark - TFDropDownMenuView Delegate
 - (void)menuView:(TFDropDownMenuView *)menu selectIndex:(TFIndexPatch *)index{
     QDLog(@"第%ld列 第%ld个", (long)index.column, (long)index.section);
     switch (index.column) {
-        case 0:             //全部区域
+        case 0:             //酒店类型
             QDLog(@"0");
-            break;
-        case 1:             //酒店类型
-            QDLog(@"1");
             _hotelTypeId = (index.section == 0)? @"": ([NSString stringWithFormat:@"%ld", (long)index.section]);
             QDLog(@"_hotelTypeId = %@", _hotelTypeId);
             break;
-        case 2:             //价格
+        case 1:             //价格
             
-            QDLog(@"2");
+            QDLog(@"1");
             break;
-        case 3:             //星级
+        case 2:             //星级
             _hotelLevel = (index.section == 0)? @"": ([NSString stringWithFormat:@"%ld", (long)index.section]);
             QDLog(@"_hotelLevel = %@", _hotelLevel);
             break;
