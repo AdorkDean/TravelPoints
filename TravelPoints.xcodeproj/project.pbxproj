@@ -257,6 +257,7 @@
 		9327161A224E296A008CD6A8 /* UIView+ST.m in Sources */ = {isa = PBXBuildFile; fileRef = 93271614224E296A008CD6A8 /* UIView+ST.m */; };
 		93271620224E36D3008CD6A8 /* QDUploadImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9327161C224E36D3008CD6A8 /* QDUploadImageManager.m */; };
 		93271621224E36D3008CD6A8 /* QDUploadUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 9327161F224E36D3008CD6A8 /* QDUploadUtils.m */; };
+		93271623224E504B008CD6A8 /* skip_button.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 93271622224E504B008CD6A8 /* skip_button.bundle */; };
 		935D559A223F721800E97FC9 /* LaunchAnimationTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 935D5599223F721800E97FC9 /* LaunchAnimationTool.m */; };
 		935D559D223F7AFC00E97FC9 /* QDPlayingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 935D559C223F7AFC00E97FC9 /* QDPlayingViewController.m */; };
 		935D55A0223F7BBD00E97FC9 /* QDHotelReserveVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 935D559F223F7BBD00E97FC9 /* QDHotelReserveVC.m */; };
@@ -824,6 +825,7 @@
 		9327161D224E36D3008CD6A8 /* QDUploadUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QDUploadUtils.h; sourceTree = "<group>"; };
 		9327161E224E36D3008CD6A8 /* QDUploadImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QDUploadImageManager.h; sourceTree = "<group>"; };
 		9327161F224E36D3008CD6A8 /* QDUploadUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QDUploadUtils.m; sourceTree = "<group>"; };
+		93271622224E504B008CD6A8 /* skip_button.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = skip_button.bundle; sourceTree = "<group>"; };
 		935D5598223F721800E97FC9 /* LaunchAnimationTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchAnimationTool.h; sourceTree = "<group>"; };
 		935D5599223F721800E97FC9 /* LaunchAnimationTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchAnimationTool.m; sourceTree = "<group>"; };
 		935D559B223F7AFC00E97FC9 /* QDPlayingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDPlayingViewController.h; sourceTree = "<group>"; };
@@ -1473,6 +1475,7 @@
 		3BD9515B21EC2A1700CD0627 = {
 			isa = PBXGroup;
 			children = (
+				93271622224E504B008CD6A8 /* skip_button.bundle */,
 				93271604224E1A00008CD6A8 /* JhtGuidePages.framework */,
 				3B1BC00221FAA1590005C415 /* MBProgressHUD.bundle */,
 				3B0CD74121F1DE380020824A /* SYCity.bundle */,
@@ -2074,12 +2077,12 @@
 			children = (
 				9327160C224E296A008CD6A8 /* STConfig.h */,
 				9327160D224E296A008CD6A8 /* STUI.h */,
+				93271611224E296A008CD6A8 /* STUI.m */,
+				93271613224E296A008CD6A8 /* STConst.h */,
 				9327160E224E296A008CD6A8 /* STConst.m */,
 				9327160F224E296A008CD6A8 /* UIImage+ST.h */,
 				93271610224E296A008CD6A8 /* UIView+ST.h */,
-				93271611224E296A008CD6A8 /* STUI.m */,
 				93271612224E296A008CD6A8 /* UIImage+ST.m */,
-				93271613224E296A008CD6A8 /* STConst.h */,
 				93271614224E296A008CD6A8 /* UIView+ST.m */,
 			);
 			path = STConfig;
@@ -2312,6 +2315,7 @@
 				93271603224E187D008CD6A8 /* skip_button@3x.png in Resources */,
 				3BD9517121EC2A1C00CD0627 /* Assets.xcassets in Resources */,
 				3B0CD74221F1DE380020824A /* SYCity.bundle in Resources */,
+				93271623224E504B008CD6A8 /* skip_button.bundle in Resources */,
 				3B0DC050220033150056C318 /* placeHolder@2x.png in Resources */,
 				93D2D630222E59D100CCC61D /* emptySource@2x.png in Resources */,
 				3BD9516F21EC2A1800CD0627 /* Main.storyboard in Resources */,

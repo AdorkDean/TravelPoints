@@ -84,9 +84,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     // 在window上放一个imageView
-//    [self createGuideVC];
+    [self createGuideVC];
     [[TABViewAnimated sharedAnimated] initWithDefaultAnimated];
-    self.window.rootViewController = [self setRootVC];
+//    self.window.rootViewController = [self setRootVC];
 
     [self configureAPIKey];
     [self.window makeKeyAndVisible];
@@ -166,10 +166,10 @@
     NSString *firstKey = [NSString stringWithFormat:@"isFirst%@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
     NSString *isFirst = [defaults objectForKey:firstKey];
     
-    NSMutableArray *backgroundImageNames = [NSMutableArray arrayWithCapacity:4];
-    NSMutableArray *coverImageNames = [NSMutableArray arrayWithCapacity:4];
+    NSMutableArray *backgroundImageNames = [NSMutableArray arrayWithCapacity:3];
+    NSMutableArray *coverImageNames = [NSMutableArray arrayWithCapacity:3];
     if (!isFirst.length) {
-        for (NSInteger i = 1; i < 5; i ++) {
+        for (NSInteger i = 1; i < 4; i ++) {
             NSString *temp1 = [NSString stringWithFormat:@"ggps_%ld_bg", i];
             NSString *temp2 = [NSString stringWithFormat:@"ggps_%ld_text", i];
             if ([[UIApplication sharedApplication] statusBarFrame].size.height > 20) {
@@ -197,8 +197,8 @@
         //        UIButton *enterButton = [[UIButton alloc] initWithFrame:CGRectMake((CGRectGetWidth([UIScreen mainScreen].bounds) - 100) / 2, CGRectGetHeight([UIScreen mainScreen].bounds) - 30 - 50, 100, 30)];
         //        [enterButton setBackgroundImage:[UIImage imageNamed:@"enter_btn"] forState:UIControlStateNormal];
         
-        self.introductionView = [[JhtGradientGuidePageVC alloc] initWithCoverImageNames:coverImageNames withBackgroundImageNames:backgroundImageNames withEnterButton:enterButton withLastRootViewController:[self setRootVC]];
-        
+//        self.introductionView = [[JhtGradientGuidePageVC alloc] initWithCoverImageNames:coverImageNames withBackgroundImageNames:backgroundImageNames withEnterButton:enterButton withLastRootViewController:[self setRootVC]];
+        self.introductionView = [[JhtGradientGuidePageVC alloc] initWithGuideImageNames:backgroundImageNames withLastRootViewController:[self setRootVC]];
         // 添加《跳过》按钮
         self.introductionView.isNeedSkipButton = YES;
         /******** 更多个性化配置见《JhtGradientGuidePageVC.h》 ********/

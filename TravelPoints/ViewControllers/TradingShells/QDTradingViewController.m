@@ -72,7 +72,7 @@
 
 - (NSString *)pageController:(WMPageController *)pageController titleAtIndex:(NSInteger)index {
     switch (index) {
-        case 0: return @"用玩贝";
+        case 0: return @"要玩贝";
         case 1: return @"转玩贝";
         case 2: return @"我的报单";
         case 3: return @"我的摘单";

@@ -175,7 +175,7 @@ typedef enum : NSUInteger {
 #pragma 要玩贝数据与上拉刷新数据请求
 - (void)requestYWBData{
     if (_totalPage != 0) {
-        if (_pageNum >= _totalPage) {
+        if (_pageNum > _totalPage) {
             [self.tableView.mj_footer endRefreshingWithNoMoreData];
             return;
         }

@@ -143,8 +143,8 @@ static NSString * const api_imageUpload      = @"/consumer/image/upload";       
  */
 
 
-//static NSString * const QD_JSURL                = @"http://112.64.226.138:60409/app";    //前端地址
-//static NSString * const QD_TESTJSURL            = @"http://112.64.226.138:60409/app/#";    //前端地址
+//static NSString * const QD_JSURL                = @"http://appuat.wedotting.com/app";    //前端地址
+//static NSString * const QD_TESTJSURL            = @"http://appuat.wedotting.com/app/#";    //前端地址
 static NSString * const QD_JSURL                = @"http://203.110.179.27:60409/app";    //前端地址
 static NSString * const QD_TESTJSURL            = @"http://203.110.179.27:60409/app/#";    //前端地址
 

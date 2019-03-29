@@ -130,7 +130,7 @@
     _sortColumn = @"";
     _sortType = @"";
     _pageNum = 1;
-    _pageSize = 10;
+    _pageSize = 30;
     _totalPage = 0; //总页数默认为1
     _ordersArr = [[NSMutableArray alloc] init];
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
