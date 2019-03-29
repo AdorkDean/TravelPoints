@@ -129,7 +129,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 13;
+    return 0.01;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
@@ -181,7 +181,7 @@
     cell.delegate = self;
     cell.backgroundColor = [UIColor clearColor];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [cell setView:model];
+//    [cell setView:model];
     cell.index = (int)indexPath.row;
     cell.indexArr = self.StatusArray;
     return cell;

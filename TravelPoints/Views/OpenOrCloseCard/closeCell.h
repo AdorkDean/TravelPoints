@@ -10,12 +10,25 @@
  **/
 
 #import "BaseCell.h"
-
+#import "SPButton.h"
+#import "HotelCouponDetailDTO.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface closeCell : BaseCell
 
-- (void)setView:(openOrCloseModel *)model;
+@property (nonatomic, strong) UIView *backView;
+
+@property (nonatomic, strong) UIImageView *pic;
+@property (nonatomic, strong) UILabel *lab;
+@property (nonatomic, strong) UILabel *titleLab;
+@property (nonatomic, strong) UILabel *couponNo;
+@property (nonatomic, strong) UILabel *deadLineLab;
+@property (nonatomic, strong) UILabel *infoLab;
+@property (nonatomic, strong) SPButton *ruleBtn;
+
+- (void)loadCouponViewWithModel:(HotelCouponDetailDTO *)model;
+
+//- (void)setView:(openOrCloseModel *)model;
 
 @end
 

@@ -31,8 +31,21 @@
 
 @implementation TestViewController
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.navigationController.navigationBar setHidden:YES];
+    [self.navigationController.tabBarController.tabBar setHidden:YES];
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self.navigationController.navigationBar setHidden:YES];
+    [self.navigationController.tabBarController.tabBar setHidden:NO];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = APP_WHITECOLOR;
     [self.view addSubview:self.tableView];
 }
 
@@ -117,13 +130,10 @@
     
     NSString *row = [NSString stringWithFormat:@"%ld",indexPath.row];
     BOOL isbool = [self.StatusArray containsObject: row];
-    
-    UITableViewCell *cell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
-    
     if (isbool == NO){
-        return 136;
+        return 136+30;
     }else{
-        return cell.frame.size.height+21;
+        return 176+30;
     }
     return indexPath.row;
 }
@@ -134,7 +144,7 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 13;
+    return 0.01;
     
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{

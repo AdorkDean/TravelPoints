@@ -29,11 +29,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) void (^reLayoutBlock) (BOOL ss);
 
 - (void)loadCouponViewWithModel:(HotelCouponDetailDTO *)model;
-//默认cell高度
-//+ (CGFloat)cellDefaultHeight:(TextEntity *)entity;
-//
-////展开后的高度
-//+ (CGFloat)cellMoreHeight:(TextEntity *)entity;
 @end
 
 NS_ASSUME_NONNULL_END
