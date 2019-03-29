@@ -56,10 +56,17 @@
     [_identifyView setHidden:YES];
 
     //协议富文本
-    _yyLabel = [[YYLabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH*0.056, SCREEN_HEIGHT*0.49, SCREEN_WIDTH*0.7, 40)];
+    _yyLabel = [[YYLabel alloc]init];
+//    _yyLabel = [[YYLabel alloc]initWithFrame:CGRectMake(21, 327+SafeAreaTopHeight, 300, 44)];
     _yyLabel.textVerticalAlignment = YYTextVerticalAlignmentCenter;
     _yyLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:_yyLabel];
+    [_yyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view.mas_left).offset(21);
+        make.top.equalTo(_registerView.userNameLine.mas_bottom).offset(20);
+        make.width.mas_equalTo(300);
+        make.height.mas_equalTo(44);
+    }];
     [self protocolIsSelect:NO];
     [_yyLabel setHidden:YES];
     
@@ -199,18 +206,24 @@
 - (void)protocolIsSelect:(BOOL)isSelect{
     //设置整段字符串的颜色
     UIColor *color = self.isSelect ? [UIColor blackColor] : [UIColor lightGrayColor];
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:@"PingFangSC-Regular" size:12], NSForegroundColorAttributeName: color};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:@"PingFangSC-Regular" size:13], NSForegroundColorAttributeName: color};
     
-    NSMutableAttributedString *text = [[NSMutableAttributedString alloc] initWithString:@"  已阅读并同意《这好玩用户注册协议》" attributes:attributes];
+    NSMutableAttributedString *text = [[NSMutableAttributedString alloc] initWithString:@"    已阅读并同意《用户注册服务协议》、《隐私政策》、《软件许可及服务协议》" attributes:attributes];
     //设置高亮色和点击事件
-    [text yy_setTextHighlightRange:[[text string] rangeOfString:@"《这好玩用户注册协议》"] color:[UIColor blackColor] backgroundColor:[UIColor clearColor] tapAction:^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
+    [text yy_setTextHighlightRange:[[text string] rangeOfString:@"《用户注册服务协议》"] color:[UIColor blackColor] backgroundColor:[UIColor clearColor] tapAction:^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
         NSLog(@"点击了《用户协议》");
+    }];
+    [text yy_setTextHighlightRange:[[text string] rangeOfString:@"《隐私政策》"] color:[UIColor blackColor] backgroundColor:[UIColor clearColor] tapAction:^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
+        NSLog(@"点击了《隐私政策》");
+    }];
+    [text yy_setTextHighlightRange:[[text string] rangeOfString:@"《软件许可及服务协议》"] color:[UIColor blackColor] backgroundColor:[UIColor clearColor] tapAction:^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
+        NSLog(@"点击了《软件许可及服务协议》");
     }];
     //添加图片
     UIImage *image = [UIImage imageNamed:self.isSelect == NO ? @"unSelectIcon" : @"selectIcon"];
-    NSMutableAttributedString *attachment = [NSMutableAttributedString yy_attachmentStringWithContent:image contentMode:UIViewContentModeCenter attachmentSize:CGSizeMake(12, 12) alignToFont:[UIFont fontWithName:@"PingFangSC-Regular"  size:12] alignment:(YYTextVerticalAlignment)YYTextVerticalAlignmentCenter];
+    NSMutableAttributedString *attachment = [NSMutableAttributedString yy_attachmentStringWithContent:image contentMode:UIViewContentModeCenter attachmentSize:CGSizeMake(16, 16) alignToFont:[UIFont fontWithName:@"PingFangSC-Regular"  size:12] alignment:(YYTextVerticalAlignment)YYTextVerticalAlignmentCenter];
     //将图片放在最前面
-    [text insertAttributedString:attachment atIndex:0];
+    [text insertAttributedString:attachment atIndex:1];
     //添加图片的点击事件
     [text yy_setTextHighlightRange:[[text string] rangeOfString:[attachment string]] color:[UIColor clearColor] backgroundColor:[UIColor clearColor] tapAction:^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
         __weak typeof(self) weakSelf = self;
@@ -225,8 +238,10 @@
         [weakSelf protocolIsSelect:self.isSelect];
     }];
     _yyLabel.attributedText = text;
+    _yyLabel.numberOfLines = 0;
     //居中显示一定要放在这里，放在viewDidLoad不起作用
-    _yyLabel.textAlignment = NSTextAlignmentCenter;
+//    _yyLabel.backgroundColor = APP_BLUECOLOR;
+    _yyLabel.textAlignment = NSTextAlignmentLeft;
 }
 
 - (void)login{

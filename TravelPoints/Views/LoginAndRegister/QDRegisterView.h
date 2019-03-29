@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIView *userNameLine;
 @property (nonatomic, strong) UITextField *userNameTF;
 @property (nonatomic, strong) UILabel *infoLab;
-@property (nonatomic, strong) QDButton *nextBtn;
+@property (nonatomic, strong) UIButton *nextBtn;
 @property (nonatomic, strong) UIImageView *imgView; //输入完成
 
 @end

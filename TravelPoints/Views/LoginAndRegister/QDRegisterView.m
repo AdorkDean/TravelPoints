@@ -64,15 +64,29 @@
         _infoLab.font = QDFont(13);
         [self addSubview:_infoLab];
         
-        
-        _nextBtn = [[QDButton alloc] init];
-        [_nextBtn setBackgroundColor:APP_LIGHTGRAYCOLOR forState:UIControlStateNormal];
-        [_nextBtn setBackgroundColor:APP_BLUECOLOR forState:UIControlStateSelected];
-        [_nextBtn setBackgroundColor:APP_BLUECOLOR forState:UIControlStateHighlighted];
-        [_nextBtn setBackgroundColor:APP_LIGHTGRAYCOLOR forState:UIControlStateDisabled];
+        _nextBtn = [[UIButton alloc] init];
+        CAGradientLayer *gradientLayer =  [CAGradientLayer layer];
+        gradientLayer.frame = CGRectMake(0, 0, 335, 50);
+        gradientLayer.startPoint = CGPointMake(0, 0);
+        gradientLayer.endPoint = CGPointMake(1, 0);
+        gradientLayer.locations = @[@(0.5),@(1.0)];//渐变点
+        [gradientLayer setColors:@[(id)[[UIColor colorWithHexString:@"#159095"] CGColor],(id)[[UIColor colorWithHexString:@"#3CC8B1"] CGColor]]];//渐变数组
+        [_nextBtn.layer addSublayer:gradientLayer];
         [_nextBtn setTitle:@"下一步" forState:UIControlStateNormal];
-        _nextBtn.titleLabel.font = QDFont(21);
+        _nextBtn.layer.cornerRadius = 4;
+        _nextBtn.layer.masksToBounds = YES;
+        _nextBtn.titleLabel.font = QDFont(20);
         [self addSubview:_nextBtn];
+        
+        
+//        _nextBtn = [[QDButton alloc] init];
+//        [_nextBtn setBackgroundColor:APP_LIGHTGRAYCOLOR forState:UIControlStateNormal];
+//        [_nextBtn setBackgroundColor:APP_BLUECOLOR forState:UIControlStateSelected];
+//        [_nextBtn setBackgroundColor:APP_BLUECOLOR forState:UIControlStateHighlighted];
+//        [_nextBtn setBackgroundColor:APP_LIGHTGRAYCOLOR forState:UIControlStateDisabled];
+//        [_nextBtn setTitle:@"下一步" forState:UIControlStateNormal];
+//        _nextBtn.titleLabel.font = QDFont(21);
+//        [self addSubview:_nextBtn];
         
         _imgView = [[UIImageView alloc] init];
         _imgView.backgroundColor = [UIColor redColor];
@@ -140,15 +154,11 @@
         make.centerY.equalTo(self.userNameTF);
         make.right.equalTo(self.userNameLine);
     }];
-    [_nextBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.equalTo(self.userNameLine);
-        make.top.equalTo(self.userNameLine.mas_bottom).offset(SCREEN_HEIGHT*0.12);
-        make.height.mas_equalTo(SCREEN_HEIGHT*0.075);
-    }];
     
     [_nextBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.and.right.equalTo(self.userNameLine);
-        make.height.mas_equalTo(SCREEN_HEIGHT*0.075);
+        make.height.mas_equalTo(50);
+        make.width.mas_equalTo(335);
+        make.centerX.equalTo(self);
         make.top.equalTo(self.userNameLine.mas_bottom).offset(SCREEN_HEIGHT*0.12);
     }];
 }
