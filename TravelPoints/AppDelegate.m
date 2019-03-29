@@ -193,13 +193,29 @@
         [enterButton setTitle:@"点击进入" forState:UIControlStateNormal];
         [enterButton setBackgroundColor:[UIColor purpleColor]];
         enterButton.layer.cornerRadius = 8.0;
+        
+//        UIButton *_optionBtn = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*0.3, SCREEN_HEIGHT*0.85, SCREEN_WIDTH*0.44, SCREEN_HEIGHT*0.07)];
+//        CAGradientLayer *gradientLayer =  [CAGradientLayer layer];
+//        gradientLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH*0.44, SCREEN_HEIGHT*0.05);
+//        gradientLayer.startPoint = CGPointMake(0, 0);
+//        gradientLayer.endPoint = CGPointMake(1, 0);
+//        gradientLayer.locations = @[@(0.5),@(1.0)];//渐变点
+//        [gradientLayer setColors:@[(id)[[UIColor colorWithHexString:@"#28BAD3"] CGColor],(id)[[UIColor colorWithHexString:@"#119EC7"] CGColor]]];//渐变数组
+//        [_optionBtn.layer addSublayer:gradientLayer];
+//        [_optionBtn setTitle:@"立即体验" forState:UIControlStateNormal];
+//        [_optionBtn setTitleColor:APP_WHITECOLOR forState:UIControlStateNormal];
+//        _optionBtn.layer.cornerRadius = 16;
+//        _optionBtn.layer.masksToBounds = YES;
+//        _optionBtn.titleLabel.font = QDFont(20);
         // case 2
         //        UIButton *enterButton = [[UIButton alloc] initWithFrame:CGRectMake((CGRectGetWidth([UIScreen mainScreen].bounds) - 100) / 2, CGRectGetHeight([UIScreen mainScreen].bounds) - 30 - 50, 100, 30)];
         //        [enterButton setBackgroundImage:[UIImage imageNamed:@"enter_btn"] forState:UIControlStateNormal];
         
 //        self.introductionView = [[JhtGradientGuidePageVC alloc] initWithCoverImageNames:coverImageNames withBackgroundImageNames:backgroundImageNames withEnterButton:enterButton withLastRootViewController:[self setRootVC]];
         self.introductionView = [[JhtGradientGuidePageVC alloc] initWithGuideImageNames:backgroundImageNames withLastRootViewController:[self setRootVC]];
+//        self.introductionView = [[JhtGradientGuidePageVC alloc] initWithCoverImageNames:backgroundImageNames withBackgroundImageNames:backgroundImageNames withEnterButton:_optionBtn withLastRootViewController:[self setRootVC]];
         // 添加《跳过》按钮
+        self.introductionView.isHiddenPageControl = YES;
         self.introductionView.isNeedSkipButton = YES;
         /******** 更多个性化配置见《JhtGradientGuidePageVC.h》 ********/
         
