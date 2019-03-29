@@ -21,6 +21,7 @@
 #import "QDBridgeViewController.h"
 #import "QDHouseCouponVC.h"
 #import "AllHouseCouponVC.h"
+#import "TestViewController.h"
 @interface QDMineInfoViewController ()<UITableViewDelegate, UITableViewDataSource>{
     UITableView *_tableView;
     QDMineHeaderNotLoginView *_notLoginHeaderView;
@@ -352,7 +353,7 @@
             break;
         case 3: //房券
         {
-            QDHouseCouponVC *houseVC = [[QDHouseCouponVC alloc] init];
+            TestViewController *houseVC = [[TestViewController alloc] init];
             self.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:houseVC animated:YES];
         }

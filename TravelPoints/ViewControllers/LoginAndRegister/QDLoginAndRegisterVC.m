@@ -448,8 +448,40 @@
     }];
 }
 
+- (BOOL)judgePassWordLegal:(NSString *)pass{
+    BOOL result = false;
+    if ([pass length] >= 6 && [pass length] <= 16){
+        // 判断长度大于8位后再接着判断是否同时包含数字和字符
+        NSString * regex = @"^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$";
+        NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+        result = [pred evaluateWithObject:pass];
+    }
+    return result;
+}
+
 #pragma mark - 设置登录密码
 - (void)setLoginPwd:(UIButton *)sender{
+    //密码必填 忘记密码和注册的密码长度，和数字字母校验
+    NSString *pwdStr = _setLogPwdView.pwdTF.text;
+    NSString *confirmPwdStr = _setLogPwdView.confirmPwdTF.text;
+
+    if ([pwdStr isEqualToString:@""]) {
+        [WXProgressHUD showInfoWithTittle:@"请设置登录密码"];
+        return;
+    }
+    if ([confirmPwdStr isEqualToString:@""]) {
+        [WXProgressHUD showInfoWithTittle:@"请确认登录密码"];
+        return;
+    }
+    if (![pwdStr isEqualToString:confirmPwdStr]) {
+        [WXProgressHUD showInfoWithTittle:@"两次密码输入不一致"];
+        return;
+    }
+    if (![self judgePassWordLegal:pwdStr]) {
+        [WXProgressHUD showInfoWithTittle:@"密码要求为6～16为字母与数字组合"];
+        return;
+    }
+  
     [WXProgressHUD showHUD];
     NSString *code = [QDUserDefaults getObjectForKey:@"verificationCode"];
     NSDictionary * dic = @{@"legalPhone":_userPhoneNum,

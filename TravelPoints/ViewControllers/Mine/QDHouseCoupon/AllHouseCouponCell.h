@@ -8,11 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "SPButton.h"
+#import "HotelCouponDetailDTO.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface AllHouseCouponCell : UITableViewCell
 
 @property (nonatomic, strong) UIView *backView;
+
+@property (nonatomic, strong) UIImageView *pic;
+@property (nonatomic, strong) UILabel *lab;
 @property (nonatomic, strong) UILabel *titleLab;
 @property (nonatomic, strong) UILabel *couponNo;
 @property (nonatomic, strong) UILabel *deadLineLab;
@@ -22,7 +26,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) SPButton *ruleBtn;
 
+@property (nonatomic, copy) void (^reLayoutBlock) (BOOL ss);
 
+- (void)loadCouponViewWithModel:(HotelCouponDetailDTO *)model;
 //默认cell高度
 //+ (CGFloat)cellDefaultHeight:(TextEntity *)entity;
 //

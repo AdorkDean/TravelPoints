@@ -33,7 +33,7 @@
         [self addSubview:_lineViewBottom];
         
         _pwdTF = [[UITextField alloc] init];
-        _pwdTF.placeholder = @"请输入登录密码";
+        _pwdTF.placeholder = @"登录密码(6~16位字母与数字组合)";
         _pwdTF.secureTextEntry = YES;
         _pwdTF.clearButtonMode = UITextFieldViewModeWhileEditing;
         [_pwdTF setValue:APP_GRAYLAYERCOLOR forKeyPath:@"placeholderLabel.textColor"];
@@ -41,7 +41,7 @@
         [self addSubview:_pwdTF];
         
         _confirmPwdTF = [[UITextField alloc] init];
-        _confirmPwdTF.placeholder = @"请确认登录密码";
+        _confirmPwdTF.placeholder = @"确认登录密码(6~16位字母与数字组合)";
         _confirmPwdTF.secureTextEntry = YES;
         _confirmPwdTF.clearButtonMode = UITextFieldViewModeWhileEditing;
         [_confirmPwdTF setValue:APP_GRAYLAYERCOLOR forKeyPath:@"placeholderLabel.textColor"];

@@ -29,6 +29,16 @@
         _backView.layer.masksToBounds = YES;
         [self.contentView addSubview:_backView];
         
+        _pic = [[UIImageView alloc] init];
+        _pic.image = [UIImage imageNamed:@"houseCoupon"];
+        [_backView addSubview:_pic];
+        
+        _lab = [[UILabel alloc] init];
+        _lab.textColor = APP_BLACKCOLOR;
+        _lab.font = QDBoldFont(18);
+        _lab.numberOfLines = 0;
+        [_backView addSubview:_lab];
+        
         _titleLab = [[UILabel alloc] init];
         _titleLab.text = @"重庆华城国际大酒店";
         _titleLab.textColor = APP_BLACKCOLOR;
@@ -68,6 +78,7 @@
         _ruleBtn = [[SPButton alloc] init];
         [_ruleBtn setTitle:@"规则" forState:UIControlStateNormal];
         _ruleBtn.titleLabel.font = QDFont(12);
+        _ruleBtn.backgroundColor = APP_BLUECOLOR;
         [_ruleBtn setTitleColor:APP_GRAYTEXTCOLOR forState:UIControlStateNormal];
         [_ruleBtn setImage:[UIImage imageNamed:@"icon_selectAddress"] forState:UIControlStateNormal];
         [_ruleBtn addTarget:self action:@selector(reLayout:) forControlEvents:UIControlEventTouchUpInside];
@@ -82,9 +93,19 @@
     [_backView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.equalTo(self.contentView);
         make.width.mas_equalTo(335);
-        make.height.mas_equalTo(136);
+        make.height.mas_equalTo(self.contentView.frame.size.height-30);
     }];
     
+    [_pic mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.left.equalTo(_backView);
+        make.height.mas_equalTo(96);
+    }];
+    
+    [_lab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_backView.mas_left).offset(15);
+        make.centerY.equalTo(_backView);
+        make.width.mas_equalTo(72);
+    }];
     [_titleLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_backView.mas_top).offset(23);
         make.left.equalTo(_backView.mas_left).offset(125);
@@ -107,29 +128,60 @@
     
     [_info2Lab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_backView.mas_left).offset(10);
-        make.top.equalTo(_infoLab.mas_bottom);
+        make.top.equalTo(_backView.mas_top).offset(136);
     }];
     
-    [_infoLab mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_info3Lab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_backView.mas_left).offset(10);
-        make.top.equalTo(_info2Lab.mas_bottom);
+        make.top.equalTo(_info2Lab.mas_bottom).offset(1);
     }];
     
     [_ruleBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_infoLab);
         make.right.equalTo(_backView.mas_right).offset(-10);
+        make.width.and.height.mas_equalTo(40);
     }];
 }
 
 - (void)reLayout:(UIButton *)sender{
     sender.selected = !sender.selected;
+    if (self.reLayoutBlock) {
+        self.reLayoutBlock(sender.selected);
+    }
     if (sender.selected) {
-        [_ruleBtn setImage:[UIImage imageNamed:@"icon_arrowDown"] forState:UIControlStateNormal];
+        [_ruleBtn setImage:[UIImage imageNamed:@"zhankai"] forState:UIControlStateNormal];
+        [_backView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.center.equalTo(self.contentView);
+//            make.top.equalTo(self.contentView);
+            make.width.mas_equalTo(335);
+            make.height.mas_equalTo(176);
+        }];
     }else{
-        [_ruleBtn setImage:[UIImage imageNamed:@"icon_arrowUp"] forState:UIControlStateNormal];
+        [_ruleBtn setImage:[UIImage imageNamed:@"shouqi"] forState:UIControlStateNormal];
+        [_backView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.center.equalTo(self.contentView);
+//            make.top.equalTo(self.contentView);
+            make.width.mas_equalTo(335);
+            make.height.mas_equalTo(136);
+        }];
     }
 }
+- (void)loadCouponViewWithModel:(HotelCouponDetailDTO *)model{
+    self.titleLab.text = model.hotelName;
+    self.lab.text = model.roomTypeName;
+    NSString *ss = [self timeStampConversionNSString:model.overdueDate];
+    self.deadLineLab.text = [NSString stringWithFormat:@"有效期至:%@", ss];
+    self.info3Lab.text = [NSString stringWithFormat:@"需要提前%@天预定", model.advanceDays];
+}
 
+- (NSString *)timeStampConversionNSString:(NSString *)timeStamp
+{
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[timeStamp longLongValue]/1000];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    NSString *dateStr = [formatter stringFromDate:date];
+    return dateStr;
+}
 //+ (CGFloat)cellDefaultHeight:(TextEntity *)entity{
 //    return 136;
 //}
