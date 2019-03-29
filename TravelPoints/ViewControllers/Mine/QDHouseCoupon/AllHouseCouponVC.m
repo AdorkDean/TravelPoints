@@ -12,7 +12,6 @@
 #import "HotelCouponDetailDTO.h"
 #import "closeCell.h"
 #import "openCell.h"
-#import "openOrCloseModel.h"
 #import "BaseCell.h"
 @interface AllHouseCouponVC ()<UITableViewDelegate, UITableViewDataSource, BaseCellDelegate>{
     UITableView *_tableView;
@@ -60,7 +59,7 @@
     }];
     [_baseView addSubview:self.tableView];
     //查询我的房券
-    [self findAllMyHouseCoupon];
+//    [self findAllMyHouseCoupon];
 }
 
 
@@ -91,16 +90,18 @@
     QDLog(@"==============");
 }
 
-- (UITableView *)tableView{
+#pragma mark lazy
+- (UITableView *)tableView {
     if (!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 10, SCREEN_WIDTH, SCREEN_HEIGHT-58) style:UITableViewStylePlain];
+        _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) style:UITableViewStyleGrouped];
         _tableView.delegate = self;
         _tableView.dataSource = self;
+        _tableView.backgroundColor = APP_GRAYBACKGROUNDCOLOR;
         _tableView.separatorStyle = 0;
-        _tableView.backgroundColor = APP_BLUECOLOR;
     }
     return _tableView;
 }
+
 
 - (NSMutableArray *)StatusArray{
     if (!_StatusArray) {
@@ -117,9 +118,6 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSString *row = [NSString stringWithFormat:@"%ld",indexPath.row];
     BOOL isbool = [self.StatusArray containsObject: row];
-    
-    UITableViewCell *cell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
-    
     if (isbool == NO){
         return 136+30;
     }else{
@@ -155,34 +153,40 @@
 //    cell.backgroundColor = APP_GRAYBACKGROUNDCOLOR;
 //    return cell;
     BaseCell *cell = nil;
-    openOrCloseModel *model = nil;
+    //如果有网络请求数据，更改model
     cell.userInteractionEnabled = YES;
-    NSString *identifier;
-    NSString *row = [NSString stringWithFormat:@"%ld", indexPath.row];
+    NSString *cellIdentifier;
     
-    BOOL isbool = [self.StatusArray containsObject:row];
-    if (isbool) {
-        identifier = @"open";
+    NSString *row = [NSString stringWithFormat:@"%ld",indexPath.row];
+    //是用来判断有没用被打开// YES (BOOL)1// NO  (BOOL)0
+    BOOL isbool = [self.StatusArray containsObject: row];
+    if (isbool == NO){
+        
+        cellIdentifier = @"unOpen";
+        
     }else{
-        identifier = @"unOpen";
+        
+        cellIdentifier = @"open";
+        
     }
-    cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    
     if (!cell) {
-        if (isbool) {
-            cell = [[closeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        
+        if (isbool == NO){
+            
+            cell = [[closeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+            
         }else{
-            cell = [[openCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-        }
-    }else{
-        while ([cell.contentView.subviews lastObject] != nil) {
-            [(UIView *)[cell.contentView.subviews lastObject] removeFromSuperview];
+            
+            cell = [[openCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         }
     }
     cell.delegate = self;
-    cell.backgroundColor = [UIColor clearColor];
+    cell.backgroundColor = APP_WHITECOLOR;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//    [cell setView:model];
     cell.index = (int)indexPath.row;
+    
     cell.indexArr = self.StatusArray;
     return cell;
 }
@@ -192,12 +196,13 @@
     [_tableView reloadData];
 }
 
-- (void)baseCell:(BaseCell *)baseCell btnType:(BtnType)btnType WithIndex:(int)index withArr:(NSMutableArray *)array{
+- (void)baseCell:(BaseCell *)baseCell btnType:(BtnType)btnType WithIndex:(int)index withArr:(nonnull NSMutableArray *)array{
     self.isOpen = btnType;
     self.cellIndex = index;
     self.StatusArray = array;
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
-    [_tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationFade];
+    NSIndexPath *indexPath=[NSIndexPath indexPathForRow:index inSection:0];
+    [_tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationFade];
 }
+
 
 @end

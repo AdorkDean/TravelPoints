@@ -16,7 +16,7 @@
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-        _backView = [[UIView alloc] init];
+        _backView = [[UIView alloc] initWithFrame:CGRectMake(20, 0, 335, 136)];
         _backView.backgroundColor = APP_WHITECOLOR;
         _backView.layer.cornerRadius = 2;
         _backView.layer.masksToBounds = YES;
@@ -61,7 +61,7 @@
         _ruleBtn.titleLabel.font = QDFont(12);
         _ruleBtn.backgroundColor = [UIColor redColor];
         [_ruleBtn setTitleColor:APP_GRAYTEXTCOLOR forState:UIControlStateNormal];
-        [_ruleBtn setImage:[UIImage imageNamed:@"icon_selectAddress"] forState:UIControlStateNormal];
+        [_ruleBtn setImage:[UIImage imageNamed:@"zhankai"] forState:UIControlStateNormal];
         [_ruleBtn addTarget:self action:@selector(openMemberView:) forControlEvents:UIControlEventTouchUpInside];
         _ruleBtn.imagePosition = SPButtonImagePositionRight;
         [_backView addSubview:_ruleBtn];
@@ -73,11 +73,6 @@
 
 - (void)layoutSubviews{
     [super layoutSubviews];
-    [_backView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.center.equalTo(self.contentView);
-        make.width.mas_equalTo(335);
-        make.height.mas_equalTo(self.contentView.frame.size.height-30);
-    }];
     
     [_pic mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.equalTo(_backView);
@@ -112,7 +107,8 @@
     [_ruleBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_infoLab);
         make.right.equalTo(_backView.mas_right).offset(-10);
-        make.width.and.height.mas_equalTo(40);
+        make.height.mas_equalTo(40);
+        make.width.mas_equalTo(60);
     }];
 }
 
@@ -134,7 +130,7 @@
 
 - (void)openMemberView:(UIButton *)btn{
     
-    [self.indexArr removeObject:[NSString stringWithFormat:@"%d",self.index]];
+    [self.indexArr addObject:[NSString stringWithFormat:@"%d",self.index]];
     
     if ([self.delegate respondsToSelector:@selector(baseCell:btnType:WithIndex:withArr:)])
     {

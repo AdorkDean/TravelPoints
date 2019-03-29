@@ -144,6 +144,10 @@ static NSString *cellIdentifier = @"CellIdentifier";
                     [detailArr addObject:listDTO];
                 }
                 [_rankTotalArr addObject:detailArr];
+            }else{
+                //如果该类型没有数据,移除该类型
+                [_rankTypeArr removeObjectAtIndex:[_rankTypeArr indexOfObject:typeStr]];
+                QDLog(@"_rankTypeArr");
             }
             if (_currentTypeIndex < _rankTypeArr.count) {
                 [self getRankedSortingWithTypeStr:_rankTypeArr[_currentTypeIndex]];

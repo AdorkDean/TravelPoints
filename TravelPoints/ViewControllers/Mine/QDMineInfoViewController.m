@@ -22,7 +22,21 @@
 #import "QDHouseCouponVC.h"
 #import "AllHouseCouponVC.h"
 #import "TestViewController.h"
-@interface QDMineInfoViewController ()<UITableViewDelegate, UITableViewDataSource>{
+#import <MobileCoreServices/MobileCoreServices.h>
+#import "STPhotoKitController.h"
+#import "UIImagePickerController+ST.h"
+#import "STConfig.h"
+#import "QDUploadImageManager.h"
+#import "QDUploadUtils.h"
+
+typedef NS_ENUM(NSInteger, PhotoType)
+{
+    PhotoTypeIcon,
+    PhotoTypeRectangle,
+    PhotoTypeRectangle1
+};
+
+@interface QDMineInfoViewController ()<UINavigationControllerDelegate,UITableViewDelegate, UITableViewDataSource,UIImagePickerControllerDelegate, UIActionSheetDelegate, STPhotoKitDelegate>{
     UITableView *_tableView;
     QDMineHeaderNotLoginView *_notLoginHeaderView;
     QDLogonWithNoFinancialAccountView *_noFinancialView;
@@ -32,6 +46,7 @@
     UIView *_cellSeparateLineView;
     QDMemberDTO *_currentQDMemberTDO;
 }
+@property (nonatomic, assign) PhotoType type;
 
 @end
 
@@ -216,6 +231,8 @@
     _tableView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_tableView];
     
+    UITapGestureRecognizer *tapGes = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changePic:)];
+    
     //未登录
     _notLoginHeaderView = [[QDMineHeaderNotLoginView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.2)];
     _notLoginHeaderView.backgroundColor = APP_WHITECOLOR;
@@ -226,12 +243,15 @@
     _noFinancialView.backgroundColor = APP_WHITECOLOR;
     [_noFinancialView.settingBtn addTarget:self action:@selector(userSettings:) forControlEvents:UIControlEventTouchUpInside];
     [_noFinancialView.voiceBtn addTarget:self action:@selector(notices:) forControlEvents:UIControlEventTouchUpInside];
-
+    [_noFinancialView addGestureRecognizer:tapGes];
+    
     [_noFinancialView.openFinancialBtn addTarget:self action:@selector(openFinancialAction:) forControlEvents:UIControlEventTouchUpInside];
     [_noFinancialView.accountInfo addTarget:self action:@selector(lookAccountInfo:) forControlEvents:UIControlEventTouchUpInside];
     //已经开通资金账户的
     _haveFinancialView = [[QDMineHeaderFinancialAccountView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.56)];
     _haveFinancialView.backgroundColor = APP_WHITECOLOR;
+    [_haveFinancialView addGestureRecognizer:tapGes];
+
     [_haveFinancialView.voiceBtn addTarget:self action:@selector(notices:) forControlEvents:UIControlEventTouchUpInside];
     [_haveFinancialView.accountInfo addTarget:self action:@selector(lookAccountInfo:) forControlEvents:UIControlEventTouchUpInside];
     [_haveFinancialView.settingBtn addTarget:self action:@selector(userSettings:) forControlEvents:UIControlEventTouchUpInside];
@@ -353,7 +373,7 @@
             break;
         case 3: //房券
         {
-            TestViewController *houseVC = [[TestViewController alloc] init];
+            QDHouseCouponVC *houseVC = [[QDHouseCouponVC alloc] init];
             self.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:houseVC animated:YES];
         }
@@ -440,6 +460,107 @@
 {
     if (_tableView) {
         [_tableView.mj_header endRefreshing];
+    }
+}
+
+- (void)changePic:(UIGestureRecognizer *)ges{
+    self.type = PhotoTypeIcon;
+    [self editImageSelected];
+}
+
+#pragma mark - --- event response 事件相应 ---
+- (void)editImageSelected
+{
+    UIAlertController *alertController = [[UIAlertController alloc]init];
+    
+    UIAlertAction *action0 = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UIImagePickerController *controller = [UIImagePickerController imagePickerControllerWithSourceType:UIImagePickerControllerSourceTypeCamera];
+        
+        if ([controller isAvailableCamera] && [controller isSupportTakingPhotos]) {
+            [controller setDelegate:self];
+            [self presentViewController:controller animated:YES completion:nil];
+        }else {
+            NSLog(@"%s %@", __FUNCTION__, @"相机权限受限");
+        }
+    }];
+    
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"从相册获取" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UIImagePickerController *controller = [UIImagePickerController imagePickerControllerWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+        [controller setDelegate:self];
+        if ([controller isAvailablePhotoLibrary]) {
+            [self presentViewController:controller animated:YES completion:nil];
+        }    }];
+    
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+    }];
+    
+    [alertController addAction:action0];
+    [alertController addAction:action1];
+    [alertController addAction:action2];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [picker dismissViewControllerAnimated:YES completion:^(){
+    }];
+}
+
+#pragma mark - 2.UIImagePickerController的委托
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
+{
+    [picker dismissViewControllerAnimated:YES completion:^{
+        UIImage *imageOriginal = [info objectForKey:UIImagePickerControllerOriginalImage];
+        STPhotoKitController *photoVC = [STPhotoKitController new];
+        [photoVC setDelegate:self];
+        [photoVC setImageOriginal:imageOriginal];
+        switch (self.type) {
+            case PhotoTypeIcon:
+                [photoVC setSizeClip:CGSizeMake(_haveFinancialView.picView.width*2, _haveFinancialView.picView.height*2)];
+                break;
+//            case PhotoTypeRectangle:
+//                [photoVC setSizeClip:CGSizeMake(self.imageRectangle.width*2, self.imageRectangle.height*2)];
+//                break;
+//            case PhotoTypeRectangle1:
+//                [photoVC setSizeClip:CGSizeMake(self.imageRectangle1.width*2, self.imageRectangle1.height*2)];
+//                break;
+            default:
+                break;
+        }
+        
+        
+        [self presentViewController:photoVC animated:YES completion:nil];
+    }];
+}
+
+- (void)photoKitController:(STPhotoKitController *)photoKitController resultImage:(UIImage *)resultImage
+{
+    _haveFinancialView.picView.image = resultImage;
+    NSString *urlStr = [NSString stringWithFormat:@"%@%@", QD_Domain, api_imageUpload];
+    [[QDUploadImageManager manager] uploadImageWithUrlStr:urlStr AndImage:resultImage withSuccessBlock:^(QDResponseObject *responseObject) {
+        if (responseObject.code == 0) {
+            NSDictionary *dic = responseObject.result;
+            QDLog(@"dic = %@", dic);
+        }
+    } withFailurBlock:^(NSError *error) {
+        QDLog(@"123123");
+    } withUpLoadProgress:^(NSProgress *progress) {
+        QDLog(@"12");
+    }];
+    switch (self.type) {
+        case PhotoTypeIcon:
+            //上传图片
+            
+            break;
+//        case PhotoTypeRectangle:
+//            self.imageRectangle.image = resultImage;
+//            break;
+//        case PhotoTypeRectangle1:
+//            self.imageRectangle1.image = resultImage;
+//            break;
+        default:
+            break;
     }
 }
 

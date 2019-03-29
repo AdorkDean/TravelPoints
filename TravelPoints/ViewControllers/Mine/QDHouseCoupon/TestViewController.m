@@ -45,7 +45,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = APP_WHITECOLOR;
+    self.view.backgroundColor = APP_GRAYBACKGROUNDCOLOR;
     [self.view addSubview:self.tableView];
 }
 
@@ -55,10 +55,8 @@
         _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) style:UITableViewStyleGrouped];
         _tableView.delegate = self;
         _tableView.dataSource = self;
-        _tableView.backgroundColor = [UIColor clearColor];
+        _tableView.backgroundColor = APP_GRAYBACKGROUNDCOLOR;
         _tableView.separatorStyle = 0;
-        
-        
     }
     return _tableView;
 }
@@ -81,7 +79,6 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     BaseCell *cell = nil;
     //如果有网络请求数据，更改model
-    openOrCloseModel *model = nil;
     cell.userInteractionEnabled = YES;
     NSString *cellIdentifier;
     
@@ -110,15 +107,14 @@
             cell = [[openCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         }
     }
-    else{
-        while ([cell.contentView.subviews lastObject] != nil) {
-            [(UIView *)[cell.contentView.subviews lastObject] removeFromSuperview];
-        }
-    }
+//    else{
+//        while ([cell.contentView.subviews lastObject] != nil) {
+//            [(UIView *)[cell.contentView.subviews lastObject] removeFromSuperview];
+//        }
+//    }
     cell.delegate = self;
-    cell.backgroundColor = [UIColor clearColor];
+    cell.backgroundColor = APP_WHITECOLOR;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [cell setView:model];
     cell.index = (int)indexPath.row;
     
     cell.indexArr = self.StatusArray;

@@ -133,7 +133,10 @@ static NSString * const api_GetBiddingPosterByPosterId = @"/lyjfapp/api/v1/ctrad
 static NSString * const api_CancelBiddingPosters = @"/lyjfapp/api/v1/ctrade/cancelBiddingPosters";                     //撤销挂单
 static NSString * const api_saveBiddingPosters = @"/lyjfapp/api/v1/ctrade/saveBiddingPosters";                       //挂单申请
 static NSString * const api_findCategory       = @"/lyjfapp/api/v1/goods/findCategory";                  //获取商品分类列表
-static NSString * const api_findAllMyHouseCoupon       = @"/lyjfapp/api/v1/hotelCoupon/findAllMyHouseCoupon";                  //查询我的房券
+static NSString * const api_findAllMyHouseCoupon  = @"/lyjfapp/api/v1/hotelCoupon/findAllMyHouseCoupon";                  //查询我的房券
+static NSString * const api_checkLoginNum       = @"/lyjfapp/api/v1/user/checkLoginNum";                  //用户重复登录次数控制
+static NSString * const api_findNoticeByTypeId      = @"/lyjfapp/api/v1/common/findNoticeByTypeId";       //协议查询
+static NSString * const api_imageUpload      = @"/consumer/image/upload";       //图片上传
 
 /**
  JAVAScriptBridgeWebView

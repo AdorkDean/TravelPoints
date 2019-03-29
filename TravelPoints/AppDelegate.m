@@ -17,7 +17,10 @@
 #import "LaunchImageTransition.h"
 #import "LaunchAnimationTool.h"
 #import "TABAnimated.h"
+
+#import <JhtGuidePages/JhtGradientGuidePageVC.h>
 @interface AppDelegate ()
+@property (nonatomic, strong) JhtGradientGuidePageVC *introductionView;
 
 @property(nonatomic, strong) UITabBarController *rootTabbarCtr;
 
@@ -34,7 +37,7 @@
     [AMapServices sharedServices].apiKey = (NSString *)APIKey;
 }
 
-- (void)initRootVC{
+- (UITabBarController *)setRootVC{
     QDHomgePageVC *homeVC = [[QDHomgePageVC alloc] init];
     UINavigationController *navHome = [[UINavigationController alloc] initWithRootViewController:homeVC];
     
@@ -54,7 +57,7 @@
     NSArray *viewCtrs = @[navHome, navPlayShell, navTradeShell, navMine];
     self.rootTabbarCtr = [[UITabBarController alloc] init];
     [self.rootTabbarCtr setViewControllers:viewCtrs animated:YES];
-    self.window.rootViewController = self.rootTabbarCtr;
+//    self.window.rootViewController = self.rootTabbarCtr;
 
     
     UITabBar *tabbar = self.rootTabbarCtr.tabBar;
@@ -75,15 +78,16 @@
     item4.image = [[UIImage imageNamed:@"icon_tabbar_mine"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:APP_GRAYTEXTCOLOR, NSForegroundColorAttributeName, QDFont(12), NSFontAttributeName, nil] forState:UIControlStateNormal];
     [[UITabBarItem appearance]setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:APP_BLUECOLOR,NSForegroundColorAttributeName,QDFont(12),NSFontAttributeName,nil]forState:UIControlStateSelected];
+    return self.rootTabbarCtr;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     // 在window上放一个imageView
-    
+//    [self createGuideVC];
     [[TABViewAnimated sharedAnimated] initWithDefaultAnimated];
-    [self initRootVC];
-//    [LaunchAnimationTool showLaunchAnimationViewToWindow];
+    self.window.rootViewController = [self setRootVC];
+
     [self configureAPIKey];
     [self.window makeKeyAndVisible];
 
@@ -154,6 +158,70 @@
     } failureBlock:^(NSError *error) {
         [WXProgressHUD hideHUD];
     }];
+}
+
+/** 创建引导页 */
+- (void)createGuideVC {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *firstKey = [NSString stringWithFormat:@"isFirst%@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
+    NSString *isFirst = [defaults objectForKey:firstKey];
+    
+    NSMutableArray *backgroundImageNames = [NSMutableArray arrayWithCapacity:4];
+    NSMutableArray *coverImageNames = [NSMutableArray arrayWithCapacity:4];
+    if (!isFirst.length) {
+        for (NSInteger i = 1; i < 5; i ++) {
+            NSString *temp1 = [NSString stringWithFormat:@"ggps_%ld_bg", i];
+            NSString *temp2 = [NSString stringWithFormat:@"ggps_%ld_text", i];
+            if ([[UIApplication sharedApplication] statusBarFrame].size.height > 20) {
+                temp1 = [NSString stringWithFormat:@"x_%@", temp1];
+                temp2 = [NSString stringWithFormat:@"x_%@", temp2];
+            }
+            
+            [backgroundImageNames addObject:temp1];
+            [coverImageNames addObject:temp2];
+        }
+        
+        // NO.1
+        //        self.introductionView = [[JhtGradientGuidePageVC alloc] initWithGuideImageNames:backgroundImageNames withLastRootViewController:[[ViewController alloc] init]];
+        
+        // NO.2
+        //        self.introductionView = [[JhtGradientGuidePageVC alloc] initWithCoverImageNames:coverImageNames withBackgroundImageNames:backgroundImageNames withLastRootViewController:[[ViewController alloc] init]];
+        
+        // NO.3
+        // case 1
+        UIButton *enterButton = [[UIButton alloc] init];
+        [enterButton setTitle:@"点击进入" forState:UIControlStateNormal];
+        [enterButton setBackgroundColor:[UIColor purpleColor]];
+        enterButton.layer.cornerRadius = 8.0;
+        // case 2
+        //        UIButton *enterButton = [[UIButton alloc] initWithFrame:CGRectMake((CGRectGetWidth([UIScreen mainScreen].bounds) - 100) / 2, CGRectGetHeight([UIScreen mainScreen].bounds) - 30 - 50, 100, 30)];
+        //        [enterButton setBackgroundImage:[UIImage imageNamed:@"enter_btn"] forState:UIControlStateNormal];
+        
+        self.introductionView = [[JhtGradientGuidePageVC alloc] initWithCoverImageNames:coverImageNames withBackgroundImageNames:backgroundImageNames withEnterButton:enterButton withLastRootViewController:[self setRootVC]];
+        
+        // 添加《跳过》按钮
+        self.introductionView.isNeedSkipButton = YES;
+        /******** 更多个性化配置见《JhtGradientGuidePageVC.h》 ********/
+        
+        self.window.rootViewController = self.introductionView;
+        
+        __weak AppDelegate *weakSelf = self;
+        self.introductionView.didClickedEnter = ^() {
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            NSString *firstKey = [NSString stringWithFormat:@"isFirst%@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
+            NSString *isFirst = [defaults objectForKey:firstKey];
+            if (!isFirst) {
+                [defaults setObject:@"notFirst" forKey:firstKey];
+                [defaults synchronize];
+            }
+            
+            weakSelf.introductionView = nil;
+        };
+        
+    } else {
+//        [self initRootVC];
+        self.window.rootViewController = [self setRootVC];
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

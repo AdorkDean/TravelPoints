@@ -8,7 +8,7 @@
 
 #import "QDLoginAndRegisterVC.h"
 #import "QDMemberDTO.h"
-
+#import "QDProtocolVC.h"
 @interface QDLoginAndRegisterVC ()<getTextFieldContentDelegate>
 
 @property (nonatomic, strong) QDMemberDTO *qdMemberTDO;
@@ -203,6 +203,20 @@
     [_yyLabel setHidden:NO];
 }
 
+- (void)findNoticeByTypeIdWithTypeStr:(NSString *)typeStr{
+    NSDictionary *dic = @{@"noticeType":typeStr};
+    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_findNoticeByTypeId params:dic successBlock:^(QDResponseObject *responseObject) {
+        if (responseObject.code == 0) {
+            NSDictionary *dic = responseObject.result;
+            NSString *contentStr = [dic objectForKey:@"content"];
+            QDProtocolVC *protocolVC = [[QDProtocolVC alloc] init];
+            protocolVC.contentStr = contentStr;
+            [self presentViewController:protocolVC animated:YES completion:nil];
+        }
+    } failureBlock:^(NSError *error) {
+        
+    }];
+}
 - (void)protocolIsSelect:(BOOL)isSelect{
     //设置整段字符串的颜色
     UIColor *color = self.isSelect ? [UIColor blackColor] : [UIColor lightGrayColor];
@@ -212,12 +226,14 @@
     //设置高亮色和点击事件
     [text yy_setTextHighlightRange:[[text string] rangeOfString:@"《用户注册服务协议》"] color:[UIColor blackColor] backgroundColor:[UIColor clearColor] tapAction:^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
         NSLog(@"点击了《用户协议》");
+        [self findNoticeByTypeIdWithTypeStr:@"0"];
     }];
     [text yy_setTextHighlightRange:[[text string] rangeOfString:@"《隐私政策》"] color:[UIColor blackColor] backgroundColor:[UIColor clearColor] tapAction:^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
         NSLog(@"点击了《隐私政策》");
+        [self findNoticeByTypeIdWithTypeStr:@"1"];
     }];
     [text yy_setTextHighlightRange:[[text string] rangeOfString:@"《软件许可及服务协议》"] color:[UIColor blackColor] backgroundColor:[UIColor clearColor] tapAction:^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
-        NSLog(@"点击了《软件许可及服务协议》");
+        [self findNoticeByTypeIdWithTypeStr:@"2"];
     }];
     //添加图片
     UIImage *image = [UIImage imageNamed:self.isSelect == NO ? @"unSelectIcon" : @"selectIcon"];
@@ -274,8 +290,7 @@
     NSDictionary * dic = @{@"legalPhone":_loginView.phoneTF.text};
     [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_VerificationIsRegister params:dic successBlock:^(QDResponseObject *responseObject) {
         if (responseObject.code == 0) {
-            QDLog(@"responseObject");
-            [self login];
+            [self checkLoginNumWithPhone:_loginView.phoneTF.text];
         }else{
             [WXProgressHUD showInfoWithTittle:responseObject.message];
         }
@@ -284,6 +299,19 @@
     }];
 }
 
+#pragma mark - 用户重复登录次数控制
+- (void)checkLoginNumWithPhone:(NSString *)phoneStr{
+    NSDictionary *dic = @{@"legalPhone":phoneStr};
+    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_checkLoginNum params:dic successBlock:^(QDResponseObject *responseObject) {
+        if (responseObject.code == 0) {
+            [self login];
+        }else{
+            [WXProgressHUD showInfoWithTittle:responseObject.message];
+        }
+    } failureBlock:^(NSError *error) {
+        [WXProgressHUD showErrorWithTittle:@"网络异常"];
+    }];
+}
 
 #pragma mark - 个人积分账户详情
 - (void)findMyUserCreditWithUrlStr:(NSString *)urlStr{

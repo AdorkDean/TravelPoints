@@ -22,6 +22,12 @@
         _titleLab.font = QDFont(17);
         [self addSubview:_titleLab];
         
+        _protocolBtn = [[UIButton alloc] init];
+        [_protocolBtn setTitle:@"会员协议" forState:UIControlStateNormal];
+        _protocolBtn.titleLabel.font = QDBoldFont(17);
+        [_protocolBtn setTitleColor:APP_BLUECOLOR forState:UIControlStateNormal];
+        [self addSubview:_protocolBtn];
+        
         _picView = [[UIImageView alloc] init];
         _picView.image = [UIImage imageNamed:@"icon_headerPic"];
         _picView.layer.cornerRadius = SCREEN_WIDTH*0.065;
@@ -110,7 +116,6 @@
         _priceTF.clearButtonMode = UITextFieldViewModeAlways;
         _priceTF.keyboardType = UIKeyboardTypeDecimalPad;
         _priceTF.hidden = YES;
-        _priceTF.backgroundColor = APP_BLUECOLOR;
         _priceTF.font = QDBoldFont(24);
         [_priceTF setValue:APP_GRAYLINECOLOR forKeyPath:@"placeholderLabel.textColor"];
         [_priceTF setValue:QDFont(24) forKeyPath:@"_placeholderLabel.font"];
@@ -151,6 +156,11 @@
     [_titleLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self);
         make.centerY.equalTo(_returnBtn);
+    }];
+    
+    [_protocolBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_titleLab);
+        make.right.equalTo(self.mas_right).offset(-20);
     }];
     
     [_picView mas_makeConstraints:^(MASConstraintMaker *make) {

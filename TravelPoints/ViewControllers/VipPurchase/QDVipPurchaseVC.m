@@ -19,6 +19,7 @@
 #import "QDMemberDTO.h"
 #import "AppDelegate.h"
 #import "QYBaseView.h"
+#import "QDProtocolVC.h"
 @interface QDVipPurchaseVC ()<NewPagedFlowViewDelegate, NewPagedFlowViewDataSource, UITableViewDelegate, UITableViewDataSource>{
     QDVipPurchaseView *_vipPurchaseView;
     UITableView *_tableView;
@@ -111,6 +112,7 @@
     [self queryOrderPay:api_FindPurchaseInfos];
     [_vipPurchaseView.returnBtn addTarget:self action:@selector(popVC:) forControlEvents:UIControlEventTouchUpInside];
     [_vipPurchaseView.confirmBtn addTarget:self action:@selector(confirmToBuy:) forControlEvents:UIControlEventTouchUpInside];
+    [_vipPurchaseView.protocolBtn addTarget:self action:@selector(protocolAction) forControlEvents:UIControlEventTouchUpInside];
     AppDelegate *appD = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     _vipPurchaseView.basePrice = appD.basePirceRate;
     QDLog(@"%lf", _vipPurchaseView.basePrice);
@@ -127,6 +129,20 @@
     [self initBottomBtn];
 }
 
+- (void)protocolAction{
+    NSDictionary *dic = @{@"noticeType":@4};
+    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_findNoticeByTypeId params:dic successBlock:^(QDResponseObject *responseObject) {
+        if (responseObject.code == 0) {
+            NSDictionary *dic = responseObject.result;
+            NSString *contentStr = [dic objectForKey:@"content"];
+            QDProtocolVC *protocolVC = [[QDProtocolVC alloc] init];
+            protocolVC.contentStr = contentStr;
+            [self presentViewController:protocolVC animated:YES completion:nil];
+        }
+    } failureBlock:^(NSError *error) {
+        
+    }];
+}
 #pragma mark - 请求用户信息
 - (void)requestUserStatus{
     [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_GetUserDetail params:nil successBlock:^(QDResponseObject *responseObject) {

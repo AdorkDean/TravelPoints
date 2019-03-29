@@ -20,6 +20,8 @@
 @property (nonatomic, strong) UILabel *priceLab;
 @property (nonatomic, strong) UILabel *balanceLab;
 
+@property (nonatomic, strong) UILabel *amountLab;   //不可部分成交时的数量显示
+
 @end
 
 @implementation QDBuyOrSellViewController
@@ -127,13 +129,23 @@
     if (indexPath.row == 0) {
         cell.textLabel.text = @"数量";
         cell.textLabel.font = QDFont(16);
-        [cell.contentView addSubview:self.numberButton];
-        [_numberButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerY.equalTo(cell.contentView);
-            make.right.equalTo(cell.contentView.mas_right).offset(-(SCREEN_WIDTH*0.05));
-            make.width.mas_equalTo(145);
-            make.height.mas_equalTo(SCREEN_HEIGHT*0.06);
-        }];
+        if ([_operateModel.isPartialDeal isEqualToString:@"0"]) {
+            //不可部分成交
+            self.amountLab.text = _operateModel.surplusVolume;
+            [cell.contentView addSubview:self.amountLab];
+            [_amountLab mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.centerY.equalTo(cell.contentView);
+                make.right.equalTo(cell.contentView.mas_right).offset(-(SCREEN_WIDTH*0.05));
+            }];
+        }else{
+            [cell.contentView addSubview:self.numberButton];
+            [_numberButton mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.centerY.equalTo(cell.contentView);
+                make.right.equalTo(cell.contentView.mas_right).offset(-(SCREEN_WIDTH*0.05));
+                make.width.mas_equalTo(145);
+                make.height.mas_equalTo(SCREEN_HEIGHT*0.06);
+            }];
+        }
     }else if(indexPath.row == 1){
         cell.textLabel.text = @"价格";
         cell.textLabel.font = QDFont(16);
@@ -311,5 +323,13 @@
     }
 }
 
+- (UILabel *)amountLab{
+    if (!_amountLab) {
+        _amountLab = [[UILabel alloc] init];
+        _amountLab.textColor = APP_BLACKCOLOR;
+        _amountLab.font = QDFont(16);
+    }
+    return _amountLab;
+}
 
 @end

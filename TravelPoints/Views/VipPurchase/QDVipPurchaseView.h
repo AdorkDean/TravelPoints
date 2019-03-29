@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *titleLab;
 @property (nonatomic, strong) UIButton *returnBtn;
 
+@property (nonatomic, strong) UIButton *protocolBtn;
 @property (nonatomic, strong) UIImageView *picView;
 @property (nonatomic, strong) UILabel *info1Lab;
 @property (nonatomic, strong) UILabel *info2Lab;
