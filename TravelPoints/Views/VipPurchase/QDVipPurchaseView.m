@@ -110,6 +110,7 @@
         _priceTF.clearButtonMode = UITextFieldViewModeAlways;
         _priceTF.keyboardType = UIKeyboardTypeDecimalPad;
         _priceTF.hidden = YES;
+        _priceTF.backgroundColor = APP_BLUECOLOR;
         _priceTF.font = QDBoldFont(24);
         [_priceTF setValue:APP_GRAYLINECOLOR forKeyPath:@"placeholderLabel.textColor"];
         [_priceTF setValue:QDFont(24) forKeyPath:@"_placeholderLabel.font"];
@@ -244,8 +245,9 @@
 
     [_priceTF mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_priceLab);
-        make.left.equalTo(_priceLab.mas_right).offset(5);
-        make.right.equalTo(_lineView);
+        make.left.equalTo(self.mas_left).offset(35);
+//        make.right.equalTo(_lineView);
+        make.width.mas_equalTo(320);
     }];
     
     [_bottomLab1 mas_makeConstraints:^(MASConstraintMaker *make) {

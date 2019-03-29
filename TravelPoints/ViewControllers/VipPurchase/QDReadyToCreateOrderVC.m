@@ -98,7 +98,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self readyToCreateOrder:api_ReadyToCreateOrder];
-    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 64)];
+    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SafeAreaTopHeight)];
     backView.backgroundColor = APP_WHITECOLOR;
     [self.view addSubview:backView];
     
@@ -108,8 +108,9 @@
     [_returnBtn addTarget:self action:@selector(popAction:) forControlEvents:UIControlEventTouchUpInside];
     [backView addSubview:_returnBtn];
     [_returnBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view.mas_left).offset(SCREEN_WIDTH*0.06);
-        make.top.equalTo(self.view.mas_top).offset(32);
+        make.left.equalTo(self.view.mas_left).offset(10);
+        make.top.equalTo(self.view.mas_top).offset(35);
+        make.width.and.height.mas_equalTo(45);
     }];
     _titleLab = [[UILabel alloc] init];
     _titleLab.text = @"确认支付";

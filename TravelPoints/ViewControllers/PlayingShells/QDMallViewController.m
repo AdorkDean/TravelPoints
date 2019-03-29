@@ -177,7 +177,7 @@
                             @"sortColumn":_sortColumn,
                             @"sortType":_sortType,
                             @"isShipping":_baoyou,
-                            @"keywords":_keywords
+                            @"goodsName":_keywords
                             };
     [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_GetMallList params:dic1 successBlock:^(QDResponseObject *responseObject) {
         [self endRefreshing];

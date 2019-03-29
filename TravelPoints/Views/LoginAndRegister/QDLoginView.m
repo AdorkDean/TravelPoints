@@ -70,7 +70,6 @@
         [gradientLayer setColors:@[(id)[[UIColor colorWithHexString:@"#159095"] CGColor],(id)[[UIColor colorWithHexString:@"#3CC8B1"] CGColor]]];//渐变数组
         [_gotologinBtn.layer addSublayer:gradientLayer];
         [_gotologinBtn setTitle:@"登录" forState:UIControlStateNormal];
-        _gotologinBtn.backgroundColor = [UIColor redColor];
         _gotologinBtn.layer.cornerRadius = 4;
         _gotologinBtn.layer.masksToBounds = YES;
         _gotologinBtn.titleLabel.font = QDFont(17);

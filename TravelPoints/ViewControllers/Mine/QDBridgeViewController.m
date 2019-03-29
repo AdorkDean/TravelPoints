@@ -34,6 +34,7 @@
     UIImage *_weiboImg;
     NSString *_weiboDownUrl;
     NSString *_weiboTitle;
+    QYBaseView *_baseView;
 }
 @property (nonatomic, strong) QDShareView *shareView;
 @property (nonatomic, strong) SnailQuickMaskPopups *popups;
@@ -77,11 +78,11 @@
     if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
-    QYBaseView *baseView = [[QYBaseView alloc] initWithFrame:self.view.frame];
-    self.view = baseView;
+//    _baseView = [[QYBaseView alloc] initWithFrame:self.view.frame];
+//    self.view = _baseView;
     _webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 3, SCREEN_WIDTH, SCREEN_HEIGHT)];
     _webView.navigationDelegate = self;
-    [baseView addSubview:_webView];
+    [self.view addSubview:_webView];
     
     //设置能够进行桥接
     [WebViewJavascriptBridge enableLogging];
@@ -96,26 +97,11 @@
     // 添加属性监听
     [self.webView addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:nil];
     
-    // 进度条
-//    UIView * progress = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 2)];
-//    progress.backgroundColor = [UIColor clearColor];
-//    [self.view addSubview:progress];
-    
-//     隐式动画
-//    CALayer * layer = [CALayer layer];
-//    layer.frame = CGRectMake(0, 0, 0, 3);
-//    layer.backgroundColor = APP_BLUECOLOR.CGColor;
-//    [progress.layer addSublayer:layer];
-//    self.progressLayer = layer;
-    
     [_bridge registerHandler:@"POST" handler:^(id data, WVJBResponseCallback responseCallback) {
         //data: js页面传过来的参数
         //准备post请求
         QDLog(@"JS调用OC,并传值过来");
         NSDictionary *dataDic = [data objectForKey:@"param"];
-//        if(![dataDic count]){
-//            dataDic = nil;
-//        }
         NSString *urlStr = [data objectForKey:@"url"];
         [[QDServiceClient shareClient] requestWithHTMLType:kHTTPRequestTypePOST urlString:urlStr params:dataDic successBlock:^(id responseObject) {
             QDLog(@"responseObject");
@@ -159,7 +145,7 @@
         _popups = [SnailQuickMaskPopups popupsWithMaskStyle:MaskStyleBlackTranslucent aView:_shareView];
         _popups.presentationStyle = PresentationStyleBottom;
         _popups.delegate = self;
-        [_popups presentInView:self.view animated:YES completion:NULL];
+        [_popups presentInView:nil animated:YES completion:NULL];
     }];
     
     //调用日历 多选
