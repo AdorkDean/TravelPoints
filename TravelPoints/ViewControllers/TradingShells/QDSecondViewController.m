@@ -319,6 +319,7 @@
                 }
                 [_tableView reloadData];
             }else{
+                [_tableView reloadData];
                 [self.tableView.mj_header endRefreshing];
             }
         }else{

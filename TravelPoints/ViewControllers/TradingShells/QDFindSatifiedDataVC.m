@@ -12,12 +12,15 @@
 #import "QDRecommendViewController.h"
 #import "CWActionSheet.h"
 #define AddBtnWidth SCREEN_WIDTH*0.075
-@interface QDFindSatifiedDataVC ()<UITableViewDelegate, UITableViewDataSource, PPNumberButtonDelegate>{
+@interface QDFindSatifiedDataVC ()<UITableViewDelegate, UITableViewDataSource, PPNumberButtonDelegate, UITextFieldDelegate>{
     UITableView *_tableView;
     UIButton *_operateBtn;
     int maxNumber;
     int minNumber;
     int currentNumber;
+    NSDecimalNumber *_priceTick;
+    NSDecimalNumber *_amountTick;
+    BOOL isHaveDian;
 }
 @property (nonatomic, strong) PPNumberButton *amountNumBtn;
 @property (nonatomic, strong) PPNumberButton *priceNumBtn;
@@ -26,6 +29,8 @@
 @property (nonatomic, strong) UILabel *situationLab;
 @property (nonatomic, strong) NSString *isPartialDeal;
 
+@property (nonatomic, strong) UITextField *amountTF;
+@property (nonatomic, strong) UITextField *priceTF;
 
 @end
 
@@ -56,9 +61,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    isHaveDian = NO;
     minNumber = 0;
     maxNumber = 5;
     _isPartialDeal = @"1";
+    _priceTick = [NSDecimalNumber decimalNumberWithString:@"0.01"]; //价格
+    _amountTick = [NSDecimalNumber decimalNumberWithString:@"1"];   //数量
     self.title = @"这好玩";
     self.view.backgroundColor = APP_WHITECOLOR;
     [self setLeftBtnItem];
@@ -129,8 +137,10 @@
     if (indexPath.row == 0) {
         cell.textLabel.text = @"数量";
         cell.textLabel.font = QDFont(16);
-        [cell.contentView addSubview:self.amountNumBtn];
-        [_amountNumBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//        [cell.contentView addSubview:self.amountNumBtn];
+        [self setupTextField:self.amountTF];
+        [cell.contentView addSubview:self.amountTF];
+        [_amountTF mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(cell.contentView);
             make.right.equalTo(cell.contentView.mas_right).offset(-(SCREEN_WIDTH*0.05));
             make.width.mas_equalTo(145);
@@ -139,8 +149,10 @@
     }else if(indexPath.row == 1){
         cell.textLabel.text = @"价格";
         cell.textLabel.font = QDFont(16);
-        [cell.contentView addSubview:self.priceNumBtn];
-        [_priceNumBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        [self setupTextField:self.priceTF];
+        [cell.contentView addSubview:self.priceTF];
+//        [cell.contentView addSubview:self.priceNumBtn];
+        [_priceTF mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(cell.contentView);
             make.right.equalTo(cell.contentView.mas_right).offset(-(SCREEN_WIDTH*0.05));
             make.width.mas_equalTo(145);
@@ -188,24 +200,93 @@
     }
 }
 
+#pragma mark - 价格加
 - (void)addAction:(id)sender{
-    
+    NSDecimalNumber *existNum;
+    UITextField *textField = (UITextField *)objc_getAssociatedObject(sender, "textField");
+    if (textField == _priceTF) {    //价格无最大限制,最小不能小于0
+        if ([_priceTF.text isEqualToString:@""]) {
+            existNum = [NSDecimalNumber decimalNumberWithString:@"0"];
+        }else{
+            existNum = [NSDecimalNumber decimalNumberWithString:_priceTF.text];
+        }
+        textField.text = [[existNum decimalNumberByAdding:_priceTick] stringValue];
+    }
+    if (textField == _amountTF) {   //数量最小为1,无最大限制
+        if ([_amountTF.text isEqualToString:@""]) {
+            existNum = [NSDecimalNumber decimalNumberWithString:@"0"];
+        }else{
+            existNum = [NSDecimalNumber decimalNumberWithString:_amountTF.text];
+        }
+        textField.text = [[existNum decimalNumberByAdding:_amountTick] stringValue];
+    }
+    self.priceLab.text = [NSString stringWithFormat:@"%.2lf", [_priceTF.text doubleValue] * [_amountTF.text doubleValue]];
 }
 
+#pragma mark - 价格减
 - (void)subAction:(id)sender{
-    
+    NSDecimalNumber *existNum;
+    UITextField *textField = (UITextField *)objc_getAssociatedObject(sender, "textField");
+    if (textField == _priceTF) {
+        existNum = [NSDecimalNumber decimalNumberWithString:_priceTF.text];
+        textField.text = [[existNum decimalNumberBySubtracting:_priceTick] stringValue];
+        if ([textField.text isEqualToString:@"0"] || [textField.text isEqualToString:@""]) {
+            textField.text = [_priceTick stringValue];
+            [WXProgressHUD showInfoWithTittle:@"价格不能为0"];
+        }
+    }
+    if (textField == _amountTF) {
+        existNum = [NSDecimalNumber decimalNumberWithString:_amountTF.text];
+        textField.text = [[existNum decimalNumberBySubtracting:_amountTick] stringValue];
+        if ([textField.text isEqualToString:@"0"] || [textField.text isEqualToString:@""]) {
+            textField.text = [_amountTick stringValue];
+            [WXProgressHUD showInfoWithTittle:@"数量不能为0"];
+        }
+    }
+    self.priceLab.text = [NSString stringWithFormat:@"%.2lf", [_priceTF.text doubleValue] * [_amountTF.text doubleValue]];
 }
 
 - (void)payAction:(UIButton *)sender{
-    
+    if ([_amountTF.text isEqualToString:@""]) {
+        [WXProgressHUD showInfoWithTittle:@"数量不能为空"];
+        return;
+    }
+    if ([_priceTF.text isEqualToString:@""]) {
+        [WXProgressHUD showInfoWithTittle:@"价格不能为空"];
+        return;
+    }
     QDRecommendViewController *recommendVC = [[QDRecommendViewController alloc] init];
-    
-//    QDShellRecommendVC *recommendVC = [[QDShellRecommendVC alloc] init];
     recommendVC.price = [NSString stringWithFormat:@"%.2f",self.priceNumBtn.currentNumber];
     recommendVC.volume = [NSString stringWithFormat:@"%.2f",self.amountNumBtn.currentNumber];
     recommendVC.isPartialDeal = _isPartialDeal;
     recommendVC.postersType = _typeStr;
     [self.navigationController pushViewController:recommendVC animated:YES];
+}
+
+#pragma mark - 价格输入框
+- (UITextField *)priceTF{
+    if (!_priceTF) {
+        _priceTF = [[UITextField alloc] init];
+        _priceTF.delegate = self;
+        [_priceTF addTarget:self action:@selector(textfieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+        _priceTF.textColor = APP_BLACKCOLOR;
+        _priceTF.font = QDFont(16);
+        _priceTF.text = @"0.01";
+    }
+    return _priceTF;
+}
+
+#pragma mark - 数量输入框
+- (UITextField *)amountTF{
+    if (!_amountTF) {
+        _amountTF = [[UITextField alloc] init];
+        [_amountTF addTarget:self action:@selector(textfieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+        _amountTF.textColor = APP_BLACKCOLOR;
+        _amountTF.delegate = self;
+        _amountTF.font = QDFont(16);
+        _amountTF.text = @"1";
+    }
+    return _amountTF;
 }
 
 #pragma mark - 价格
@@ -220,7 +301,7 @@
         _priceNumBtn.minValue = 0.1;
         _priceNumBtn.currentNumber = 0.1;
         // 设置最大值
-        [_priceNumBtn.textField addTarget:self action:@selector(textfieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+//        [_priceNumBtn.textField addTarget:self action:@selector(textfieldDidChange:) forControlEvents:UIControlEventEditingChanged];
         _priceNumBtn.maxValue = 10000;
         _priceNumBtn.delegate = self;
         _priceNumBtn.increaseImage = [UIImage imageNamed:@"icon_increase"];
@@ -265,7 +346,7 @@
 - (UILabel *)priceLab{
     if(!_priceLab){
         _priceLab = [[UILabel alloc] init];
-//        _priceLab.text = _operateModel.price;
+        _priceLab.text = @"0.01";
         _priceLab.font = QDFont(16);
         _priceLab.textColor = APP_BLACKCOLOR;
     }
@@ -311,8 +392,129 @@
     }
 }
 
-- (void)textfieldDidChange:(UITextField *)textField{
-    self.priceLab.text = [NSString stringWithFormat:@"%.2lf", _amountNumBtn.currentNumber * _priceNumBtn.currentNumber];
+- (void)setupTextField:(UITextField *)textField
+{
+    if(textField == _priceTF){
+        textField.keyboardType = UIKeyboardTypeDecimalPad;
+    }else if (textField == _amountTF){
+        textField.keyboardType = UIKeyboardTypeNumberPad;
+    }
+    textField.textAlignment = NSTextAlignmentCenter;
+    
+    UIButton *subBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    subBtn.frame = CGRectMake(0, 0, 28, 28);
+    [subBtn setImage:[UIImage imageNamed:@"icon_decrease"] forState:UIControlStateNormal];
+    
+    UIButton *addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    addBtn.frame = CGRectMake(0, 0, 28, 28);
+    [addBtn setImage:[UIImage imageNamed:@"icon_increase"] forState:UIControlStateNormal];
+    
+    UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 28, 28)];
+    [leftView addSubview:subBtn];
+    
+    UIView *rightView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 28, 28)];
+    [rightView addSubview:addBtn];
+    
+    [addBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.bottom.height.and.right.equalTo(rightView);
+        make.width.mas_equalTo(28);
+    }];
+    
+    [subBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.bottom.height.and.right.equalTo(leftView);
+        make.width.mas_equalTo(28);
+    }];
+    
+    textField.leftView = leftView;
+    textField.leftViewMode = UITextFieldViewModeAlways;
+    textField.rightView = rightView;
+    textField.rightViewMode = UITextFieldViewModeAlways;
+    
+    objc_setAssociatedObject(addBtn, "textField", textField, OBJC_ASSOCIATION_ASSIGN);
+    [addBtn addTarget:self action:@selector(addAction:) forControlEvents:UIControlEventTouchUpInside];
+    
+    objc_setAssociatedObject(subBtn, "textField", textField, OBJC_ASSOCIATION_ASSIGN);
+    [subBtn addTarget:self action:@selector(subAction:) forControlEvents:UIControlEventTouchUpInside];
 }
 
+- (void)addssAction:(id)sender{
+    [sender setImage:[UIImage imageNamed:@"icon_grayDecrease"] forState:UIControlStateNormal];
+}
+
+- (void)textfieldDidChange:(UITextField *)textField{
+    self.priceLab.text = [NSString stringWithFormat:@"%.2lf", [_priceTF.text doubleValue] * [_amountTF.text doubleValue]];
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    if (textField == _priceTF) {
+        /*
+         * 不能输入.0-9以外的字符。
+         * 设置输入框输入的内容格式
+         * 只能有一个小数点
+         * 小数点后最多能输入两位
+         * 如果第一位是.则前面加上0.
+         * 如果第一位是0则后面必须输入点，否则不能输入。
+         */
+        
+        // 判断是否有小数点
+        if ([textField.text containsString:@"."]) {
+            isHaveDian = YES;
+        }else{
+            isHaveDian = NO;
+        }
+        
+        if (string.length > 0) {
+            
+            //当前输入的字符
+            unichar single = [string characterAtIndex:0];
+            
+            // 不能输入.0-9以外的字符
+            if (!((single >= '0' && single <= '9') || single == '.'))
+            {
+                [WXProgressHUD showInfoWithTittle:@"您的输入格式不正确"];
+                return NO;
+            }
+            
+            // 只能有一个小数点
+            if (isHaveDian && single == '.') {
+                [WXProgressHUD showInfoWithTittle:@"最多只能输入一个小数点"];
+                return NO;
+            }
+            
+            // 如果第一位是.则前面加上0.
+            if ((textField.text.length == 0) && (single == '.')) {
+                textField.text = @"0";
+            }
+            
+            // 如果第一位是0则后面必须输入点，否则不能输入。
+            if ([textField.text hasPrefix:@"0"]) {
+                if (textField.text.length > 1) {
+                    NSString *secondStr = [textField.text substringWithRange:NSMakeRange(1, 1)];
+                    if (![secondStr isEqualToString:@"."]) {
+                        [WXProgressHUD showInfoWithTittle:@"第二个字符需要是小数点"];
+                        return NO;
+                    }
+                }else{
+                    if (![string isEqualToString:@"."]) {
+                        [WXProgressHUD showInfoWithTittle:@"第二个字符需要是小数点"];
+                        return NO;
+                    }
+                }
+            }
+            
+            // 小数点后最多能输入两位
+            if (isHaveDian) {
+                NSRange ran = [textField.text rangeOfString:@"."];
+                // 由于range.location是NSUInteger类型的，所以这里不能通过(range.location - ran.location)>2来判断
+                if (range.location > ran.location) {
+                    if ([textField.text pathExtension].length > 1) {
+                        [WXProgressHUD showInfoWithTittle:@"小数点后最多有两位小数"];
+                        return NO;
+                    }
+                }
+            }
+        }
+    }
+    return YES;
+}
 @end

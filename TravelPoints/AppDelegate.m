@@ -167,18 +167,13 @@
     NSString *isFirst = [defaults objectForKey:firstKey];
     
     NSMutableArray *backgroundImageNames = [NSMutableArray arrayWithCapacity:3];
-    NSMutableArray *coverImageNames = [NSMutableArray arrayWithCapacity:3];
     if (!isFirst.length) {
         for (NSInteger i = 1; i < 4; i ++) {
             NSString *temp1 = [NSString stringWithFormat:@"ggps_%ld_bg", i];
-            NSString *temp2 = [NSString stringWithFormat:@"ggps_%ld_text", i];
             if ([[UIApplication sharedApplication] statusBarFrame].size.height > 20) {
                 temp1 = [NSString stringWithFormat:@"x_%@", temp1];
-                temp2 = [NSString stringWithFormat:@"x_%@", temp2];
             }
-            
             [backgroundImageNames addObject:temp1];
-            [coverImageNames addObject:temp2];
         }
         
         // NO.1

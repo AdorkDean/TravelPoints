@@ -275,6 +275,7 @@ typedef enum : NSUInteger {
                     }
                 }
             }else{
+                [self.tableView reloadData];
                 [self.tableView.mj_header endRefreshing];
             }
         }else{

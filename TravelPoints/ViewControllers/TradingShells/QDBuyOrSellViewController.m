@@ -183,45 +183,49 @@
 
 - (void)payAction:(UIButton *)sender{
     //直接购买
-    [WXProgressHUD showHUD];
-    NSDictionary *paramsDic = @{
-                                @"userId":_operateModel.userId,
-                                @"creditCode":_operateModel.creditCode,
-                                @"price":[NSNumber numberWithDouble:[_operateModel.price doubleValue]],
-                                @"buyVolume":[NSNumber numberWithFloat:_numberButton.currentNumber],
-                                @"balance":self.balanceLab.text,
-                                @"postersId":_operateModel.postersId,
-                                @"postersType":_operateModel.postersType,
-                                @"isPartialDeal":_operateModel.isPartialDeal    //是否允许部分成交
-                                };
-    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_BuyAndSellBiddingPosters params:paramsDic successBlock:^(QDResponseObject *responseObject) {
-        if (responseObject.code == 0) {
-            [WXProgressHUD showSuccessWithTittle:@"订单生成"];
-            //摘单生成的订单号
-            NSString *str = responseObject.result;
-            //是否确认付款
-            [WXProgressHUD hideHUD];
-            TYAlertView *alertView = [[TYAlertView alloc] initWithTitle:@"确认付款" message:@"您确定要对这笔订单进行付款操作吗?"];
-            [alertView addAction:[TYAlertAction actionWithTitle:@"取消" style:TYAlertActionStyleCancel handler:^(TYAlertAction *action) {
+    if ([_numberButton.textField.text intValue] > [_operateModel.surplusVolume intValue]) {
+        [WXProgressHUD showInfoWithTittle:@"数量输入不合法,请重新输入"];
+    }else{
+        [WXProgressHUD showHUD];
+        NSDictionary *paramsDic = @{
+                                    @"userId":_operateModel.userId,
+                                    @"creditCode":_operateModel.creditCode,
+                                    @"price":[NSNumber numberWithDouble:[_operateModel.price doubleValue]],
+                                    @"buyVolume":[NSNumber numberWithFloat:_numberButton.currentNumber],
+                                    @"balance":self.balanceLab.text,
+                                    @"postersId":_operateModel.postersId,
+                                    @"postersType":_operateModel.postersType,
+                                    @"isPartialDeal":_operateModel.isPartialDeal    //是否允许部分成交
+                                    };
+        [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_BuyAndSellBiddingPosters params:paramsDic successBlock:^(QDResponseObject *responseObject) {
+            if (responseObject.code == 0) {
+                [WXProgressHUD showSuccessWithTittle:@"订单生成"];
+                //摘单生成的订单号
+                NSString *str = responseObject.result;
+                //是否确认付款
                 [WXProgressHUD hideHUD];
-            }]];
-            [alertView addAction:[TYAlertAction actionWithTitle:@"确定" style:TYAlertActionStyleDestructive handler:^(TYAlertAction *action) {
-                QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
-                NSString *balance = [NSString stringWithFormat:@"%.2f", [_balanceLab.text doubleValue]];
-                bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?amount=%@&id=%@", QD_JSURL, JS_PAYACTION, balance, str];
-                [self.navigationController pushViewController:bridgeVC animated:YES];
-            }]];
-            [alertView setButtonTitleColor:APP_BLUECOLOR forActionStyle:TYAlertActionStyleCancel forState:UIControlStateNormal];
-            [alertView setButtonTitleColor:APP_BLUECOLOR forActionStyle:TYAlertActionStyleBlod forState:UIControlStateNormal];
-            [alertView setButtonTitleColor:APP_BLUECOLOR forActionStyle:TYAlertActionStyleDestructive forState:UIControlStateNormal];
-            [alertView show];
-        }else{
-            [WXProgressHUD hideHUD];
-            [WXProgressHUD showInfoWithTittle:responseObject.message];
-        }
-    } failureBlock:^(NSError *error) {
-        [WXProgressHUD showErrorWithTittle:@"网络请求失败"];
-    }];
+                TYAlertView *alertView = [[TYAlertView alloc] initWithTitle:@"确认付款" message:@"您确定要对这笔订单进行付款操作吗?"];
+                [alertView addAction:[TYAlertAction actionWithTitle:@"取消" style:TYAlertActionStyleCancel handler:^(TYAlertAction *action) {
+                    [WXProgressHUD hideHUD];
+                }]];
+                [alertView addAction:[TYAlertAction actionWithTitle:@"确定" style:TYAlertActionStyleDestructive handler:^(TYAlertAction *action) {
+                    QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
+                    NSString *balance = [NSString stringWithFormat:@"%.2f", [_balanceLab.text doubleValue]];
+                    bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?amount=%@&id=%@", QD_JSURL, JS_PAYACTION, balance, str];
+                    [self.navigationController pushViewController:bridgeVC animated:YES];
+                }]];
+                [alertView setButtonTitleColor:APP_BLUECOLOR forActionStyle:TYAlertActionStyleCancel forState:UIControlStateNormal];
+                [alertView setButtonTitleColor:APP_BLUECOLOR forActionStyle:TYAlertActionStyleBlod forState:UIControlStateNormal];
+                [alertView setButtonTitleColor:APP_BLUECOLOR forActionStyle:TYAlertActionStyleDestructive forState:UIControlStateNormal];
+                [alertView show];
+            }else{
+                [WXProgressHUD hideHUD];
+                [WXProgressHUD showInfoWithTittle:responseObject.message];
+            }
+        } failureBlock:^(NSError *error) {
+            [WXProgressHUD showErrorWithTittle:@"网络请求失败"];
+        }];
+    }
 }
 
 - (void)sellAction:(UIButton *)sender{
@@ -249,6 +253,19 @@
         [WXProgressHUD showErrorWithTittle:@"网络请求失败"];
     }];
 }
+
+#pragma mark - 数量输入,第一位不能为0,且不能高于superVolume
+- (void)verifyNum:(UITextField *)tf{
+    if (tf.text.length == 1 && [tf.text isEqualToString:@"0"]) {
+        tf.text = @"";
+    }else{
+        if ([tf.text intValue] > [_operateModel.surplusVolume intValue]) {
+            [WXProgressHUD showInfoWithTittle:@"不能高于可成交数量,请重新输入"];
+        }
+    }
+    QDLog(@"123");
+}
+
 #pragma mark - lazy
 - (PPNumberButton *)numberButton
 {
@@ -256,6 +273,8 @@
         _numberButton = [[PPNumberButton alloc] initWithFrame:CGRectMake(0, 0, 145, 40)];
         _numberButton.shakeAnimation = YES;
         _numberButton.delegate = self;
+        _numberButton.textField.keyboardType = UIKeyboardTypeNumberPad;
+        [_numberButton.textField addTarget:self action:@selector(verifyNum:) forControlEvents:UIControlEventEditingChanged];
         // 设置最小值
         if (_operateModel != nil) {
             if ([_operateModel.isPartialDeal isEqualToString:@"0"]) {   //不可部分成交
