@@ -155,10 +155,16 @@ typedef enum : NSUInteger {
 - (void)requestHeaderTopData{
     NSString *str = [QDUserDefaults getObjectForKey:@"loginType"];
     if ([str isEqualToString:@"0"] || str == nil) { //未登录
+        if (_myOrdersArr.count) {
+            [_myOrdersArr removeAllObjects];
+        }
         [self endRefreshing];
-        QDLoginAndRegisterVC *loginVC = [[QDLoginAndRegisterVC alloc] init];
-        loginVC.pushVCTag = @"0";
-        [self presentViewController:loginVC animated:YES completion:nil];
+        [_tableView reloadData];
+        [_tableView reloadEmptyDataSet];
+        _emptyType = QDNODataError;
+//        QDLoginAndRegisterVC *loginVC = [[QDLoginAndRegisterVC alloc] init];
+//        loginVC.pushVCTag = @"0";
+//        [self presentViewController:loginVC animated:YES completion:nil];
     }else{
         if (_myOrdersArr.count) {
             [_myOrdersArr removeAllObjects];
@@ -208,7 +214,6 @@ typedef enum : NSUInteger {
 
 #pragma mark - 请求我的报单数据
 - (void)requestMyOrdersData{
-    [WXProgressHUD showHUD];
     NSString *str = [QDUserDefaults getObjectForKey:@"loginType"];
     if ([str isEqualToString:@"0"] || str == nil) { //未登录
         QDLoginAndRegisterVC *loginVC = [[QDLoginAndRegisterVC alloc] init];
@@ -227,7 +232,6 @@ typedef enum : NSUInteger {
                                      @"pageSize":[NSNumber numberWithInt:_pageSize]
                                      };
         [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_FindMyBiddingPosterse params:paramsDic successBlock:^(QDResponseObject *responseObject) {
-            [WXProgressHUD hideHUD];
             if (responseObject.code == 0) {
                 NSDictionary *dic = responseObject.result;
                 NSArray *hotelArr = [dic objectForKey:@"result"];
@@ -265,7 +269,6 @@ typedef enum : NSUInteger {
                 [WXProgressHUD showInfoWithTittle:responseObject.message];
             }
         } failureBlock:^(NSError *error) {
-            [WXProgressHUD hideHUD];
             _emptyType = QDNetworkError;
             [_tableView reloadData];
             [_tableView reloadEmptyDataSet];

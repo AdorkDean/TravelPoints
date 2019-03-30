@@ -126,9 +126,16 @@ QD_ManualCanceled = 4      //手工取消
     NSString *str = [QDUserDefaults getObjectForKey:@"loginType"];
     if ([str isEqualToString:@"0"] || str == nil) { //未登录
         [self endRefreshing];
-        QDLoginAndRegisterVC *loginVC = [[QDLoginAndRegisterVC alloc] init];
-        loginVC.pushVCTag = @"0";
-        [self presentViewController:loginVC animated:YES completion:nil];
+        if (_myPickOrdersArr.count) {
+            [_myPickOrdersArr removeAllObjects];
+        }
+        [self endRefreshing];
+        [_tableView reloadData];
+        [_tableView reloadEmptyDataSet];
+        _emptyType = QDNODataError;
+//        QDLoginAndRegisterVC *loginVC = [[QDLoginAndRegisterVC alloc] init];
+//        loginVC.pushVCTag = @"0";
+//        [self presentViewController:loginVC animated:YES completion:nil];
     }else{
         if (_myPickOrdersArr.count) {
             [_myPickOrdersArr removeAllObjects];

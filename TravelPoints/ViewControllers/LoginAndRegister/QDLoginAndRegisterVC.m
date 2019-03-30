@@ -227,18 +227,17 @@
     //设置高亮色和点击事件
     [text yy_setTextHighlightRange:[[text string] rangeOfString:@"《用户注册服务协议》"] color:[UIColor blackColor] backgroundColor:[UIColor clearColor] tapAction:^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
         NSLog(@"点击了《用户协议》");
-//        QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
-//        bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?noticeType=0", QD_JSURL, JS_NOTICETYPE];
-//        QDLog(@"urlStr = %@", bridgeVC.urlStr);
-//        [self presentViewController:bridgeVC animated:YES completion:nil];
+//        [self protocolBridgeVC:@"0"];
         [self findNoticeByTypeIdWithTypeStr:@"0"];
     }];
     [text yy_setTextHighlightRange:[[text string] rangeOfString:@"《隐私政策》"] color:[UIColor blackColor] backgroundColor:[UIColor clearColor] tapAction:^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
         NSLog(@"点击了《隐私政策》");
+//        [self protocolBridgeVC:@"1"];
         [self findNoticeByTypeIdWithTypeStr:@"1"];
     }];
     [text yy_setTextHighlightRange:[[text string] rangeOfString:@"《软件许可及服务协议》"] color:[UIColor blackColor] backgroundColor:[UIColor clearColor] tapAction:^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
         [self findNoticeByTypeIdWithTypeStr:@"2"];
+//        [self protocolBridgeVC:@"2"];
     }];
     //添加图片
     UIImage *image = [UIImage imageNamed:self.isSelect == NO ? @"unSelectIcon" : @"selectIcon"];
@@ -574,5 +573,11 @@
     } failureBlock:^(NSError *error) {
         [WXProgressHUD showErrorWithTittle:@"网络请求失败"];
     }];
+}
+
+- (void)protocolBridgeVC:(NSString *)typeStr{
+    QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
+    bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?noticeType=%@", QD_TESTJSURL, JS_NOTICETYPE, typeStr];
+    [self presentViewController:bridgeVC animated:YES completion:nil];
 }
 @end

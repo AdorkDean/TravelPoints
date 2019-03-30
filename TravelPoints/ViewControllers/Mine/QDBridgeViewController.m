@@ -140,7 +140,11 @@
     
     [_bridge registerHandler:@"goBack" handler:^(id data, WVJBResponseCallback responseCallback) {
         QDLog(@"goBack");   //返回按钮的点击事件里面的代码
-        [self.navigationController popViewControllerAnimated:YES];
+        if (self.presentingViewController) {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }else{
+            [self.navigationController popViewControllerAnimated:YES];
+        }
     }];
     
     [_bridge registerHandler:@"getShare" handler:^(id data, WVJBResponseCallback responseCallback) {
