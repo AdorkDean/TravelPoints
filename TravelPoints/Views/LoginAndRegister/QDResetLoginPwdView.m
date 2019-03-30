@@ -47,13 +47,15 @@
 
         _confirmBtn = [[UIButton alloc] init];
         CAGradientLayer *gradientLayer =  [CAGradientLayer layer];
-        gradientLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH*0.89, SCREEN_HEIGHT*0.068);
+        gradientLayer.frame = CGRectMake(0, 0, 335, 50);
         gradientLayer.startPoint = CGPointMake(0, 0);
         gradientLayer.endPoint = CGPointMake(1, 0);
         gradientLayer.locations = @[@(0.5),@(1.0)];//渐变点
         [gradientLayer setColors:@[(id)[[UIColor colorWithHexString:@"#159095"] CGColor],(id)[[UIColor colorWithHexString:@"#3CC8B1"] CGColor]]];//渐变数组
         [_confirmBtn.layer addSublayer:gradientLayer];
-        [_confirmBtn setTitle:@"确认" forState:UIControlStateNormal];
+        _confirmBtn.layer.masksToBounds =YES;
+        _confirmBtn.layer.cornerRadius =4;
+        [_confirmBtn setTitle:@"确定" forState:UIControlStateNormal];
         [self addSubview:_confirmBtn];
     }
     return self;
@@ -102,7 +104,8 @@
     [_confirmBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.and.width.equalTo(self.lineViewBottom);
         make.top.equalTo(self.lineViewBottom.mas_bottom).offset(SCREEN_HEIGHT*0.068);
-        make.height.mas_equalTo(SCREEN_HEIGHT*0.075);
+        make.height.mas_equalTo(50);
+        make.width.mas_equalTo(335);
     }];
 }
 @end

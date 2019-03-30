@@ -339,14 +339,14 @@ typedef enum : NSUInteger {
 #pragma mark - 点击玩贝手册
 - (void)wbscAction{
     NSDictionary *dic = @{@"noticeType":@"11"};
-    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_otherProtocols params:dic successBlock:^(QDResponseObject *responseObject) {
-        if (responseObject.code == 0) {
-            NSString *urlStr = responseObject.result;
-            QDLog(@"urlStr = %@", urlStr);
-        }
-    } failureBlock:^(NSError *error) {
-        
-    }];
+//    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_otherProtocols params:dic successBlock:^(QDResponseObject *responseObject) {
+//        if (responseObject.code == 0) {
+//            NSString *urlStr = responseObject.result;
+//            QDLog(@"urlStr = %@", urlStr);
+//        }
+//    } failureBlock:^(NSError *error) {
+//
+//    }];
     
     QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
     bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?noticeType=11", QD_TESTJSURL, JS_WBSC];

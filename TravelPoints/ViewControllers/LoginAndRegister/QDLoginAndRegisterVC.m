@@ -556,6 +556,25 @@
 
 #pragma mark - 重置登录密码
 - (void)confirmToModeifyPwd:(UIButton *)sender{
+    NSString *pwdStr = _resetLoginPwdView.theNewPwdTF.text;
+    NSString *confirmPwdStr = _resetLoginPwdView.confirmPwdTF.text;
+    
+    if ([pwdStr isEqualToString:@""]) {
+        [WXProgressHUD showInfoWithTittle:@"请设置新密码"];
+        return;
+    }
+    if ([confirmPwdStr isEqualToString:@""]) {
+        [WXProgressHUD showInfoWithTittle:@"请确认新密码"];
+        return;
+    }
+    if (![pwdStr isEqualToString:confirmPwdStr]) {
+        [WXProgressHUD showInfoWithTittle:@"两次密码输入不一致"];
+        return;
+    }
+    if (![self judgePassWordLegal:pwdStr]) {
+        [WXProgressHUD showInfoWithTittle:@"密码要求为6～16位字母与数字组合"];
+        return;
+    }
     QDLog(@"resetPWD");
     NSDictionary * dic = @{@"legalPhone":_userPhoneNum,
                            @"userPwd":_resetLoginPwdView.theNewPwdTF.text,

@@ -26,6 +26,7 @@
 #import "WaterLayou.h"
 #import "QDBuyOrSellViewController.h"
 #import "QDLoginAndRegisterVC.h"
+#import "QDBridgeViewController.h"
 #define K_T_Cell @"t_cell"
 #define K_C_Cell @"c_cell"
 
@@ -272,8 +273,12 @@
     _tableView.tableHeaderView = headerView;
     
     UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*0.05, SCREEN_WIDTH*0.03, 346, 135)];
+    imgView.userInteractionEnabled = YES;
     imgView.image = [UIImage imageNamed:@"shellBanner"];
     [headerView addSubview:imgView];
+    UITapGestureRecognizer *ges = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(wbscAction)];
+    [imgView addGestureRecognizer:ges];
+
 
     _tableView.mj_header = [QDRefreshHeader headerWithRefreshingBlock:^{
         QDLog(@"下拉刷新");
@@ -284,6 +289,24 @@
         _pageNum++;
         [self requestZWBData];
     }];
+}
+
+#pragma mark - 点击玩贝手册
+- (void)wbscAction{
+    NSDictionary *dic = @{@"noticeType":@"11"};
+    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_otherProtocols params:dic successBlock:^(QDResponseObject *responseObject) {
+        if (responseObject.code == 0) {
+            NSString *urlStr = responseObject.result;
+            QDLog(@"urlStr = %@", urlStr);
+        }
+    } failureBlock:^(NSError *error) {
+        
+    }];
+    
+    QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
+    bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?noticeType=11", QD_TESTJSURL, JS_WBSC];
+    QDLog(@"urlStr = %@", bridgeVC.urlStr);
+    [self.navigationController pushViewController:bridgeVC animated:YES];
 }
 
 #pragma mark - 下拉刷新数据  只请求第一页的数据

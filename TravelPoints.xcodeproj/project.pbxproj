@@ -266,6 +266,7 @@
 		936CB21B22367C5300D67896 /* QDThirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 936CB21A22367C5300D67896 /* QDThirdViewController.m */; };
 		93726472224F4DE800A3B9C5 /* HcdGuideView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9372646F224F4DE800A3B9C5 /* HcdGuideView.m */; };
 		93726473224F4DE800A3B9C5 /* HcdGuideViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93726470224F4DE800A3B9C5 /* HcdGuideViewCell.m */; };
+		937264F8224FAD7C00A3B9C5 /* QDPicVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 937264F7224FAD7C00A3B9C5 /* QDPicVC.m */; };
 		937344E4223137850054D753 /* LQPopUpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 937344E3223137850054D753 /* LQPopUpView.m */; };
 		93744F472239DC37000708A3 /* QDPickOrderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93744F462239DC37000708A3 /* QDPickOrderView.m */; };
 		93744F4A223A29A1000708A3 /* QDFindSatifiedDataVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93744F49223A29A1000708A3 /* QDFindSatifiedDataVC.m */; };
@@ -842,6 +843,8 @@
 		9372646F224F4DE800A3B9C5 /* HcdGuideView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HcdGuideView.m; sourceTree = "<group>"; };
 		93726470224F4DE800A3B9C5 /* HcdGuideViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HcdGuideViewCell.m; sourceTree = "<group>"; };
 		93726471224F4DE800A3B9C5 /* HcdGuideView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HcdGuideView.h; sourceTree = "<group>"; };
+		937264F6224FAD7C00A3B9C5 /* QDPicVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDPicVC.h; sourceTree = "<group>"; };
+		937264F7224FAD7C00A3B9C5 /* QDPicVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDPicVC.m; sourceTree = "<group>"; };
 		937344E2223137850054D753 /* LQPopUpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LQPopUpView.h; sourceTree = "<group>"; };
 		937344E3223137850054D753 /* LQPopUpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LQPopUpView.m; sourceTree = "<group>"; };
 		93744F452239DC37000708A3 /* QDPickOrderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDPickOrderView.h; sourceTree = "<group>"; };
@@ -1711,6 +1714,8 @@
 				3B2C1F8D21F732AD00DD94CD /* QDMineInfoViewController.m */,
 				932715F2224E058D008CD6A8 /* QDProtocolVC.h */,
 				932715F3224E058D008CD6A8 /* QDProtocolVC.m */,
+				937264F6224FAD7C00A3B9C5 /* QDPicVC.h */,
+				937264F7224FAD7C00A3B9C5 /* QDPicVC.m */,
 			);
 			path = Mine;
 			sourceTree = "<group>";
@@ -2403,6 +2408,7 @@
 				3B1DFE0A21F2D26D007D4B12 /* SYSearchController.m in Sources */,
 				932715D5224C7397008CD6A8 /* AllHouseCouponCell.m in Sources */,
 				93E30EA42224D1A9003CA771 /* PGCustomBannerView.m in Sources */,
+				937264F8224FAD7C00A3B9C5 /* QDPicVC.m in Sources */,
 				3B0DC082220034B30056C318 /* SDImageCacheConfig.m in Sources */,
 				93E30EC422261714003CA771 /* NSString+QDDecimalNumberHandler.m in Sources */,
 				93D2D5B0222A149D00CCC61D /* SFDualWayIndicateView.m in Sources */,

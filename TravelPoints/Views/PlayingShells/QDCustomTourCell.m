@@ -92,14 +92,14 @@
     [_thePic mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.contentView);
         make.top.equalTo(self.contentView.mas_top).offset(SCREEN_HEIGHT*0.03);
-        make.width.mas_equalTo(SCREEN_WIDTH*0.89);
-        make.height.mas_equalTo(SCREEN_HEIGHT*0.375);
+        make.width.mas_equalTo(335);
+        make.height.mas_equalTo(250);
     }];
     
     [_titleLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(_thePic);
         make.top.equalTo(self.thePic.mas_bottom).offset(SCREEN_WIDTH*0.02);
-        make.width.mas_equalTo(SCREEN_WIDTH*0.84);
+        make.width.mas_equalTo(315);
     }];
     
     [_wanbei mas_makeConstraints:^(MASConstraintMaker *make) {
