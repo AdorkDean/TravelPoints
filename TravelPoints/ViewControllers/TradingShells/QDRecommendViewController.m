@@ -150,7 +150,7 @@
     NSDictionary * paramsDic = @{@"creditCode":@"10001",
                                  @"price":_price,
                                  @"postersType":[_postersType isEqualToString:@"1"] ? @"0": @"1",
-                                 @"volume":[NSNumber numberWithInt:[_volume intValue]],
+                                 @"volume":_volume,
                                  @"isPartialDeal": _isPartialDeal
                                  };
     [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_SaveIntentionPosters params:paramsDic successBlock:^(QDResponseObject *responseObject) {

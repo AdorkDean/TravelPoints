@@ -169,6 +169,7 @@ typedef enum : NSUInteger {
                                      @"pageSize":[NSNumber numberWithInt:_pageSize]
                                      };
         [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_FindMyBiddingPosterse params:paramsDic successBlock:^(QDResponseObject *responseObject) {
+            self.loading = NO;
             if (responseObject.code == 0) {
                 NSDictionary *dic = responseObject.result;
                 NSArray *hotelArr = [dic objectForKey:@"result"];
@@ -184,6 +185,8 @@ typedef enum : NSUInteger {
                     [_tableView reloadData];
                 }else{
                     _emptyType = QDNODataError;
+                    [_tableView reloadData];
+                    [_tableView reloadEmptyDataSet];
                     [_tableView.mj_header endRefreshing];
                 }
             }else{
@@ -526,7 +529,7 @@ typedef enum : NSUInteger {
         if ([str isEqualToString:@"0"] || str == nil) { //未登录
             text = @"前往登录";
         }else{
-            text = @"暂无数据";
+            text = @"点击刷新";
         }
         NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
         paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
@@ -596,7 +599,7 @@ typedef enum : NSUInteger {
 }
 
 - (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView{
-    return -50;
+    return -80;
 }
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button
 {

@@ -69,7 +69,6 @@
     [super viewWillAppear:animated];
     [self.navigationController.navigationBar setHidden:YES];
     [self.tabBarController.tabBar setHidden:YES];
-    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
 }
 
 - (void)viewDidLoad {
@@ -80,8 +79,17 @@
 //    }
 //    _baseView = [[QYBaseView alloc] initWithFrame:self.view.frame];
 //    self.view = _baseView;
-    _webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 3, SCREEN_WIDTH, SCREEN_HEIGHT)];
+//    _webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 3, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    
+
+    _webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    _webView.backgroundColor = APP_WHITECOLOR;
     _webView.navigationDelegate = self;
+    if (@available(iOS 11.0, *)) {
+        self.webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    } else {
+        // Fallback on earlier versions
+    }
     [self.view addSubview:_webView];
     
     //设置能够进行桥接

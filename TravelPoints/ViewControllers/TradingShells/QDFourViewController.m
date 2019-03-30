@@ -530,20 +530,18 @@ QD_ManualCanceled = 4      //手工取消
         NSString *str = [QDUserDefaults getObjectForKey:@"loginType"];
         if ([str isEqualToString:@"0"] || str == nil) { //未登录
             text = @"前往登录";
-            NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
-            paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
-            paragraphStyle.alignment = NSTextAlignmentCenter;
-            
-            NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:18],
-                                         NSForegroundColorAttributeName: APP_WHITECOLOR,
-                                         NSParagraphStyleAttributeName: paragraphStyle};
-            return [[NSMutableAttributedString alloc] initWithString:text attributes:attributes];
         }else{
-            return nil;
+            text = @"点击刷新";
         }
-       
+        NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
+        paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+        paragraphStyle.alignment = NSTextAlignmentCenter;
+        
+        NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:18],
+                                     NSForegroundColorAttributeName: APP_WHITECOLOR,
+                                     NSParagraphStyleAttributeName: paragraphStyle};
+        return [[NSMutableAttributedString alloc] initWithString:text attributes:attributes];
     }
-    return nil;
 }
 
 - (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state{
@@ -615,6 +613,6 @@ QD_ManualCanceled = 4      //手工取消
 }
 
 - (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView{
-    return -50;
+    return -80;
 }
 @end

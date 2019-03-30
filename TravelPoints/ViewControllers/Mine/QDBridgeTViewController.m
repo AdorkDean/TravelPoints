@@ -69,7 +69,11 @@
     _webView.navigationDelegate = self;
 //    _webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     [baseView addSubview:_webView];
-    
+    if (@available(iOS 11.0, *)) {
+        self.webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    } else {
+        // Fallback on earlier versions
+    }
     //设置能够进行桥接
     [WebViewJavascriptBridge enableLogging];
     

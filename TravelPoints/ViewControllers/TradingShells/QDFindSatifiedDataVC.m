@@ -162,7 +162,7 @@
         cell.textLabel.text = @"金额";
         cell.textLabel.font = QDFont(16);
         [cell.contentView addSubview:self.priceLab];
-        self.priceLab.text = [NSString stringWithFormat:@"%.2lf", _amountNumBtn.currentNumber * _priceNumBtn.currentNumber];
+        self.priceLab.text = [NSString stringWithFormat:@"%.2lf", [_priceTF.text doubleValue] * [_amountTF.text doubleValue]];
         [_priceLab mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(cell.contentView);
             make.right.equalTo(cell.contentView.mas_right).offset(-(SCREEN_WIDTH*0.05));
@@ -256,10 +256,11 @@
         return;
     }
     QDRecommendViewController *recommendVC = [[QDRecommendViewController alloc] init];
-    recommendVC.price = [NSString stringWithFormat:@"%.2f",self.priceNumBtn.currentNumber];
-    recommendVC.volume = [NSString stringWithFormat:@"%.2f",self.amountNumBtn.currentNumber];
+    recommendVC.price = self.priceTF.text;
+    recommendVC.volume = self.amountTF.text;
     recommendVC.isPartialDeal = _isPartialDeal;
     recommendVC.postersType = _typeStr;
+    QDLog(@"self.priceTF.text = %@, self.amountTF.text = %@", self.priceTF.text, self.amountTF.text);
     [self.navigationController pushViewController:recommendVC animated:YES];
 }
 
@@ -346,7 +347,6 @@
 - (UILabel *)priceLab{
     if(!_priceLab){
         _priceLab = [[UILabel alloc] init];
-        _priceLab.text = @"0.01";
         _priceLab.font = QDFont(16);
         _priceLab.textColor = APP_BLACKCOLOR;
     }
