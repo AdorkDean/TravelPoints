@@ -568,7 +568,7 @@ typedef NS_ENUM(NSInteger, PhotoType)
 #pragma mark - 会员权益
 - (void)vipRights:(UIButton *)sender{
     QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
-    bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?noticeType=12", QD_JSURL, JS_WBSC];
+    bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?noticeType=12", QD_TESTJSURL, JS_WBSC];
     QDLog(@"urlStr = %@", bridgeVC.urlStr);
     [self.navigationController pushViewController:bridgeVC animated:YES];
 }

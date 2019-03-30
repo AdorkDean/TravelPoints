@@ -38,6 +38,7 @@
     NSMutableArray *_dzyImgArr;
     NSMutableArray *_mallInfoArr;
     QD_LOCATION_STATUS _locationStatus;
+    QDEmptyType _emptyType;
 }
 
 @property (nonatomic, strong) CLLocationManager *locationManager;
@@ -97,9 +98,10 @@
     NSDictionary * dic1 = @{@"hotelName":_headerView.locationTF.text,
                             @"cityName":_headerView.locationLab.text,
                             @"pageNum":@1,
-                            @"pageSize":@10
+                            @"pageSize":@30
                             };
     [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:urlStr params:dic1 successBlock:^(QDResponseObject *responseObject) {
+        [self endRefreshing];
         if (responseObject.code == 0) {
             NSDictionary *dic = responseObject.result;
             NSArray *hotelArr = [dic objectForKey:@"result"];
@@ -131,13 +133,13 @@
                 }else{
                     [_tableView reloadData];
                 }
-                [self endRefreshing];
             }else{
-                [WXProgressHUD showErrorWithTittle:@"无数据返回,请重试"];
+                [WXProgressHUD showInfoWithTittle:@"无数据返回,请重试"];
             }
             [_tableView tab_endAnimation];
         }
     } failureBlock:^(NSError *error) {
+        _emptyType = QDNetworkError;
         [WXProgressHUD showErrorWithTittle:@"网络异常"];
         [_tableView tab_endAnimation];
         [self endRefreshing];
@@ -188,8 +190,7 @@
 //    _tableView.mj_header = header;
     
     _tableView.mj_header = [QDRefreshHeader headerWithRefreshingBlock:^{
-//        [self requestHotelInfoWithURL:api_GetHotelCondition andIsPushVC:NO];
-        [self loadNewData];
+        [self requestHotelInfoWithURL:api_GetHotelCondition andIsPushVC:NO];
     }];
     //手动刷新请求最新数据
     _tableView.mj_footer = [QDRefreshFooter footerWithRefreshingBlock:^{
@@ -343,7 +344,11 @@
         return [UIImage imageNamed:@"loading_imgBlue" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
     }
     else {
-        return [UIImage imageNamed:@"icon_noConnect"];
+        if (_emptyType == QDNODataError) {
+            return [UIImage imageNamed:@"icon_nodata"];
+        }else if(_emptyType == QDNetworkError){
+            return [UIImage imageNamed:@"icon_noConnect"];
+        }
     }
     return nil;
 }
@@ -371,18 +376,18 @@
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
 
-- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView
-{
-    NSString *text = @"请检查您的手机网络后点击重试";
-    NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
-    paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
-    paragraphStyle.alignment = NSTextAlignmentCenter;
-
-    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:14],
-                                 NSForegroundColorAttributeName: APP_GRAYLINECOLOR,
-                                 NSParagraphStyleAttributeName: paragraphStyle};
-    return [[NSMutableAttributedString alloc] initWithString:text attributes:attributes];
-}
+//- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView
+//{
+//    NSString *text = @"请检查您的手机网络后点击重试";
+//    NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
+//    paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+//    paragraphStyle.alignment = NSTextAlignmentCenter;
+//
+//    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:14],
+//                                 NSForegroundColorAttributeName: APP_GRAYLINECOLOR,
+//                                 NSParagraphStyleAttributeName: paragraphStyle};
+//    return [[NSMutableAttributedString alloc] initWithString:text attributes:attributes];
+//}
 #pragma mark - DZNEmptyDataSetDelegate Methods
 
 - (BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView

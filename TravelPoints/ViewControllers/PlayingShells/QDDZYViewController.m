@@ -69,7 +69,7 @@
     }
     NSDictionary * dic1 = @{@"travelName":_travelName,
                             @"pageNum":@1,
-                            @"pageSize":@10
+                            @"pageSize":@20
                             };
     [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_GetDZYList params:dic1 successBlock:^(QDResponseObject *responseObject) {
         if (responseObject.code == 0) {

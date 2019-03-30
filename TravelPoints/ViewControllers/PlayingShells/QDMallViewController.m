@@ -413,7 +413,7 @@
 //        NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
 //        paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
 //        paragraphStyle.alignment = NSTextAlignmentCenter;
-//        
+//
 //        NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:18],
 //                                     NSForegroundColorAttributeName: APP_WHITECOLOR,
 //                                     NSParagraphStyleAttributeName: paragraphStyle};

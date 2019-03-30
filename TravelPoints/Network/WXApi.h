@@ -185,7 +185,7 @@ static NSString * const JS_PREPARETOPAY         = @"/order/pay";                
 static NSString * const JS_RANKLIST             = @"/list/detail";                  //榜单详情
 static NSString * const JS_INVITEFRIENDS        = @"/invitefriends";                  //邀请好友
 static NSString * const JS_NOTICETYPE           = @"/common/notice";                  //协议
-static NSString * const JS_WBSC           = @"/wanbei/img";                  //玩贝手册
+static NSString * const JS_WBSC                 = @"/wanbei/img";                  //玩贝手册
 
 
 #endif /* WXApi_h */
