@@ -247,7 +247,6 @@
 		932715F4224E058D008CD6A8 /* QDProtocolVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 932715F3224E058D008CD6A8 /* QDProtocolVC.m */; };
 		93271602224E187D008CD6A8 /* skip_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 93271600224E187D008CD6A8 /* skip_button@2x.png */; };
 		93271603224E187D008CD6A8 /* skip_button@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 93271601224E187D008CD6A8 /* skip_button@3x.png */; };
-		93271605224E1A00008CD6A8 /* JhtGuidePages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93271604224E1A00008CD6A8 /* JhtGuidePages.framework */; };
 		93271615224E296A008CD6A8 /* UIImagePickerController+ST.m in Sources */ = {isa = PBXBuildFile; fileRef = 93271607224E2969008CD6A8 /* UIImagePickerController+ST.m */; };
 		93271616224E296A008CD6A8 /* STPhotoKitController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93271609224E2969008CD6A8 /* STPhotoKitController.m */; };
 		93271617224E296A008CD6A8 /* STConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 9327160E224E296A008CD6A8 /* STConst.m */; };
@@ -806,7 +805,6 @@
 		932715F3224E058D008CD6A8 /* QDProtocolVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDProtocolVC.m; sourceTree = "<group>"; };
 		93271600224E187D008CD6A8 /* skip_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "skip_button@2x.png"; sourceTree = "<group>"; };
 		93271601224E187D008CD6A8 /* skip_button@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "skip_button@3x.png"; sourceTree = "<group>"; };
-		93271604224E1A00008CD6A8 /* JhtGuidePages.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = JhtGuidePages.framework; sourceTree = "<group>"; };
 		93271607224E2969008CD6A8 /* UIImagePickerController+ST.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImagePickerController+ST.m"; sourceTree = "<group>"; };
 		93271608224E2969008CD6A8 /* STPhotoKitController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STPhotoKitController.h; sourceTree = "<group>"; };
 		93271609224E2969008CD6A8 /* STPhotoKitController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STPhotoKitController.m; sourceTree = "<group>"; };
@@ -967,7 +965,6 @@
 				3B0CD72B21F16F540020824A /* OpenGLES.framework in Frameworks */,
 				3B0CD72921F16F4E0020824A /* libsqlite3.0.tbd in Frameworks */,
 				3B0CD72721F16F3F0020824A /* libc++.tbd in Frameworks */,
-				93271605224E1A00008CD6A8 /* JhtGuidePages.framework in Frameworks */,
 				3B0CD72521F16F2F0020824A /* CoreLocation.framework in Frameworks */,
 				3B0CD72321F16F280020824A /* CoreGraphics.framework in Frameworks */,
 			);
@@ -1480,7 +1477,6 @@
 			isa = PBXGroup;
 			children = (
 				93271622224E504B008CD6A8 /* skip_button.bundle */,
-				93271604224E1A00008CD6A8 /* JhtGuidePages.framework */,
 				3B1BC00221FAA1590005C415 /* MBProgressHUD.bundle */,
 				3B0CD74121F1DE380020824A /* SYCity.bundle */,
 				3B0CD73621F1868B0020824A /* AMap.bundle */,
