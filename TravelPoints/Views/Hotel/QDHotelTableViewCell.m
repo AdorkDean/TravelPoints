@@ -35,7 +35,7 @@
         
         _hotelName = [[UILabel alloc] init];
         _hotelName.text = @"";
-        _hotelName.numberOfLines = 0;
+//        _hotelName.numberOfLines = 0;
         _hotelName.font = QDBoldFont(16);
         _hotelName.loadStyle = TABViewLoadAnimationWithOnlySkeleton;
         [self.contentView addSubview:_hotelName];
@@ -75,7 +75,7 @@
         
         _locationLab = [[UILabel alloc] init];
         _locationLab.text = @"";
-        _locationLab.numberOfLines = 0;
+//        _locationLab.numberOfLines = 0;
         _locationLab.font = QDBoldFont(12);
         _locationLab.textColor = APP_GRAYCOLOR;
         _locationLab.loadStyle = TABViewLoadAnimationWithOnlySkeleton;
@@ -89,28 +89,28 @@
     [_hotelImg mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.contentView);
         make.left.equalTo(self.contentView.mas_left).offset(SCREEN_WIDTH*0.054);
-        make.width.mas_equalTo(SCREEN_WIDTH*0.35);
-        make.height.mas_equalTo(SCREEN_HEIGHT*0.165);
+        make.width.mas_equalTo(130);
+        make.height.mas_equalTo(98);
     }];
     
     [_hotelName mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_hotelImg);
-        make.left.equalTo(self.hotelImg.mas_right).offset(SCREEN_WIDTH*0.037);
-        make.right.equalTo(self.mas_right).offset(-(SCREEN_WIDTH*0.05));
+        make.left.equalTo(self.hotelImg.mas_right).offset(15);
+        make.right.equalTo(self.mas_right).offset(-(5));
     }];
     
     [_wanbei mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_hotelName.mas_bottom).offset(SCREEN_HEIGHT*0.012);
-        make.left.equalTo(self.contentView.mas_left).offset(SCREEN_WIDTH*0.44);
+        make.top.equalTo(_hotelName.mas_bottom).offset(10);
+        make.left.equalTo(_hotelImg.mas_right).offset(15);
     }];
     
     [_wanbeiLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_wanbei);
-        make.left.equalTo(_wanbei.mas_right).offset(SCREEN_WIDTH*0.006);
+        make.left.equalTo(_wanbei.mas_right).offset(2);
     }];
     
     [_yueLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_wanbei.mas_bottom).offset(SCREEN_HEIGHT*0.003);
+        make.top.equalTo(_wanbei.mas_bottom).offset(2);
         make.left.equalTo(_wanbei);
     }];
     
@@ -131,9 +131,8 @@
 
     [_locationLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_yueLab);
-        make.top.equalTo(_priceLab.mas_bottom).offset(SCREEN_HEIGHT*0.007);
-        make.right.equalTo(self.contentView.mas_right).offset(-(SCREEN_WIDTH*0.05));
-//        make.bottom.equalTo(self.contentView.mas_bottom).offset(-(SCREEN_HEIGHT*0.03));
+        make.bottom.equalTo(self.hotelImg);
+        make.right.equalTo(self.mas_right).offset(-(5));
     }];
 }
 

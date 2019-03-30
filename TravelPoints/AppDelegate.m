@@ -14,7 +14,6 @@
 #import "QDBridgeViewController.h"
 #import <AMapFoundationKit/AMapFoundationKit.h>
 #import "OpenShareHeader.h"
-#import "LaunchImageTransition.h"
 #import "LaunchAnimationTool.h"
 #import "TABAnimated.h"
 #import "HcdGuideView.h"

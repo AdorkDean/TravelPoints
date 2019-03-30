@@ -28,7 +28,7 @@
         
         
         _inputTF = [[UITextField alloc] init];
-        _inputTF.placeholder = @"搜索目的地、酒店和景点";
+        _inputTF.placeholder = @"搜索关键字";
         _inputTF.tintColor = APP_BLUECOLOR;
         [_inputTF setValue:QDFont(14) forKeyPath:@"_placeholderLabel.font"];
         _inputTF.clearButtonMode = UITextFieldViewModeWhileEditing;

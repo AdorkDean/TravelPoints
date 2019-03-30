@@ -273,7 +273,6 @@
 		93744F54223B7744000708A3 /* QDMyBiddingOrderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93744F53223B7744000708A3 /* QDMyBiddingOrderView.m */; };
 		93744F57223B7AF8000708A3 /* QDMyBiddingOrderDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93744F56223B7AF8000708A3 /* QDMyBiddingOrderDetailVC.m */; };
 		93744F5A223B953E000708A3 /* QDRecommendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93744F59223B953E000708A3 /* QDRecommendViewController.m */; };
-		93744F5D223BB179000708A3 /* LaunchImageTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 93744F5C223BB179000708A3 /* LaunchImageTransition.m */; };
 		93744F6A223BCC17000708A3 /* UIButton+ImageTitleStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 93744F69223BCC17000708A3 /* UIButton+ImageTitleStyle.m */; };
 		93BB7AAF2220F97F0061FB9C /* QDHomeTopCancelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BB7AAE2220F97F0061FB9C /* QDHomeTopCancelView.m */; };
 		93BB7AB222212D710061FB9C /* WaterLayou.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BB7AB022212D700061FB9C /* WaterLayou.m */; };
@@ -857,8 +856,6 @@
 		93744F56223B7AF8000708A3 /* QDMyBiddingOrderDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDMyBiddingOrderDetailVC.m; sourceTree = "<group>"; };
 		93744F58223B953E000708A3 /* QDRecommendViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDRecommendViewController.h; sourceTree = "<group>"; };
 		93744F59223B953E000708A3 /* QDRecommendViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDRecommendViewController.m; sourceTree = "<group>"; };
-		93744F5B223BB179000708A3 /* LaunchImageTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchImageTransition.h; sourceTree = "<group>"; };
-		93744F5C223BB179000708A3 /* LaunchImageTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchImageTransition.m; sourceTree = "<group>"; };
 		93744F68223BCC17000708A3 /* UIButton+ImageTitleStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+ImageTitleStyle.h"; sourceTree = "<group>"; };
 		93744F69223BCC17000708A3 /* UIButton+ImageTitleStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+ImageTitleStyle.m"; sourceTree = "<group>"; };
 		93BB7AAD2220F97F0061FB9C /* QDHomeTopCancelView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDHomeTopCancelView.h; sourceTree = "<group>"; };
@@ -1498,8 +1495,6 @@
 		3BD9516621EC2A1800CD0627 /* TravelPoints */ = {
 			isa = PBXGroup;
 			children = (
-				93744F5B223BB179000708A3 /* LaunchImageTransition.h */,
-				93744F5C223BB179000708A3 /* LaunchImageTransition.m */,
 				3B0CD6DD21F05E7D0020824A /* Config */,
 				3BEA2C2C21EF3866001C52C4 /* WebViewJavascriptBridge */,
 				3B40EB7321EC952800656C1F /* Utils */,
@@ -2528,7 +2523,6 @@
 				93744F5A223B953E000708A3 /* QDRecommendViewController.m in Sources */,
 				932715B022486ED7008CD6A8 /* OpenShare+Renren.m in Sources */,
 				937344E4223137850054D753 /* LQPopUpView.m in Sources */,
-				93744F5D223BB179000708A3 /* LaunchImageTransition.m in Sources */,
 				3B40EBBB21EC953E00656C1F /* NSAttributedString+YYText.m in Sources */,
 				93744F51223B46B6000708A3 /* YUTimer.m in Sources */,
 				3B40EBAD21EC953E00656C1F /* YYTextInput.m in Sources */,

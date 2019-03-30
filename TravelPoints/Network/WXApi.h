@@ -13,12 +13,12 @@
 const static NSString *APIKey = @"ab0b884fbd773609e7fccbbd5f9ccbe0";
 
 
-static NSString * const QD_Domain = @"https://app.wedotting.com";
+//static NSString * const QD_Domain = @"https://app.wedotting.com";
 
 //测试环境
-//static NSString * const QD_Domain = @"http://203.110.179.27:60409";
+static NSString * const QD_Domain = @"http://203.110.179.27:60409";
 //static NSString * const QD_Domain = @"http://112.64.226.138:60409";
-
+//
 //static NSString * const QD_Domain = @"http://47.101.222.172:8080";
 
 static NSString * const QD_ProjectName = @"/lyjfapp/sso/";
@@ -145,10 +145,10 @@ static NSString * const api_otherProtocols   = @"/lyjfapp/api/v1/common/otherPro
  */
 
 
-static NSString * const QD_JSURL                = @"https://app.wedotting.com/app";    //前端地址
-static NSString * const QD_TESTJSURL            = @"https://app.wedotting.com/app/#";    //前端地址
-//static NSString * const QD_JSURL                = @"http://203.110.179.27:60409/app";    //前端地址
-//static NSString * const QD_TESTJSURL            = @"http://203.110.179.27:60409/app/#";    //前端地址
+//static NSString * const QD_JSURL                = @"https://app.wedotting.com/app";    //前端地址
+//static NSString * const QD_TESTJSURL            = @"https://app.wedotting.com/app/#";    //前端地址
+static NSString * const QD_JSURL                = @"http://203.110.179.27:60409/app";    //前端地址
+static NSString * const QD_TESTJSURL            = @"http://203.110.179.27:60409/app/#";    //前端地址
 
 //static NSString * const QD_JSURL                = @"http://47.101.222.172:8080/app";    //前端地址
 //static NSString * const QD_TESTJSURL            = @"http://47.101.222.172:8080/app/#";    //前端地址
@@ -182,6 +182,7 @@ static NSString * const JS_PREPARETOPAY         = @"/order/pay";                
 static NSString * const JS_RANKLIST             = @"/list/detail";                  //榜单详情
 static NSString * const JS_INVITEFRIENDS        = @"/invitefriends";                  //邀请好友
 static NSString * const JS_NOTICETYPE           = @"/common/notice";                  //协议
+static NSString * const JS_WBSC           = @"/wanbei/img";                  //玩贝手册
 
 
 #endif /* WXApi_h */
