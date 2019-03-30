@@ -350,6 +350,7 @@
         bannerView.layer.cornerRadius = 4;
         bannerView.layer.masksToBounds = YES;
     }
+    //这里需要加入容错
     bannerView.mainImageView.image = self.imageArray[index];
     if (_cardArr.count) {
         [bannerView loadDataWithModel:_cardArr[index]];

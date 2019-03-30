@@ -157,7 +157,7 @@ typedef enum : NSUInteger {
     [self.view addSubview:_optionBtn];
     [_optionBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view);
-        make.bottom.equalTo(self.view.mas_bottom).offset(-71);
+        make.bottom.equalTo(self.view.mas_bottom).offset(-60);
         make.width.mas_equalTo(140);
         make.height.mas_equalTo(44);
     }];
@@ -313,11 +313,11 @@ typedef enum : NSUInteger {
 //    self.view = _tableView;
     [self.view addSubview:_tableView];
     
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.23)];
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 135)];
     headerView.backgroundColor = [UIColor whiteColor];
     _tableView.tableHeaderView = headerView;
     
-    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*0.05, SCREEN_WIDTH*0.03, SCREEN_WIDTH*0.89, SCREEN_HEIGHT*0.225)];
+    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*0.05, SCREEN_WIDTH*0.03, 345, 135)];
     imgView.userInteractionEnabled = YES;
     imgView.image = [UIImage imageNamed:@"shellBanner"];
     UITapGestureRecognizer *ges = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(wbscAction)];
@@ -338,6 +338,16 @@ typedef enum : NSUInteger {
 
 #pragma mark - 点击玩贝手册
 - (void)wbscAction{
+    NSDictionary *dic = @{@"noticeType":@"11"};
+    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_otherProtocols params:dic successBlock:^(QDResponseObject *responseObject) {
+        if (responseObject.code == 0) {
+            NSString *urlStr = responseObject.result;
+            QDLog(@"urlStr = %@", urlStr);
+        }
+    } failureBlock:^(NSError *error) {
+        
+    }];
+    
     QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
     bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?noticeType=11", QD_TESTJSURL, JS_WBSC];
     QDLog(@"urlStr = %@", bridgeVC.urlStr);
@@ -353,7 +363,7 @@ typedef enum : NSUInteger {
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return SCREEN_HEIGHT*0.075;
+    return 45;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -422,7 +432,7 @@ typedef enum : NSUInteger {
 
 - (QDTradeShellsSectionHeaderView *)sectionHeaderView{
     if (!_sectionHeaderView) {
-        _sectionHeaderView = [[QDTradeShellsSectionHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 300)];
+        _sectionHeaderView = [[QDTradeShellsSectionHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 45)];
         [_sectionHeaderView.filterBtn addTarget:self action:@selector(filterAction:) forControlEvents:UIControlEventTouchUpInside];
         _sectionHeaderView.backgroundColor = APP_WHITECOLOR;
     }

@@ -149,11 +149,11 @@
     [_optionBtn setTitle:@"转玩贝" forState:UIControlStateNormal];
     _optionBtn.layer.cornerRadius = 22;
     _optionBtn.layer.masksToBounds = YES;
-    _optionBtn.titleLabel.font = QDFont(17);
+    _optionBtn.titleLabel.font = QDFont(18);
     [self.view addSubview:_optionBtn];
     [_optionBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view);
-        make.bottom.equalTo(self.view.mas_bottom).offset(-71);
+        make.bottom.equalTo(self.view.mas_bottom).offset(-60);
         make.width.mas_equalTo(140);
         make.height.mas_equalTo(44);
     }];
@@ -267,11 +267,11 @@
 //    self.view = _tableView;
     [self.view addSubview:_tableView];
     
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.23)];
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 135)];
     headerView.backgroundColor = [UIColor whiteColor];
     _tableView.tableHeaderView = headerView;
     
-    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*0.05, SCREEN_WIDTH*0.03, SCREEN_WIDTH*0.89, SCREEN_HEIGHT*0.225)];
+    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*0.05, SCREEN_WIDTH*0.03, 346, 135)];
     imgView.image = [UIImage imageNamed:@"shellBanner"];
     [headerView addSubview:imgView];
 
@@ -343,7 +343,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return SCREEN_HEIGHT*0.075;
+    return 45;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
