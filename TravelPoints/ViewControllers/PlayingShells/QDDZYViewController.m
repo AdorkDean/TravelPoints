@@ -1,5 +1,5 @@
 //
-//  QDPlayingShellsVC.m
+//  QDDZYViewController.m
 //  TravelPoints
 //
 //  Created by 冉金 on 2019/2/15.
@@ -31,6 +31,7 @@
     NSMutableArray *_dzyListInfoArr;
     NSMutableArray *_dzyImgArr;
     QDEmptyType *_emptyType;
+    NSString *_travelName;
 }
 @property (nonatomic, getter=isLoading) BOOL loading;
 
@@ -53,24 +54,24 @@
     self.view.backgroundColor = APP_WHITECOLOR;
     _dzyListInfoArr = [[NSMutableArray alloc] init];
     _dzyImgArr = [[NSMutableArray alloc] init];
-    
+    _travelName = @"";
     //分段选择按钮
     [self initTableView];
-    [self requestDZYList:api_GetDZYList];
+    [self requestDZYList];
 }
 
 #pragma mark - 请求定制游列表信息
-- (void)requestDZYList:(NSString *)urlStr{
+- (void)requestDZYList{
     self.loading = NO;
     if (_dzyListInfoArr.count) {
         [_dzyListInfoArr removeAllObjects];
         [_dzyImgArr removeAllObjects];
     }
-    NSDictionary * dic1 = @{@"travelName":@"",
+    NSDictionary * dic1 = @{@"travelName":_travelName,
                             @"pageNum":@1,
                             @"pageSize":@10
                             };
-    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:urlStr params:dic1 successBlock:^(QDResponseObject *responseObject) {
+    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_GetDZYList params:dic1 successBlock:^(QDResponseObject *responseObject) {
         if (responseObject.code == 0) {
             NSDictionary *dic = responseObject.result;
             NSArray *dzyArr = [dic objectForKey:@"result"];
@@ -113,12 +114,14 @@
     _tableView.emptyDataSetSource = self;
 //    [self.view addSubview:_tableView];
     _customTourHeaderView = [[QDCustomTourSectionHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH*0.12)];
-    [_customTourHeaderView.searchBtn addTarget:self action:@selector(customerTourSearchAction:) forControlEvents:UIControlEventTouchUpInside];
+//    [_customTourHeaderView.searchBtn addTarget:self action:@selector(customerTourSearchAction:) forControlEvents:UIControlEventTouchUpInside];
+    _customTourHeaderView.inputTF.returnKeyType = UIReturnKeySearch;    //变为搜索按钮
+    _customTourHeaderView.inputTF.delegate = self;
     _customTourHeaderView.backgroundColor = APP_WHITECOLOR;
     _tableView.tableHeaderView = _customTourHeaderView;
     self.view = _tableView;
     _tableView.mj_header = [QDRefreshHeader headerWithRefreshingBlock:^{
-        [self requestDZYList:api_GetDZYList];
+        [self requestDZYList];
     }];
     
     _tableView.mj_footer = [QDRefreshFooter footerWithRefreshingBlock:^{
@@ -284,13 +287,13 @@
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapView:(UIView *)view
 {
     self.loading = YES;
-    [self requestDZYList:api_GetDZYList];
+    [self requestDZYList];
 }
 
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button
 {
     self.loading = YES;
-    [self requestDZYList:api_GetDZYList];
+    [self requestDZYList];
 
 }
 
@@ -298,6 +301,14 @@
     QDSearchViewController *searchVC = [[QDSearchViewController alloc] init];
     searchVC.playShellType = QDCustomTour;
     [self.navigationController pushViewController:searchVC animated:YES];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    QDLog(@"搜索商品");
+    [_customTourHeaderView.inputTF resignFirstResponder];
+    _travelName = _customTourHeaderView.inputTF.text;
+    [self requestDZYList];
+    return YES;
 }
 
 @end

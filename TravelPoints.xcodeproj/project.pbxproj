@@ -189,7 +189,6 @@
 		3BEA2C3821EF45C5001C52C4 /* WebViewJavascriptBridge_JS.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BEA2C3621EF45C5001C52C4 /* WebViewJavascriptBridge_JS.m */; };
 		3BEA2C3B21EF478E001C52C4 /* QDBridgeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BEA2C3A21EF478E001C52C4 /* QDBridgeViewController.m */; };
 		3BEA2C3D21EF4C15001C52C4 /* ExampleApp.html in Resources */ = {isa = PBXBuildFile; fileRef = 3BEA2C3C21EF4C14001C52C4 /* ExampleApp.html */; };
-		3BF92D6022165E4C0019B941 /* QDPlayingShellsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF92D5F22165E4C0019B941 /* QDPlayingShellsVC.m */; };
 		3BF92D6422165F290019B941 /* QDTradingShellsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF92D6322165F290019B941 /* QDTradingShellsVC.m */; };
 		3BF92D68221688C20019B941 /* QDTradeShellsSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF92D67221688C20019B941 /* QDTradeShellsSectionHeaderView.m */; };
 		3BF92D7222168E300019B941 /* MyTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF92D6C22168E2D0019B941 /* MyTableCell.m */; };
@@ -676,8 +675,6 @@
 		3BEA2C3921EF478E001C52C4 /* QDBridgeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDBridgeViewController.h; sourceTree = "<group>"; };
 		3BEA2C3A21EF478E001C52C4 /* QDBridgeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDBridgeViewController.m; sourceTree = "<group>"; };
 		3BEA2C3C21EF4C14001C52C4 /* ExampleApp.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ExampleApp.html; sourceTree = "<group>"; };
-		3BF92D5E22165E4C0019B941 /* QDPlayingShellsVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDPlayingShellsVC.h; sourceTree = "<group>"; };
-		3BF92D5F22165E4C0019B941 /* QDPlayingShellsVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDPlayingShellsVC.m; sourceTree = "<group>"; };
 		3BF92D6222165F290019B941 /* QDTradingShellsVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDTradingShellsVC.h; sourceTree = "<group>"; };
 		3BF92D6322165F290019B941 /* QDTradingShellsVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDTradingShellsVC.m; sourceTree = "<group>"; };
 		3BF92D66221688C20019B941 /* QDTradeShellsSectionHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDTradeShellsSectionHeaderView.h; sourceTree = "<group>"; };
@@ -1784,8 +1781,6 @@
 		3BF92D5B22165E030019B941 /* PlayingShells */ = {
 			isa = PBXGroup;
 			children = (
-				3BF92D5E22165E4C0019B941 /* QDPlayingShellsVC.h */,
-				3BF92D5F22165E4C0019B941 /* QDPlayingShellsVC.m */,
 				93E30EC522263FF2003CA771 /* QDKeyWordsSearchVC.h */,
 				93E30EC622263FF2003CA771 /* QDKeyWordsSearchVC.m */,
 				93D2D634222E82F900CCC61D /* QDKeyWordsHomePageVC.h */,
@@ -2420,7 +2415,6 @@
 				3B40EBFA21EDCDA700656C1F /* QDResetLoginPwdView.m in Sources */,
 				93744F4A223A29A1000708A3 /* QDFindSatifiedDataVC.m in Sources */,
 				3B2C1F6A21F56C1A00DD94CD /* QDCalendarTopView.m in Sources */,
-				3BF92D6022165E4C0019B941 /* QDPlayingShellsVC.m in Sources */,
 				3B2ADD0821FD95F600F62D63 /* QDHotelsInAreaViewTableViewCell.m in Sources */,
 				93E30EDC2228BD60003CA771 /* QDRotePlanViewController.m in Sources */,
 				3B0DC07C220034B30056C318 /* SDWebImagePrefetcher.m in Sources */,

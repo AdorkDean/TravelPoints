@@ -1,5 +1,5 @@
 //
-//  QDBridgeViewController.m
+//  QDBridgeTViewController.m
 //  TravelPoints
 //
 //  Created by 冉金 on 2019/1/16.
@@ -15,12 +15,12 @@
 #import "QDLoginAndRegisterVC.h"
 #import "QDRotePlanViewController.h"
 #import "AppDelegate.h"
-#import "QDPlayingShellsVC.h"
 #import "QDCalendarCustomerTourVC.h"
 #import "QYBaseView.h"
 @interface QDBridgeTViewController ()<WKNavigationDelegate>{
     WebViewJavascriptBridge *_bridge;
     CAReplicatorLayer *_containerLayer;
+    QYBaseView *_baseView;
 }
 
 @property (nonatomic, strong) UIProgressView *progressView;
@@ -63,12 +63,11 @@
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
     
-    QYBaseView *baseView = [[QYBaseView alloc] initWithFrame:self.view.frame];
-    self.view = baseView;
+    _baseView = [[QYBaseView alloc] initWithFrame:self.view.frame];
+    self.view = _baseView;
     _webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 3, SCREEN_WIDTH, SCREEN_HEIGHT)];
     _webView.navigationDelegate = self;
-//    _webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-    [baseView addSubview:_webView];
+    [_baseView addSubview:_webView];
     if (@available(iOS 11.0, *)) {
         self.webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     } else {
@@ -90,7 +89,7 @@
     // 进度条
     UIView * progress = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 2)];
     progress.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:progress];
+    [_baseView addSubview:progress];
     
     // 隐式动画
     CALayer * layer = [CALayer layer];
@@ -143,9 +142,8 @@
             responseCallback(singleDate);
         };
     }];
-    [self.view addSubview:self.progressView];
+    [_baseView addSubview:self.progressView];
     self.edgesForExtendedLayout = UIRectEdgeNone;
-    self.view.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)loadWebViewWithURL{

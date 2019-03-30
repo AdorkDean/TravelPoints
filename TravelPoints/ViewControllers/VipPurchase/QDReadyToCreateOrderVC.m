@@ -109,7 +109,7 @@
     [backView addSubview:_returnBtn];
     [_returnBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view.mas_left).offset(10);
-        make.top.equalTo(self.view.mas_top).offset(35);
+        make.top.equalTo(self.view.mas_top).offset(SafeAreaTopHeight-50);
         make.width.and.height.mas_equalTo(45);
     }];
     _titleLab = [[UILabel alloc] init];

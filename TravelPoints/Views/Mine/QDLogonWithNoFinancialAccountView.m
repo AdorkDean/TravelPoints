@@ -251,8 +251,7 @@
     }];
     
     [_openFinancialBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.centerY.equalTo(_balance);
-        make.top.equalTo(self.mas_top).offset(336);
+        make.top.equalTo(self.balanceLab.mas_top).offset(8);
         make.right.equalTo(self.mas_right).offset(-20);
         make.height.mas_equalTo(36);
         make.width.mas_equalTo(140);

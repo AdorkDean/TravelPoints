@@ -77,9 +77,9 @@
 //    if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
 //        self.edgesForExtendedLayout = UIRectEdgeNone;
 //    }
-//    _baseView = [[QYBaseView alloc] initWithFrame:self.view.frame];
-//    self.view = _baseView;
-//    _webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 3, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    _baseView = [[QYBaseView alloc] initWithFrame:self.view.frame];
+    self.view = _baseView;
+    _webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 3, SCREEN_WIDTH, SCREEN_HEIGHT)];
     
 
     _webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
@@ -90,7 +90,7 @@
     } else {
         // Fallback on earlier versions
     }
-    [self.view addSubview:_webView];
+    [_baseView addSubview:_webView];
     
     //设置能够进行桥接
     [WebViewJavascriptBridge enableLogging];
@@ -134,7 +134,7 @@
             NSString * telStr = [NSString stringWithFormat:@"tel:%@",data];
             UIWebView * webV = [[UIWebView alloc]init];
             [webV loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:telStr]]];
-            [self.view addSubview:webV];
+            [_baseView addSubview:webV];
         }
     }];
     
@@ -145,7 +145,7 @@
     
     [_bridge registerHandler:@"getShare" handler:^(id data, WVJBResponseCallback responseCallback) {
         QDLog(@"getShare");
-        [self.view addSubview:self.shareView];
+        [_baseView addSubview:self.shareView];
         _weiboTitle = [data objectForKey:@"title"];
         NSData *imgData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[data objectForKey:@"imgeUrl"]]];
         _weiboImg = [UIImage imageWithData:imgData];
@@ -168,7 +168,7 @@
             responseCallback(dic);
         };
     }];
-    [self.view addSubview:self.progressView];
+    [_baseView addSubview:self.progressView];
     self.edgesForExtendedLayout = UIRectEdgeNone;
     _baseView.backgroundColor = [UIColor whiteColor];
 }

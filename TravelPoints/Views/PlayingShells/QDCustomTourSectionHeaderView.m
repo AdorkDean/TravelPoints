@@ -22,12 +22,19 @@
         _imgView = [[UIImageView alloc] init];
         [_imgView setImage:[UIImage imageNamed:@"icon_search"]];
         [_topBackView addSubview:_imgView];
-        _searchBtn = [[UIButton alloc] init];
-        [_searchBtn setTitle:@"搜索关键字" forState:UIControlStateNormal];
-        _searchBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-        [_searchBtn setTitleColor:APP_GRAYTEXTCOLOR forState:UIControlStateNormal];
-        _searchBtn.titleLabel.font = QDFont(15);
-        [_topBackView addSubview:_searchBtn];
+//        _searchBtn = [[UIButton alloc] init];
+//        [_searchBtn setTitle:@"搜索关键字" forState:UIControlStateNormal];
+//        _searchBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+//        [_searchBtn setTitleColor:APP_GRAYTEXTCOLOR forState:UIControlStateNormal];
+//        _searchBtn.titleLabel.font = QDFont(15);
+//        [_topBackView addSubview:_searchBtn];
+        
+        _inputTF = [[UITextField alloc] init];
+        _inputTF.placeholder = @"搜索关键字";
+        [_inputTF setValue:APP_GRAYTEXTCOLOR forKeyPath:@"_placeholderLabel.textColor"];
+        [_inputTF setValue:QDFont(15) forKeyPath:@"_placeholderLabel.font"];
+        _inputTF.clearButtonMode = UITextFieldViewModeWhileEditing;
+        [_topBackView addSubview:_inputTF];
     }
     return self;
 }
@@ -45,10 +52,15 @@
         make.centerY.equalTo(self.topBackView);
         make.left.equalTo(self.topBackView.mas_left).offset(SCREEN_WIDTH*0.04);
     }];
-    [_searchBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//    [_searchBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerY.equalTo(self.topBackView);
+//        make.left.equalTo(self.imgView.mas_right).offset(SCREEN_WIDTH*0.02);
+//        make.right.equalTo(self.topBackView.mas_right).offset(-5);
+//    }];
+    [_inputTF mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.topBackView);
         make.left.equalTo(self.imgView.mas_right).offset(SCREEN_WIDTH*0.02);
-        make.right.equalTo(self.topBackView.mas_right).offset(-5);
+        make.right.equalTo(self.topBackView);
     }];
 }
 

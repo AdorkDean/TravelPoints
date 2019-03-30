@@ -9,6 +9,7 @@
 #import "QDLoginAndRegisterVC.h"
 #import "QDMemberDTO.h"
 #import "QDProtocolVC.h"
+#import "QDBridgeViewController.h"
 @interface QDLoginAndRegisterVC ()<getTextFieldContentDelegate>
 
 @property (nonatomic, strong) QDMemberDTO *qdMemberTDO;
@@ -226,6 +227,10 @@
     //设置高亮色和点击事件
     [text yy_setTextHighlightRange:[[text string] rangeOfString:@"《用户注册服务协议》"] color:[UIColor blackColor] backgroundColor:[UIColor clearColor] tapAction:^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
         NSLog(@"点击了《用户协议》");
+//        QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
+//        bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?noticeType=0", QD_JSURL, JS_NOTICETYPE];
+//        QDLog(@"urlStr = %@", bridgeVC.urlStr);
+//        [self presentViewController:bridgeVC animated:YES completion:nil];
         [self findNoticeByTypeIdWithTypeStr:@"0"];
     }];
     [text yy_setTextHighlightRange:[[text string] rangeOfString:@"《隐私政策》"] color:[UIColor blackColor] backgroundColor:[UIColor clearColor] tapAction:^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {

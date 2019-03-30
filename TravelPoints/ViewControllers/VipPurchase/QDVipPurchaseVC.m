@@ -138,6 +138,8 @@
             QDProtocolVC *protocolVC = [[QDProtocolVC alloc] init];
             protocolVC.contentStr = contentStr;
             [self presentViewController:protocolVC animated:YES completion:nil];
+        }else{
+            [WXProgressHUD showInfoWithTittle:responseObject.message];
         }
     } failureBlock:^(NSError *error) {
         

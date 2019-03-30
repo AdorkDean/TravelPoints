@@ -183,6 +183,7 @@ static NSString * const JS_OPENACCOUNT          = @"/#/my/openAccount";         
 static NSString * const JS_PREPARETOPAY         = @"/order/pay";                    //预支付
 static NSString * const JS_RANKLIST             = @"/list/detail";                  //榜单详情
 static NSString * const JS_INVITEFRIENDS        = @"/invitefriends";                  //邀请好友
+static NSString * const JS_NOTICETYPE           = @"/common/notice";                  //协议
 
 
 #endif /* WXApi_h */

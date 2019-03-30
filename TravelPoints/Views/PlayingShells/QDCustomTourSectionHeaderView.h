@@ -12,10 +12,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface QDCustomTourSectionHeaderView : UIView
 
-@property (nonatomic, strong) UIView *topLineView;
 @property (nonatomic, strong) UIView *topBackView;
 @property (nonatomic, strong) UIImageView *imgView;
-@property (nonatomic, strong) UIButton *searchBtn;
+//@property (nonatomic, strong) UIButton *searchBtn;
+@property (nonatomic, strong) UITextField *inputTF;
 
 @end
 

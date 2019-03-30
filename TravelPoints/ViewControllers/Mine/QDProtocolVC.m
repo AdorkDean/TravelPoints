@@ -37,6 +37,7 @@
     _textView = [[UITextView alloc]initWithFrame:CGRectMake(21, SafeAreaTopHeight, 335, SCREEN_HEIGHT-SafeAreaTopHeight)];
     _textView.backgroundColor = APP_GRAYBACKGROUNDCOLOR;
     _textView.editable = NO;    //禁止编辑
+    _textView.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:_textView];
     NSAttributedString *attributedString = [[NSAttributedString alloc] initWithData: [_contentStr dataUsingEncoding:NSUnicodeStringEncoding] options: @{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes: nil error: nil];
     _textView.attributedText = attributedString;
