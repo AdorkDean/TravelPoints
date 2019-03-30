@@ -17,7 +17,7 @@
 #import "LaunchImageTransition.h"
 #import "LaunchAnimationTool.h"
 #import "TABAnimated.h"
-
+#import "HcdGuideView.h"
 #import <JhtGuidePages/JhtGradientGuidePageVC.h>
 @interface AppDelegate ()
 @property (nonatomic, strong) JhtGradientGuidePageVC *introductionView;
@@ -84,14 +84,27 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     // 在window上放一个imageView
-    [self createGuideVC];
+//    [self createGuideVC];
     [[TABViewAnimated sharedAnimated] initWithDefaultAnimated];
-//    self.window.rootViewController = [self setRootVC];
-
+    self.window.rootViewController = [self setRootVC];
     [self configureAPIKey];
     [self.window makeKeyAndVisible];
-
     self.window.backgroundColor = APP_WHITECOLOR;
+    //引导页
+    NSMutableArray *images = [NSMutableArray new];
+    
+    [images addObject:[UIImage imageNamed:@"ggps_1_bg"]];
+    [images addObject:[UIImage imageNamed:@"ggps_2_bg"]];
+    [images addObject:[UIImage imageNamed:@"ggps_3_bg"]];
+    
+    HcdGuideView *guideView = [HcdGuideView sharedInstance];
+    guideView.window = self.window;
+    [guideView showGuideViewWithImages:images
+                        andButtonTitle:@"立即体验"
+                   andButtonTitleColor:[UIColor whiteColor]
+                      andButtonBGColor:[UIColor clearColor]
+                  andButtonBorderColor:[UIColor whiteColor]];
+
     _hotelLevel = [[NSMutableArray alloc] init];    //酒店等级
     _hotelTypeId = [[NSMutableArray alloc] init];   //酒店类型
     _level = [[NSMutableArray alloc] init];         //会员等级

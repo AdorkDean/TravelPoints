@@ -183,6 +183,10 @@
 
 - (void)payAction:(UIButton *)sender{
     //直接购买
+    if ([_numberButton.textField.text isEqualToString:@""]) {
+        [WXProgressHUD showInfoWithTittle:@"数量不能为空"];
+        return;
+    }
     if ([_numberButton.textField.text intValue] > [_operateModel.surplusVolume intValue]) {
         [WXProgressHUD showInfoWithTittle:@"数量输入不合法,请重新输入"];
     }else{

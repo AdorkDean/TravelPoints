@@ -24,7 +24,7 @@
         
         _protocolBtn = [[UIButton alloc] init];
         [_protocolBtn setTitle:@"会员协议" forState:UIControlStateNormal];
-        _protocolBtn.titleLabel.font = QDBoldFont(17);
+        _protocolBtn.titleLabel.font = QDFont(14);
         [_protocolBtn setTitleColor:APP_BLUECOLOR forState:UIControlStateNormal];
         [self addSubview:_protocolBtn];
         

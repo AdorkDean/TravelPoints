@@ -265,6 +265,8 @@
 		936CB21522367C2200D67896 /* QDFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 936CB21422367C2200D67896 /* QDFirstViewController.m */; };
 		936CB21822367C3800D67896 /* QDSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 936CB21722367C3800D67896 /* QDSecondViewController.m */; };
 		936CB21B22367C5300D67896 /* QDThirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 936CB21A22367C5300D67896 /* QDThirdViewController.m */; };
+		93726472224F4DE800A3B9C5 /* HcdGuideView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9372646F224F4DE800A3B9C5 /* HcdGuideView.m */; };
+		93726473224F4DE800A3B9C5 /* HcdGuideViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93726470224F4DE800A3B9C5 /* HcdGuideViewCell.m */; };
 		937344E4223137850054D753 /* LQPopUpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 937344E3223137850054D753 /* LQPopUpView.m */; };
 		93744F472239DC37000708A3 /* QDPickOrderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93744F462239DC37000708A3 /* QDPickOrderView.m */; };
 		93744F4A223A29A1000708A3 /* QDFindSatifiedDataVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93744F49223A29A1000708A3 /* QDFindSatifiedDataVC.m */; };
@@ -839,6 +841,10 @@
 		936CB21722367C3800D67896 /* QDSecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDSecondViewController.m; sourceTree = "<group>"; };
 		936CB21922367C5300D67896 /* QDThirdViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDThirdViewController.h; sourceTree = "<group>"; };
 		936CB21A22367C5300D67896 /* QDThirdViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDThirdViewController.m; sourceTree = "<group>"; };
+		9372646E224F4DE800A3B9C5 /* HcdGuideViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HcdGuideViewCell.h; sourceTree = "<group>"; };
+		9372646F224F4DE800A3B9C5 /* HcdGuideView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HcdGuideView.m; sourceTree = "<group>"; };
+		93726470224F4DE800A3B9C5 /* HcdGuideViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HcdGuideViewCell.m; sourceTree = "<group>"; };
+		93726471224F4DE800A3B9C5 /* HcdGuideView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HcdGuideView.h; sourceTree = "<group>"; };
 		937344E2223137850054D753 /* LQPopUpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LQPopUpView.h; sourceTree = "<group>"; };
 		937344E3223137850054D753 /* LQPopUpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LQPopUpView.m; sourceTree = "<group>"; };
 		93744F452239DC37000708A3 /* QDPickOrderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDPickOrderView.h; sourceTree = "<group>"; };
@@ -1184,6 +1190,7 @@
 		3B40EB7321EC952800656C1F /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				9372646D224F4DE800A3B9C5 /* HcdGuideView */,
 				9327160B224E296A008CD6A8 /* STConfig */,
 				93271606224E2969008CD6A8 /* STPhotoKit */,
 				9327159D22486ED7008CD6A8 /* OpenShare */,
@@ -2094,6 +2101,17 @@
 			path = upload;
 			sourceTree = "<group>";
 		};
+		9372646D224F4DE800A3B9C5 /* HcdGuideView */ = {
+			isa = PBXGroup;
+			children = (
+				9372646E224F4DE800A3B9C5 /* HcdGuideViewCell.h */,
+				9372646F224F4DE800A3B9C5 /* HcdGuideView.m */,
+				93726470224F4DE800A3B9C5 /* HcdGuideViewCell.m */,
+				93726471224F4DE800A3B9C5 /* HcdGuideView.h */,
+			);
+			path = HcdGuideView;
+			sourceTree = "<group>";
+		};
 		93744F4E223B46B0000708A3 /* QDGCDTimer */ = {
 			isa = PBXGroup;
 			children = (
@@ -2598,6 +2616,7 @@
 				93271621224E36D3008CD6A8 /* QDUploadUtils.m in Sources */,
 				3B40EBC021EC953E00656C1F /* YYTextWeakProxy.m in Sources */,
 				3B40EC1B21EED50F00656C1F /* QDBaseViewController.m in Sources */,
+				93726472224F4DE800A3B9C5 /* HcdGuideView.m in Sources */,
 				3B40EBD621ED655400656C1F /* IdentifyView.m in Sources */,
 				3BF92D68221688C20019B941 /* QDTradeShellsSectionHeaderView.m in Sources */,
 				93E30ED62226B310003CA771 /* DIYCalendarCell.m in Sources */,
@@ -2668,6 +2687,7 @@
 				3B40EBB221EC953E00656C1F /* YYTextDebugOption.m in Sources */,
 				3B1DFE1921F31A5D007D4B12 /* QDHotelTypeCell.m in Sources */,
 				3B7636C0221951C600F77007 /* QDHomePageViewCell.m in Sources */,
+				93726473224F4DE800A3B9C5 /* HcdGuideViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
