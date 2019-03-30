@@ -498,8 +498,8 @@
 - (BOOL)judgePassWordLegal:(NSString *)pass{
     BOOL result = false;
     if ([pass length] >= 6 && [pass length] <= 16){
-        // 判断长度大于8位后再接着判断是否同时包含数字和字符
-        NSString * regex = @"^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$";
+        // 判断长度大于6位后再接着判断是否同时包含数字和字符
+        NSString * regex = @"^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$";
         NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
         result = [pred evaluateWithObject:pass];
     }
@@ -525,7 +525,7 @@
         return;
     }
     if (![self judgePassWordLegal:pwdStr]) {
-        [WXProgressHUD showInfoWithTittle:@"密码要求为6～16为字母与数字组合"];
+        [WXProgressHUD showInfoWithTittle:@"密码要求为6～16位字母与数字组合"];
         return;
     }
   

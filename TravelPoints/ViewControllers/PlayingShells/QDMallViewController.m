@@ -405,21 +405,21 @@
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
 
-- (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state{
-    if (_emptyType == QDNODataError) {
-        return nil;
-    }else{
-        NSString *text = @"重新加载";
-        NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
-        paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
-        paragraphStyle.alignment = NSTextAlignmentCenter;
-        
-        NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:18],
-                                     NSForegroundColorAttributeName: APP_WHITECOLOR,
-                                     NSParagraphStyleAttributeName: paragraphStyle};
-        return [[NSMutableAttributedString alloc] initWithString:text attributes:attributes];
-    }
-}
+//- (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state{
+//    if (_emptyType == QDNODataError) {
+//        return nil;
+//    }else{
+//        NSString *text = @"重新加载";
+//        NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
+//        paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+//        paragraphStyle.alignment = NSTextAlignmentCenter;
+//        
+//        NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:18],
+//                                     NSForegroundColorAttributeName: APP_WHITECOLOR,
+//                                     NSParagraphStyleAttributeName: paragraphStyle};
+//        return [[NSMutableAttributedString alloc] initWithString:text attributes:attributes];
+//    }
+//}
 
 - (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state{
     NSString *imageName = @"button_background_kickstarter";

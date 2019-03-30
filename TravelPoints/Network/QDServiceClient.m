@@ -37,7 +37,12 @@ typedef void(^PrivateRequestFailure)(NSURLSessionDataTask *task, NSError *error)
     dispatch_once(&onceToken, ^{
         serviceClient = [[QDServiceClient alloc] init];
         serviceClient.manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-        serviceClient.manager.securityPolicy.allowInvalidCertificates = YES;
+        //客户端是否信任非法证书
+        serviceClient.manager.securityPolicy.allowInvalidCertificates = NO;
+        
+        //是否在证书域字段中验证域名
+        serviceClient.manager.securityPolicy.validatesDomainName = NO;
+        
         serviceClient.tasks = [[NSMutableArray alloc] init];
 //        serviceClient.
     });
