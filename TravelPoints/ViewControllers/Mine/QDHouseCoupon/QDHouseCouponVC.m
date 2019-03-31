@@ -138,7 +138,7 @@
     menuView.style = WMMenuViewStyleFloodHollow;
     self.menuView.style = WMMenuViewStyleLine;
     CGFloat leftMargin = self.showOnNavigationBar ? 50 : 0;
-    return CGRectMake(leftMargin, 79, self.view.frame.size.width - 2*leftMargin, 44);
+    return CGRectMake(leftMargin, SafeAreaTopHeight-8, self.view.frame.size.width - 2*leftMargin, 44);
 }
 
 - (CGRect)pageController:(WMPageController *)pageController preferredFrameForContentView:(WMScrollView *)contentView {
