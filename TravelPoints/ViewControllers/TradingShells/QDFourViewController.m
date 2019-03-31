@@ -146,6 +146,7 @@ QD_ManualCanceled = 4      //手工取消
                                      @"pageSize":[NSNumber numberWithInt:_pageSize]
                                      };
         [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_FindMyOrder params:paramsDic successBlock:^(QDResponseObject *responseObject) {
+            self.loading = NO;
             if (responseObject.code == 0) {
                 NSDictionary *dic = responseObject.result;
                 NSArray *hotelArr = [dic objectForKey:@"result"];
@@ -170,6 +171,7 @@ QD_ManualCanceled = 4      //手工取消
                 [WXProgressHUD showInfoWithTittle:responseObject.message];
             }
         } failureBlock:^(NSError *error) {
+            self.loading = NO;
             _emptyType = QDNetworkError;
             [_tableView reloadData];
             [_tableView reloadEmptyDataSet];
@@ -246,6 +248,7 @@ QD_ManualCanceled = 4      //手工取消
 - (void)isLogin{
     [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_IsLogin params:nil successBlock:^(QDResponseObject *responseObject) {
         NSString *cookie = [NSString stringWithFormat:@"%@", [QDUserDefaults getCookies]];
+        self.loading = NO;
         if ([responseObject.result intValue] == 0) {
             _emptyType = QDNODataError;
             QDLog(@"未登录, cookie = %@", cookie);
@@ -259,6 +262,7 @@ QD_ManualCanceled = 4      //手工取消
             [self requestMyZhaiDanData];
         }
     } failureBlock:^(NSError *error) {
+        self.loading = NO;
         _emptyType = QDNetworkError;
         [_tableView reloadData];
         [_tableView reloadEmptyDataSet];

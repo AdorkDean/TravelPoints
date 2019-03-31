@@ -102,7 +102,7 @@
     [self.view addSubview:_currentLocationView];
     UITapGestureRecognizer *tapGes = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectCurrentLocation:)];
     [_currentLocationView addGestureRecognizer:tapGes];
-    _resultVC = [[UITableView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT*0.05 + 24, SCREEN_WIDTH, SCREEN_HEIGHT) style:UITableViewStylePlain];
+    _resultVC = [[UITableView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT*0.05 + SafeAreaTopHeight - 34, SCREEN_WIDTH, SCREEN_HEIGHT) style:UITableViewStylePlain];
     _resultVC.emptyDataSetDelegate = self;
     _resultVC.emptyDataSetSource = self;
     _resultVC.separatorStyle = UITableViewCellSeparatorStyleNone;

@@ -367,6 +367,7 @@
     _segmentControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
     [self.view addSubview:_segmentControl];
 }
+
 - (void)setDropMenu{
     NSMutableArray *data1 = [NSMutableArray arrayWithObjects:_array2, @[@"价格"], _array3, nil];
     NSMutableArray *data2 = [NSMutableArray arrayWithObjects:@[], @[], @[], nil];

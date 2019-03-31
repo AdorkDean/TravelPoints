@@ -126,6 +126,10 @@
     _tableView.tableHeaderView = _customTourHeaderView;
     self.view = _tableView;
     _tableView.mj_header = [QDRefreshHeader headerWithRefreshingBlock:^{
+        //重新刷新 查询全部
+        if ([_customTourHeaderView.inputTF.text isEqualToString:@""]) {
+            _travelName = @"";
+        }
         [self requestDZYList];
     }];
     

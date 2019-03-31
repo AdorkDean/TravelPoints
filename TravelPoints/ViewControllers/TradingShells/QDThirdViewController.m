@@ -82,6 +82,7 @@ typedef enum : NSUInteger {
 
 - (void)isLogin{
     [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_IsLogin params:nil successBlock:^(QDResponseObject *responseObject) {
+        self.loading = YES;
         NSString *cookie = [NSString stringWithFormat:@"%@", [QDUserDefaults getCookies]];
         if ([responseObject.result intValue] == 0) {
             _emptyType = QDNODataError;
@@ -601,9 +602,6 @@ typedef enum : NSUInteger {
 //    });
 }
 
-- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView{
-    return -80;
-}
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button
 {
     self.loading = YES;
@@ -613,6 +611,10 @@ typedef enum : NSUInteger {
     }else{
         [self requestHeaderTopData];
     }
+}
+
+- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView{
+    return -80;
 }
 
 @end

@@ -360,7 +360,14 @@
 
 #pragma mark - 下一步按钮:注册这好玩&&找回密码
 - (void)registNextStep:(UIButton *)sender{
-    
+    if ([_registerView.phoneTF.text isEqualToString:@""]) {
+        [WXProgressHUD showInfoWithTittle:@"请输入手机号"];
+        return;
+    }
+    if ([_registerView.userNameTF.text isEqualToString:@""]) {
+        [WXProgressHUD showInfoWithTittle:@"用户名不能为空"];
+        return;
+    }
     //先验证是否注册
     [self checkIsRegister];
 //    if ([_registerView.nextBtn isEnabled]) {

@@ -119,6 +119,7 @@
 
 #pragma mark - 用户登出接口
 - (void)logout{
+    //先判断用户是否登录
     [[QDServiceClient shareClient] logoutWitStr:api_UserLogout SuccessBlock:^(QDResponseObject *responseObject) {
         [WXProgressHUD hideHUD];
         if (responseObject.code == 0) {
@@ -158,7 +159,12 @@
         }
     }
     if (indexPath.section == 1) {
-        [self showAlertView];
+        NSString *str = [QDUserDefaults getObjectForKey:@"loginType"];
+        if ([str isEqualToString:@"0"] || str == nil) { //未登录
+            [WXProgressHUD showInfoWithTittle:@"当前无用户登录"];
+        }else{
+            [self showAlertView];
+        }
     }
 }
 

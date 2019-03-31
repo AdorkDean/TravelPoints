@@ -109,7 +109,7 @@
     }else{
         [self requestUserStatus];
     }
-    [self queryOrderPay:api_FindPurchaseInfos];
+    [self queryOrderPay];
     [_vipPurchaseView.returnBtn addTarget:self action:@selector(popVC:) forControlEvents:UIControlEventTouchUpInside];
     [_vipPurchaseView.confirmBtn addTarget:self action:@selector(confirmToBuy:) forControlEvents:UIControlEventTouchUpInside];
     [_vipPurchaseView.protocolBtn addTarget:self action:@selector(protocolAction) forControlEvents:UIControlEventTouchUpInside];
@@ -174,7 +174,6 @@
     gradientLayer.startPoint = CGPointMake(0, 0);
     gradientLayer.endPoint = CGPointMake(1, 0);
     gradientLayer.locations = @[@(0.5),@(1.0)];//渐变点
-
     [gradientLayer setColors:@[(id)[[UIColor colorWithHexString:@"#159095"] CGColor],(id)[[UIColor colorWithHexString:@"#3CC8B1"] CGColor]]];//渐变数组
     [_confirmBtn.layer addSublayer:gradientLayer];
     _confirmBtn.layer.cornerRadius = 4;
@@ -191,13 +190,13 @@
 }
 
 #pragma mark - 积分充值卡查询
-- (void)queryOrderPay:(NSString *)urlStr{
+- (void)queryOrderPay{
     [WXProgressHUD showHUD];
     if (_cardArr.count) {
         [_cardArr removeAllObjects];
     }
     //先查询全部
-    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:urlStr params:nil successBlock:^(QDResponseObject *responseObject) {
+    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_FindPurchaseInfos params:nil successBlock:^(QDResponseObject *responseObject) {
         [WXProgressHUD hideHUD];
         if (responseObject.code == 0) {
             NSDictionary *dic = responseObject.result;
@@ -218,9 +217,7 @@
                     _vipPurchaseView.priceTF.hidden = YES;
                 }
                 [_vipPurchaseView layoutSubviews];
-                
             }else{
-                //
                 [self showPurchaseViewWithBool:YES];
                 [WXProgressHUD showErrorWithTittle:@"暂无VIP售卡信息"];
             }
