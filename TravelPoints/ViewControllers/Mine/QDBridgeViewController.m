@@ -81,8 +81,7 @@
     self.view = _baseView;
     _webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 3, SCREEN_WIDTH, SCREEN_HEIGHT)];
     
-
-    _webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+//    _webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     _webView.backgroundColor = APP_WHITECOLOR;
     _webView.navigationDelegate = self;
     if (@available(iOS 11.0, *)) {
@@ -179,6 +178,9 @@
 
 - (void)loadWebViewWithURL{
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:_urlStr]];
+
+//    [NSURLRequest setAllowsAnyHTTPSCertificate:YES forHost:@"https"];
+//    reques
     [_webView loadRequest:request];
 }
 
@@ -412,6 +414,19 @@
         }];
     }
 }
+
+//- (void)webView:(WKWebView *)webView didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *credential))completionHandler {
+//    if ([challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust]) {
+//        if ([challenge previousFailureCount] == 0) {
+//            NSURLCredential *credential = [NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust];
+//            completionHandler(NSURLSessionAuthChallengeUseCredential, credential);
+//        } else {
+//            completionHandler(NSURLSessionAuthChallengeCancelAuthenticationChallenge, nil);
+//        }
+//    } else {
+//        completionHandler(NSURLSessionAuthChallengeCancelAuthenticationChallenge, nil);
+//    }
+//}
 
 - (void)dismissShareView:(UIButton *)sender{
     [_popups dismissAnimated:YES completion:nil];

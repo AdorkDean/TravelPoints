@@ -39,12 +39,10 @@ typedef void(^PrivateRequestFailure)(NSURLSessionDataTask *task, NSError *error)
         serviceClient.manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
         //客户端是否信任非法证书
         serviceClient.manager.securityPolicy.allowInvalidCertificates = NO;
-        
         //是否在证书域字段中验证域名
-        serviceClient.manager.securityPolicy.validatesDomainName = NO;
+//        serviceClient.manager.securityPolicy.validatesDomainName = YES;
         
         serviceClient.tasks = [[NSMutableArray alloc] init];
-//        serviceClient.
     });
     return serviceClient;
 }

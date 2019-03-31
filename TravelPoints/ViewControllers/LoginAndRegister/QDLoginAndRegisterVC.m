@@ -368,6 +368,10 @@
         [WXProgressHUD showInfoWithTittle:@"用户名不能为空"];
         return;
     }
+    if (!self.isSelect) {
+        [WXProgressHUD showErrorWithTittle:@"请先阅读完注册协议并勾选"];
+        return;
+    }
     //先验证是否注册
     [self checkIsRegister];
 //    if ([_registerView.nextBtn isEnabled]) {

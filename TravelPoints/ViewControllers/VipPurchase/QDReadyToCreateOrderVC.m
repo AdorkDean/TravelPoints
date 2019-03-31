@@ -293,7 +293,8 @@
         if (responseObject.code == 0) {
             NSString *resultNum = responseObject.result;
             QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
-            bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?amount=%@&&id=%@", QD_JSURL, JS_PAYACTION,[subscribeTotalPriceNum stringValue], resultNum];
+            bridgeVC.urlStr = [NSString stringWithFormat:@"%@%@?amount=%@&id=%@", QD_JSURL, JS_PAYACTION,[subscribeTotalPriceNum stringValue], resultNum];
+//            bridgeVC.urlStr = @"https://app.wedotting.com/app1/#/";
             QDLog(@"urlStr = %@", bridgeVC.urlStr);
             [self.navigationController pushViewController:bridgeVC animated:YES];
         }else{

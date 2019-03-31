@@ -41,7 +41,7 @@
 
         _phoneTF = [[UITextField alloc] init];
         _phoneTF.placeholder = @"请输入手机号";
-        _phoneTF.keyboardType = UIKeyboardTypePhonePad;
+        _phoneTF.keyboardType = UIKeyboardTypeNumberPad;
         _phoneTF.clearButtonMode = UITextFieldViewModeWhileEditing;
         [_phoneTF setValue:APP_GRAYLAYERCOLOR forKeyPath:@"placeholderLabel.textColor"];
         [_phoneTF setValue:[UIFont systemFontOfSize:15] forKeyPath:@"_placeholderLabel.font"];
