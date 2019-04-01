@@ -17,6 +17,7 @@
 #import "AppDelegate.h"
 #import "QDCalendarCustomerTourVC.h"
 #import "QYBaseView.h"
+#import "QDCalendarViewController.h"
 @interface QDBridgeTViewController ()<WKNavigationDelegate>{
     WebViewJavascriptBridge *_bridge;
     CAReplicatorLayer *_containerLayer;
@@ -129,6 +130,19 @@
     [_bridge registerHandler:@"goBack" handler:^(id data, WVJBResponseCallback responseCallback) {
         QDLog(@"goBack");
         [self.navigationController popViewControllerAnimated:YES];
+    }];
+    
+    //调用日历 多选
+    [_bridge registerHandler:@"getRangeDate" handler:^(id data, WVJBResponseCallback responseCallback) {
+        QDLog(@"getRangeDate");
+        NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+        QDCalendarViewController *calendar = [[QDCalendarViewController alloc] init];
+        [self presentViewController:calendar animated:YES completion:nil];
+        calendar.returnDateBlock = ^(NSString * _Nonnull startDate, NSString * _Nonnull endDate, NSString * _Nonnull dateInPassedVal, NSString * _Nonnull dateOutPassedVal, int totayDays) {
+            [dic setObject:dateInPassedVal forKey:@"startDate"];
+            [dic setObject:dateOutPassedVal forKey:@"endDate"];
+            responseCallback(dic);
+        };
     }];
     
     //调用日历 单选
