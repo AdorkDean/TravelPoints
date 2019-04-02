@@ -32,6 +32,12 @@
         _userNameLab.font = QDFont(17);
         [self addSubview:_userNameLab];
         
+        _userIdLab = [[UILabel alloc] init];
+        _userIdLab.text = @"--";
+        _userIdLab.textColor = APP_GRAYLINECOLOR;
+        _userIdLab.font = QDFont(14);
+        [self addSubview:_userIdLab];
+        
         _levelPic = [[UIImageView alloc] init];
         [_levelPic setImage:[UIImage imageNamed:@"icon_crown"]];
         [self addSubview:_levelPic];
@@ -43,7 +49,7 @@
         [_levelPic addSubview:_levelLab];
         
         _vipRightsBtn = [[SPButton alloc] initWithImagePosition:SPButtonImagePositionLeft];
-        _vipRightsBtn.frame = CGRectMake(SCREEN_WIDTH*0.72, SCREEN_HEIGHT*0.12, SCREEN_WIDTH*0.29, SCREEN_HEIGHT*0.05);
+        _vipRightsBtn.frame = CGRectMake(0, 0, 109, 30);
         [_vipRightsBtn setTitle:@"会员权益 >" forState:UIControlStateNormal];
         [_vipRightsBtn setImage:[UIImage imageNamed:@"icon_rights"] forState:UIControlStateNormal];
         [_vipRightsBtn setTitleColor:APP_BLUECOLOR forState:UIControlStateNormal];
@@ -152,8 +158,9 @@
     [super layoutSubviews];
     
     [_settingBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.mas_top).offset(SCREEN_HEIGHT*0.06);
-        make.right.equalTo(self.mas_right).offset(-(SCREEN_WIDTH*0.16));
+        make.top.equalTo(self.mas_top).offset(SafeAreaTopHeight-33);
+        make.right.equalTo(self.mas_right).offset(-63);
+        make.width.and.height.mas_equalTo(24);
     }];
 //    [_voiceBtn mas_makeConstraints:^(MASConstraintMaker *make) {
 //        make.centerY.equalTo(self.settingBtn);
@@ -161,14 +168,19 @@
 //    }];
     
     [_userNameLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.mas_top).offset(SCREEN_HEIGHT*0.1);
-        make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH*0.2);
+        make.top.equalTo(_settingBtn.mas_bottom).offset(9);
+        make.left.equalTo(self.mas_left).offset(78);
+    }];
+    
+    [_userIdLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_userNameLab.mas_bottom);
+        make.left.equalTo(_userNameLab);
     }];
     
    
     [_levelPic mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH*0.21);
-        make.top.equalTo(_userNameLab.mas_bottom).offset(3);
+        make.left.equalTo(_userIdLab);
+        make.top.equalTo(_userIdLab.mas_bottom);
     }];
     
     [_levelLab mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -176,10 +188,17 @@
         make.centerY.equalTo(_levelPic);
     }];
     
+    [_vipRightsBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_settingBtn.mas_bottom).offset(22);
+        make.right.equalTo(self);
+        make.width.mas_equalTo(109);
+        make.height.mas_equalTo(30);
+    }];
+    
     [_financialPic mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_top).offset(SCREEN_HEIGHT*0.18);
         make.centerX.equalTo(self);
-        make.width.mas_equalTo(335);
+        make.width.mas_equalTo(359);
         make.height.mas_equalTo(202);
     }];
     

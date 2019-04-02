@@ -240,7 +240,7 @@ typedef NS_ENUM(NSInteger, PhotoType)
     [_notLoginHeaderView.settingBtn addTarget:self action:@selector(userSettings:) forControlEvents:UIControlEventTouchUpInside];
     [_notLoginHeaderView.loginBtn addTarget:self action:@selector(userLogin:) forControlEvents:UIControlEventTouchUpInside];
     //未开通资金帐户
-    _noFinancialView = [[QDLogonWithNoFinancialAccountView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.58)];
+    _noFinancialView = [[QDLogonWithNoFinancialAccountView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 340+SafeAreaTopHeight)];
     _noFinancialView.backgroundColor = APP_WHITECOLOR;
     [_noFinancialView.settingBtn addTarget:self action:@selector(userSettings:) forControlEvents:UIControlEventTouchUpInside];
     [_noFinancialView.voiceBtn addTarget:self action:@selector(notices:) forControlEvents:UIControlEventTouchUpInside];
@@ -249,7 +249,7 @@ typedef NS_ENUM(NSInteger, PhotoType)
     [_noFinancialView.openFinancialBtn addTarget:self action:@selector(openFinancialAction:) forControlEvents:UIControlEventTouchUpInside];
     [_noFinancialView.accountInfo addTarget:self action:@selector(lookAccountInfo:) forControlEvents:UIControlEventTouchUpInside];
     //已经开通资金账户的
-    _haveFinancialView = [[QDMineHeaderFinancialAccountView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.56)];
+    _haveFinancialView = [[QDMineHeaderFinancialAccountView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 350+SafeAreaTopHeight)];
     _haveFinancialView.backgroundColor = APP_WHITECOLOR;
 //    [_haveFinancialView addGestureRecognizer:tapGes];
     [_haveFinancialView.vipRightsBtn addTarget:self action:@selector(vipRights:) forControlEvents:UIControlEventTouchUpInside];

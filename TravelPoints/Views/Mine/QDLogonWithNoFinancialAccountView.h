@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) UIImageView *picView;
 @property (nonatomic, strong) UILabel *userNameLab;
+@property (nonatomic, strong) UILabel *userIdLab;
 @property (nonatomic, strong) UIImageView *levelPic;
 @property (nonatomic, strong) UILabel *levelLab;
 @property (nonatomic, strong) UIButton *vipRightsBtn;

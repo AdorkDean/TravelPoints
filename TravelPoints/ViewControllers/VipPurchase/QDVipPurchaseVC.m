@@ -26,6 +26,7 @@
     BOOL _selected;
     VipCardDTO *_currentModel;
     QYBaseView *_baseView;
+    NSString *_isYePay;
 }
 @property (nonatomic, strong) UIButton *confirmBtn;
 
@@ -151,6 +152,7 @@
         if (responseObject.code == 0) {
             [self showPurchaseViewWithBool:NO];
             QDMemberDTO *currentQDMemberTDO = [QDMemberDTO yy_modelWithDictionary:responseObject.result];
+            _isYePay = currentQDMemberTDO.isYepay;
             [_vipPurchaseView loadVipViewWithModel:currentQDMemberTDO];
         }else if (responseObject.code == 2){
             [QDUserDefaults removeCookies];
@@ -288,20 +290,24 @@
             return;
         }
         //针对输入金额
-        if ([_currentModel.vipMoney isEqualToString:@"0"]) {
-            VipCardDTO *cardDTO = [[VipCardDTO alloc] init];
-            cardDTO.vipMoney = _vipPurchaseView.priceTF.text;
-            cardDTO.subscriptCount = _vipPurchaseView.bottomLab2.text;
-            cardDTO.creditCode = _currentModel.creditCode;
-            cardDTO.vipTypeName = _currentModel.vipTypeName;
-            cardDTO.id = _currentModel.id;
-            cardDTO.basePrice = _currentModel.basePrice;
-            cardDTO.isDefault = _currentModel.isDefault;
-            orderVC.vipModel = cardDTO;
+        if ([_isYePay isEqualToString:@"0"]) {
+            [WXProgressHUD showInfoWithTittle:@"该用户暂无资金账户,无法购买"];
         }else{
-            orderVC.vipModel = _currentModel;
+            if ([_currentModel.vipMoney isEqualToString:@"0"]) {
+                VipCardDTO *cardDTO = [[VipCardDTO alloc] init];
+                cardDTO.vipMoney = _vipPurchaseView.priceTF.text;
+                cardDTO.subscriptCount = _vipPurchaseView.bottomLab2.text;
+                cardDTO.creditCode = _currentModel.creditCode;
+                cardDTO.vipTypeName = _currentModel.vipTypeName;
+                cardDTO.id = _currentModel.id;
+                cardDTO.basePrice = _currentModel.basePrice;
+                cardDTO.isDefault = _currentModel.isDefault;
+                orderVC.vipModel = cardDTO;
+            }else{
+                orderVC.vipModel = _currentModel;
+            }
+            [self.navigationController pushViewController:orderVC animated:YES];
         }
-        [self.navigationController pushViewController:orderVC animated:YES];
     }
 }
 
