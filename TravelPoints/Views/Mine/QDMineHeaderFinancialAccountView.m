@@ -32,6 +32,12 @@
         _userNameLab.font = QDFont(17);
         [self addSubview:_userNameLab];
         
+        _userIdLab = [[UILabel alloc] init];
+        _userIdLab.text = @"--";
+        _userIdLab.textColor = APP_GRAYLINECOLOR;
+        _userIdLab.font = QDFont(14);
+        [self addSubview:_userIdLab];
+        
         _levelPic = [[UIImageView alloc] init];
         [_levelPic setImage:[UIImage imageNamed:@"icon_crown"]];
         [self addSubview:_levelPic];
@@ -156,23 +162,28 @@
     [super layoutSubviews];
     
     [_settingBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.mas_top).offset(SCREEN_HEIGHT*0.06);
-        make.right.equalTo(self.mas_right).offset(-(SCREEN_WIDTH*0.16));
+        make.top.equalTo(self.mas_top).offset(SafeAreaTopHeight-33);
+        make.right.equalTo(self.mas_right).offset(-63);
     }];
+    
 //    [_voiceBtn mas_makeConstraints:^(MASConstraintMaker *make) {
 //        make.centerY.equalTo(self.settingBtn);
 //        make.right.equalTo(self.mas_right).offset(-(SCREEN_WIDTH*0.05));
 //    }];
 //    
     [_userNameLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_userNameLab.mas_bottom);
+        make.left.equalTo(_userNameLab);
+    }];
+    
+    [_userIdLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_top).offset(SCREEN_HEIGHT*0.1);
         make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH*0.2);
     }];
     
-    
     [_levelPic mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH*0.21);
-        make.top.equalTo(_userNameLab.mas_bottom).offset(3);
+        make.left.equalTo(_userIdLab);
+        make.top.equalTo(_userIdLab.mas_bottom);
     }];
     
     [_levelLab mas_makeConstraints:^(MASConstraintMaker *make) {

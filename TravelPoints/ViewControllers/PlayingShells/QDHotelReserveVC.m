@@ -39,6 +39,9 @@
     NSMutableArray *_mallInfoArr;
     QD_LOCATION_STATUS _locationStatus;
     QDEmptyType _emptyType;
+    int _totalPage;
+    int _pageNum;
+    int _pageSize;
 }
 
 @property (nonatomic, strong) CLLocationManager *locationManager;
@@ -64,9 +67,12 @@
     self.view.backgroundColor = APP_WHITECOLOR;
     _hotelListInfoArr = [[NSMutableArray alloc] init];
     _hotelImgArr = [[NSMutableArray alloc] init];
+    _pageNum = 1;
+    _pageSize = 10;
     [self initTableView];
+    _totalPage = 0; //总页数默认
     //请求酒店数据
-    [self requestHotelInfoWithURL:api_GetHotelCondition andIsPushVC:NO];
+    [self requestHotelInfoIsPushVC:NO];
     [self locate];
 }
 
@@ -88,32 +94,131 @@
     }
 }
 
-#pragma mark - 请求酒店信息
-- (void)requestHotelInfoWithURL:(NSString *)urlStr andIsPushVC:(BOOL)pushVC{
-    self.loading = NO;
+#pragma mark - 请求酒店头部数据
+- (void)requestHotelHeaderData{
+    _pageNum = 1;
     if (_hotelListInfoArr.count) {
         [_hotelListInfoArr removeAllObjects];
         [_hotelImgArr removeAllObjects];
     }
     NSDictionary * dic1 = @{@"hotelName":_headerView.locationTF.text,
                             @"cityName":_headerView.locationLab.text,
-                            @"pageNum":@1,
-                            @"pageSize":@30
+                            @"pageNum":[NSNumber numberWithInt:_pageNum],
+                            @"pageSize":[NSNumber numberWithInt:_pageSize]
                             };
-    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:urlStr params:dic1 successBlock:^(QDResponseObject *responseObject) {
-        [self endRefreshing];
+    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_GetHotelCondition params:dic1 successBlock:^(QDResponseObject *responseObject) {
+        self.loading = NO;
         if (responseObject.code == 0) {
             NSDictionary *dic = responseObject.result;
             NSArray *hotelArr = [dic objectForKey:@"result"];
+            _totalPage = [[dic objectForKey:@"totalPage"] intValue];
             if (hotelArr.count) {
+                NSMutableArray *arr = [[NSMutableArray alloc] init];
+                NSMutableArray *imgarr = [[NSMutableArray alloc] init];
                 for (NSDictionary *dic in hotelArr) {
                     QDHotelListInfoModel *infoModel = [QDHotelListInfoModel yy_modelWithDictionary:dic];
-                    [_hotelListInfoArr addObject:infoModel];
+                    [arr addObject:infoModel];
                     
                     NSDictionary *dic = [infoModel.imageList firstObject];
                     NSString *urlStr = [dic objectForKey:@"imageFullUrl"];
                     QDLog(@"urlStr = %@", urlStr);
-                    [_hotelImgArr addObject:urlStr];
+                    [imgarr addObject:urlStr];
+                }
+                if (arr.count) {
+                    if (arr.count < _pageSize) {   //不满10个
+                        [_hotelListInfoArr addObjectsFromArray:arr];
+                        [_hotelImgArr addObjectsFromArray:imgarr];
+                        _tableView.mj_footer.state = MJRefreshStateNoMoreData;
+                        [_tableView reloadData];
+                    }else{
+                        [_hotelListInfoArr addObjectsFromArray:arr];
+                        [_hotelImgArr addObjectsFromArray:imgarr];
+                        _tableView.mj_footer.state = MJRefreshStateIdle;
+                        [_tableView reloadData];
+                    }
+                    if ([_tableView.mj_header isRefreshing]) {
+                        [_tableView.mj_header endRefreshing];
+                    }
+                }else{
+                    [_tableView reloadData];
+                    [_tableView.mj_header endRefreshing];
+                }
+            }else{
+                _emptyType = QDNODataError;
+                [_tableView reloadData];
+                [_tableView reloadEmptyDataSet];
+                [_tableView.mj_header endRefreshing];
+            }
+        }else{
+            [_tableView reloadData];
+            [_tableView reloadEmptyDataSet];
+            [self endRefreshing];
+            [WXProgressHUD showInfoWithTittle:responseObject.message];
+        }
+    } failureBlock:^(NSError *error) {
+        _emptyType = QDNetworkError;
+        self.loading = NO;
+        [_tableView reloadData];
+        [_tableView reloadEmptyDataSet];
+        [self endRefreshing];
+        [WXProgressHUD showErrorWithTittle:@"网络异常"];
+    }];
+}
+
+
+#pragma mark - 请求酒店信息
+- (void)requestHotelInfoIsPushVC:(BOOL)pushVC{
+//    self.loading = NO;
+//    if (_hotelListInfoArr.count) {
+//        [_hotelListInfoArr removeAllObjects];
+//        [_hotelImgArr removeAllObjects];
+//    }
+    
+    if (_totalPage != 0) {
+        if (_pageNum > _totalPage) {
+            [_tableView.mj_footer endRefreshingWithNoMoreData];
+            return;
+        }
+    }
+    NSDictionary * dic1 = @{@"hotelName":_headerView.locationTF.text,
+                            @"cityName":_headerView.locationLab.text,
+                            @"pageNum":[NSNumber numberWithInt:_pageNum],
+                            @"pageSize":[NSNumber numberWithInt:_pageSize]
+                            };
+    [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_GetHotelCondition params:dic1 successBlock:^(QDResponseObject *responseObject) {
+        [self endRefreshing];
+        if (responseObject.code == 0) {
+            NSDictionary *dic = responseObject.result;
+            NSArray *hotelArr = [dic objectForKey:@"result"];
+            _totalPage = [[dic objectForKey:@"totalPage"] intValue];
+            if (hotelArr.count) {
+                NSMutableArray *arr = [[NSMutableArray alloc] init];
+                NSMutableArray *imgarr = [[NSMutableArray alloc] init];
+
+                for (NSDictionary *dic in hotelArr) {
+                    QDHotelListInfoModel *infoModel = [QDHotelListInfoModel yy_modelWithDictionary:dic];
+                    [arr addObject:infoModel];
+
+                    NSDictionary *dic = [infoModel.imageList firstObject];
+                    NSString *urlStr = [dic objectForKey:@"imageFullUrl"];
+                    QDLog(@"urlStr = %@", urlStr);
+                    [imgarr addObject:urlStr];
+                }
+                if (arr.count) {
+                    if (arr.count < _pageSize) {   //不满10个
+                        [_hotelListInfoArr addObjectsFromArray:arr];
+                        [_hotelImgArr addObjectsFromArray:imgarr];
+                        [_tableView reloadData];
+                        if ([_tableView.mj_footer isRefreshing]) {
+                            [self endRefreshing];
+                            _tableView.mj_footer.state = MJRefreshStateNoMoreData;
+                        }
+                    }else{
+                        [_hotelListInfoArr addObjectsFromArray:arr];
+                        [_hotelImgArr addObjectsFromArray:imgarr];
+                        _tableView.mj_footer.state = MJRefreshStateIdle;
+                        [_tableView reloadData];
+                    }
                 }
                 if (pushVC) {
                     QDKeyWordsSearchVC *keyVC = [[QDKeyWordsSearchVC alloc] init];
@@ -190,13 +295,16 @@
 //    _tableView.mj_header = header;
     
     _tableView.mj_header = [QDRefreshHeader headerWithRefreshingBlock:^{
-        [self requestHotelInfoWithURL:api_GetHotelCondition andIsPushVC:NO];
+        [self requestHotelHeaderData];
     }];
     //手动刷新请求最新数据
     _tableView.mj_footer = [QDRefreshFooter footerWithRefreshingBlock:^{
         QDLog(@"sss");
-        [self endRefreshing];
-        [_tableView.mj_footer endRefreshingWithNoMoreData];
+//        [self endRefreshing];
+//        [_tableView.mj_footer endRefreshingWithNoMoreData];
+        QDLog(@"上拉刷新");
+        _pageNum++;
+        [self requestHotelInfoIsPushVC:NO];
     }];
 }
 
@@ -208,19 +316,27 @@
         [_tableView.mj_header endRefreshing];
     });
 }
+
 - (void)startSearch:(UIButton *)sender{
-    QDKeyWordsSearchVC *keyVC = [[QDKeyWordsSearchVC alloc] init];
-    keyVC.playShellType = QDHotelReserve;    //酒店预订的类型
-    NSString *ss = _headerView.dateIn.titleLabel.text;
-    NSString *sss = _headerView.dateOut.titleLabel.text;
     
-    keyVC.dateInPassedVal = _dateInPassedVal;
-    keyVC.dateOutPassedVal =_dateOutPassedVal;
-    keyVC.dateInStr = ss;
-    keyVC.dateOutStr = sss;
-    keyVC.keyWords = _headerView.locationTF.text;
-    keyVC.cityName = _headerView.locationLab.text;
-    [self.navigationController pushViewController:keyVC animated:YES];
+    QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
+    bridgeVC.urlStr = @"https://appuat.wedotting.com/app/#/pay/orderPay?amount=100&id=190402U1903110056210";
+    //            bridgeVC.urlStr = @"https://app.wedotting.com/app1/#/";
+    QDLog(@"urlStr = %@", bridgeVC.urlStr);
+    [self.navigationController pushViewController:bridgeVC animated:YES];
+    
+//    QDKeyWordsSearchVC *keyVC = [[QDKeyWordsSearchVC alloc] init];
+//    keyVC.playShellType = QDHotelReserve;    //酒店预订的类型
+//    NSString *ss = _headerView.dateIn.titleLabel.text;
+//    NSString *sss = _headerView.dateOut.titleLabel.text;
+//
+//    keyVC.dateInPassedVal = _dateInPassedVal;
+//    keyVC.dateOutPassedVal =_dateOutPassedVal;
+//    keyVC.dateInStr = ss;
+//    keyVC.dateOutStr = sss;
+//    keyVC.keyWords = _headerView.locationTF.text;
+//    keyVC.cityName = _headerView.locationLab.text;
+//    [self.navigationController pushViewController:keyVC animated:YES];
 }
 
 - (void)endRefreshing
@@ -413,7 +529,7 @@
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapView:(UIView *)view
 {
     self.loading = YES;
-    [self requestHotelInfoWithURL:api_GetHotelCondition andIsPushVC:NO];
+    [self requestHotelInfoIsPushVC:NO];
 
 //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 //        self.loading = NO;
@@ -423,7 +539,7 @@
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button
 {
     self.loading = YES;
-    [self requestHotelInfoWithURL:api_GetHotelCondition andIsPushVC:NO];
+    [self requestHotelInfoIsPushVC:NO];
 //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 //        self.loading = NO;
 //    });
@@ -491,5 +607,6 @@
     searchVC.playShellType = QDCustomTour;
     [self.navigationController pushViewController:searchVC animated:YES];
 }
+
 
 @end

@@ -309,7 +309,7 @@ static NSString *cellIdentifier = @"CellIdentifier";
         
         _homePageTopView.iconBtn.layer.cornerRadius = SCREEN_WIDTH*0.11/2;
         _homePageTopView.iconBtn.layer.masksToBounds = YES;
-//        [_homePageTopView.iconBtn addTarget:self action:@selector(homeMapPage:) forControlEvents:UIControlEventTouchUpInside];
+        [_homePageTopView.iconBtn addTarget:self action:@selector(homeMapPage:) forControlEvents:UIControlEventTouchUpInside];
         _tableView.tableHeaderView = _homePageTopView;
         
 //        UITapGestureRecognizer *doubleTapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleDoubleTap:)];

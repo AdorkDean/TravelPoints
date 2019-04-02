@@ -194,6 +194,7 @@ typedef NS_ENUM(NSInteger, PhotoType)
         _tableView.tableHeaderView = _noFinancialView;
     }else{
         _haveFinancialView.userNameLab.text = _currentQDMemberTDO.userName;
+        _haveFinancialView.userIdLab.text = _currentQDMemberTDO.userId;
         _tableView.tableHeaderView = _haveFinancialView;
     }
     [_tableView reloadData];

@@ -32,7 +32,7 @@
         [self.contentView addSubview:_backView];
         
         _pic = [[UIImageView alloc] init];
-        _pic.backgroundColor = APP_BLUECOLOR;
+        _pic.backgroundColor = APP_WHITECOLOR;
         [_backView addSubview:_pic];
         
         _descLab = [[UILabel alloc] init];
