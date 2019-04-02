@@ -142,8 +142,8 @@
     self.starLab.text = @"收藏";
     self.hotelName.text = infoModel.hotelName;
     self.totalStars.text = [NSString stringWithFormat:@"%@",infoModel.collectCount];
-    self.priceLab.text = [NSString stringWithFormat:@"¥%@", infoModel.rmbprice];
-    self.wanbei.text = [NSString stringWithFormat:@"%.2lf", [infoModel.price doubleValue]];
+    self.priceLab.text = [NSString stringWithFormat:@"%.2lf", [infoModel.rmbprice doubleValue]];;
+    self.wanbei.text = infoModel.price;
     self.locationLab.text = infoModel.address;
 //    SDWebImageManager *manager = [SDWebImageManager sharedManager];
 //    BOOL isCached = [manager cachedImageExistsForURL:[NSURL URLWithString:imgURL] completion:nil];
