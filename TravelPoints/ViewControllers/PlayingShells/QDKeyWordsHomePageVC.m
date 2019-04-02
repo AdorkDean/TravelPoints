@@ -94,7 +94,7 @@
     if (![_array3[0] isEqualToString:@"星级"]) {
         [_array3 insertObject:@"星级" atIndex:0];
     }
-    _headView = [[QDKeyWordsSearchHeaderView alloc] initWithFrame:CGRectMake(0, 20, SCREEN_WIDTH, SCREEN_HEIGHT*0.1)];
+    _headView = [[QDKeyWordsSearchHeaderView alloc] initWithFrame:CGRectMake(0, 50, SCREEN_WIDTH, SCREEN_HEIGHT*0.1)];
     NSString *final = [NSString stringWithFormat:@"住%@\n离%@", _dateInStr, _dateOutStr];
     [_headView.selectDateBtn setTitle:final forState:UIControlStateNormal];
     [_headView.selectDateBtn addTarget:self action:@selector(chooseDate:) forControlEvents:UIControlEventTouchUpInside];

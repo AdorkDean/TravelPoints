@@ -24,7 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = APP_WHITECOLOR;
-    _headViewT = [[QDKeyWordsSearchViewT alloc] initWithFrame:CGRectMake(0, 20, SCREEN_WIDTH, 49)];
+    _headViewT = [[QDKeyWordsSearchViewT alloc] initWithFrame:CGRectMake(0, SafeAreaTopHeight-44, SCREEN_WIDTH, 49)];
 //    [_headViewT.toSearchVCBtn addTarget:self action:@selector(toSearchVC:) forControlEvents:UIControlEventTouchUpInside];
     [_headViewT.toSearchVCBtn setTitle:_keyStr forState:UIControlStateNormal];
     [_headViewT.returnBtn addTarget:self action:@selector(returnActiion:) forControlEvents:UIControlEventTouchUpInside];
@@ -111,7 +111,7 @@
     menuView.style = WMMenuViewStyleFloodHollow;
     self.menuView.style = WMMenuViewStyleLine;
     CGFloat leftMargin = self.showOnNavigationBar ? 50 : 0;
-    return CGRectMake(leftMargin, SafeAreaTopHeight-20, self.view.frame.size.width - 2*leftMargin, 44);
+    return CGRectMake(leftMargin, SafeAreaTopHeight-44+49, self.view.frame.size.width - 2*leftMargin, 44);
 }
 
 - (CGRect)pageController:(WMPageController *)pageController preferredFrameForContentView:(WMScrollView *)contentView {
