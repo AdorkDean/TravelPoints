@@ -146,7 +146,7 @@
     self.title = @"订单详情";
     self.view.backgroundColor = APP_WHITECOLOR;
     [self setLeftBtnItem];
-    _biddingOrderView = [[QDMyBiddingOrderView alloc] initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    _biddingOrderView = [[QDMyBiddingOrderView alloc] initWithFrame:CGRectMake(0, SafeAreaTopHeight, SCREEN_WIDTH, SCREEN_HEIGHT)];
     _biddingOrderView.backgroundColor = APP_GRAYBACKGROUNDCOLOR;
     [_biddingOrderView.withdrawBtn addTarget:self action:@selector(withdrawAction:) forControlEvents:UIControlEventTouchUpInside];
     [_biddingOrderView loadViewWithModel:_posterDTO];

@@ -305,11 +305,19 @@
             switch ([model.postersStatus integerValue]) {
                 case QD_ORDERSTATUS_NOTTRADED:
                     self.statusLab.text = @"未成交";
-                    self.withdrawBtn.hidden = NO;
+                    if ([model.frozenVolume intValue] > 0) {
+                        self.withdrawBtn.hidden = YES;
+                    }else{
+                        self.withdrawBtn.hidden = NO;
+                    }
                     break;
                 case QD_ORDERSTATUS_PARTTRADED:
                     self.statusLab.text = @"部分成交";
-                    self.withdrawBtn.hidden = NO;
+                    if ([model.frozenVolume intValue] > 0) {
+                        self.withdrawBtn.hidden = YES;
+                    }else{
+                        self.withdrawBtn.hidden = NO;
+                    }
                     break;
                 case QD_ORDERSTATUS_ALLTRADED:
                     self.statusLab.text = @"全部成交";

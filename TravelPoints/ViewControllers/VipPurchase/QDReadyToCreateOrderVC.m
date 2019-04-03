@@ -150,7 +150,7 @@
 
 #pragma mark - 代销申购
 - (void)conformToPayAction:(UIButton *)sender{
-    if (_currentSale == nil) {
+    if (_currentSale == nil || [_currentSale.saleName isEqualToString:@"无"]) {
         if (_salesInfoArr.count) {
             //承销商有数据 可以不选择
             QDSalesInfo *salesInfo = [[QDSalesInfo alloc] init];
@@ -240,11 +240,17 @@
         for (QDSalesInfo *info in _salesInfoArr) {
             [infoArr addObject:info.saleName];
         }
+        [infoArr insertObject:@"无" atIndex:0];
     }
     CWActionSheet *sheet = [[CWActionSheet alloc] initWithTitles:infoArr clickAction:^(CWActionSheet *sheet, NSIndexPath *indexPath) {
         QDLog(@"点击了%ld%@", indexPath.row, _salesInfoArr[indexPath.row]);
-        QDSalesInfo *info = _salesInfoArr[indexPath.row];
-        _currentSale = info;
+        if (indexPath.row == 0) {
+            _currentSale = [[QDSalesInfo alloc] init];
+            _currentSale.saleName = @"无";
+        }else{
+            QDSalesInfo *info = _salesInfoArr[indexPath.row];
+            _currentSale = info;
+        }
         [_tableView reloadData];
     }];
     [sheet show];
@@ -258,11 +264,17 @@
             for (QDSalesInfo *info in _salesInfoArr) {
                 [infoArr addObject:info.saleName];
             }
+            [infoArr insertObject:@"无" atIndex:0];
         }
         CWActionSheet *sheet = [[CWActionSheet alloc] initWithTitles:infoArr clickAction:^(CWActionSheet *sheet, NSIndexPath *indexPath) {
             QDLog(@"点击了%ld%@", indexPath.row, _salesInfoArr[indexPath.row]);
-            QDSalesInfo *info = _salesInfoArr[indexPath.row];
-            _currentSale = info;
+            if (indexPath.row == 0) {
+                _currentSale = [[QDSalesInfo alloc] init];
+                _currentSale.saleName = @"无";
+            }else{
+                QDSalesInfo *info = _salesInfoArr[indexPath.row];
+                _currentSale = info;
+            }
             [_tableView reloadData];
         }];
         [sheet show];
