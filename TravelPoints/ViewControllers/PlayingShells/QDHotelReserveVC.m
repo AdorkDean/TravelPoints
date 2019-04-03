@@ -318,25 +318,18 @@
 }
 
 - (void)startSearch:(UIButton *)sender{
-    
-    QDBridgeViewController *bridgeVC = [[QDBridgeViewController alloc] init];
-    bridgeVC.urlStr = @"https://appuat.wedotting.com/app/#/pay/orderPay?amount=100&id=190402U1903110056210";
-    //            bridgeVC.urlStr = @"https://app.wedotting.com/app1/#/";
-    QDLog(@"urlStr = %@", bridgeVC.urlStr);
-    [self.navigationController pushViewController:bridgeVC animated:YES];
-    
-//    QDKeyWordsSearchVC *keyVC = [[QDKeyWordsSearchVC alloc] init];
-//    keyVC.playShellType = QDHotelReserve;    //酒店预订的类型
-//    NSString *ss = _headerView.dateIn.titleLabel.text;
-//    NSString *sss = _headerView.dateOut.titleLabel.text;
-//
-//    keyVC.dateInPassedVal = _dateInPassedVal;
-//    keyVC.dateOutPassedVal =_dateOutPassedVal;
-//    keyVC.dateInStr = ss;
-//    keyVC.dateOutStr = sss;
-//    keyVC.keyWords = _headerView.locationTF.text;
-//    keyVC.cityName = _headerView.locationLab.text;
-//    [self.navigationController pushViewController:keyVC animated:YES];
+    QDKeyWordsSearchVC *keyVC = [[QDKeyWordsSearchVC alloc] init];
+    keyVC.playShellType = QDHotelReserve;    //酒店预订的类型
+    NSString *ss = _headerView.dateIn.titleLabel.text;
+    NSString *sss = _headerView.dateOut.titleLabel.text;
+
+    keyVC.dateInPassedVal = _dateInPassedVal;
+    keyVC.dateOutPassedVal =_dateOutPassedVal;
+    keyVC.dateInStr = ss;
+    keyVC.dateOutStr = sss;
+    keyVC.keyWords = _headerView.locationTF.text;
+    keyVC.cityName = _headerView.locationLab.text;
+    [self.navigationController pushViewController:keyVC animated:YES];
 }
 
 - (void)endRefreshing

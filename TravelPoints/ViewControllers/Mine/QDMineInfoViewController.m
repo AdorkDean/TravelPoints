@@ -190,6 +190,7 @@ typedef NS_ENUM(NSInteger, PhotoType)
         _tableView.tableHeaderView = _notLoginHeaderView;
     }else if([str isEqualToString:@"1"]){
         _noFinancialView.userNameLab.text = _currentQDMemberTDO.userName;
+        _noFinancialView.userIdLab.text = _currentQDMemberTDO.userId;
         //会员等级
         _tableView.tableHeaderView = _noFinancialView;
     }else{
