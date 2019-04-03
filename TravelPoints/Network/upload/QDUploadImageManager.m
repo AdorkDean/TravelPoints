@@ -11,7 +11,6 @@
 #import "AFNetworking.h"
 #import "QDServiceErrorHandler.h"
 #import "QDServiceClient.h"
-#import "NSMutableURLRequest+Upload.h"
 @interface QDUploadImageManager ()
 
 @property (nonatomic, strong) NSURLSessionConfiguration *sessionConfig;
@@ -68,7 +67,7 @@
 //    AFSecurityPolicy *securityPolicy = [AFSecurityPolicy defaultPolicy];
 //    manager.securityPolicy = securityPolicy;
 //
-//    
+//
 //    [manager POST:urlStr parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
 //        //set fileName with current time
 //        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
