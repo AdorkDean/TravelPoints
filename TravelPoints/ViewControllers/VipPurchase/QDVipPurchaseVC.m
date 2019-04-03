@@ -277,6 +277,10 @@
         loginVC.pushVCTag = @"0";
         [self presentViewController:loginVC animated:YES completion:nil];
     }else{
+        if ([_vipPurchaseView.bottomLab2.text isEqualToString:@"0"]) {
+            [WXProgressHUD showInfoWithTittle:@"小于玩贝的最小申购量，请输入正确的金额"];
+            return;
+        }
         QDReadyToCreateOrderVC *orderVC = [[QDReadyToCreateOrderVC alloc] init];
         if (_currentModel == nil && _cardArr.count) {
             _currentModel = _cardArr[0];

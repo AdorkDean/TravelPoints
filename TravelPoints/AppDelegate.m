@@ -82,9 +82,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    [[CCAppManager sharedInstance] configureApp];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldUpdateApp:) name:kNotificationAppShouldUpdate object:nil];
+//    [[CCAppManager sharedInstance] configureApp];
+//
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldUpdateApp:) name:kNotificationAppShouldUpdate object:nil];
     [[TABViewAnimated sharedAnimated] initWithDefaultAnimated];
     self.window.rootViewController = [self setRootVC];
     [self configureAPIKey];
@@ -126,7 +126,8 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         id userInfo = notification.object;
         CCGotoUpDateViewController *updateVC = [[CCGotoUpDateViewController alloc] init];
-        updateVC.urlStr = [userInfo objectForKey:@"URI"];
+//        updateVC.urlStr = [userInfo objectForKey:@"URI"];
+        updateVC.urlStr = @"https://fir.im/qwux";
         [self.window setRootViewController:updateVC];
     });
 }

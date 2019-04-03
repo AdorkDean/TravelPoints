@@ -305,7 +305,9 @@
     if (myNub > sum) {
         textField.text = [textField.text substringToIndex:textField.text.length-1];
     }
-    _bottomLab2.text = [NSString stringWithFormat:@"%.lf", [_priceTF.text doubleValue] / _basePrice];
+    double ss = [_priceTF.text doubleValue] / _basePrice;
+    double sss = floor(ss);
+    _bottomLab2.text = [NSString stringWithFormat:@"%.lf", sss];
 }
 
 - (void)loadVipViewWithModel:(QDMemberDTO *)member{

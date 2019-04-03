@@ -20,7 +20,7 @@ static NSString * const QD_Domain = @"https://appuat.wedotting.com";    //UAT环
 //static NSString * const QD_Domain = @"https://app.wedotting.com";
 
 //测试环境
-//static NSString * const QD_Domain = @"http://203.110.179.27:60409";
+//static NSString * const QD_Domain = @"http://192.168.65.130:8080";
 //static NSString * const QD_Domain = @"http://112.64.226.138:60409";
 //
 //static NSString * const QD_Domain = @"http://47.101.222.172:8080";
@@ -143,6 +143,7 @@ static NSString * const api_findNoticeByTypeId      = @"/lyjfapp/api/v1/common/f
 static NSString * const api_imageUpload      = @"/consumer/image/upload";       //图片上传
 static NSString * const api_otherProtocols   = @"/lyjfapp/api/v1/common/otherProtocols";       //app_玩呗手册、会员协议
 
+static NSString * const api_getIsUpdate  = @"/lyjfapp/api/v1/version/getIsUpdate";       //强制更新
 
 /**
  JAVAScriptBridgeWebView
