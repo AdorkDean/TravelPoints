@@ -191,6 +191,7 @@ typedef NS_ENUM(NSInteger, PhotoType)
     }else if([str isEqualToString:@"1"]){
         _noFinancialView.userNameLab.text = _currentQDMemberTDO.userName;
         //会员等级
+        _noFinancialView.userIdLab.text = _currentQDMemberTDO.userId;
         _tableView.tableHeaderView = _noFinancialView;
     }else{
         _haveFinancialView.userNameLab.text = _currentQDMemberTDO.userName;
@@ -232,7 +233,7 @@ typedef NS_ENUM(NSInteger, PhotoType)
     _tableView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_tableView];
     
-//    UITapGestureRecognizer *tapGes = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changePic:)];
+    UITapGestureRecognizer *tapGes = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changePic:)];
     
     //未登录
     _notLoginHeaderView = [[QDMineHeaderNotLoginView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*0.2)];
@@ -244,7 +245,7 @@ typedef NS_ENUM(NSInteger, PhotoType)
     _noFinancialView.backgroundColor = APP_WHITECOLOR;
     [_noFinancialView.settingBtn addTarget:self action:@selector(userSettings:) forControlEvents:UIControlEventTouchUpInside];
     [_noFinancialView.voiceBtn addTarget:self action:@selector(notices:) forControlEvents:UIControlEventTouchUpInside];
-//    [_noFinancialView addGestureRecognizer:tapGes];
+    [_noFinancialView addGestureRecognizer:tapGes];
     [_noFinancialView.vipRightsBtn addTarget:self action:@selector(vipRights:) forControlEvents:UIControlEventTouchUpInside];
     [_noFinancialView.openFinancialBtn addTarget:self action:@selector(openFinancialAction:) forControlEvents:UIControlEventTouchUpInside];
     [_noFinancialView.accountInfo addTarget:self action:@selector(lookAccountInfo:) forControlEvents:UIControlEventTouchUpInside];

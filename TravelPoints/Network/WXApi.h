@@ -15,9 +15,9 @@ const static NSString *APIKey = @"0b39f0a341315a7f3574e309d8d24082";
 
 //static NSString * const QD_Domain = @"http://app.wedotting.com";      //生产环境
 
-//static NSString * const QD_Domain = @"https://appuat.wedotting.com";    //UAT环境
+static NSString * const QD_Domain = @"https://appuat.wedotting.com";    //UAT环境
 
-static NSString * const QD_Domain = @"https://app.wedotting.com";
+//static NSString * const QD_Domain = @"https://app.wedotting.com";
 
 //测试环境
 //static NSString * const QD_Domain = @"http://203.110.179.27:60409";
@@ -150,11 +150,11 @@ static NSString * const api_otherProtocols   = @"/lyjfapp/api/v1/common/otherPro
 
 //static NSString * const QD_JSURL                = @"http://192.168.40.10:3001/#";    //前端地址
 
-//static NSString * const QD_JSURL                = @"https://appuat.wedotting.com/app";    //前端地址
-//static NSString * const QD_TESTJSURL            = @"https://appuat.wedotting.com/app/#";    //前端地址
+static NSString * const QD_JSURL                = @"https://appuat.wedotting.com/app";    //前端地址
+static NSString * const QD_TESTJSURL            = @"https://appuat.wedotting.com/app/#";    //前端地址
 ////
-static NSString * const QD_JSURL                = @"https://app.wedotting.com/app";    //前端地址
-static NSString * const QD_TESTJSURL            = @"https://app.wedotting.com/app/#";    //前端地址//static NSString * const QD_TESTJSURL            = @"https://192.168.40.10:3000/app/#";    //前端地址
+//static NSString * const QD_JSURL                = @"https://app.wedotting.com/app";    //前端地址
+//static NSString * const QD_TESTJSURL            = @"https://app.wedotting.com/app/#";    //前端地址//static NSString * const QD_TESTJSURL            = @"https://192.168.40.10:3000/app/#";    //前端地址
 
 //static NSString * const QD_JSURL                = @"http://203.110.179.27:60409/app";    //前端地址
 //static NSString * const QD_TESTJSURL            = @"http://203.110.179.27:60409/app/#";    //前端地址
