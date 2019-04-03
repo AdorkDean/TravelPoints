@@ -102,7 +102,7 @@
                 _pickOrderView.withdrawBtn.hidden = YES;
                 switch ([[orderDetail objectForKey:@"state"] integerValue]) {
                     case QD_HavePurchased:
-                        _pickOrderView.statusLab.text = @"已付款";
+                        _pickOrderView.statusLab.text = @"已成交";
                         break;
                     case QD_HaveFinished:
                         _pickOrderView.statusLab.text = @"已完成";

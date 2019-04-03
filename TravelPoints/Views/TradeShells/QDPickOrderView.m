@@ -343,7 +343,7 @@
         _remain.hidden = YES;
         switch ([model.state integerValue]) {
             case QD_HavePurchased:
-                self.statusLab.text = @"已付款";
+                self.statusLab.text = @"已成交";
                 break;
             case QD_HaveFinished:
                 self.statusLab.text = @"已完成";
