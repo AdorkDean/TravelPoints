@@ -556,13 +556,13 @@
             NSDictionary *address = [placemark addressDictionary];
             
             //  Country(国家)  State(省)  City（市）
-            NSLog(@"#####%@",address);
-            
-            NSLog(@"%@", [address objectForKey:@"Country"]);
-            
-            NSLog(@"%@", [address objectForKey:@"State"]);
-            
-            NSLog(@"%@", [address objectForKey:@"City"]);
+//            NSLog(@"#####%@",address);
+//            
+//            NSLog(@"%@", [address objectForKey:@"Country"]);
+//            
+//            NSLog(@"%@", [address objectForKey:@"State"]);
+//            
+//            NSLog(@"%@", [address objectForKey:@"City"]);
             _headerView.locationLab.text = [address objectForKey:@"City"];
             //发送通知
         }

@@ -17,6 +17,8 @@
 #import "LaunchAnimationTool.h"
 #import "TABAnimated.h"
 #import "HcdGuideView.h"
+#import "CCAppManager.h"
+#import "CCGotoUpDateViewController.h"
 @interface AppDelegate ()
 
 @property(nonatomic, strong) UITabBarController *rootTabbarCtr;
@@ -79,6 +81,10 @@
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    [[CCAppManager sharedInstance] configureApp];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldUpdateApp:) name:kNotificationAppShouldUpdate object:nil];
     [[TABViewAnimated sharedAnimated] initWithDefaultAnimated];
     self.window.rootViewController = [self setRootVC];
     [self configureAPIKey];
@@ -110,7 +116,38 @@
     //获取基准价
     [self getBasicPrice];
     [self findAllMapDict];
+    
+    //App Update
+//    [self getUpdateInfo];
     return YES;
+}
+
+- (void)shouldUpdateApp:(NSNotification *)notification {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        id userInfo = notification.object;
+        CCGotoUpDateViewController *updateVC = [[CCGotoUpDateViewController alloc] init];
+        updateVC.urlStr = [userInfo objectForKey:@"URI"];
+        [self.window setRootViewController:updateVC];
+    });
+}
+
+- (void)getUpdateInfo{
+    [self showAlertView];
+}
+
+- (void)showAlertView{
+    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"更新" message:@"检测到有新版本" preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSString *urlStr =@"https://itunes.apple.com/us/app/%E8%BF%99%E5%A5%BD%E7%8E%A9/id1456067852?l=zh&ls=1&mt=8";
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlStr]];
+    }];
+    
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action){
+        
+    }];
+    [alertVC addAction:action1];
+    [self.rootTabbarCtr presentViewController:alertVC animated:YES completion:nil];
 }
 
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options{
@@ -174,18 +211,21 @@
 
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    
+    QDLog(@"applicationDidEnterBackground");
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
 
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
+    QDLog(@"applicationWillEnterForeground");
+    [self showAlertView];
     // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
 }
 
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
+    QDLog(@"applicationDidBecomeActive");
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 

@@ -152,7 +152,6 @@ static NSString *cellIdentifier = @"CellIdentifier";
             if (_currentTypeIndex < _rankTypeArr.count) {
                 [self getRankedSortingWithTypeStr:_rankTypeArr[_currentTypeIndex]];
             }else{
-                QDLog(@"_rankTotalArr = %@", _rankTotalArr);
                 //处理数据
                 if (_rankFirstArr.count) {
                     [_rankFirstArr removeAllObjects];
@@ -205,7 +204,6 @@ static NSString *cellIdentifier = @"CellIdentifier";
             for (NSDictionary *dic in resultArr) {
                 [_rankTypeArr addObject:[dic objectForKey:@"rankType"]];
             }
-            QDLog(@"_rankTypeArr = %@", _rankTypeArr);
         }
         if (_rankTypeArr.count) {
             [self getRankedSortingWithTypeStr:_rankTypeArr[_currentTypeIndex]];
@@ -439,7 +437,6 @@ static NSString *cellIdentifier = @"CellIdentifier";
         if (_collectionView) {
             [_collectionView.mainCollectionView reloadData];
         }else{
-            QDLog(@"%@, %@, %@", _rankTypeArr, _rankFirstArr, _rankTotalArr);
             if (_rankTotalArr.count) {
                 [cell.contentView addSubview:self.collectionView];
             }
@@ -550,7 +547,7 @@ static NSString *cellIdentifier = @"CellIdentifier";
             NSDictionary *address = [placemark addressDictionary];
             
             //  Country(国家)  State(省)  City（市）
-            NSLog(@"#####%@",address);
+//            NSLog(@"#####%@",address);
             
             NSLog(@"%@", [address objectForKey:@"Country"]);
             

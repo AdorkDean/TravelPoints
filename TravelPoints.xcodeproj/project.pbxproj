@@ -275,6 +275,10 @@
 		93744F57223B7AF8000708A3 /* QDMyBiddingOrderDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93744F56223B7AF8000708A3 /* QDMyBiddingOrderDetailVC.m */; };
 		93744F5A223B953E000708A3 /* QDRecommendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93744F59223B953E000708A3 /* QDRecommendViewController.m */; };
 		93744F6A223BCC17000708A3 /* UIButton+ImageTitleStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 93744F69223BCC17000708A3 /* UIButton+ImageTitleStyle.m */; };
+		93B1C124225494BF008FD57B /* CCGotoUpDateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B1C122225494BE008FD57B /* CCGotoUpDateViewController.m */; };
+		93B1C125225494BF008FD57B /* CCAppManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B1C123225494BF008FD57B /* CCAppManager.m */; };
+		93B1C127225494CB008FD57B /* Launch.png in Resources */ = {isa = PBXBuildFile; fileRef = 93B1C126225494CB008FD57B /* Launch.png */; };
+		93B1C12922549539008FD57B /* version.json in Resources */ = {isa = PBXBuildFile; fileRef = 93B1C12822549539008FD57B /* version.json */; };
 		93BB7AAF2220F97F0061FB9C /* QDHomeTopCancelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BB7AAE2220F97F0061FB9C /* QDHomeTopCancelView.m */; };
 		93BB7AB222212D710061FB9C /* WaterLayou.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BB7AB022212D700061FB9C /* WaterLayou.m */; };
 		93BB7ABA2221466A0061FB9C /* BiddingPostersDTO.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BB7AB92221466A0061FB9C /* BiddingPostersDTO.m */; };
@@ -861,6 +865,12 @@
 		93744F59223B953E000708A3 /* QDRecommendViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDRecommendViewController.m; sourceTree = "<group>"; };
 		93744F68223BCC17000708A3 /* UIButton+ImageTitleStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+ImageTitleStyle.h"; sourceTree = "<group>"; };
 		93744F69223BCC17000708A3 /* UIButton+ImageTitleStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+ImageTitleStyle.m"; sourceTree = "<group>"; };
+		93B1C120225494BE008FD57B /* CCAppManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAppManager.h; sourceTree = "<group>"; };
+		93B1C121225494BE008FD57B /* CCGotoUpDateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGotoUpDateViewController.h; sourceTree = "<group>"; };
+		93B1C122225494BE008FD57B /* CCGotoUpDateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCGotoUpDateViewController.m; sourceTree = "<group>"; };
+		93B1C123225494BF008FD57B /* CCAppManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCAppManager.m; sourceTree = "<group>"; };
+		93B1C126225494CB008FD57B /* Launch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Launch.png; sourceTree = "<group>"; };
+		93B1C12822549539008FD57B /* version.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = version.json; sourceTree = "<group>"; };
 		93BB7AAD2220F97F0061FB9C /* QDHomeTopCancelView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDHomeTopCancelView.h; sourceTree = "<group>"; };
 		93BB7AAE2220F97F0061FB9C /* QDHomeTopCancelView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDHomeTopCancelView.m; sourceTree = "<group>"; };
 		93BB7AB022212D700061FB9C /* WaterLayou.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaterLayou.m; sourceTree = "<group>"; };
@@ -1498,6 +1508,11 @@
 		3BD9516621EC2A1800CD0627 /* TravelPoints */ = {
 			isa = PBXGroup;
 			children = (
+				93B1C12822549539008FD57B /* version.json */,
+				93B1C120225494BE008FD57B /* CCAppManager.h */,
+				93B1C123225494BF008FD57B /* CCAppManager.m */,
+				93B1C121225494BE008FD57B /* CCGotoUpDateViewController.h */,
+				93B1C122225494BE008FD57B /* CCGotoUpDateViewController.m */,
 				3B0CD6DD21F05E7D0020824A /* Config */,
 				3BEA2C2C21EF3866001C52C4 /* WebViewJavascriptBridge */,
 				3B40EB7321EC952800656C1F /* Utils */,
@@ -1744,6 +1759,7 @@
 		3BD951B721EC6E5300CD0627 /* Others */ = {
 			isa = PBXGroup;
 			children = (
+				93B1C126225494CB008FD57B /* Launch.png */,
 				3BD951B821EC6E5300CD0627 /* Resources */,
 			);
 			path = Others;
@@ -2323,6 +2339,7 @@
 				3B0CD73721F1868C0020824A /* AMap.bundle in Resources */,
 				93271603224E187D008CD6A8 /* skip_button@3x.png in Resources */,
 				3BD9517121EC2A1C00CD0627 /* Assets.xcassets in Resources */,
+				93B1C12922549539008FD57B /* version.json in Resources */,
 				3B0CD74221F1DE380020824A /* SYCity.bundle in Resources */,
 				93271623224E504B008CD6A8 /* skip_button.bundle in Resources */,
 				3B0DC050220033150056C318 /* placeHolder@2x.png in Resources */,
@@ -2331,6 +2348,7 @@
 				93271602224E187D008CD6A8 /* skip_button@2x.png in Resources */,
 				3B1BC01221FAFAE20005C415 /* gpsStat1@2x.png in Resources */,
 				3B2ADD1621FEA68B00F62D63 /* seach_01@2x.png in Resources */,
+				93B1C127225494CB008FD57B /* Launch.png in Resources */,
 				932715B52248B1F0008CD6A8 /* shellBanner@2x.png in Resources */,
 				3B1BC01021FAFAE20005C415 /* decrease@2x.png in Resources */,
 				3B1BC00321FAA1590005C415 /* MBProgressHUD.bundle in Resources */,
@@ -2517,6 +2535,7 @@
 				93E30EC12225630D003CA771 /* ImageDTO.m in Sources */,
 				3B40EBBC21EC953E00656C1F /* UIPasteboard+YYText.m in Sources */,
 				3B40EBAB21EC953E00656C1F /* YYTextContainerView.m in Sources */,
+				93B1C124225494BF008FD57B /* CCGotoUpDateViewController.m in Sources */,
 				93EEE8FA2243811E00D4EC02 /* QDHomeHotelListVC.m in Sources */,
 				3BCA581F221A600600DCEEF7 /* QDMineSectionHeaderView.m in Sources */,
 				93BB7AAF2220F97F0061FB9C /* QDHomeTopCancelView.m in Sources */,
@@ -2631,6 +2650,7 @@
 				930F325122408F75003741E1 /* TABAnimationMethod.m in Sources */,
 				93E30ED022268DB0003CA771 /* UIImage+Image.m in Sources */,
 				3B40EBBD21EC953E00656C1F /* YYTextTransaction.m in Sources */,
+				93B1C125225494BF008FD57B /* CCAppManager.m in Sources */,
 				93E30EA72224EF85003CA771 /* QDVipPurchaseTableHeader.m in Sources */,
 				3BCA58152219593C00DCEEF7 /* QDVipPurchaseVC.m in Sources */,
 				3B40EBB321EC953E00656C1F /* YYLabel.m in Sources */,
