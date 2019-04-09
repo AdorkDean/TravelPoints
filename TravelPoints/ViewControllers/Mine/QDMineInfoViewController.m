@@ -527,7 +527,7 @@ typedef NS_ENUM(NSInteger, PhotoType)
         [photoVC setImageOriginal:imageOriginal];
         switch (self.type) {
             case PhotoTypeIcon:
-                [photoVC setSizeClip:CGSizeMake(_haveFinancialView.picView.width*2, _haveFinancialView.picView.height*2)];
+                [photoVC setSizeClip:CGSizeMake(_haveFinancialView.picView.width*3, _haveFinancialView.picView.height*3)];
                 break;
 //            case PhotoTypeRectangle:
 //                [photoVC setSizeClip:CGSizeMake(self.imageRectangle.width*2, self.imageRectangle.height*2)];
@@ -561,8 +561,7 @@ typedef NS_ENUM(NSInteger, PhotoType)
 - (void)photoKitController:(STPhotoKitController *)photoKitController resultImage:(UIImage *)resultImage
 {
     [WXProgressHUD showHUD];
-    _haveFinancialView.picView.image = resultImage;
-    _noFinancialView.picView.image = resultImage;
+    NSString *str = [QDUserDefaults getObjectForKey:@"loginType"];
     NSString *urlStr = [NSString stringWithFormat:@"%@%@", QD_Domain, api_imageUpload];
     [[QDUploadImageManager manager] uploadImageWithUrlStr:urlStr AndImage:resultImage withSuccessBlock:^(QDResponseObject *responseObject) {
         [WXProgressHUD hideHUD];
@@ -570,6 +569,11 @@ typedef NS_ENUM(NSInteger, PhotoType)
             NSDictionary *dic = responseObject.result;
             QDLog(@"dic = %@", dic);
             NSString *imgUrl = [dic objectForKey:@"imageFullUrl"];
+            if ([str isEqualToString:@"1"]) {
+                [_noFinancialView.picView sd_setImageWithURL:[NSURL URLWithString:imgUrl] placeholderImage:[UIImage imageNamed:@"placeHolder"] options:SDWebImageLowPriority];
+            }else{
+                [_haveFinancialView.picView sd_setImageWithURL:[NSURL URLWithString:imgUrl] placeholderImage:[UIImage imageNamed:@"placeHolder"] options:SDWebImageLowPriority];
+            }
             [self changeIcon:imgUrl];
         }
     } withFailurBlock:^(NSError *error) {
