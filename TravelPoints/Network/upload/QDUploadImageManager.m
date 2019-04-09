@@ -11,6 +11,7 @@
 #import "AFNetworking.h"
 #import "QDServiceErrorHandler.h"
 #import "QDServiceClient.h"
+
 @interface QDUploadImageManager ()
 
 @property (nonatomic, strong) NSURLSessionConfiguration *sessionConfig;
@@ -59,53 +60,58 @@
 
 
 - (void)uploadImageWithUrlStr:(NSString *)urlStr AndImage:(UIImage *)image withSuccessBlock:(RequestSuccess)successBlock withFailurBlock:(RequestFailure)failureBlock withUpLoadProgress:(UploadProgress)progress{
+    //image to data
+    NSData *imageData = UIImageJPEGRepresentation(image, 0.7);
+    //    NSData *scaledData = [self intelligentCompress:image];
     
-//    NSData *imageData = UIImageJPEGRepresentation(image, 0.7);
-//    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-//    manager.requestSerializer.timeoutInterval = QD_Timeout;
-//    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript", @"text/html",@"text/xml",@"text/plain",@"application/xml", nil];
-//    AFSecurityPolicy *securityPolicy = [AFSecurityPolicy defaultPolicy];
-//    manager.securityPolicy = securityPolicy;
-//
-//
-//    [manager POST:urlStr parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-//        //set fileName with current time
-//        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-//        formatter.dateFormat = @"yyyyMMddHHmmss";
-//        NSDate *today = [NSDate date];
-//        NSString *fileName = [formatter stringFromDate:today];
-//        [formData appendPartWithFileData:imageData name:@"file" fileName:fileName mimeType:@"image/jpeg"];
-//    } progress:^(NSProgress * _Nonnull uploadProgress) {
-//        progress ? progress(uploadProgress) : nil;
-//    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//        NSInteger errorCode = 200;
-//        @try {
-//            NSHTTPURLResponse *response = (NSHTTPURLResponse *)task.response;
-//            NSDictionary *allHeaders = response.allHeaderFields;
-//            NSNumber *code = [allHeaders objectForKey:@"error_code"];
-//            if (code != nil) {
-//                errorCode = [code integerValue];
-//            }
-//        } @catch (NSException *exception) {
-//
-//        } @finally {
-//
-//        }
-//        if (errorCode == 200) {
-//            QDResponseObject *responseObj = [QDResponseObject yy_modelWithDictionary:responseObject];
-//            if (responseObj.code == 0) {
-//                successBlock ? successBlock(responseObj) : nil;
-//            }
-//            else {
-//                QDToast(@"上传图片失败，请重试或重新登录");
-//            }
-//        }
-//        else {
-//            [QDServiceErrorHandler handleError:errorCode];
-//        }
-//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//
-//    }];
+    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    manager.requestSerializer.timeoutInterval = QD_Timeout;
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript", @"text/html",@"text/xml",@"text/plain",@"application/xml", nil];
+    AFSecurityPolicy *securityPolicy = [AFSecurityPolicy defaultPolicy];
+    securityPolicy.validatesDomainName = NO;
+    securityPolicy.allowInvalidCertificates = YES;
+    manager.securityPolicy = securityPolicy;
+    NSString *cookie = [NSString stringWithFormat:@"%@", [QDUserDefaults getCookies]];
+    [manager.requestSerializer setHTTPShouldHandleCookies:YES];
+    [manager.requestSerializer setValue:cookie forHTTPHeaderField:@"Cookie"];
+    [manager POST:urlStr parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        //set fileName with current time
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        formatter.dateFormat = @"yyyyMMddHHmmss";
+        NSDate *today = [NSDate date];
+        NSString *fileName = [formatter stringFromDate:today];
+        [formData appendPartWithFileData:imageData name:@"file" fileName:fileName mimeType:@"image/jpeg"];
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
+        progress ? progress(uploadProgress) : nil;
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSInteger errorCode = 200;
+        @try {
+            NSHTTPURLResponse *response = (NSHTTPURLResponse *)task.response;
+            NSDictionary *allHeaders = response.allHeaderFields;
+            NSNumber *code = [allHeaders objectForKey:@"error_code"];
+            if (code != nil) {
+                errorCode = [code integerValue];
+            }
+        } @catch (NSException *exception) {
+            
+        } @finally {
+            
+        }
+        if (errorCode == 200) {
+            QDResponseObject *responseObj = [QDResponseObject yy_modelWithDictionary:responseObject];
+            if (responseObj.code == 0) {
+                successBlock ? successBlock(responseObj) : nil;
+            }
+            else {
+                QDToast(@"上传图片失败，请重试或重新登录");
+            }
+        }
+        else {
+            [QDServiceErrorHandler handleError:errorCode];
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
 }
 
 

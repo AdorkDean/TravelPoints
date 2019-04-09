@@ -43,11 +43,8 @@
 }
 
 - (void)gotoUpdate:(id)sender {
-    //https://itunes.apple.com/us/app/5tv-shou-ji-ju/id940044276?l=zh&ls=1&mt=8
-    //    NSString *iTunesLink = [NSString stringWithFormat:@"itms-apps://phobos.apple.com/WebObjects/MZStore.woa/wa/viewSoftwareUpdate?id=%@&mt=8", APP_ID];
-    //    NSString *iTunesLink = [NSString stringWithFormat:@"https://itunes.apple.com/us/app/5tv-shou-ji-ju/id%@?l=zh&ls=1&mt=8", APP_ID];
-    
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.urlStr]];
+    NSString *urlStr = @"itms-apps://itunes.apple.com/cn/app/id1456067852?mt=8";
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlStr]];
 }
 @end
 

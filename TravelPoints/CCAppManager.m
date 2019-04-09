@@ -59,10 +59,9 @@
             NSString *result = responseObject.result;
             if ([result isEqualToString:@"0"]) {  //不需要强制更新
                 //测试需要强制更新
-                needUpdate = YES;
-                
-            }else{
                 needUpdate = NO;
+            }else{
+                needUpdate = YES;
             }
         }
         if (needUpdate) {
@@ -116,88 +115,77 @@
     if (self.needsForceUpdate) {
         NSString *URLString = [NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@", APP_ID];
         //强制更新 发送通知   通知接受对象可以更加自己项目情况来定
-//        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationAppShouldUpdate object:@{@"URI":self.versionInfo.URI}];
         [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationAppShouldUpdate object:@{@"URI":URLString}];
-
         return;
     }
     /**
      *  APP_ID 请替换成自己的APPID
      */
-    NSString *URLString = [NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@", APP_ID];
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:[NSURL URLWithString:URLString]];
-    [request setHTTPMethod:@"POST"];
-    [request setTimeoutInterval:15.0f];
-    __weak __typeof(&*self)weakSelf = self;
-    __block NSHTTPURLResponse *urlResponse = nil;
-    __block NSError *error = nil;
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-        NSData *recervedData = [NSURLConnection sendSynchronousRequest:request returningResponse:&urlResponse error:&error];
-
-        if (recervedData && recervedData.length > 0) {
-            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:recervedData options:NSJSONReadingMutableLeaves error:&error];
-            NSArray *infoArray = [dict objectForKey:@"results"];
-            if (infoArray && infoArray.count > 0) {
-                NSDictionary *releaseInfo = [infoArray objectAtIndex:0];
-                //描述
-                weakSelf.versionInfo.releaseNote = releaseInfo[@"releaseNotes"];
-                weakSelf.versionInfo.version = releaseInfo[@"version"];
-                weakSelf.versionInfo.URI = releaseInfo[@"trackViewUrl"];
-
-                if (weakSelf.needsForceUpdate) {
-                    //强制更新 发送通知   通知接受对象可以更加自己项目情况来定
-                    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationAppShouldUpdate object:@{@"URI":weakSelf.versionInfo.URI}];
-                    return;
-                }
-                //是否忽略这个版本
-                QDLog(@"UDkUpdateIgnoredVersion = %@", [[NSUserDefaults standardUserDefaults] objectForKey:UDkUpdateIgnoredVersion]);
-                weakSelf.versionIgnored = ([weakSelf.versionInfo.version isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:UDkUpdateIgnoredVersion]]);
-                //要判断这里忽略过的版本是不是更新了 和本地版本号已经一样了
-                if ([VERSION isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:UDkUpdateIgnoredVersion]]) {
-                    weakSelf.versionIgnored = NO;
-                    [[NSUserDefaults standardUserDefaults]removeObjectForKey:UDkUpdateIgnoredVersion];
-                }
-                weakSelf.hasNewVersion = ([VERSION compare:weakSelf.versionInfo.version options:NSNumericSearch] == NSOrderedAscending);
-
-                if (weakSelf.versionIgnored&&!flag) {
-                    NSLog(@"忽略的版本");
-                    return;
-                }
-                if (weakSelf.hasNewVersion) {
-                    if (!flag) {
-                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"新版本%@",weakSelf.versionInfo.version] message:[NSString stringWithFormat:@"%@",weakSelf.versionInfo.releaseNote] delegate:self cancelButtonTitle:@"关闭" otherButtonTitles:@"立即更新",@"忽略此版本", nil];
-                        alert.tag = 10000;
-                        [alert show];
-
-                    }else{
-
-                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"新版本%@",weakSelf.versionInfo.version] message:[NSString stringWithFormat:@"%@",weakSelf.versionInfo.releaseNote] delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"立即更新", nil];
-                        alert.tag = 10000;
-                        [alert show];
-                    }
-
-                } else {
-                    if (flag) {
-
-                        //[HTUIHelper alertMessage:@"已经是最新版本"];
-
-                    }
-                }
-            } else {
-                if (flag) {
-
-                    //[HTUIHelper alertMessage:@"检测失败,请稍后再试"];
-
-                }
-            }
-        }
-        else {
-            //[HTUIHelper alertMessage:@"检测失败,请稍后再试"];
-        }
-
-    }];
-    
+//    NSString *URLString = [NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@", APP_ID];
+//    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+//    [request setURL:[NSURL URLWithString:URLString]];
+//    [request setHTTPMethod:@"POST"];
+//    [request setTimeoutInterval:15.0f];
+//    __weak __typeof(&*self)weakSelf = self;
+//    __block NSHTTPURLResponse *urlResponse = nil;
+//    __block NSError *error = nil;
+//    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+//        NSData *recervedData = [NSURLConnection sendSynchronousRequest:request returningResponse:&urlResponse error:&error];
+//
+//        if (recervedData && recervedData.length > 0) {
+//            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:recervedData options:NSJSONReadingMutableLeaves error:&error];
+//            NSArray *infoArray = [dict objectForKey:@"results"];
+//            if (infoArray && infoArray.count > 0) {
+//                NSDictionary *releaseInfo = [infoArray objectAtIndex:0];
+//                //描述
+//                weakSelf.versionInfo.releaseNote = releaseInfo[@"releaseNotes"];
+//                weakSelf.versionInfo.version = releaseInfo[@"version"];
+//                weakSelf.versionInfo.URI = releaseInfo[@"trackViewUrl"];
+//
+//                if (weakSelf.needsForceUpdate) {
+//                    //强制更新 发送通知   通知接受对象可以更加自己项目情况来定
+//                    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationAppShouldUpdate object:@{@"URI":weakSelf.versionInfo.URI}];
+//                    return;
+//                }
+//                //是否忽略这个版本
+//                QDLog(@"UDkUpdateIgnoredVersion = %@", [[NSUserDefaults standardUserDefaults] objectForKey:UDkUpdateIgnoredVersion]);
+//                weakSelf.versionIgnored = ([weakSelf.versionInfo.version isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:UDkUpdateIgnoredVersion]]);
+//                //要判断这里忽略过的版本是不是更新了 和本地版本号已经一样了
+//                if ([VERSION isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:UDkUpdateIgnoredVersion]]) {
+//                    weakSelf.versionIgnored = NO;
+//                    [[NSUserDefaults standardUserDefaults]removeObjectForKey:UDkUpdateIgnoredVersion];
+//                }
+//                weakSelf.hasNewVersion = ([VERSION compare:weakSelf.versionInfo.version options:NSNumericSearch] == NSOrderedAscending);
+//
+//                if (weakSelf.versionIgnored&&!flag) {
+//                    NSLog(@"忽略的版本");
+//                    return;
+//                }
+//                if (weakSelf.hasNewVersion) {
+//                    if (!flag) {
+//                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"新版本%@",weakSelf.versionInfo.version] message:[NSString stringWithFormat:@"%@",weakSelf.versionInfo.releaseNote] delegate:self cancelButtonTitle:@"关闭" otherButtonTitles:@"立即更新",@"忽略此版本", nil];
+//                        alert.tag = 10000;
+//                        [alert show];
+//
+//                    }else{
+//
+//                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"新版本%@",weakSelf.versionInfo.version] message:[NSString stringWithFormat:@"%@",weakSelf.versionInfo.releaseNote] delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"立即更新", nil];
+//                        alert.tag = 10000;
+//                        [alert show];
+//                    }
+//
+//                } else {
+//                    if (flag) {
+//                    }
+//                }
+//            } else {
+//                if (flag) {
+//                }
+//            }
+//        }
+//        else {
+//        }
+//    }];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex

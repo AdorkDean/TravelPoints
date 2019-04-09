@@ -125,8 +125,7 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         id userInfo = notification.object;
         CCGotoUpDateViewController *updateVC = [[CCGotoUpDateViewController alloc] init];
-//        updateVC.urlStr = [userInfo objectForKey:@"URI"];
-        updateVC.urlStr = @"https://fir.im/qwux";
+        updateVC.urlStr = [userInfo objectForKey:@"URI"];
         [self.window setRootViewController:updateVC];
     });
 }
@@ -139,7 +138,9 @@
     UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"更新" message:@"检测到有新版本" preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        NSString *urlStr =@"https://itunes.apple.com/us/app/%E8%BF%99%E5%A5%BD%E7%8E%A9/id1456067852?l=zh&ls=1&mt=8";
+//        NSString *urlStr =@"https://itunes.apple.com/us/app/%E8%BF%99%E5%A5%BD%E7%8E%A9/id1456067852?l=zh&ls=1&mt=8";
+
+     NSString *urlStr = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/cn/app/id%@", APP_ID];
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlStr]];
     }];
     

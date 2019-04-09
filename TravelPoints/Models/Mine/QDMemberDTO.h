@@ -60,6 +60,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *maxLevelValue;       //用户等级
 @property (nonatomic, strong) NSString *tradingStatus;       //用户等级
 
+#pragma mark - 新增用户头像
+@property (nonatomic, strong) NSString *iconUrl;       //用户头像
+
 
 @end
 

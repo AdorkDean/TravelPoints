@@ -2105,9 +2105,9 @@
 		9327161B224E36D3008CD6A8 /* upload */ = {
 			isa = PBXGroup;
 			children = (
+				9327161E224E36D3008CD6A8 /* QDUploadImageManager.h */,
 				9327161C224E36D3008CD6A8 /* QDUploadImageManager.m */,
 				9327161D224E36D3008CD6A8 /* QDUploadUtils.h */,
-				9327161E224E36D3008CD6A8 /* QDUploadImageManager.h */,
 				9327161F224E36D3008CD6A8 /* QDUploadUtils.m */,
 			);
 			path = upload;
@@ -2864,7 +2864,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.quantdo.customerTravelPoints;
+				PRODUCT_BUNDLE_IDENTIFIER = com.quantdo.travelPoints;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -2894,7 +2894,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.quantdo.customerTravelPoints;
+				PRODUCT_BUNDLE_IDENTIFIER = com.quantdo.travelPoints;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
