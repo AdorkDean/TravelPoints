@@ -22,4 +22,5 @@ target 'TravelPoints' do
   pod 'DZNEmptyDataSet'
   pod 'zhPopupController'
   pod 'WMPageController'
+  pod 'TZImagePickerController'
 end
