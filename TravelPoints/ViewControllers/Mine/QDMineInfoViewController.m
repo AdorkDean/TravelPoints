@@ -493,7 +493,8 @@ typedef NS_ENUM(NSInteger, PhotoType)
         [controller setDelegate:self];
         if ([controller isAvailablePhotoLibrary]) {
             [self presentViewController:controller animated:YES completion:nil];
-        }    }];
+        }
+    }];
     
     UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
     }];

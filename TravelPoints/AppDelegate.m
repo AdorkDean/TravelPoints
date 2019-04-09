@@ -82,9 +82,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-//    [[CCAppManager sharedInstance] configureApp];
-//
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldUpdateApp:) name:kNotificationAppShouldUpdate object:nil];
+    [[CCAppManager sharedInstance] configureApp];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldUpdateApp:) name:kNotificationAppShouldUpdate object:nil];
     [[TABViewAnimated sharedAnimated] initWithDefaultAnimated];
     self.window.rootViewController = [self setRootVC];
     [self configureAPIKey];
