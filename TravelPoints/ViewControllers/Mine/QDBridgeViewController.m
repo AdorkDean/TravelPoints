@@ -63,12 +63,22 @@
     [super viewWillDisappear:animated];
     [self.tabBarController.tabBar setHidden:NO];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:Notification_LoginSucceeded object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController.navigationBar setHidden:YES];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshPageInfo:) name:Notification_LoginSucceeded object:nil];
     [self.tabBarController.tabBar setHidden:YES];
+}
+
+- (void)refreshPageInfo:(NSNotification *)noti{
+    QDLog(@"urlStr = %@", _urlStr);
+//    if () {
+//        statements
+//    }
+//    [self loadWebViewWithURL];
 }
 
 - (void)viewDidLoad {

@@ -124,11 +124,11 @@ typedef NS_ENUM(NSInteger, PhotoType)
                     _currentQDMemberTDO = [QDMemberDTO yy_modelWithDictionary:responseObject.result];
                     if ([_currentQDMemberTDO.isYepay isEqualToString:@"0"] || _currentQDMemberTDO.isYepay == nil) {
                         [QDUserDefaults setObject:@"1" forKey:@"loginType"];
-                        [_noFinancialView.picView sd_setImageWithURL:[NSURL URLWithString:_currentQDMemberTDO.iconUrl] placeholderImage:[UIImage imageNamed:@"placeHolder"] options:SDWebImageLowPriority];
+                        [_noFinancialView.picView sd_setImageWithURL:[NSURL URLWithString:_currentQDMemberTDO.iconUrl] placeholderImage:[UIImage imageNamed:@"icon_headerPic"] options:SDWebImageLowPriority];
                         [_noFinancialView loadViewWithModel:_currentQDMemberTDO];
                     }else{
                         [QDUserDefaults setObject:@"2" forKey:@"loginType"];
-                        [_haveFinancialView.picView sd_setImageWithURL:[NSURL URLWithString:_currentQDMemberTDO.iconUrl] placeholderImage:[UIImage imageNamed:@"placeHolder"] options:SDWebImageLowPriority];
+                        [_haveFinancialView.picView sd_setImageWithURL:[NSURL URLWithString:_currentQDMemberTDO.iconUrl] placeholderImage:[UIImage imageNamed:@"icon_headerPic"] options:SDWebImageLowPriority];
                         [_haveFinancialView loadFinancialViewWithModel:_currentQDMemberTDO];
                     }
                 }
@@ -251,14 +251,14 @@ typedef NS_ENUM(NSInteger, PhotoType)
     _noFinancialView.backgroundColor = APP_WHITECOLOR;
     [_noFinancialView.settingBtn addTarget:self action:@selector(userSettings:) forControlEvents:UIControlEventTouchUpInside];
     [_noFinancialView.voiceBtn addTarget:self action:@selector(notices:) forControlEvents:UIControlEventTouchUpInside];
-    [_noFinancialView addGestureRecognizer:tapGes];
+    [_noFinancialView.picView addGestureRecognizer:tapGes];
     [_noFinancialView.vipRightsBtn addTarget:self action:@selector(vipRights:) forControlEvents:UIControlEventTouchUpInside];
     [_noFinancialView.openFinancialBtn addTarget:self action:@selector(openFinancialAction:) forControlEvents:UIControlEventTouchUpInside];
     [_noFinancialView.accountInfo addTarget:self action:@selector(lookAccountInfo:) forControlEvents:UIControlEventTouchUpInside];
     //已经开通资金账户的
     _haveFinancialView = [[QDMineHeaderFinancialAccountView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 350+SafeAreaTopHeight)];
     _haveFinancialView.backgroundColor = APP_WHITECOLOR;
-    [_haveFinancialView addGestureRecognizer:tapGes];
+    [_haveFinancialView.picView addGestureRecognizer:tapGes];
     [_haveFinancialView.vipRightsBtn addTarget:self action:@selector(vipRights:) forControlEvents:UIControlEventTouchUpInside];
 
     [_haveFinancialView.voiceBtn addTarget:self action:@selector(notices:) forControlEvents:UIControlEventTouchUpInside];
@@ -570,9 +570,9 @@ typedef NS_ENUM(NSInteger, PhotoType)
             QDLog(@"dic = %@", dic);
             NSString *imgUrl = [dic objectForKey:@"imageFullUrl"];
             if ([str isEqualToString:@"1"]) {
-                [_noFinancialView.picView sd_setImageWithURL:[NSURL URLWithString:imgUrl] placeholderImage:[UIImage imageNamed:@"placeHolder"] options:SDWebImageLowPriority];
+                [_noFinancialView.picView sd_setImageWithURL:[NSURL URLWithString:imgUrl] placeholderImage:[UIImage imageNamed:@"icon_headerPic"] options:SDWebImageLowPriority];
             }else{
-                [_haveFinancialView.picView sd_setImageWithURL:[NSURL URLWithString:imgUrl] placeholderImage:[UIImage imageNamed:@"placeHolder"] options:SDWebImageLowPriority];
+                [_haveFinancialView.picView sd_setImageWithURL:[NSURL URLWithString:imgUrl] placeholderImage:[UIImage imageNamed:@"icon_headerPic"] options:SDWebImageLowPriority];
             }
             [self changeIcon:imgUrl];
         }
