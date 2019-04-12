@@ -175,12 +175,13 @@
  *  @param sender sender
  */
 - (void)nextButtonHandler:(id)sender {
-    
     [self.pageControl removeFromSuperview];
     [self.view removeFromSuperview];
     [self setWindow:nil];
     [self setView:nil];
     [self setPageControl:nil];
+    QDLog(@"立即体验");
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"FirstLaunch" object:nil];
 }
 
 @end
