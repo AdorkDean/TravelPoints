@@ -123,10 +123,10 @@ static NSString *cellIdentifier = @"CellIdentifier";
 }
 
 //跳转到地图页面
-- (void)homeMapPage:(UIButton *)sender{
-    QDHomeViewController *homeVC = [[QDHomeViewController alloc] init];
-    [self.navigationController pushViewController:homeVC animated:YES];
-}
+//- (void)homeMapPage:(UIButton *)sender{
+//    QDHomeViewController *homeVC = [[QDHomeViewController alloc] init];
+//    [self.navigationController pushViewController:homeVC animated:YES];
+//}
 
 - (void)getRankedSortingWithTypeStr:(NSString *)typeStr{
     NSDictionary * dic1 = @{@"listType":typeStr,
