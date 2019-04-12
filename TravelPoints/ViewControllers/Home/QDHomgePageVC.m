@@ -78,8 +78,10 @@ static NSString *cellIdentifier = @"CellIdentifier";
 }
 
 - (void)firstLaunch:(NSNotification *)noti{
-    [self findRankType];
-    [self locate];
+    if (!_rankTypeArr.count) {
+        [self findRankType];
+        [self locate];
+    }
 }
 
 - (void)horizontalSilde:(NSNotification *)notification {

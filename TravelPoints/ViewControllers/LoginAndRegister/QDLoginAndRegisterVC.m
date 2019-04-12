@@ -294,9 +294,7 @@
     NSDictionary * dic = @{@"legalPhone":_loginView.phoneTF.text};
     [[QDServiceClient shareClient] requestWithType:kHTTPRequestTypePOST urlString:api_VerificationIsRegister params:dic successBlock:^(QDResponseObject *responseObject) {
         if (responseObject.code == 0) {
-//            [self checkLoginNumWithPhone:_loginView.phoneTF.text];
-            [self login];
-
+            [self checkLoginNumWithPhone:_loginView.phoneTF.text];
         }else{
             [WXProgressHUD showInfoWithTittle:responseObject.message];
         }
