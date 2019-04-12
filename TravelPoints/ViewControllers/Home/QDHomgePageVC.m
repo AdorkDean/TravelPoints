@@ -67,16 +67,20 @@ static NSString *cellIdentifier = @"CellIdentifier";
     [self.navigationController.tabBarController.tabBar setHidden:NO];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(horizontalSilde:) name:@"horizontalSilde" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(firstLaunch:) name:@"FirstLaunch" object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"FirstLaunch" object:nil];
     [self.locationManager stopUpdatingLocation];    //停止定位
 }
 
-//- (void)viewWillLayoutSubviews {
-//    [super viewWillLayoutSubviews];
-//}
+- (void)firstLaunch:(NSNotification *)noti{
+    [self findRankType];
+    [self locate];
+}
 
 - (void)horizontalSilde:(NSNotification *)notification {
     QDLog(@"info = %@", notification.object);
@@ -305,10 +309,6 @@ static NSString *cellIdentifier = @"CellIdentifier";
         _homePageTopView.iconBtn.layer.masksToBounds = YES;
         _tableView.tableHeaderView = _homePageTopView;
         
-//        UITapGestureRecognizer *doubleTapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleDoubleTap:)];
-//        doubleTapGesture.numberOfTapsRequired =2;
-//        [_homePageTopView addGestureRecognizer:doubleTapGesture];
-        
         [self.view addSubview:_tableView];
         _tableView.mj_header = [QDRefreshHeader headerWithRefreshingBlock:^{
             if (_rankTotalArr.count) {
@@ -319,6 +319,8 @@ static NSString *cellIdentifier = @"CellIdentifier";
             if (_rankTypeArr.count) {
                 [self getRankedSortingWithTypeStr:_rankTypeArr[_currentTypeIndex]];
             }else{
+                [self locate];
+                [self findRankType];
                 [self endRefreshing];
             }
         }];

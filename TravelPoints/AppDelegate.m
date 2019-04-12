@@ -80,19 +80,19 @@
     return self.rootTabbarCtr;
 }
 
-- (void)FirstLaunch:(NSNotification *)noti{
-    self.window.rootViewController = [self setRootVC];
-}
+//- (void)FirstLaunch:(NSNotification *)noti{
+//    self.window.rootViewController = [self setRootVC];
+//}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     [[CCAppManager sharedInstance] configureApp];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldUpdateApp:) name:kNotificationAppShouldUpdate object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(FirstLaunch:) name:@"FirstLaunch" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(FirstLaunch:) name:@"FirstLaunch" object:nil];
 
     [[TABViewAnimated sharedAnimated] initWithDefaultAnimated];
-//    self.window.rootViewController = [self setRootVC];
+    self.window.rootViewController = [self setRootVC];
     [self configureAPIKey];
     [self.window makeKeyAndVisible];
     self.window.backgroundColor = APP_WHITECOLOR;
