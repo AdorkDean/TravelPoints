@@ -23,6 +23,7 @@
         _picView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*0.06, SCREEN_HEIGHT*0.1, SCREEN_WIDTH*0.12, SCREEN_WIDTH*0.12)];
         _picView.layer.cornerRadius = SCREEN_WIDTH*0.06;
         _picView.layer.masksToBounds = YES;
+        _picView.userInteractionEnabled = YES;
         [_picView setImage:[UIImage imageNamed:@"icon_headerPic"]];
         [self addSubview:_picView];
         
